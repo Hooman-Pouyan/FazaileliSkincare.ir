@@ -3,7 +3,7 @@ import createNextIntlPlugin from "next-intl/plugin";
 
 const nextConfig: NextConfig = {
   // Deployed as a plain Node container to an Iranian PaaS (Liara / ParsPack).
-  output: "standalone",
+  ...(process.env.VERCEL === "1" ? {} : { output: "standalone" }),
   images: {
     // Media lives in S3-compatible object storage behind an Iranian CDN.
     remotePatterns: [{ protocol: "https", hostname: "**.arvanstorage.ir" }],

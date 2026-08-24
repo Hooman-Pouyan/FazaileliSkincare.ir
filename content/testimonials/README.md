@@ -4,7 +4,10 @@ This directory holds **privacy-safe, pre-database testimonial candidates**. It i
 
 ## First batch
 
-`fa-first-pass-2026-08-24.json` contains 14 Persian transcriptions from Instagram screenshots supplied on 2026-08-24.
+The dated batches currently contain:
+
+- `fa-first-pass-2026-08-24.json`: 14 screenshots and 14 candidate records.
+- `fa-second-pass-2026-08-24.json`: 29 screenshots and 28 distinct comments. Images 12 and 14 are different crops of the same comment, so the latter is preserved as `duplicate_source_do_not_seed` rather than becoming a second testimonial.
 
 - Screenshot line wrapping was removed, but the customer's informal wording and emoji were retained. Punctuation, Persian digits, spacing, and half-spaces received light normalization; this is recorded in the batch metadata.
 - Usernames, phone numbers, avatars, timestamps, and other direct identifiers were not copied.

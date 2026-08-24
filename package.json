@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build && cp -R public .next/standalone/ && cp -R .next/static .next/standalone/.next/",
+    "build": "next build && if [ \"${VERCEL:-}\" != \"1\" ]; then cp -R public .next/standalone/ && cp -R .next/static .next/standalone/.next/; fi",
     "start": "node .next/standalone/server.js",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",

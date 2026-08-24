@@ -1,0 +1,588 @@
+{
+  "schemaVersion": 1,
+  "batchId": "instagram-second-pass-2026-08-24",
+  "locale": "fa",
+  "sourceKind": "instagram_screenshot",
+  "recordCount": 29,
+  "distinctTestimonialCount": 28,
+  "duplicateSourceCount": 1,
+  "transcriptionPolicy": "Customer wording and emoji are preserved; screenshot line wrapping, punctuation, Persian digits, spacing, and half-spaces are lightly normalized. No semantic or marketing rewrite has been applied.",
+  "privacyPolicy": "Usernames, avatars, timestamps, and other source identities are deliberately excluded from this seedable file.",
+  "sourceRetention": "Source screenshots are not committed because they contain personal data. Filename and SHA-256 are retained for private-source matching.",
+  "deduplicationNote": "Images 12 and 14 contain the same Storyderm/protocol comment in different crops. Image 14 is retained for provenance but marked duplicate_source_do_not_seed.",
+  "records": [
+    {
+      "id": "testimonial-fa-015",
+      "sourceImage": {
+        "imageIndex": 1,
+        "fileName": "codex-clipboard-f9dce8cc-a0cc-475e-b23b-b9f1be8f5f2e.png",
+        "sha256": "badc016b4de1625bdba4f1385c910e37638586e56b3f2b0cbf0222a83c9d33dd"
+      },
+      "authorLabelFa": "همکار ناشناس",
+      "relationship": "professional_peer",
+      "contentKind": "professional_praise",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "اصالت، دانش، فروتنی، دیسیپلین، حرفه‌ای بودن همگی یکجا در وجود شماست ❤️ بدرخشید ✨",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "needs_relationship_context",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-016",
+      "sourceImage": {
+        "imageIndex": 2,
+        "fileName": "codex-clipboard-cb1d4e86-21d7-4458-b28a-36ff6ef5b8d7.png",
+        "sha256": "98aa71f8b11389f14616c2383c245af41523208a31287f7a6d153f8ff37e19ca"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "service_experience",
+      "relatedOfferingCandidate": "facial",
+      "transcriptionFa": "تجربه یه فیشیال بی‌نظیر و عالی 👌 با خانم فضائلی عزیز و دوست‌داشتنی. انرژی مثبت خودتون و فضاتون فوق‌العاده‌ست 😊 و اینکه اینقدر حرفه‌ای کار می‌کنید واقعا ارزشمنده 🫶 ممنون که یه تجربه عالی برامون رقم می‌زنید. همیشه تندرست و شاد و موفق ببینمتون 💛",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-017",
+      "sourceImage": {
+        "imageIndex": 3,
+        "fileName": "codex-clipboard-9452e595-3eb5-4285-9532-3e51fed6c1ce.png",
+        "sha256": "dcf3dcfdd2c8b586edb292ff047aa41777d707d71e9bde1d8e7ab27bd8db64bc"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": "facial",
+      "transcriptionFa": "عزیزم خواستم تشکر کنم. دو جلسه فیشال اومدم صورتم خداروشکر بهتر شده. بی‌صبرانه منتظر جلسات بعدی‌ام.",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate_after_claim_review",
+      "safetyFlags": ["outcome_claim"],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-018",
+      "sourceImage": {
+        "imageIndex": 4,
+        "fileName": "codex-clipboard-ac1f5094-70a3-46b1-9595-c51d90035421.png",
+        "sha256": "0e691bc26f99171845de4252f0d8690d1c31012a9fa4d72a630ec4eb1d8a8c0c"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": "princess_shine_scar_acne_facial",
+      "transcriptionFa": "سلام خسته نباشین 😍 پرنسس شاین همونطور که خودتون گفتین دو روز بعد نتیجه‌ش مشخص میشه (که البته بعد از جلسه هم کاملا تغییرات مشخص بود) و امروز بعد از دو سه روز از جلسه فیشال اسکار و آکنه پوستم خیلی کمتر شده. خیلی ممنونم. بهترینین واقعا خانم فضائلی 🫶🥰",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate_after_claim_review",
+      "safetyFlags": [
+        "outcome_claim",
+        "medical_appearance_claim",
+        "named_treatment"
+      ],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-019",
+      "sourceImage": {
+        "imageIndex": 5,
+        "fileName": "codex-clipboard-670e4654-35bd-4a1e-8dbb-ab03269c17e2.png",
+        "sha256": "fee183c1f87c4920eff08fed8c5d34fe56e43ae4c74bf5be9198ebf54d0734c6"
+      },
+      "authorLabelFa": "هنرجوی ناشناس",
+      "relationship": "student",
+      "contentKind": "training_feedback",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "ممنونم از شما. فکر می‌کنم دو سه سال پیش بود همون دوره اصلاح هوم‌کر که گذاشته بودین و من خوشبخت 😁 شرکت کردم. دیدم نسبت به پوست و هوم‌کر عوض شد و ممنون از شما که با صبر و حوصله زیاد و مشاوره خوبتون من رو واقعا با محصولاتی که باید استفاده کنم آشنا کردین و فکر کنم الان نیاز به یادآوری مجدد داشتم که خدمتتون پیام دادم. مرسی از شما. من که بی‌صبرانه منتظر اون دوره هستم که مجدد شرکت کنم.",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-020",
+      "sourceImage": {
+        "imageIndex": 6,
+        "fileName": "codex-clipboard-381e9efe-6be4-457b-a93b-ba0106eaa71f.png",
+        "sha256": "6f582e9fcb85c6514005957a9407e6dbc063267855120a3cb631518c54d43367"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "service_experience",
+      "relatedOfferingCandidate": "facial",
+      "transcriptionFa": "دیروز وقت فیشیال داشتم، مرکز حرفه‌ای خانم فضائلی عزیز. بدون اغراق می‌تونم بگم بهترین فیشیال رو تجربه کردم؛ فضای زیباشون، مشاوره عالی و کامل، کار حرفه‌ای و از همه مهم‌تر آرامش و حس خوبی که از خودشون گرفتم 💛 واقعا برام ارزشمند و دلنشین بود.",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-021",
+      "sourceImage": {
+        "imageIndex": 7,
+        "fileName": "codex-clipboard-028d581b-e0c5-461d-a093-6611643b8814.png",
+        "sha256": "fc3a203f1e9a1bde0b070d751e6557f8e8095c45350e7a829a42588f0104e2ab"
+      },
+      "authorLabelFa": "هنرجوی ناشناس",
+      "relationship": "student",
+      "contentKind": "training_impact",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "خانم فضائلی عزیززززم 💕💕💕 ممنونم برای امروز، خیلی شرمنده کردین 🫂💖 یکتا جان خیلی راضی بود 🙏🫶 خیلی خیلی ممنونم که خداوند شما رو سر راه من قرار داد. سال ۲۰۲۳ فکر می‌کنم ۱۴۰۱ می‌شد. تأثیر خوبی که شما در زندگی من داشتین در تایم کوتاهی که پیشتون یاد گرفتم، بزرگ شدم، رشد کردم، واقعا غیر قابل وصف هست که چقدر آموزگار در هر تخصصی مهم هست 🥰🥰🥰 یک دنیا ممنونم 🫂🤍",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": ["third_party_reference"],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-022",
+      "sourceImage": {
+        "imageIndex": 8,
+        "fileName": "codex-clipboard-156c66c5-bc35-47cb-a915-6f27ba76afb2.png",
+        "sha256": "75daf895100083214dc58237903cc7654aff6b7298cdd6b90ed37ec7a24266e3"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_journey",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "خیلی خیلی خوشحال شدم از دیدن شما خانم فضائلی عزیز ❤️❤️ با اطمینان درمان پوستم رو با شما شروع کردم و قطعا ادامه می‌دم. ممنونم که عاشقانه و صبورانه وقت گذاشتین برام و منو شنیدین و راهنماییم کردین 🙏🙏🙏",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-023",
+      "sourceImage": {
+        "imageIndex": 9,
+        "fileName": "codex-clipboard-d34dbcca-e533-4496-a501-f8fa84d53a12.png",
+        "sha256": "360e4a67ae2a7d6ff6b45d86280bacae51b72a383cf3af90da642a1db209b889"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "عزیززززم پوستم هلوووووووو، براق، پرآب، جون‌دار. اون خط روی پیشونیم خیلی بهتر شده، خدایی. گردنمم همینطور. فقط دلم می‌خواد خط اخمم برررررره، مجبور نشم بوتاکس بزنم.",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate_after_claim_review",
+      "safetyFlags": [
+        "outcome_claim",
+        "medical_appearance_claim",
+        "injectable_reference"
+      ],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-024",
+      "sourceImage": {
+        "imageIndex": 10,
+        "fileName": "codex-clipboard-99426a3a-f568-42a6-81a6-7274c69b381f.png",
+        "sha256": "b119f8d7937ae29bd02f663eb2db3953dc9f504a682479e33e0c74053235a1ba"
+      },
+      "authorLabelFa": "نویسنده ناشناس",
+      "relationship": "unclear",
+      "contentKind": "social_praise",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "نهایت خوش‌انرژی 🙌🏻🧡💛",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "exclude_insufficient_context",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-025",
+      "sourceImage": {
+        "imageIndex": 11,
+        "fileName": "codex-clipboard-be6d87cf-7b08-4c53-aacf-a05c198521bd.png",
+        "sha256": "df2779c365a17354fa78391b302050a08736ca5a84b2ca608de1688258c1e115"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": "time_machine",
+      "transcriptionFa": "تو این سه دفعه‌ای که واسم تایم ماشین انجام دادین، انقدر پوستم تغییر کرده که باورم نمی‌شه. هم لک و منافذم خیلی خیلی کمتر شده، هم پوستم خیلی آبرسانی شده. واقعا شفاف شده پوستم و باعث شده دیگه آرایش نکنم چند وقته. خیلی خوشحالم که شمارو انتخاب کردم. واقعا برای تمام خدمات پوستی شما بهترینین. مرسی ازتون ❤️❤️❤️",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate_after_claim_review",
+      "safetyFlags": ["outcome_claim", "named_treatment"],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-026",
+      "sourceImage": {
+        "imageIndex": 12,
+        "fileName": "codex-clipboard-c48b5ad6-9196-4d7e-a87e-efcb4583931c.png",
+        "sha256": "189e214ee42e33110e21d08a29fb7648c3a8c7a1d9fec961c028053e69390e1c"
+      },
+      "authorLabelFa": "همکار ناشناس",
+      "relationship": "professional_peer",
+      "contentKind": "brand_protocol_results",
+      "relatedOfferingCandidate": "storyderm",
+      "transcriptionFa": "خانم فضائلی عزیز که همیشه مثل پروتکل کره جنوبی عمل کردند و نتایج فوق‌العاده‌ای کلاینت‌هاشون از درمان با استوری‌درم دیدند 😍 مثل همیشه موفق باشید استاد فضائلی عزیز 🌹🙏",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "needs_relationship_context",
+      "safetyFlags": ["outcome_claim", "third_party_claim", "named_brand"],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-027",
+      "sourceImage": {
+        "imageIndex": 13,
+        "fileName": "codex-clipboard-730ad502-68e6-4395-b2fa-c0c011751924.png",
+        "sha256": "78152d47fc65091686ffa1ca5ca2d7a3c7726f34b905a7d0c9bb97772728507c"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "materials_and_quality",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "راست می‌گن، واقعا ممنونم که اینقدر به کلاینت‌ها اهمیت می‌دین و محصولات باکیفیت استفاده می‌کنید و مهم‌تر از همه اینکه خساست به خرج نمی‌دین برای استفاده از متریال. اینو فهمیدم که فالوور زیاد داشتن کیفیت نمیاره 👌🏻",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-028",
+      "sourceImage": {
+        "imageIndex": 14,
+        "fileName": "codex-clipboard-94b0dc2f-f0f9-4bd2-a4a8-a6abb484de74.png",
+        "sha256": "c71ca82a6550f20f723bac77a95d97df6d56811c5c0e88e89af4687eff91777b"
+      },
+      "authorLabelFa": "همکار ناشناس",
+      "relationship": "professional_peer",
+      "contentKind": "brand_protocol_results",
+      "relatedOfferingCandidate": "storyderm",
+      "transcriptionFa": "خانم فضائلی عزیز که همیشه مثل پروتکل کره جنوبی عمل کردند و نتایج فوق‌العاده‌ای کلاینت‌هاشون از درمان با استوری‌درم دیدند 😍 مثل همیشه موفق باشید استاد فضائلی عزیز 🌹🙏",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "duplicate_source_do_not_seed",
+      "duplicateOf": "testimonial-fa-026",
+      "safetyFlags": ["outcome_claim", "third_party_claim", "named_brand"],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-029",
+      "sourceImage": {
+        "imageIndex": 15,
+        "fileName": "codex-clipboard-8ae8f33c-89c4-46de-8b0b-1757a9d17d31.png",
+        "sha256": "5fa4677b62b69a0c910cccdcf022a762febd639b037efc65959ee5bbd95fef78"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": "hand_treatment",
+      "transcriptionFa": "واقعا ممنونم از کیفیت خوبتون عزیزم. من دستام خیلی بهتر شده از وقتی مرتب دارم خدمات می‌گیرم پیشتون. اصلا قبلا هر چی کرم می‌زدم جوابگو نبود و بعد از چند دقیقه دوباره خشک می‌شد و از دست دادن به بقیه معذب بودم و خجالت می‌کشیدم. ولی الان کرمم که می‌زنم بیشتر می‌شینه رو پوستم. قشنگ اون آلودگی‌ها کشیده شده بیرون و تقویت شده. مرسیییی هزاران بار 😍😍😍❤️❤️",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate_after_claim_review",
+      "safetyFlags": ["outcome_claim", "medical_appearance_claim"],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-030",
+      "sourceImage": {
+        "imageIndex": 16,
+        "fileName": "codex-clipboard-c901591c-66b2-48b2-b9a8-b704639ec44f.png",
+        "sha256": "7ebe9171a47866fd2a50ddb455701c78c0f1ff58313938a6e1ae58757e6f6a08"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "provider_trust",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "خانم فضائلی همیشه بهترین‌ها رو واسه من انتخاب می‌کنن و خیلی هم وقت می‌ذارن 👌🏻🤍",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-031",
+      "sourceImage": {
+        "imageIndex": 17,
+        "fileName": "codex-clipboard-28290542-97da-466d-a1da-c941605cb077.png",
+        "sha256": "20e91c16e747336503b6e9421d27e4979353b81a5793dea9e06c3642a59173bc"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "brand_and_expertise_trust",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "مثل همیشه موفق باشید سرکار خانم فضائلی ❤️ بدون شک برندهایی که کار می‌کنید بهترینند و شکی در اون نیست، چراکه با دانش و تجربه چندین‌ساله شما انتخاب می‌شن 👏❤️",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-032",
+      "sourceImage": {
+        "imageIndex": 18,
+        "fileName": "codex-clipboard-ffab8c4b-f82e-4989-9a88-1815e145a8e6.png",
+        "sha256": "cf68e8ef3929c3e4d5e16f8d13b29909cd3433930994503002ca44a8f77e7422"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": "facial",
+      "transcriptionFa": "عالی بود، عالی بود. اولش که ترسیدم، وقتی رسیدم خونه صورتم مثل لبو قرمز شده بود 😊 از بعدازظهر تا شب رنگ صورتم باز و صاف، منافذ کوچیک؛ صبحم که پاشدم بهتر شده. اصلا صورتمو می‌شورم با دست می‌کشم، انقد صاف و نرم شده کیف می‌کنم. خیلی ممنون از خدمات عالی‌تون.",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate_after_claim_review",
+      "safetyFlags": ["outcome_claim", "post_treatment_reaction"],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-033",
+      "sourceImage": {
+        "imageIndex": 19,
+        "fileName": "codex-clipboard-3ae576a6-b9d3-4272-bddc-55bd068c67ce.png",
+        "sha256": "5a9d96d34884791d13f69d630bbf7bceb60d13aedeea5196eb8ad1e83e7a06ee"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": "time_machine",
+      "transcriptionFa": "تایم ماشین واقعا روی پوست من معجزه بود. بعد حمام اول به شدت پوستم نرم شده بود، دقیقا عین پوست بچه لطیف، و لک‌ها واقعا واقعا کم‌رنگ شده بودن. منافذ پوست به شدت کوچک شده بود و پوست یک درجه روشن‌تر شد. پوست به نظر من پرآب شده بود و جالبه که این روش حتی لیفت خوبی روی گونه‌ها داشت که من خط خنده‌ام رو که البته عمیق نبود رو دیگه ندارم. و این رو هم بگم خدمتتون که من طبق گفته سرکار خانم فضائلی پوسته‌ای که طی سه روز دوره نقاهت از روی پوست جدا می‌شه رو از روی پوست برنداشتم، چون داخل حمام با یه شستشوی ساده پوست صورت تمامی این پوسته‌ها از سطح پوست حذف می‌شن... واقعا روش جدید و جالبی بود به نظرم و من واقعا خوشحالم که هر سری به عهده خود خانم فضائلی عزیزم می‌ذارم و واقعا هر سری نتیجه‌ای رو که می‌خوام می‌بینم و واقعا ممنونم ازشون 💗",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate_after_claim_review",
+      "safetyFlags": [
+        "outcome_claim",
+        "medical_appearance_claim",
+        "named_treatment",
+        "aftercare_claim"
+      ],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-034",
+      "sourceImage": {
+        "imageIndex": 20,
+        "fileName": "codex-clipboard-95c1b8f6-d9a6-4de8-ba86-196fbc02fbcb.png",
+        "sha256": "77b534abef54f8e8146269f19ef3ede6e2bf1f612167d5d030a5da7587510b01"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "سلام خانم فضائلی عزیزم خوبین؟؟ واقعا خیر ببینید (شد مثل مادربزرگا 😁😊🤗) هر موقع خودم رو تو آینه می‌بینم دعاتون می‌کنم 😘🤗 التهاب و جوش صورتم خیلی بهتر شده. ممنونم از شما گوهر گرانبها 🌷💞🤩",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate_after_claim_review",
+      "safetyFlags": ["outcome_claim", "medical_appearance_claim"],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-035",
+      "sourceImage": {
+        "imageIndex": 21,
+        "fileName": "codex-clipboard-b4a39029-52cc-438c-ab82-d7fd4645f354.png",
+        "sha256": "7dacb0adb2eccfaaa7a487ecde7edb39c33297bac37dd542fe9e31405e1db29c"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": "facial_peel",
+      "transcriptionFa": "سلام خانوم فضائلی عزیزم، می‌خواستم ازتون تشکر کنم. حدودا یه هفته است که از فیشیالم گذشته و دفعه اولی بود که برام لایه‌بردار سنگین کار کردین. راستش دو سه روز اول صورتم کدر شده بود و پوسته‌ریزی می‌کرد، نگران بودم، ولی الان فوق‌العاده است، اینقد که شفاف شده و بهم حس خوب می‌ده. واقعا تو کارتون حرفه‌ای هستین. ازتون ممنونم که با صبوری همیشه بهم آرامش می‌دین ❤️🌹❤️🌹❤️🌹",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate_after_claim_review",
+      "safetyFlags": [
+        "outcome_claim",
+        "post_treatment_reaction",
+        "aftercare_claim"
+      ],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-036",
+      "sourceImage": {
+        "imageIndex": 22,
+        "fileName": "codex-clipboard-80e38fa0-8b5c-4cc6-9850-df460cc33a97.png",
+        "sha256": "e521f1b92a7ec5c00d8308700138e3b95a4bd0979c05d98486948f8cb431f1e7"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "consultation_feedback",
+      "relatedOfferingCandidate": "skin_consultation",
+      "transcriptionFa": "عاااالی‌ترین مشاوره‌ای که داشتم 👌🏻 ممنون ازتون 😍😍😍",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-037",
+      "sourceImage": {
+        "imageIndex": 23,
+        "fileName": "codex-clipboard-e08a60fb-f4ac-4186-8a70-1cc07a6860a4.png",
+        "sha256": "09460ff20775ec6d58d0d45dbe4b5e0770c35ab7c6e7b82e9ac35b221981fe11"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "consultation_feedback",
+      "relatedOfferingCandidate": "skin_consultation",
+      "transcriptionFa": "ممنون از برخورد و استقبال خیلی خوبتون که یکی از مهم‌ترین ویژگی‌هاست و ممنون از اینکه با دقت و حوصله بهترین مشاوره رو به من دادید 🌱✨",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-038",
+      "sourceImage": {
+        "imageIndex": 24,
+        "fileName": "codex-clipboard-0017fa73-727d-4fc7-8670-6abc372a158c.png",
+        "sha256": "5d2842b16852615f723fa1bf849eebf99894b3a35a48a9b63b02bda140dac1ea"
+      },
+      "authorLabelFa": "نویسنده ناشناس",
+      "relationship": "unclear",
+      "contentKind": "personal_praise",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "محبت شما برای من ارزشمنده خانم فضائلی عزیز. من شما رو یکبار ملاقات کردم، اما یکبار برام کاملا کفایت می‌کنه که منش درست و نیت خوب آدم‌های گلی مثل شما رو بفهمم. براتون سلامتی و شادی رو آرزومندم 😍🥰😍😍😍",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "needs_relationship_context",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-039",
+      "sourceImage": {
+        "imageIndex": 25,
+        "fileName": "codex-clipboard-3c6e6d1c-65bf-40ce-a19c-e4489f59616e.png",
+        "sha256": "6d6728f904b754ed959d6bef59490d039cf259a22f7c5b67a112b2215cc4c42f"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result_and_trust",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "از پوستم که خیلی راضیم. می‌رم جلو آینه کیف می‌کنم، می‌گم خدا پدر و مادرتون رو حفظ کنه و مورد رحمت خدا قرار بگیرن. و همش می‌گم چقد پوستم عالی شده، دست‌طلا خانم فضائلی. شما نمی‌دونین چقد با شخصیتتون کیف می‌کنم. احساس می‌کنم خیلی سال می‌شناسمتون؛ تو اینستاگرام که دیدم اینجوری نبودین، ولی از روزی که از نزدیک دیدمتون حس می‌کنم دوست قدیمی منین.",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate_after_claim_review",
+      "safetyFlags": ["outcome_claim"],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-040",
+      "sourceImage": {
+        "imageIndex": 26,
+        "fileName": "codex-clipboard-dd44f905-4960-4c52-98dc-b23902b8fa8d.png",
+        "sha256": "f74ea2a15adc387df9a874c4b4c60423bc49ba8dd02c5fefb0144328c1af26b3"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "خانم فضائلی عزیز، همونجور که گفتین من دو سه روز پوست‌ریزه داشتم. الان خوب شده، خیلی از پوستم راضیم. ممنون. خدا برکت بده به کارتون.",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate_after_claim_review",
+      "safetyFlags": [
+        "outcome_claim",
+        "post_treatment_reaction",
+        "aftercare_claim"
+      ],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-041",
+      "sourceImage": {
+        "imageIndex": 27,
+        "fileName": "codex-clipboard-f15d6cb2-d2af-4040-b52f-b327001ceb1e.png",
+        "sha256": "5f2fedca7318ed2bc573cb1253220de81f903bd92583b7fc41478eb189b3bba4"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "ممنونم که حال پوستم رو به بهترین حالت ممکن تغییر دادین ❤️😍",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate_after_claim_review",
+      "safetyFlags": ["outcome_claim"],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-042",
+      "sourceImage": {
+        "imageIndex": 28,
+        "fileName": "codex-clipboard-ad7c3349-5434-4eb8-8c50-9918be63251b.png",
+        "sha256": "6df6ca64d8026efa325174faadcdb75a0367d9402b6c1969e4f212a2f3cdaf24"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "service_and_product_expertise",
+      "relatedOfferingCandidate": "facial_massage",
+      "transcriptionFa": "ماساژ صورتتون و البته 😍😍 با تجربه بودن و دانش در انتخاب محصولاتی که استفاده می‌کنین، یکی از بهترین لذت‌های دنیاست ❤️🌹🌷😍 خیلی عالی بود 🙏 ممنونم ازتون ❤️",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-043",
+      "sourceImage": {
+        "imageIndex": 29,
+        "fileName": "codex-clipboard-b1d4c56c-a735-48d8-8a61-b234d162787b.png",
+        "sha256": "d022f9687790d5e9dde5ee907c403ef3455188669bcd8932d0675646e23589ef"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "consultation_feedback",
+      "relatedOfferingCandidate": "skin_consultation",
+      "transcriptionFa": "من ندیدم کسی برای مشاوره رایگان اینقدر زمان بذاره و عالی همه‌چیز رو توضیح بده 🌷 خیلی ممنون از وقتی که می‌ذارین 🙏🌸",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    }
+  ]
+}
