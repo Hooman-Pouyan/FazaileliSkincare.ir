@@ -1,0 +1,12 @@
+allowBuilds:
+  '@parcel/watcher': set this to true or false
+  '@swc/core': set this to true or false
+  esbuild: set this to true or false
+  unrs-resolver: set this to true or false
+# pnpm 10+ reads settings from here, not from package.json.
+onlyBuiltDependencies:
+  - "@swc/core"
+  - "@parcel/watcher"
+  - esbuild
+  - unrs-resolver
+  - sharp

@@ -1,0 +1,15 @@
+node_modules/
+.next/
+.env
+.env.*
+!.env.example
+/drizzle/meta
+next-env.d.ts
+*.log
+.DS_Store
+.app-scaffold.tar.gz
+.ds-bundle.tar.gz
+.tmp-app/
+.tmp-ds/
+node_modules/
+.next/

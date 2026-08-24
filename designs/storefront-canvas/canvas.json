@@ -1,0 +1,15 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html",     "x": 0,    "y": 0,    "w": 1440, "h": 3320, "title": "صفحهٔ اصلی — Landing" },
+    { "file": "Shop.dc.html",     "x": 1560, "y": 0,    "w": 1440, "h": 2160, "title": "فروشگاه — Shop" },
+    { "file": "Product.dc.html",  "x": 3120, "y": 0,    "w": 1440, "h": 1980, "title": "صفحهٔ محصول — Product" },
+    { "file": "Checkout.dc.html", "x": 1560, "y": 2320, "w": 1440, "h": 1420, "title": "پرداخت — Bank transfer" },
+    { "file": "Mobile.dc.html",   "x": 3120, "y": 2140, "w": 390,  "h": 1560, "title": "موبایل — Landing" }
+  ],
+  "annotations": [
+    { "id": "note-prices", "x": 1560, "y": -240, "w": 420, "text": "قیمت‌ها نمونه‌اند — sample prices, not real.\nReplace from your office price list.\n\nGrey blocks are photography placeholders.\n[براکت‌ها] = facts I don't have yet." },
+    { "id": "note-shop", "x": 2040, "y": -240, "w": 400, "text": "The concern row is live — click a concern and the heading below follows it. Everything else is a static mock." },
+    { "id": "note-pay", "x": 1030, "y": 2320, "w": 420, "text": "Bank-transfer checkout — the path that lets you launch before ZarinPal.\n\nNote the +۳۴۰ تومان: every open order expects a unique amount, so a bank statement line matches exactly one order." }
+  ],
+  "launch": { "view": "canvas" }
+}

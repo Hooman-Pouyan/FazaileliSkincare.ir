@@ -1,0 +1,145 @@
+/*
+  fazaieli.ir — design tokens
+  Generated from designs/tokens.json. Do not hand-edit; change the JSON.
+
+  Two rules the numbers enforce, not preferences:
+    1. gold, firouzeh, champagne and sand FAIL contrast on --ground.
+       They are dark-field colours. On light ground, a colour carrying
+       words uses its -text variant.
+    2. Separation comes from hairlines and tone, never shadows.
+*/
+
+:root {
+  /* ground */
+  --ground:        #F7F8F8;
+  --surface:       #FFFFFF;
+
+  /* text-safe on --ground */
+  --ink:           #161B4A;  /* 15.30:1 */
+  --lapis:         #2D389A;  /*  9.21:1 */
+  --teal:          #24403E;  /* 10.51:1 */
+
+  /* decoration and dark-field only — never behind a glyph on --ground */
+  --gold:          #A27F34;  /* 3.51:1 — hairlines, rules, marks */
+  --gold-light:    #C2994F;  /* 6.17:1 on --ink */
+  --firouzeh:      #2BB8D4;  /* 6.91:1 on --ink */
+  --champagne:     #D9C8A8;  /* 9.91:1 on --ink */
+  --sand:          #E4D1C1;  /* 11.00:1 on --ink — also the primary-button foreground */
+  --stone:         #8A8781;  /* borders only */
+
+  /* alternate panel fills — not text-bearing */
+  --mist:          #EBEDEE;  /* cool placeholder fill, imagery blocks */
+  --linen:         #F3F1EC;  /* warm panel fill, payment/receipt surfaces */
+
+  /* the -text variants: use these the moment a colour carries words on light ground */
+  --firouzeh-text: #146E82;  /* 5.51:1 */
+  --stone-text:    #6B6863;  /* 5.21:1 */
+  --gold-text:     #7A6015;  /* 5.64:1 */
+
+  --success:       #24403E;
+  --danger:        #8C2F2F;
+  --hairline:      rgba(162, 127, 52, 0.32);
+  --hairline-soft: rgba(22, 27, 74, 0.11);
+
+  /* room accents */
+  --accent-shop:    var(--teal);
+  --accent-booking: var(--firouzeh);
+  --accent-academy: var(--gold);
+  --accent-studio:  var(--lapis);
+
+  /*
+    space — 96px is the minimum between sections on desktop.
+    These are NOT re-exposed in @theme under matching numeric keys
+    (--spacing-9 etc.) because Tailwind v4 already generates p-*/gap-*/etc.
+    dynamically as multiples of its own --spacing base (4px) — adding
+    --spacing-9: 96px here would silently redefine what gap-9 means
+    project-wide instead of adding a new utility. Every value below is
+    already a 4px multiple, so use Tailwind's own numeric utility that
+    lands on the same pixel value:
+      space-1→p-1(4px)  space-2→p-2(8px)  space-3→p-3(12px)  space-4→p-4(16px)
+      space-5→p-6(24px) space-6→p-8(32px) space-7→p-12(48px) space-8→p-16(64px)
+      space-9→p-24(96px) space-10→p-32(128px)
+    Reach for var(--space-N) directly only where a component needs the
+    semantic name over the raw utility.
+  */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px; --space-5: 24px;
+  --space-6: 32px; --space-7: 48px; --space-8: 64px; --space-9: 96px; --space-10: 128px;
+
+  /* radius — two values, nothing between */
+  --radius-control: 2px;
+  --radius-surface: 20px;
+
+  /* type */
+  --font-fa:      "Vazirmatn", system-ui, sans-serif;
+  --font-display: "Bodoni Moda", Georgia, serif;
+  --leading-fa:    1.8;
+  --leading-latin: 1.7;
+
+  --text-display-1: 78px; --text-display-2: 56px;
+  --text-h1: 46px; --text-h2: 34px; --text-h3: 24px;
+  --text-lede: 19px; --text-body: 16px; --text-small: 14px; --text-micro: 12px;
+
+  /* motion */
+  --duration: 480ms;
+  --easing:   cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (max-width: 767px) {
+  :root {
+    --text-display-1: 40px; --text-display-2: 34px;
+    --text-h1: 30px; --text-h2: 24px; --text-h3: 20px;
+    --text-lede: 16px;
+    --space-9: 64px; --space-10: 80px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration: 1ms; }
+}
+
+/*
+  Tailwind v4 is CSS-first: this exposes the tokens as utilities
+  (bg-ink, text-firouzeh-text, text-h1, rounded-surface …). Import after
+  tailwindcss. Space is deliberately NOT in here — see the comment above
+  --space-1 for why gap-9 etc. stay Tailwind's own.
+*/
+@theme inline {
+  --color-ground:        var(--ground);
+  --color-surface:       var(--surface);
+  --color-ink:           var(--ink);
+  --color-lapis:         var(--lapis);
+  --color-teal:          var(--teal);
+  --color-gold:          var(--gold);
+  --color-gold-light:    var(--gold-light);
+  --color-firouzeh:      var(--firouzeh);
+  --color-champagne:     var(--champagne);
+  --color-sand:          var(--sand);
+  --color-stone:         var(--stone);
+  --color-firouzeh-text: var(--firouzeh-text);
+  --color-stone-text:    var(--stone-text);
+  --color-gold-text:     var(--gold-text);
+  --color-success:       var(--success);
+  --color-danger:        var(--danger);
+  --color-mist:          var(--mist);
+  --color-linen:         var(--linen);
+
+  --font-sans:    var(--font-fa);
+  --font-display: var(--font-display);
+
+  --radius-control: var(--radius-control);
+  --radius-surface: var(--radius-surface);
+
+  /* type scale as Tailwind utilities: text-display-1, text-h1, text-lede, etc. */
+  --text-display-1: var(--text-display-1);
+  --text-display-2: var(--text-display-2);
+  --text-h1:        var(--text-h1);
+  --text-h2:        var(--text-h2);
+  --text-h3:        var(--text-h3);
+  --text-lede:      var(--text-lede);
+  --text-body:      var(--text-body);
+  --text-small:     var(--text-small);
+  --text-micro:     var(--text-micro);
+
+  --leading-fa:    var(--leading-fa);
+  --leading-latin: var(--leading-latin);
+}

@@ -1,0 +1,313 @@
+<title>Fazaieli Design Language</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Vazirmatn:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#F7F8F8; --surface:#FFFFFF;
+    --ink:#161B4A; --lapis:#2D389A;
+    --gold:#A27F34; --gold-light:#C2994F;
+    --firouzeh:#2BB8D4; --firouzeh-text:#146E82;
+    --teal:#24403E; --champagne:#D9C8A8; --sand:#E4D1C1;
+    --stone:#8A8781; --stone-text:#6B6863;
+    --rule:rgba(162,127,52,.28);
+    --rule-soft:rgba(22,27,74,.10);
+    --display:"Bodoni Moda",Georgia,"Times New Roman",serif;
+    --body:"Vazirmatn",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+    --measure:66ch;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:var(--body); font-weight:300; font-size:17px; line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  section{padding-block:88px}
+  h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
+  h1{font-size:clamp(2.6rem,6vw,4.4rem);line-height:1.04;letter-spacing:-.01em}
+  h2{font-size:clamp(1.7rem,3.2vw,2.5rem);line-height:1.12}
+  h3{font-size:1.18rem;line-height:1.3}
+  p{margin:0;max-width:var(--measure)}
+  .stack{display:flex;flex-direction:column;gap:20px}
+  .stack-s{display:flex;flex-direction:column;gap:10px}
+  .stack-l{display:flex;flex-direction:column;gap:44px}
+  .eyebrow{
+    font-family:var(--body);font-size:.7rem;font-weight:500;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--gold);margin:0;
+  }
+  .lede{font-size:1.16rem;line-height:1.7;color:rgba(22,27,74,.82)}
+  .fine{font-size:.9rem;color:var(--stone-text);max-width:var(--measure)}
+  code,.mono{font-family:var(--mono);font-size:.82em;font-variant-numeric:tabular-nums}
+
+  /* ── masthead ─────────────────────────────── */
+  .masthead{padding-block:104px 72px;border-bottom:1px solid var(--rule)}
+  .triad{display:flex;gap:0;margin-top:40px;height:8px;max-width:520px}
+  .triad span{flex:1}
+
+  /* ── the correction ───────────────────────── */
+  .pairs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:36px}
+  .pair{display:flex;flex-direction:column;gap:14px}
+  .pair-chips{display:flex;gap:0;height:92px;border:1px solid var(--rule-soft)}
+  .pair-chips div{flex:1;display:flex;align-items:flex-end;padding:9px 11px}
+  .pair-chips .lbl{font-family:var(--mono);font-size:.68rem;letter-spacing:.03em}
+
+  /* ── swatch table ─────────────────────────── */
+  .tbl{width:100%;border-collapse:collapse;font-size:.94rem}
+  .tbl th{
+    text-align:start;font-family:var(--body);font-weight:500;font-size:.68rem;
+    letter-spacing:.15em;text-transform:uppercase;color:var(--stone-text);
+    padding:0 0 12px;border-bottom:1px solid var(--rule);
+  }
+  .tbl td{padding:15px 0;border-bottom:1px solid var(--rule-soft);vertical-align:middle}
+  .tbl td:first-child{width:88px}
+  .tbl .num{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:end;white-space:nowrap}
+  .sw{width:56px;height:34px;display:block;border:1px solid var(--rule-soft)}
+  .tok{font-family:var(--mono);font-size:.8rem}
+  .role{color:var(--stone-text);font-size:.9rem}
+  .verdict{font-family:var(--body);font-size:.78rem;font-weight:500;letter-spacing:.02em;white-space:nowrap}
+  .pass{color:var(--teal)} .fail{color:#9B2C2C}
+  .scroll{overflow-x:auto}
+
+  /* ── lapis band ───────────────────────────── */
+  .band{background:var(--ink);color:var(--sand)}
+  .band h2,.band h3{color:var(--champagne)}
+  .band .eyebrow{color:var(--gold-light)}
+  .band p{color:rgba(228,209,193,.86)}
+  .band .fine{color:rgba(228,209,193,.62)}
+  .band .tbl th{color:rgba(228,209,193,.6);border-bottom-color:rgba(194,153,79,.45)}
+  .band .tbl td{border-bottom-color:rgba(228,209,193,.16)}
+  .band .sw{border-color:rgba(228,209,193,.22)}
+  .band .role{color:rgba(228,209,193,.62)}
+  .band .pass{color:var(--firouzeh)}
+  .band .fail{color:#E8A0A0}
+
+  /* ── specimens ────────────────────────────── */
+  .spec{border-inline-start:2px solid var(--gold);padding-inline-start:26px;display:flex;flex-direction:column;gap:8px}
+  .fa{direction:rtl;text-align:right;font-family:var(--body)}
+  .fa-display{font-size:2rem;font-weight:700;line-height:1.45}
+  .fa-body{font-size:1.02rem;line-height:1.8;font-weight:300;max-width:52ch}
+  .la-display{font-family:var(--display);font-size:2.1rem;line-height:1.15}
+  .la-body{font-size:1rem;line-height:1.72;max-width:var(--measure)}
+  .caption{font-family:var(--mono);font-size:.72rem;color:var(--stone-text);letter-spacing:.04em}
+
+  /* ── rooms ────────────────────────────────── */
+  .rooms{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:0;border-top:1px solid var(--rule-soft)}
+  .room{padding:26px 22px 30px;border-bottom:1px solid var(--rule-soft);display:flex;flex-direction:column;gap:9px;position:relative}
+  .room::before{content:"";position:absolute;inset-block-start:-1px;inset-inline-start:0;width:44px;height:2px;background:var(--rm)}
+  .room .mark{font-size:1.05rem;color:var(--rm)}
+  .room .nm{font-family:var(--display);font-size:1.3rem}
+
+  /* ── form rules ───────────────────────────── */
+  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2px;background:var(--rule-soft)}
+  .rule-item{background:var(--ground);padding:24px 22px;display:flex;flex-direction:column;gap:7px}
+  .rule-item .k{font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;color:var(--gold)}
+  .rule-item .v{font-size:.95rem;line-height:1.6}
+
+  figure{margin:0;display:flex;flex-direction:column;gap:12px}
+  svg{display:block;max-width:100%;height:auto}
+
+  footer{border-top:1px solid var(--rule);padding-block:40px 72px}
+  @media (prefers-reduced-motion:no-preference){
+    a{transition:color .2s ease}
+  }
+  a{color:var(--firouzeh-text)}
+  a:focus-visible{outline:2px solid var(--firouzeh-text);outline-offset:3px}
+</style>
+
+<header class="masthead">
+  <div class="wrap stack">
+    <p class="eyebrow">مهدیه فضائلی · Mashhad</p>
+    <h1>Lapis, gold,<br>and firouzeh.</h1>
+    <p class="lede">A design language for fazaieli.ir, sampled from the institute itself rather than invented — then measured, because a palette chosen for mood has to survive contact with contrast requirements.</p>
+    <div class="triad" aria-hidden="true">
+      <span style="background:#161B4A"></span>
+      <span style="background:#2D389A"></span>
+      <span style="background:#A27F34"></span>
+      <span style="background:#2BB8D4"></span>
+      <span style="background:#24403E"></span>
+      <span style="background:#D9C8A8"></span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap stack-l">
+    <div class="stack">
+      <p class="eyebrow">Where it came from</p>
+      <h2>The building is more elegant than the graphics.</h2>
+      <p class="lede">The interiors are restrained and contemporary: bamboo in glass on white pebbles, a deep teal ceiling, gold cove light grazing an indigo wall, fluted green glass, champagne arches. The Instagram post templates — heavy gold frames, blue-to-gold gradients, outlined display type — are the visual language of Iranian beauty marketing in general, and they undersell the room they were shot in.</p>
+      <p>So the site takes its cue from the architecture. The medallion stays exactly as it is — it is a strong, jewel-like mark — but it sits on quiet ground instead of competing with a gradient.</p>
+    </div>
+
+    <div class="pairs">
+      <div class="pair">
+        <h3>Not navy. Lapis.</h3>
+        <div class="pair-chips">
+          <div style="background:#10233F;color:rgba(255,255,255,.7)"><span class="lbl">#10233F assumed</span></div>
+          <div style="background:#2D389A;color:rgba(255,255,255,.86)"><span class="lbl">#2D389A measured</span></div>
+        </div>
+        <p class="fine">Hue 235, high saturation — Persian ultramarine, not corporate navy. With gold and turquoise it is the classic Isfahani triad, and it is already true of the logo.</p>
+      </div>
+      <div class="pair">
+        <h3>Not bamboo sage. Teal.</h3>
+        <div class="pair-chips">
+          <div style="background:#6E8B5B;color:rgba(255,255,255,.85)"><span class="lbl">#6E8B5B assumed</span></div>
+          <div style="background:#24403E;color:rgba(255,255,255,.85)"><span class="lbl">#24403E measured</span></div>
+        </div>
+        <p class="fine">The fluted glass and ceiling measured hue 177. The literal bamboo is a photographic motif — living green against white — not an interface colour.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap stack">
+    <p class="eyebrow">On cool white · #F7F8F8</p>
+    <h2>Three of these cannot carry text.</h2>
+    <p class="fine">Contrast ratios measured against the ground. WCAG AA wants 4.5:1 for body text, 3:1 for large text and interface elements.</p>
+    <div class="scroll" style="margin-top:20px">
+      <table class="tbl">
+        <thead><tr><th>Swatch</th><th>Token</th><th>Role</th><th class="num">Ratio</th><th class="num">Text</th></tr></thead>
+        <tbody>
+          <tr><td><span class="sw" style="background:#161B4A"></span></td><td class="tok">--ink #161B4A</td><td class="role">All text and structure</td><td class="num">15.30 : 1</td><td class="num verdict pass">Passes</td></tr>
+          <tr><td><span class="sw" style="background:#24403E"></span></td><td class="tok">--teal #24403E</td><td class="role">Shop accent, calm fields</td><td class="num">10.51 : 1</td><td class="num verdict pass">Passes</td></tr>
+          <tr><td><span class="sw" style="background:#2D389A"></span></td><td class="tok">--lapis #2D389A</td><td class="role">Brand blue, the saturated field</td><td class="num">9.21 : 1</td><td class="num verdict pass">Passes</td></tr>
+          <tr><td><span class="sw" style="background:#A27F34"></span></td><td class="tok">--gold #A27F34</td><td class="role">Hairlines, rules, marks</td><td class="num">3.51 : 1</td><td class="num verdict fail">Decoration only</td></tr>
+          <tr><td><span class="sw" style="background:#8A8781"></span></td><td class="tok">--stone #8A8781</td><td class="role">Borders</td><td class="num">3.37 : 1</td><td class="num verdict fail">Borders only</td></tr>
+          <tr><td><span class="sw" style="background:#C2994F"></span></td><td class="tok">--gold-light #C2994F</td><td class="role">Gold on dark grounds</td><td class="num">2.48 : 1</td><td class="num verdict fail">Dark field only</td></tr>
+          <tr><td><span class="sw" style="background:#2BB8D4"></span></td><td class="tok">--firouzeh #2BB8D4</td><td class="role">Interactive, Booking accent</td><td class="num">2.22 : 1</td><td class="num verdict fail">Dark field only</td></tr>
+          <tr><td><span class="sw" style="background:#D9C8A8"></span></td><td class="tok">--champagne #D9C8A8</td><td class="role">Warm counterweight</td><td class="num">1.54 : 1</td><td class="num verdict fail">Fields only</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="fine" style="margin-top:18px">Text-safe substitutes for light ground: <code>--firouzeh-text #146E82</code> at 5.51:1 and <code>--stone-text #6B6863</code> at 5.21:1. Teal and lapis need none.</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap stack-l">
+    <div class="stack">
+      <p class="eyebrow">On lapis · #161B4A</p>
+      <h2>And here they finally speak.</h2>
+      <p>The same three colours, on the deep field. Gold reaches 6.17:1, turquoise 6.91:1, champagne 9.91:1 — every one of them comfortably legible. This is not a coincidence, and it is not a workaround: it is why the existing Instagram posts put gold on blue and look right doing it.</p>
+    </div>
+    <div class="scroll">
+      <table class="tbl">
+        <thead><tr><th>Swatch</th><th>Token</th><th class="num">On #161B4A</th><th class="num">Text</th></tr></thead>
+        <tbody>
+          <tr><td><span class="sw" style="background:#FFFFFF"></span></td><td class="tok">--surface #FFFFFF</td><td class="num">16.28 : 1</td><td class="num verdict pass">Passes</td></tr>
+          <tr><td><span class="sw" style="background:#D9C8A8"></span></td><td class="tok">--champagne #D9C8A8</td><td class="num">9.91 : 1</td><td class="num verdict pass">Passes</td></tr>
+          <tr><td><span class="sw" style="background:#2BB8D4"></span></td><td class="tok">--firouzeh #2BB8D4</td><td class="num">6.91 : 1</td><td class="num verdict pass">Passes</td></tr>
+          <tr><td><span class="sw" style="background:#C2994F"></span></td><td class="tok">--gold-light #C2994F</td><td class="num">6.17 : 1</td><td class="num verdict pass">Passes</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="stack">
+      <h3>The rhythm is the design</h3>
+      <p>Long stretches of ink on cool white, punctuated by deep lapis sections where gold and turquoise are allowed to appear. The alternation is derived from the measurements, not imposed on them — and it happens to be exactly how the institute is lit: bright white corridors opening into indigo rooms with gold light along the cornice.</p>
+      <p class="fine">This page is built the same way. You are inside one of the lapis rooms right now.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap stack-l">
+    <div class="stack">
+      <p class="eyebrow">Typography</p>
+      <h2>Persian is the source text.</h2>
+      <p>English is the translation, not the other way round. Writing English first produces stilted Persian — and Persian is the primary market. Persian body copy sets at 1.8 line-height; Latin does not need as much.</p>
+    </div>
+
+    <figure class="spec">
+      <p class="fa fa-display">مراقبت تخصصی از پوست</p>
+      <p class="fa fa-body">آکادمی تخصصی مراقبت از پوست در مشهد. نماینده رسمی فورله‌د ژاپن، مدرس رسمی فنی و حرفه‌ای، با سال‌ها تجربه در آموزش و خدمات تخصصی فیشال.</p>
+      <figcaption class="caption">VAZIRMATN 700 / 300 · SELF-HOSTED, NOT FROM GOOGLE'S CDN</figcaption>
+    </figure>
+
+    <figure class="spec">
+      <p class="la-display">Official representative of Forlle'd Japan</p>
+      <p class="la-body">A high-contrast serif echoes the fine gold linework of the medallion without imitating its ornament. It appears at display sizes only — never in running Persian, where it has no business being.</p>
+      <figcaption class="caption">BODONI MODA 400 · DISPLAY ONLY</figcaption>
+    </figure>
+
+    <p class="fine">⚠️ No webfont is ever fetched at runtime. From Iranian infrastructure a request to <code>fonts.googleapis.com</code> hangs or fails and takes the stylesheet down with it — a failure found in an audit elsewhere and worth inheriting the lesson from. Every face ships from <code>/public/fonts</code>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap stack-l">
+    <div class="stack">
+      <p class="eyebrow">Form</p>
+      <h2>Hairlines, not shadows.</h2>
+      <p>Shadows are what make a site look like a template. Separation comes from whitespace, tone shift, and a one-pixel gold rule — the one place gold is unambiguously right, because it never has to carry a letterform.</p>
+    </div>
+    <div class="rules">
+      <div class="rule-item"><span class="k">NO CARD GRID</span><span class="v">Content sits on the ground plane. A product tile is a borderless image with type beneath it — no box, no shadow, no border.</span></div>
+      <div class="rule-item"><span class="k">RADII</span><span class="v">2px on inputs. 16–24px on images and drawers. Nothing in between, so the two never look like a mistake.</span></div>
+      <div class="rule-item"><span class="k">ASYMMETRY</span><span class="v">60/40 and 70/30 splits, echoing the arched niches. Most of what reads as considered rather than corporate.</span></div>
+      <div class="rule-item"><span class="k">SPACE</span><span class="v">96px minimum between sections on desktop. Crowding kills this look, and the space itself is not crowded.</span></div>
+      <div class="rule-item"><span class="k">MOTION</span><span class="v">400–600ms, cubic-bezier(0.22, 1, 0.36, 1). Fades and 8–16px rises. No parallax, no bounce, no autoplay.</span></div>
+      <div class="rule-item"><span class="k">LOGICAL PROPERTIES</span><span class="v">margin-inline-start, never margin-left. The whole layout mirrors between Persian and English with no second stylesheet.</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap stack-l">
+    <div class="stack">
+      <p class="eyebrow">The shell</p>
+      <h2>A rail, not a header.</h2>
+      <p>Removing the horizontal header gives every page its full width for photography — the best asset this brand has — and makes "which room am I in" an ambient fact rather than something inferred from breadcrumbs. On mobile the rail becomes a bottom bar with the same marks. It sits at the inline-start edge: right in Persian, left in English.</p>
+    </div>
+
+    <figure>
+      <svg viewBox="0 0 720 260" role="img" aria-label="The vertical rail at the right edge in Persian mode, with the medallion at top, three room marks stacked below it, and account and language controls at the bottom.">
+        <rect x="0" y="0" width="720" height="260" fill="#FFFFFF" stroke="rgba(22,27,74,.10)"/>
+        <!-- content plane -->
+        <rect x="24" y="26" width="380" height="150" fill="#F0F1F2"/>
+        <rect x="24" y="192" width="240" height="9" fill="rgba(22,27,74,.16)"/>
+        <rect x="24" y="210" width="330" height="9" fill="rgba(22,27,74,.10)"/>
+        <text x="196" y="108" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="#8A8781">full-bleed photography</text>
+        <!-- rail -->
+        <rect x="648" y="0" width="72" height="260" fill="#F7F8F8"/>
+        <line x1="648" y1="0" x2="648" y2="260" stroke="rgba(162,127,52,.45)" stroke-width="1"/>
+        <circle cx="684" cy="34" r="13" fill="none" stroke="#A27F34" stroke-width="1.5"/>
+        <circle cx="684" cy="34" r="5" fill="#2D389A"/>
+        <!-- active room: shop -->
+        <rect x="710" y="88" width="2" height="22" fill="#24403E"/>
+        <text x="684" y="105" text-anchor="middle" font-size="15" fill="#24403E">◈</text>
+        <text x="684" y="139" text-anchor="middle" font-size="15" fill="rgba(22,27,74,.34)">◐</text>
+        <text x="684" y="173" text-anchor="middle" font-size="15" fill="rgba(22,27,74,.34)">◇</text>
+        <text x="684" y="209" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="12" fill="rgba(22,27,74,.34)">⌘</text>
+        <circle cx="684" cy="238" r="9" fill="none" stroke="rgba(22,27,74,.30)" stroke-width="1.2"/>
+      </svg>
+      <figcaption class="caption">PERSIAN MODE — RAIL AT THE INLINE-START EDGE · SHOP ACTIVE</figcaption>
+    </figure>
+
+    <div class="rooms">
+      <div class="room" style="--rm:#24403E"><span class="mark">◈</span><span class="nm">Shop</span><span class="fine">Browse by concern first — لک، جوش، آبرسانی. Brand and type are filters.</span></div>
+      <div class="room" style="--rm:#2BB8D4"><span class="mark">◐</span><span class="nm">Booking</span><span class="fine">Jalali week strip across three practitioners and three beds.</span></div>
+      <div class="room" style="--rm:#A27F34"><span class="mark">◇</span><span class="nm">Academy</span><span class="fine">Dated workshops with venue, sponsoring brand and instructors. Online courses.</span></div>
+      <div class="room" style="--rm:#2D389A"><span class="mark">✳</span><span class="nm">My Studio</span><span class="fine">Appointments, orders, learning. Read-only; every action deep-links home.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap stack">
+    <p class="eyebrow">One thing that is not a design question</p>
+    <h2>Before and after.</h2>
+    <p>The before/after gallery is the most persuasive content this brand has and the highest-consequence surface on the site: identifiable photographs of clients' faces, attached to a medical-adjacent treatment.</p>
+    <p>Consent is recorded per case and is revocable. A missing consent row hides the case rather than showing it — default deny, so a data-entry gap fails safe. Revocation is one action in the admin, never a code change. Those pages carry no third-party analytics and no embeds.</p>
+    <p class="fine">Treat it as health data, because that is what it is.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap stack-s">
+    <p class="caption">FAZAIELI.IR · DESIGN LANGUAGE · DRAFT 2026-08-24</p>
+    <p class="fine">Colours sampled from photographs of the institute and the logo, clustered in HSV, and contrast-checked against WCAG 2.1. Companion documents: decision map, ADR-001 stack, ADR-002 infrastructure, domain model, information architecture.</p>
+  </div>
+</footer>

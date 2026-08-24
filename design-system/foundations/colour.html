@@ -1,0 +1,74 @@
+<!-- @dsCard group="Foundations" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Colour</title>
+  <style>
+    @font-face{font-family:"Vazirmatn";src:local("Vazirmatn");font-display:swap}
+    :root{
+      --ground:#F7F8F8; --surface:#FFFFFF;
+      --ink:#161B4A; --lapis:#2D389A; --teal:#24403E;
+      --gold:#A27F34; --gold-light:#C2994F; --firouzeh:#2BB8D4;
+      --champagne:#D9C8A8; --sand:#E4D1C1; --stone:#8A8781;
+      --firouzeh-text:#146E82; --stone-text:#6B6863; --gold-text:#7A6015;
+      --hairline:rgba(162,127,52,.32); --hairline-soft:rgba(22,27,74,.11);
+      --radius-control:2px; --radius-surface:20px;
+      --duration:480ms; --easing:cubic-bezier(0.22,1,0.36,1);
+      --font-fa:"Vazirmatn",system-ui,sans-serif;
+      --font-display:"Bodoni Moda",Georgia,serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;padding:40px;background:var(--ground);color:var(--ink);
+      font-family:var(--font-fa);font-weight:300;font-size:15px;line-height:1.7;
+      -webkit-font-smoothing:antialiased}
+    h1{font-family:var(--font-display);font-weight:400;font-size:34px;margin:0 0 6px;letter-spacing:-.01em}
+    .sub{color:var(--stone-text);font-size:13.5px;margin:0 0 34px;max-width:64ch}
+    h2{font-size:11px;font-weight:500;letter-spacing:.17em;text-transform:uppercase;
+      color:var(--gold-text);margin:38px 0 16px;padding-bottom:9px;border-bottom:1px solid var(--hairline)}
+    table{width:100%;border-collapse:collapse;font-size:13.5px}
+    th{text-align:start;font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+      color:var(--stone-text);padding:0 0 10px;border-bottom:1px solid var(--hairline-soft)}
+    td{padding:12px 14px 12px 0;border-bottom:1px solid var(--hairline-soft);vertical-align:middle}
+    .mono{font-family:ui-monospace,Menlo,monospace;font-size:12px;font-variant-numeric:tabular-nums}
+    .num{text-align:end;font-family:ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+    .sw{width:56px;height:32px;display:block;border:1px solid var(--hairline-soft)}
+    .ok{color:var(--teal);font-weight:500}
+    .no{color:#8C2F2F;font-weight:500}
+    .note{font-size:12.5px;color:var(--stone-text);margin-top:14px;max-width:66ch}
+    .dark{background:var(--ink);padding:26px;margin-top:12px}
+    .dark td,.dark th{border-color:rgba(228,209,193,.16);color:var(--sand)}
+    .dark th{color:rgba(228,209,193,.6)}
+    .dark .ok{color:var(--firouzeh)}
+  </style>
+</head>
+<body>
+<h1>Colour</h1>
+<p class="sub">Sampled from photographs of the institute and the logo, then contrast-checked against WCAG 2.1.</p>
+<h2>On ground · #F7F8F8</h2><table><thead><tr><th>Swatch</th><th>Token</th><th>Role</th><th class="num">Ratio</th><th class="num">Text</th></tr></thead><tbody>
+<tr><td><span class="sw" style="background:#161B4A"></span></td><td class="mono">--ink #161B4A</td><td style="color:var(--stone-text)">All text and structure</td><td class="num">15.30 : 1</td><td class="num ok">Passes</td></tr>
+<tr><td><span class="sw" style="background:#24403E"></span></td><td class="mono">--teal #24403E</td><td style="color:var(--stone-text)">Shop accent, calm fields</td><td class="num">10.51 : 1</td><td class="num ok">Passes</td></tr>
+<tr><td><span class="sw" style="background:#2D389A"></span></td><td class="mono">--lapis #2D389A</td><td style="color:var(--stone-text)">Brand blue, the saturated field</td><td class="num">9.21 : 1</td><td class="num ok">Passes</td></tr>
+<tr><td><span class="sw" style="background:#A27F34"></span></td><td class="mono">--gold #A27F34</td><td style="color:var(--stone-text)">Hairlines, rules, marks</td><td class="num">3.51 : 1</td><td class="num no">Decoration only</td></tr>
+<tr><td><span class="sw" style="background:#8A8781"></span></td><td class="mono">--stone #8A8781</td><td style="color:var(--stone-text)">Borders</td><td class="num">3.37 : 1</td><td class="num no">Borders only</td></tr>
+<tr><td><span class="sw" style="background:#C2994F"></span></td><td class="mono">--gold-light #C2994F</td><td style="color:var(--stone-text)">Gold on dark grounds</td><td class="num">2.48 : 1</td><td class="num no">Dark field only</td></tr>
+<tr><td><span class="sw" style="background:#2BB8D4"></span></td><td class="mono">--firouzeh #2BB8D4</td><td style="color:var(--stone-text)">Interactive, Booking accent</td><td class="num">2.22 : 1</td><td class="num no">Dark field only</td></tr>
+<tr><td><span class="sw" style="background:#D9C8A8"></span></td><td class="mono">--champagne #D9C8A8</td><td style="color:var(--stone-text)">Warm counterweight</td><td class="num">1.54 : 1</td><td class="num no">Dark field only</td></tr>
+<tr><td><span class="sw" style="background:#E4D1C1"></span></td><td class="mono">--sand #E4D1C1</td><td style="color:var(--stone-text)">Large soft fields</td><td class="num">1.39 : 1</td><td class="num no">Fields only</td></tr>
+</tbody></table>
+<p class="note">Gold, firouzeh, champagne and sand fail contrast on the light ground. They are decoration and dark-field colours — never behind a glyph on ground. This is measured, not stylistic.</p>
+<h2>Text-safe variants for light ground</h2><table><thead><tr><th>Swatch</th><th>Token</th><th class="num">Ratio</th></tr></thead><tbody>
+<tr><td><span class="sw" style="background:#146E82"></span></td><td class="mono">--firouzeh-text #146E82</td><td class="num ok">5.51 : 1</td></tr>
+<tr><td><span class="sw" style="background:#7A6015"></span></td><td class="mono">--gold-text #7A6015</td><td class="num ok">5.64 : 1</td></tr>
+<tr><td><span class="sw" style="background:#6B6863"></span></td><td class="mono">--stone-text #6B6863</td><td class="num ok">5.21 : 1</td></tr>
+</tbody></table><p class="note">Swap to the -text variant the moment a colour carries words on light ground. Two tokens per hue, one rule.</p>
+<h2>On ink · #161B4A</h2><div class="dark"><table><thead><tr><th>Swatch</th><th>Token</th><th class="num">Ratio</th></tr></thead><tbody>
+<tr><td><span class="sw" style="background:#FFFFFF"></span></td><td class="mono">--surface #FFFFFF</td><td class="num ok">16.28 : 1</td></tr>
+<tr><td><span class="sw" style="background:#D9C8A8"></span></td><td class="mono">--champagne #D9C8A8</td><td class="num ok">9.91 : 1</td></tr>
+<tr><td><span class="sw" style="background:#2BB8D4"></span></td><td class="mono">--firouzeh #2BB8D4</td><td class="num ok">6.91 : 1</td></tr>
+<tr><td><span class="sw" style="background:#C2994F"></span></td><td class="mono">--gold-light #C2994F</td><td class="num ok">6.17 : 1</td></tr>
+</tbody></table></div>
+<p class="note">The rhythm of the site follows from this table: long stretches of ink on cool white, punctuated by deep lapis bands where gold and turquoise finally become legible. Sampled from photographs of the institute — the blue is Persian ultramarine, not navy; the green is teal, not sage.</p>
+</body>
+</html>

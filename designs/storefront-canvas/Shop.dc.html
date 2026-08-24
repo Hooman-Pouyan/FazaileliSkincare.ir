@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@200;300;400;500;700;900&family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&display=swap">
+  <style>
+    :root{
+      --ground:#F7F8F8; --surface:#FFFFFF;
+      --ink:#161B4A; --lapis:#2D389A;
+      --gold:#A27F34; --gold-light:#C2994F;
+      --firouzeh:#2BB8D4; --firouzeh-text:#146E82;
+      --teal:#24403E; --champagne:#D9C8A8; --sand:#E4D1C1;
+      --stone-text:#6B6863;
+      --hair:rgba(162,127,52,.32);
+      --hair-soft:rgba(22,27,74,.11);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--ground);color:var(--ink);
+      font-family:"Vazirmatn",system-ui,sans-serif;font-weight:300;
+      -webkit-font-smoothing:antialiased}
+    .lat{font-family:"Bodoni Moda",Georgia,serif}
+    a{color:var(--firouzeh-text);text-decoration:none}
+    a:hover{color:var(--lapis)}
+    .eyebrow{font-size:12px;font-weight:500;letter-spacing:.16em;color:var(--gold);margin:0}
+    .ph{border:1px solid var(--hair);background:var(--sand);
+      display:flex;align-items:center;justify-content:center}
+    .ph span{font-size:11px;letter-spacing:.14em;color:rgba(22,27,74,.42);font-weight:400}
+    .ph.cool{background:#EBEDEE}
+  </style>
+</helmet>
+<div dir="rtl" lang="fa" style="position:relative;width:1440px;min-height:2160px;background:var(--ground);overflow:hidden">
+
+  <div style="position:absolute;inset-block:0;inset-inline-start:0;width:56px;background:var(--ground);border-inline-end:1px solid var(--hair);display:flex;flex-direction:column;align-items:center;padding-block:26px 30px">
+    <div style="width:30px;height:30px;border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center">
+      <div style="width:11px;height:11px;background:var(--lapis);border-radius:50%"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:30px;margin-block-start:58px">
+      <div style="position:relative;display:flex;align-items:center;justify-content:center;width:28px;height:28px">
+        <div style="position:absolute;inset-inline-start:-14px;width:2px;height:24px;background:var(--teal)"></div>
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#24403E" stroke-width="1.6"><path d="M12 3 21 12 12 21 3 12Z"/></svg>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;width:28px;height:28px">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="rgba(22,27,74,.34)" stroke-width="1.4"><circle cx="12" cy="12" r="9"/><path d="M12 3v18"/></svg>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;width:28px;height:28px">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="rgba(22,27,74,.34)" stroke-width="1.4"><path d="M12 4 19 12 12 20 5 12Z"/><circle cx="12" cy="12" r="2.4"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-inline-start:56px">
+
+    <div style="padding:78px 88px 0;display:flex;flex-direction:column;gap:18px">
+      <p class="eyebrow">فروشگاه</p>
+      <h1 style="margin:0;font-size:56px;font-weight:900;line-height:1.32;text-wrap:balance">پوستتان چه می‌خواهد؟</h1>
+      <p style="margin:0;font-size:17px;line-height:1.95;color:var(--stone-text);max-width:36em">به‌جای گشتن میان دسته‌بندی‌ها، از دغدغه شروع کنید. محصولات هر بخش را خودمان انتخاب کرده‌ایم.</p>
+    </div>
+
+    <!-- CONCERN SELECTOR -->
+    <div style="padding:54px 88px 0">
+      <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:0;border-block-start:1px solid var(--hair)">
+        <sc-for list="{{concerns}}" as="c" hint-placeholder-count="5">
+          <div onClick="{{ c.pick }}" style="{{ c.wrap }}">
+            <div style="{{ c.bar }}"></div>
+            <div style="{{ c.label }}">{{ c.name }}</div>
+            <div style="font-size:12.5px;color:var(--stone-text);font-weight:300">{{ c.count }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- BRAND FILTER -->
+    <div style="padding:40px 88px 0;display:flex;align-items:center;gap:14px">
+      <span style="font-size:13px;color:var(--stone-text);margin-inline-end:6px">برند</span>
+      <div style="border:1px solid var(--ink);padding:8px 18px;font-size:13.5px;font-weight:500">همه</div>
+      <div style="border:1px solid var(--hair-soft);padding:8px 18px;font-size:13.5px;font-weight:300;color:var(--stone-text)" class="lat">Forlle&#39;d</div>
+      <div style="border:1px solid var(--hair-soft);padding:8px 18px;font-size:13.5px;font-weight:300;color:var(--stone-text)" class="lat">Storyderm</div>
+      <div style="border:1px solid var(--hair-soft);padding:8px 18px;font-size:13.5px;font-weight:300;color:var(--stone-text)" class="lat">Thalgo</div>
+      <div style="flex-grow:1"></div>
+      <span style="font-size:13px;color:var(--stone-text)">مرتب‌سازی: پیشنهاد ما</span>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div style="padding:58px 88px 0;display:flex;flex-direction:column;gap:34px">
+      <h2 style="margin:0;font-size:24px;font-weight:700">محصولات برای {{selectedName}}</h2>
+
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:56px 44px">
+
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="ph" style="height:352px"><span>تصویر محصول</span></div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <div class="lat" style="font-size:11px;letter-spacing:.13em;color:var(--gold)">FORLLE&#39;D · HYALOGY</div>
+            <div style="font-size:19px;font-weight:500;line-height:1.6">لوسیون لایه‌بردار P-effect</div>
+            <div style="font-size:14px;line-height:1.85;color:var(--stone-text)">لایه‌برداری بدون آسیب — ۱۲۰ میلی‌لیتر</div>
+            <div style="display:flex;align-items:baseline;gap:8px;margin-block-start:6px">
+              <span style="font-size:18px;font-weight:500">۴٬۸۵۰٬۰۰۰</span>
+              <span style="font-size:13px;color:var(--stone-text)">تومان</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="ph cool" style="height:352px"><span>تصویر محصول</span></div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <div class="lat" style="font-size:11px;letter-spacing:.13em;color:var(--gold)">FORLLE&#39;D · HYALOGY</div>
+            <div style="font-size:19px;font-weight:500;line-height:1.6">اسنس موضعی AC Spot</div>
+            <div style="font-size:14px;line-height:1.85;color:var(--stone-text)">کنترل چربی، جوش و التهاب پس از آکنه</div>
+            <div style="display:flex;align-items:baseline;gap:8px;margin-block-start:6px">
+              <span style="font-size:18px;font-weight:500">۳٬۲۰۰٬۰۰۰</span>
+              <span style="font-size:13px;color:var(--stone-text)">تومان</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="ph" style="height:352px"><span>تصویر محصول</span></div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <div class="lat" style="font-size:11px;letter-spacing:.13em;color:var(--gold)">FORLLE&#39;D · HYALOGY</div>
+            <div style="font-size:19px;font-weight:500;line-height:1.6">سرم β برای چین‌های بیانی</div>
+            <div style="font-size:14px;line-height:1.85;color:var(--stone-text)">اثر فرم‌دهی تدریجی، بدون تزریق</div>
+            <div style="display:flex;align-items:baseline;gap:8px;margin-block-start:6px">
+              <span style="font-size:18px;font-weight:500">۶٬۴۰۰٬۰۰۰</span>
+              <span style="font-size:13px;color:var(--stone-text)">تومان</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="ph cool" style="height:352px"><span>تصویر محصول</span></div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <div class="lat" style="font-size:11px;letter-spacing:.13em;color:var(--gold)">FORLLE&#39;D</div>
+            <div style="font-size:19px;font-weight:500;line-height:1.6">ماسک کلاژن CLG Luxury</div>
+            <div style="font-size:14px;line-height:1.85;color:var(--stone-text)">جعبهٔ ۵ عددی — مصرف خانگی</div>
+            <div style="display:flex;align-items:baseline;gap:8px;margin-block-start:6px">
+              <span style="font-size:18px;font-weight:500">۵٬۹۰۰٬۰۰۰</span>
+              <span style="font-size:13px;color:var(--stone-text)">تومان</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="ph" style="height:352px"><span>تصویر محصول</span></div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <div class="lat" style="font-size:11px;letter-spacing:.13em;color:var(--gold)">STORYDERM</div>
+            <div style="font-size:19px;font-weight:500;line-height:1.6">پیل روشن‌کنندهٔ O2 White</div>
+            <div style="font-size:14px;line-height:1.85;color:var(--stone-text)">اکسیژن‌رسانی و روشنی یکدست</div>
+            <div style="display:flex;align-items:baseline;gap:8px;margin-block-start:6px">
+              <span style="font-size:18px;font-weight:500">۲٬۷۵۰٬۰۰۰</span>
+              <span style="font-size:13px;color:var(--stone-text)">تومان</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="ph cool" style="height:352px"><span>تصویر محصول</span></div>
+          <div style="display:flex;flex-direction:column;gap:7px">
+            <div class="lat" style="font-size:11px;letter-spacing:.13em;color:var(--gold)">THALGO · حرفه‌ای</div>
+            <div style="font-size:19px;font-weight:500;line-height:1.6">پروتکل کابین دریایی</div>
+            <div style="font-size:14px;line-height:1.85;color:var(--stone-text)">مخصوص متخصصان — عرضه با احراز صلاحیت</div>
+            <div style="display:flex;align-items:center;gap:10px;margin-block-start:8px">
+              <div style="border-block-end:1px solid var(--firouzeh-text);color:var(--firouzeh-text);font-size:14.5px;font-weight:500;padding-block-end:3px">استعلام قیمت</div>
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#146E82" stroke-width="1.5"><path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 20.5l1.6-5.5A8.4 8.4 0 1 1 21 11.5Z"/></svg>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- QUIET BAND -->
+    <div style="margin:96px 0 0;background:var(--ink);color:var(--sand);padding:74px 88px;display:flex;align-items:center;justify-content:space-between;gap:60px">
+      <div style="display:flex;flex-direction:column;gap:14px;max-width:34em">
+        <p class="eyebrow" style="color:var(--gold-light)">مطمئن نیستید کدام؟</p>
+        <h2 style="margin:0;font-size:34px;font-weight:700;color:var(--champagne);line-height:1.5;text-wrap:balance">قبل از خرید، پوستتان را ببینیم</h2>
+        <p style="margin:0;font-size:15.5px;line-height:1.95;color:rgba(228,209,193,.82)">یک مشاورهٔ کوتاه، حضوری یا آنلاین — تا محصولی نخرید که پوست شما به آن نیاز ندارد.</p>
+      </div>
+      <div style="border:1px solid var(--gold-light);color:var(--champagne);font-size:15px;font-weight:500;padding:16px 34px;white-space:nowrap">رزرو مشاوره</div>
+    </div>
+
+  </div>
+</div>
+
+</x-dc>
+<script data-dc-script data-props='{}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { picked: 'brightening' };
+  }
+  renderVals() {
+    const picked = (this.state && this.state.picked) || 'brightening';
+    const raw = [
+      { id: 'brightening', name: 'لک و روشنی', count: '۱۲ محصول' },
+      { id: 'acne',        name: 'جوش و آکنه', count: '۹ محصول' },
+      { id: 'hydration',   name: 'آبرسانی',    count: '۱۴ محصول' },
+      { id: 'barrier',     name: 'ترمیم سد پوستی', count: '۷ محصول' },
+      { id: 'aging',       name: 'ضدپیری',     count: '۱۱ محصول' }
+    ];
+    const concerns = raw.map((c) => {
+      const on = c.id === picked;
+      return {
+        id: c.id,
+        name: c.name,
+        count: c.count,
+        pick: () => this.setState({ picked: c.id }),
+        wrap: 'cursor:pointer;padding:26px 20px 30px;display:flex;flex-direction:column;gap:9px;'
+          + (on ? 'background:#FFFFFF;' : '')
+          + 'border-inline-start:1px solid rgba(22,27,74,.11);',
+        bar: 'width:100%;height:2px;margin-block-start:-26px;margin-block-end:16px;background:'
+          + (on ? '#24403E' : 'transparent') + ';',
+        label: 'font-size:17.5px;line-height:1.6;'
+          + (on ? 'font-weight:700;color:#161B4A;' : 'font-weight:300;color:rgba(22,27,74,.62);')
+      };
+    });
+    const sel = raw.find((c) => c.id === picked) || raw[0];
+    return { concerns: concerns, selectedName: sel.name };
+  }
+}
+</script>
+
+</body>
+</html>

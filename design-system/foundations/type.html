@@ -1,0 +1,70 @@
+<!-- @dsCard group="Foundations" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Typography</title>
+  <style>
+    @font-face{font-family:"Vazirmatn";src:local("Vazirmatn");font-display:swap}
+    :root{
+      --ground:#F7F8F8; --surface:#FFFFFF;
+      --ink:#161B4A; --lapis:#2D389A; --teal:#24403E;
+      --gold:#A27F34; --gold-light:#C2994F; --firouzeh:#2BB8D4;
+      --champagne:#D9C8A8; --sand:#E4D1C1; --stone:#8A8781;
+      --firouzeh-text:#146E82; --stone-text:#6B6863; --gold-text:#7A6015;
+      --hairline:rgba(162,127,52,.32); --hairline-soft:rgba(22,27,74,.11);
+      --radius-control:2px; --radius-surface:20px;
+      --duration:480ms; --easing:cubic-bezier(0.22,1,0.36,1);
+      --font-fa:"Vazirmatn",system-ui,sans-serif;
+      --font-display:"Bodoni Moda",Georgia,serif;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;padding:40px;background:var(--ground);color:var(--ink);
+      font-family:var(--font-fa);font-weight:300;font-size:15px;line-height:1.7;
+      -webkit-font-smoothing:antialiased}
+    h1{font-family:var(--font-display);font-weight:400;font-size:34px;margin:0 0 6px;letter-spacing:-.01em}
+    .sub{color:var(--stone-text);font-size:13.5px;margin:0 0 34px;max-width:64ch}
+    h2{font-size:11px;font-weight:500;letter-spacing:.17em;text-transform:uppercase;
+      color:var(--gold-text);margin:38px 0 16px;padding-bottom:9px;border-bottom:1px solid var(--hairline)}
+    table{width:100%;border-collapse:collapse;font-size:13.5px}
+    th{text-align:start;font-weight:500;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+      color:var(--stone-text);padding:0 0 10px;border-bottom:1px solid var(--hairline-soft)}
+    td{padding:12px 14px 12px 0;border-bottom:1px solid var(--hairline-soft);vertical-align:middle}
+    .mono{font-family:ui-monospace,Menlo,monospace;font-size:12px;font-variant-numeric:tabular-nums}
+    .num{text-align:end;font-family:ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums;white-space:nowrap}
+    .sw{width:56px;height:32px;display:block;border:1px solid var(--hairline-soft)}
+    .ok{color:var(--teal);font-weight:500}
+    .no{color:#8C2F2F;font-weight:500}
+    .note{font-size:12.5px;color:var(--stone-text);margin-top:14px;max-width:66ch}
+    .dark{background:var(--ink);padding:26px;margin-top:12px}
+    .dark td,.dark th{border-color:rgba(228,209,193,.16);color:var(--sand)}
+    .dark th{color:rgba(228,209,193,.6)}
+    .dark .ok{color:var(--firouzeh)}
+  </style>
+</head>
+<body>
+<h1>Typography</h1>
+<p class="sub">Vazirmatn for Persian, Bodoni Moda for Latin display. Persian is the source language; English is the translation.</p>
+<h2>Persian — the source language</h2>
+<div style="direction:rtl;text-align:right">
+<p style="font-size:44px;font-weight:900;line-height:1.3;margin:0 0 18px">هیچ مرحله‌ای سرسری نیست</p>
+<p style="font-size:17px;line-height:1.8;font-weight:300;max-width:50ch;margin:0">آکادمی تخصصی مراقبت از پوست در مشهد. نماینده رسمی فورله‌د ژاپن، مدرس رسمی فنی و حرفه‌ای، با سال‌ها تجربه در آموزش و خدمات تخصصی فیشال.</p>
+</div>
+<p class="note">Vazirmatn 900 / 300. Persian body sets at <strong>1.8</strong> line-height — Persian needs more than Latin. Digits render as ۱۲۳ with the ٬ separator. Self-hosted from /public/fonts; never fetched at runtime.</p>
+<h2>Latin — display only</h2>
+<p style="font-family:var(--font-display);font-size:36px;line-height:1.2;margin:0">Official representative of Forlle'd Japan</p>
+<p style="font-size:15px;line-height:1.7;max-width:62ch;margin:14px 0 0">A high-contrast serif echoes the fine gold linework of the medallion without imitating its ornament. Display sizes only — never inside running Persian, where it has no business being.</p>
+<h2>Scale · desktop</h2><table><thead><tr><th>Token</th><th class="num">px</th><th>Use</th></tr></thead><tbody>
+<tr><td class="mono">--text-display-1</td><td class="num">78</td><td style="color:var(--stone-text)">Landing hero</td></tr>
+<tr><td class="mono">--text-display-2</td><td class="num">56</td><td style="color:var(--stone-text)">Room hero</td></tr>
+<tr><td class="mono">--text-h1</td><td class="num">46</td><td style="color:var(--stone-text)">Page title</td></tr>
+<tr><td class="mono">--text-h2</td><td class="num">34</td><td style="color:var(--stone-text)">Section</td></tr>
+<tr><td class="mono">--text-h3</td><td class="num">24</td><td style="color:var(--stone-text)">Sub-section</td></tr>
+<tr><td class="mono">--text-lede</td><td class="num">19</td><td style="color:var(--stone-text)">Intro paragraph</td></tr>
+<tr><td class="mono">--text-body</td><td class="num">16</td><td style="color:var(--stone-text)">Running text</td></tr>
+<tr><td class="mono">--text-small</td><td class="num">14</td><td style="color:var(--stone-text)">Meta, captions</td></tr>
+<tr><td class="mono">--text-micro</td><td class="num">12</td><td style="color:var(--stone-text)">Labels, eyebrows</td></tr>
+</tbody></table><p class="note">Below 768px the scale steps down one notch: display-1 becomes 40px, h1 becomes 30px. Body never drops below 16px.</p>
+</body>
+</html>

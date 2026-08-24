@@ -1,0 +1,21 @@
+{
+  "brand": {
+    "name": "Mahdieh Fazaieli",
+    "tagline": "Specialist skincare academy in Mashhad",
+    "eyebrow": "Mashhad — official representative of Forlle'd Japan"
+  },
+  "nav": { "shop": "Shop", "book": "Booking", "academy": "Academy", "studio": "My Studio", "search": "Search", "account": "Account" },
+  "landing": {
+    "headline": "No step is ever rushed",
+    "lede": "From choosing the formulation to performing the treatment precisely. A specialist skincare academy, led by Mahdieh Fazaieli.",
+    "primaryCta": "Book a consultation",
+    "secondaryCta": "See products",
+    "doors": {
+      "shop": "Professional skincare from Forlle'd, Storyderm and Thalgo — chosen for your skin's concern.",
+      "book": "Facials and specialist treatments. See real availability and book on the spot.",
+      "academy": "Professional courses and workshops, in Mashhad and online."
+    },
+    "quote": "\"When your skin's health is at stake, quality means no step is ever rushed.\""
+  },
+  "common": { "currency": "Toman", "loading": "Loading…", "inStock": "In stock" }
+}

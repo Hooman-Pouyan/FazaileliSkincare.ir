@@ -1,0 +1,74 @@
+@import "tailwindcss";
+@import "../../designs/tokens.css";
+
+/*
+  Fonts are SELF-HOSTED. From Iranian infrastructure a request to
+  fonts.googleapis.com hangs and takes the stylesheet down with it.
+  Drop the .woff2 files into /public/fonts — see public/fonts/README.md.
+*/
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("/fonts/Vazirmatn[wght].woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Bodoni Moda";
+  src: url("/fonts/BodoniModa[opsz,wght].woff2") format("woff2-variations");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+@layer base {
+  /* shadcn's semantic names, bound once to our tokens. See docs/10-design-playbook.md. */
+  :root {
+    --background: var(--ground);
+    --foreground: var(--ink);
+    --card: var(--surface);
+    --card-foreground: var(--ink);
+    --popover: var(--surface);
+    --popover-foreground: var(--ink);
+    --primary: var(--ink);            /* not lapis — fields are not fills behind text */
+    --primary-foreground: var(--sand);
+    --secondary: var(--surface);
+    --secondary-foreground: var(--ink);
+    --muted: var(--surface);
+    --muted-foreground: var(--stone-text);
+    --accent: var(--champagne);
+    --accent-foreground: var(--ink);
+    --destructive: var(--danger);
+    --destructive-foreground: var(--surface);
+    --border: var(--hairline-soft);
+    --input: var(--hairline-soft);
+    --ring: var(--firouzeh-text);
+    --radius: var(--radius-control);
+  }
+
+  * { border-color: var(--border); }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--font-fa);
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  [lang="fa"] { line-height: var(--leading-fa); }
+  [lang="en"] { line-height: var(--leading-latin); }
+
+  :focus-visible {
+    outline: 2px solid var(--firouzeh-text);
+    outline-offset: 2px;
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+}
