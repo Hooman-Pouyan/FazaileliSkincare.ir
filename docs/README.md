@@ -10,6 +10,7 @@ Written before code, deliberately. Every decision here has a stated reason and a
 | [`03-domain-model.md`](03-domain-model.md) | Bounded contexts and their boundaries · entities and invariants · the EN/FA ubiquitous language |
 | [`04-information-architecture.md`](04-information-architecture.md) | The rail-and-rooms shell · the five surfaces · the palette sampled from the institute, with measured contrast · RTL rules |
 | [`05-paperwork-playbook.md`](05-paperwork-playbook.md) | The non-technical track: company file, business licence, eNamad, ZarinPal, tax e-invoicing — in sequence, runnable in parallel |
+| [`14-storyderm-draft-catalog-pipeline.md`](14-storyderm-draft-catalog-pipeline.md) | Temporary Storyderm asset policy · current database readiness · deterministic seeds · thumbnails/media · PLP/PDP query boundaries · production promotion gates |
 
 ## The three decisions most expensive to reverse
 

@@ -88,7 +88,9 @@ fazaieli/
 ### Data
 `drizzle-kit generate` → review the SQL → commit → `migrate`. Migrations are **read before they run**; that is the point of choosing Drizzle.
 
-Seed: brands (Forlle'd/Storyderm/Thalgo with `countryOfOrigin`), concerns (لک · جوش و آکنه · آبرسانی · ترمیم سد پوستی · ضدپیری), the real product list.
+Seed: brands (Forlle'd/Storyderm/Thalgo with `countryOfOrigin`), concerns (لک · جوش و آکنه · آبرسانی · ترمیم سد پوستی · ضدپیری), then the verified product list.
+
+The temporary Storyderm image set is a **draft input, not catalogue truth**. Its manifest, idempotent seed profiles, image-derivative pipeline, database gaps, and draft-to-production gates are specified in [`14-storyderm-draft-catalog-pipeline.md`](14-storyderm-draft-catalog-pipeline.md). Do not infer prices, stock, SKUs, claims, or sellable product boundaries from filenames.
 
 ### Routes
 `/shop` (PHP hub) · `/shop/concern/[slug]` · `/shop/brand/[slug]` · `/shop/c/[category]` · `/shop/p/[slug]` · `/cart` · `/checkout` · `/checkout/transfer/[orderId]` · `/order/[orderNumber]` · `/order/[orderNumber]/invoice`

@@ -1,0 +1,51 @@
+- generic [active] [ref=f3e1]:
+  - navigation "فروشگاه" [ref=f3e2]:
+    - link "خانه" [ref=f3e3] [cursor=pointer]:
+      - /url: /fa
+    - list [ref=f3e5]:
+      - listitem [ref=f3e6]:
+        - link "فروشگاه" [ref=f3e7] [cursor=pointer]:
+          - /url: /fa/shop
+      - listitem [ref=f3e11]:
+        - link "رزرو خدمات" [ref=f3e12] [cursor=pointer]:
+          - /url: /fa/book
+      - listitem [ref=f3e16]:
+        - link "آکادمی" [ref=f3e17] [cursor=pointer]:
+          - /url: /fa/academy
+    - generic [ref=f3e22]:
+      - link "EN" [ref=f3e23] [cursor=pointer]:
+        - /url: /en
+      - link "حساب من" [ref=f3e24] [cursor=pointer]:
+        - /url: /fa/studio
+  - main [ref=f3e29]:
+    - generic [ref=f3e30]:
+      - generic [ref=f3e31]:
+        - paragraph [ref=f3e32]: مشهد — نمایندهٔ رسمی فورله‌د ژاپن
+        - heading "هیچ مرحله‌ای سرسری نیست" [level=1] [ref=f3e33]
+        - paragraph [ref=f3e34]: از انتخاب مواد تا اجرای دقیق خدمات. آکادمی تخصصی مراقبت از پوست، زیر نظر مهدیه فضائلی.
+        - generic [ref=f3e35]:
+          - button "رزرو وقت مشاوره" [ref=f3e36]
+          - link "دیدن محصولات" [ref=f3e37] [cursor=pointer]:
+            - /url: /fa/shop
+      - img "پرترهٔ مهدیه فضائلی" [ref=f3e39]
+    - generic [ref=f3e40]:
+      - link [ref=f3e41] [cursor=pointer]:
+        - /url: /fa/shop
+        - generic [ref=f3e43]:
+          - heading "فروشگاه" [level=2] [ref=f3e45]
+          - paragraph [ref=f3e46]: محصولات تخصصی فورله‌د، استوری‌درم و تالگو — انتخاب‌شده بر اساس دغدغهٔ پوست شما.
+      - link [ref=f3e47] [cursor=pointer]:
+        - /url: /fa/book
+        - generic [ref=f3e49]:
+          - heading "رزرو خدمات" [level=2] [ref=f3e51]
+          - paragraph [ref=f3e52]: فیشال و درمان‌های تخصصی پوست. زمان خالی را ببینید و همان‌جا نوبت بگیرید.
+      - link [ref=f3e53] [cursor=pointer]:
+        - /url: /fa/academy
+        - generic [ref=f3e55]:
+          - heading "آکادمی" [level=2] [ref=f3e57]
+          - paragraph [ref=f3e58]: دوره‌ها و کارگاه‌های حرفه‌ای، حضوری در مشهد و آنلاین.
+    - generic [ref=f3e59]:
+      - paragraph [ref=f3e60]: آکادمی تخصصی مراقبت از پوست در مشهد
+      - paragraph [ref=f3e61]: «وقتی سلامت پوست شما در میان است، کیفیت یعنی هیچ مرحله‌ای سرسری انجام نشود.»
+  - region "Notifications alt+T"
+  - button "Open Next.js Dev Tools" [ref=f3e67] [cursor=pointer]

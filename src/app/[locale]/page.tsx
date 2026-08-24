@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { Rail } from "@/components/rail";
@@ -23,7 +24,7 @@ export default async function LandingPage({
       <Rail />
       <main className="ms-14">
         {/* HERO — editorial scroll, asymmetric split, no card, no shadow */}
-        <section className="flex min-h-[78vh] items-stretch">
+        <section className="flex min-h-screen items-stretch">
           <div className="flex flex-1 flex-col justify-center gap-7 px-8 md:px-20">
             <p className="text-xs font-medium uppercase tracking-[0.16em] text-[var(--gold-text)]">
               {brand("eyebrow")}
@@ -41,13 +42,16 @@ export default async function LandingPage({
               </Link>
             </div>
           </div>
-          <div
-            className="hidden w-[42%] items-center justify-center border-s border-[var(--hairline)] bg-[var(--sand)] lg:flex"
-            aria-hidden
-          >
-            <span className="text-[11px] tracking-[0.14em] text-[color-mix(in_oklab,var(--ink)_42%,transparent)]">
-              {t("portraitPlaceholder")}
-            </span>
+          <div className="relative hidden w-[46%] overflow-hidden border-s border-[var(--hairline)] bg-[var(--sand)] lg:block">
+            <Image
+              src="/images/mahdieh-fazaieli-hero.png"
+              alt={t("portraitPlaceholder")}
+              fill
+              priority
+              unoptimized
+              sizes="46vw"
+              className="object-cover object-[92%_center]"
+            />
           </div>
         </section>
 

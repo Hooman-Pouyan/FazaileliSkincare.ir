@@ -1,0 +1,282 @@
+{
+  "schemaVersion": 1,
+  "batchId": "instagram-first-pass-2026-08-24",
+  "locale": "fa",
+  "sourceKind": "instagram_screenshot",
+  "recordCount": 14,
+  "transcriptionPolicy": "Customer wording and emoji are preserved; screenshot line wrapping, punctuation, Persian digits, spacing, and half-spaces are lightly normalized. No semantic or marketing rewrite has been applied.",
+  "privacyPolicy": "Usernames, phone numbers, avatars, timestamps, and other source identities are deliberately excluded from this seedable file.",
+  "sourceRetention": "Source screenshots are not committed because they contain personal data. Filename and SHA-256 are retained for private-source matching.",
+  "records": [
+    {
+      "id": "testimonial-fa-001",
+      "sourceImage": {
+        "imageIndex": 1,
+        "fileName": "codex-clipboard-ef0fe352-90a2-4544-8971-1567099c1f08.png",
+        "sha256": "0ac5241df4198902b765f2c4c975ac5369e112beca8bc43ae77abfd0fd071f7c"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "خانم فضائلی عزیزم سلام. روز برفیتون بخیر و شادی. خواستم بهتون اطلاع بدم خیییییلی حال پوستم خوب شده تمیییییززز و انگاری آب رفته زیر پوستم. 🥰✨ کلیییی مرسی ازتون ❤️❤️❤️",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": ["outcome_claim"],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-002",
+      "sourceImage": {
+        "imageIndex": 2,
+        "fileName": "codex-clipboard-6cc73a7d-2b04-487f-912d-6894da86d1ce.png",
+        "sha256": "8c1a25e4677685cacd1f620523ceb7bd075320abaec2e8593eea04aff2585f7f"
+      },
+      "authorLabelFa": "شرکت‌کننده ناشناس",
+      "relationship": "workshop_attendee",
+      "contentKind": "workshop_feedback",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "سلام و عرض ادب و احترام خانم فضائلی عزیز. سپاس از شما و سرکار خانم بوروک. فوق‌العاده عالی و پربار بود. سپاس از لطف و محبت‌تون 💕💕❤️❤️❤️😘😘😘😍😍😍",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-003",
+      "sourceImage": {
+        "imageIndex": 3,
+        "fileName": "codex-clipboard-50bd791f-2353-4596-931f-495d7cc8b2f4.png",
+        "sha256": "68953b9e8f8f850d595e4a2a1350242e368373eb7bcef7579612b9cde6802ed5"
+      },
+      "authorLabelFa": "شرکت‌کننده ناشناس",
+      "relationship": "workshop_attendee",
+      "contentKind": "workshop_feedback",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "سلام و خسته نباشید 🌸🙏 خدمت تمامی همکاران و اساتید محترم سرکارخانم فضائلی و سرکار خانم بوروک عزیز ❤️ خیلی خیلی ممنونم بابت زحمات و تایمی که امروز در اختیارمون قرار دادید تا از حضور ارزشمندتون فیض ببریم 💖🙏 ورکشاپ امروز فوق‌العاده پربار و تکنیکال بود و بشدت برای من مباحث جذاب واقع شد ✨ باعث افتخاره حضور داشتن در کنار اساتید ارزشمند و باتجربه‌ای همچون شما 🥺💕 متشکرم از تدریس و پذیرایی گرانبهاتون 🥰🙏 شاد و مانا باشید عزیزان دل ❤️🌹",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-004",
+      "sourceImage": {
+        "imageIndex": 4,
+        "fileName": "codex-clipboard-842067db-2e85-419f-863a-3630f63b1814.png",
+        "sha256": "4e6a872952eee0de21221218e6561a91570302d30888d74c6afe6db1a6a66b94"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": "time_machine",
+      "transcriptionFa": "همین الان گرفتم از نزدیک پوستم رو ببینید. سلام خانم فضائلی عزیزم خوب هستین. تایم ماشین که برام انجام دادین به قدری روی پوستم جواب داده که تمام همکارام و اطرافیانم براشون سوال پیش اومده بود چه کار کردم و من براشون توضیح دادم و شمارو معرفی کردم. خیلی راضی‌ام، خیلی خیلی عالی بود. کاش زودتر انجام می‌دادم. تمام منافذ پوستم جمع شده و پوستم خیلی روشن شده. پیام دادم تشکر ویژه کنم از شماااا. انشاالله خدا بهتون سلامتی و به کسب و کارتون برکت بده. دوستون دارم ❤️😘 چندین مرتبه فیشیال انجام دادم با اینکه راضی بودم اما تایم ماشین یه چیز دیگه بود 🫶",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": ["outcome_claim", "named_treatment"],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-005",
+      "sourceImage": {
+        "imageIndex": 5,
+        "fileName": "codex-clipboard-cdff83ec-bfc7-4a56-ab45-7925b115bb1b.png",
+        "sha256": "5d147ec3108a9a48530f77cde830abf2b5aed77bcfc4fb3ab1f6d56828e20396"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": "princess",
+      "transcriptionFa": "من دیروز پرنسس انجام دادم امروز پوستم یک درجه روشن‌تر شده و پوستم نرم‌تر واقعا ممنون از خانم فضائلی عزیز",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": ["outcome_claim", "named_treatment"],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-006",
+      "sourceImage": {
+        "imageIndex": 6,
+        "fileName": "codex-clipboard-3895c2de-4456-41ff-84e3-f2703621c91f.png",
+        "sha256": "53335984b044bd4e8eaaefd75537fc9e1a070f49f415238719024c2338fc2d25"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": "princess_shine",
+      "transcriptionFa": "سلام. چند ماه پیش پیشونیم بر اثر ضربه یه فرو رفتگی کوچیک پیدا کرده بود که خیلی ناراحتم می‌کرد. هفته پیش پرنسس شاین رو واسم انجام دادید. باورم نمیشه بعد از انجامش، اون فرو رفتگی تا حد زیادی از بین رفته 😍 پوستم خیلی لطیف‌تر و روشن‌تر شده. ممنونم از خانم فضائلی عزیز که این‌قدری با دقت و عشق کار می‌کنید ❤️🙏",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate_after_claim_review",
+      "safetyFlags": [
+        "outcome_claim",
+        "medical_appearance_claim",
+        "named_treatment"
+      ],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-007",
+      "sourceImage": {
+        "imageIndex": 7,
+        "fileName": "codex-clipboard-d2e023b1-763f-4db1-be0f-08c81a5447a9.png",
+        "sha256": "ee83ee2302c92961eb0463261f7f84b00739031a2ff5dbf6105bf527e1a37599"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "service_experience",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "خانم فضائلی نازنینم دفعه اول بود این خدمات رو می‌گرفتم. این بار با تمام دفعات قبل برام فرق داشت، بهتره بگم تفاوت قبل و بعد خدمات رو کاملا احساس کردم. عالی بود. ممنون و سپاس از شما که انقدر دلسوزانه و متعهدانه و با عشق کار می‌کنید 😘😘😘😘",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": ["outcome_claim"],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-008",
+      "sourceImage": {
+        "imageIndex": 8,
+        "fileName": "codex-clipboard-6812e4b3-8ed5-413a-9965-a192e3f4ac71.png",
+        "sha256": "b75ab076144c96e513731f3b41ae63677a3fcb78442efec992cebba25fddad11"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "expertise_and_training",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "دقیقا 👏💗 شما بهترینین حتی منه وسواس ک به عنوان کلاینت پیشتون میام این چندسال اینقدر خیالم راحته با دنیا هم نمی‌خام عوضتون کنم اینقدر دوستون دارم 🥺 من ک همیشه هم گفتم شما کوه تجربه و دانش و آگاهی هستین و این بهترین سرمایه است که شما دارید 👏 آفرین ب اونایی ک پیش شما دوره می‌بینن واقعا نتیجه‌اش از همین الان مشخصه 👏",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-009",
+      "sourceImage": {
+        "imageIndex": 9,
+        "fileName": "codex-clipboard-0192ae24-35b3-4e92-b8d9-b1034f411a10.png",
+        "sha256": "efcbdfaec2236a65d0199ff911e28368482257bccc4d4f9f08fb9ca7a0a16256"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "treatment_result",
+      "relatedOfferingCandidate": "facial",
+      "transcriptionFa": "سلام خانم فضائلی عزیزم 😍 همه دوستانی که یکی دو ماهی بود منو ندیده بودن، گفتن چقدر پوستت با اینکه مشکل خاصی نداشته جوون‌تر شده و روی بینیت خیلی تمیز و صاف شده (قبلا بصورت فشرده پر از جوش سرسیاه بود). خواستم نتیجه کار خارق‌العاده‌تون رو پوستم که افتخارش رو داشتم رو بگم 🤍🤍🤍",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate_after_claim_review",
+      "safetyFlags": ["outcome_claim"],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-010",
+      "sourceImage": {
+        "imageIndex": 10,
+        "fileName": "codex-clipboard-42f2a713-8267-4d5d-a7cb-e6432f2ffd32.png",
+        "sha256": "58e21d89af1ff9120942617af9b569504c2b89a7ab2c051faefd037e91c3aeef"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client",
+      "contentKind": "service_experience",
+      "relatedOfferingCandidate": "facial",
+      "transcriptionFa": "وااای چقدرم بهم چسبید اون فیشیال و ماساژش، درست یه نیم ساعتی فکر کنم خوابم برد، درسته؟",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-011",
+      "sourceImage": {
+        "imageIndex": 11,
+        "fileName": "codex-clipboard-4fbfb0df-c70e-460c-ac5d-ebcc467f6dc6.png",
+        "sha256": "7aaace5f4bf6833e343bd72c13e56304d27bf003d628946be745b1f06a2a88e0"
+      },
+      "authorLabelFa": "نویسنده ناشناس",
+      "relationship": "unclear",
+      "contentKind": "social_praise",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "الهی فداتون بشم من بیشتر به خودتون نگاه کردم 😂 تا به صحبتاتون گوش کنم 😂🥰💕💕💕",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "exclude_not_service_feedback",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-012",
+      "sourceImage": {
+        "imageIndex": 12,
+        "fileName": "codex-clipboard-290366ef-d9fc-4969-8a6c-5720e33479db.png",
+        "sha256": "aaaa2c7661d240ebf18ae698b3337928ce9c428ec4ae9bba9fa227458c2e74bd"
+      },
+      "authorLabelFa": "نویسنده ناشناس",
+      "relationship": "unclear",
+      "contentKind": "brand_and_environment_praise",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "چندبار ویدئو رو دیدم تا کاملا متوجه حرفاتون شدم اینقد ک محو خودتون شدم 😍😍😍😍 عالی هستید کاملا حرفه‌ای، کاردرست و پر از عشق. باعث افتخارم هست ک مراقبت پوست مو رو در حضور پر عشق شما توی همچین محیط لوکس و پرانرژی خوب انجام می‌دیم ❤️❤️❤️❤️❤️",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "needs_relationship_context",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-013",
+      "sourceImage": {
+        "imageIndex": 13,
+        "fileName": "codex-clipboard-867e77cb-0113-409b-8cf9-f16be83fbf6b.png",
+        "sha256": "e5722d6d102a244d1eddc12e620fd5e3ca3ef2011a9ed5469e4658290a57cee6"
+      },
+      "authorLabelFa": "مراجعه‌کننده ناشناس",
+      "relationship": "client_or_peer",
+      "contentKind": "expertise_and_consultation",
+      "relatedOfferingCandidate": "skin_consultation",
+      "transcriptionFa": "من، دانش و تجربه خانم فضائلی رو ندارم، علاوه بر اینکه آموزشی که من دیدم مربوط به سال ۱۴۰۰ هست و از اون زمان آپدیت نشدم. واسه همین برای مراقبت از پوست خودم نیاز به رجوع به یک بیوتی تراپیست حرفه‌ای دارم و من در این زمینه تا حالا کسی بهتر از خانم فضائلی پیدا نکردم. لطفا از ایشون درخواست کنین یک نوبت مشاوره برای من در نظر بگیرن 🌹🙏",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "candidate",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    },
+    {
+      "id": "testimonial-fa-014",
+      "sourceImage": {
+        "imageIndex": 14,
+        "fileName": "codex-clipboard-30da1813-9a46-41a7-9ed3-0bffa67f06a3.png",
+        "sha256": "7c972eadf8d93310607a1e9d3e44f5f3b64ca2add8cdcad338bcfe2cc1099d23"
+      },
+      "authorLabelFa": "نویسنده ناشناس",
+      "relationship": "unclear",
+      "contentKind": "professional_praise",
+      "relatedOfferingCandidate": null,
+      "transcriptionFa": "با اخلاق، بهترینین 💎🦋💙 حرفه‌ای در کار و اخلاق 💙💙 افتخار می‌کنم بهتون 🌸✌️💪💙",
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "publicationConsent": "unknown",
+      "moderationStatus": "draft",
+      "editorialSuitability": "needs_relationship_context",
+      "safetyFlags": [],
+      "displayQuoteFa": null
+    }
+  ]
+}
