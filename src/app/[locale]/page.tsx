@@ -46,7 +46,7 @@ export default async function LandingPage({
             aria-hidden
           >
             <span className="text-[11px] tracking-[0.14em] text-[color-mix(in_oklab,var(--ink)_42%,transparent)]">
-              پرترهٔ مهدیه فضائلی
+              {t("portraitPlaceholder")}
             </span>
           </div>
         </section>

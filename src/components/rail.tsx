@@ -23,7 +23,7 @@ export async function Rail({ active }: { active?: "shop" | "book" | "academy" })
       className="fixed inset-block-0 inset-inline-start-0 z-40 flex w-14 flex-col items-center bg-[var(--ground)] py-6 border-inline-end border-[var(--hairline)]"
       style={{ borderInlineEndWidth: 1, borderInlineEndStyle: "solid" }}
     >
-      <Link href="/" aria-label="خانه" className="grid size-[30px] place-items-center rounded-full border-[1.5px] border-[var(--gold)]">
+      <Link href="/" aria-label={t("home")} className="grid size-[30px] place-items-center rounded-full border-[1.5px] border-[var(--gold)]">
         <span className="size-[11px] rounded-full bg-[var(--lapis)]" aria-hidden />
       </Link>
 

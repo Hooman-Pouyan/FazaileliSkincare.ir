@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing, dirFor } from "@/i18n/routing";
+import { DirectionProvider } from "@/components/direction-provider";
+import { Toaster } from "@/components/ui/sonner";
 import "../globals.css";
 
 export function generateStaticParams() {
@@ -32,11 +34,17 @@ export default async function LocaleLayout({
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
+  const direction = dirFor(locale);
 
   return (
-    <html lang={locale} dir={dirFor(locale)} suppressHydrationWarning>
+    <html lang={locale} dir={direction} suppressHydrationWarning>
       <body>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <DirectionProvider dir={direction}>
+            {children}
+            <Toaster dir={direction} />
+          </DirectionProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

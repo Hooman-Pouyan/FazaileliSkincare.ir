@@ -6,10 +6,11 @@ node_modules/
 /drizzle/meta
 next-env.d.ts
 *.log
+*.tsbuildinfo
 .DS_Store
 .app-scaffold.tar.gz
 .ds-bundle.tar.gz
 .tmp-app/
+.tmp-app2/
+.tmp-app3/
 .tmp-ds/
-node_modules/
-.next/

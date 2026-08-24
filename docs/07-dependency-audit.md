@@ -6,22 +6,11 @@
 
 ---
 
-## ⚠️ Context7 is enabled but unreachable in this session
+## Verification sources
 
-You have both `context7-mcp` and `find-docs` enabled, and I tried to use them. The API is blocked by this session's egress allowlist:
-
-```
-context7.com   → CONNECT tunnel failed, 403   (cloud container)
-context7.com   → 403 from proxy after CONNECT (device bridge)
-registry.npmjs.org → 200
-```
-
-Blocked from **both** sides, so it is the allowlist, not the tool. What I used instead:
-
-- **npm registry** — authoritative for "what version is actually published", and reachable.
-- **Official documentation sites** — `nextjs.org`, `better-auth.com`, `zod.dev` all fetch fine.
-
-Between them this is as good as Context7 for version facts, and slightly worse for broad API search. **If you can add `context7.com` to the session's allowlist, do — it would make API-shape checks cheaper.** Until then this is the process.
+- **npm registry** for published versions and package peer ranges.
+- **Context7 official documentation** for framework and tool behavior, including Tailwind v4's CSS-first configuration and Sass incompatibility.
+- **Installed peer checks** for the resolved dependency graph; published "latest" versions are not accepted when their declared peer ranges conflict.
 
 ---
 
@@ -31,8 +20,8 @@ Between them this is as good as Context7 for version facts, and slightly worse f
 |---|---|---|
 | `next` | **16.3.2** | Node 20.9+, Turbopack default |
 | `react` / `react-dom` | **19.2.8** | |
-| `typescript` | **7.0.2** | ⚠️ TS **7**, not 5 — see below |
-| `eslint` | **10.9.0** | Flat config only |
+| `typescript` | **6.0.3** | Compatibility pin: `typescript-eslint` 8.67 declares `<6.1.0` |
+| `eslint` | **9.39.5** | Compatibility pin: Next 16.3's installed ESLint plugins reject 10.x |
 | `pnpm` | **11.23.0** | Your package manager |
 | `tailwindcss` | **4.3.3** | CSS-first config |
 | `drizzle-orm` | **0.45.2** | Still 0.x — pin exactly |
@@ -44,6 +33,8 @@ Between them this is as good as Context7 for version facts, and slightly worse f
 | `zod` | **4.4.3** | ⚠️ Zod **4** — see below |
 | `react-hook-form` | **7.86.0** | |
 | `@hookform/resolvers` | **5.9.1** | |
+| `radix-ui` | **1.6.7** | Unified Radix primitives package used by the scaffold |
+| `tw-animate-css` | **1.4.0** | Tailwind v4 animation utilities imported by `globals.css` |
 | `react-day-picker` | **10.0.1** | ⚠️ major 10 |
 | `shadcn` (CLI) | **4.19.0** | |
 | `sonner` 2.0.8 · `cmdk` 1.1.1 · `input-otp` 1.5.0 · `embla-carousel-react` 8.6.0 · `lucide-react` 1.33.0 · `libphonenumber-js` 1.13.11 · `class-variance-authority` 0.7.1 · `tailwind-merge` 3.6.0 | | |
@@ -83,9 +74,9 @@ Both stay behind the one `JalaliDate` utility module that the domain model alrea
 
 Also: defaults inside optional fields now apply by default. Since **every server action opens with a Zod parse** (AGENTS.md rule 3), getting this wrong would have been wrong in about a hundred places.
 
-### 3. TypeScript **7**, and what follows from it
+### 3. TypeScript and ESLint compatibility pins
 
-TS 7 is the native port — roughly 10× faster type checking, and Next 16.3 supports using it for `next build`. Take it. Consequences: `eslint` 10 is flat-config only, and `next lint` no longer exists in Next 16 (run ESLint or Biome directly).
+The registry's newest releases are not a compatible set for this scaffold. `typescript-eslint` 8.67 declares TypeScript `>=4.8.4 <6.1.0`, so TypeScript is pinned to 6.0.3. Next 16.3's installed ESLint plugins reject ESLint 10, so ESLint is pinned to 9.39.5. `pnpm peers check`, the typechecker, and the linter must all pass before either pin is raised. Next 16 no longer has `next lint`; run ESLint directly.
 
 **Also watch:** `react-day-picker` is on **v10**. shadcn's `calendar` component historically targeted v9, so the generated component may need adjusting — check it the day we add the booking calendar rather than discovering it mid-build.
 

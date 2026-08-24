@@ -53,13 +53,13 @@ fazaieli/
 
 ## Phase 1 — Foundation ✅ *scaffolded*
 
-**Status: built and verified.** `next build` passes on Next 16.3.2 with TypeScript 7, both locales prerendering.
+**Status: built and verified.** `next build` passes on Next 16.3.2 with TypeScript 6.0.3, both locales prerendering.
 
 | Delivered | Detail |
 |---|---|
-| `package.json` | Every version pinned exactly, verified against the registry (`07-dependency-audit.md`). pnpm 11.23. |
+| `package.json` | Every version pinned exactly, verified against the registry (`07-dependency-audit.md`). The production build copies `public/` and `.next/static/` into Next's standalone artifact before `pnpm start`. |
 | `next.config.ts` | `output: "standalone"` for the Iranian container. Cache Components and Partial Prefetching present but **commented off** — Phase 2 polish. |
-| `pnpm-workspace.yaml` | `onlyBuiltDependencies` — pnpm 10+ moved this out of `package.json`, and without it `next build` exits 1. |
+| `pnpm-workspace.yaml` | `allowBuilds` explicitly approves the native build scripts required by Next and the toolchain. |
 | `.npmrc` | Registry-mirror note for when the public registry is unreachable from an Iranian IP. |
 | `src/proxy.ts` | Locale routing. Next 16 renamed `middleware.ts` → `proxy.ts`, Node runtime. |
 | `src/i18n/*` | `next-intl` 4.13, `fa` base, `localePrefix: "always"`. |

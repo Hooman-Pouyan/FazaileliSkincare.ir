@@ -50,7 +50,7 @@
   /*
     space — 96px is the minimum between sections on desktop.
     These are NOT re-exposed in @theme under matching numeric keys
-    (--spacing-9 etc.) because Tailwind v4 already generates p-*/gap-*/etc.
+    (--spacing-9 etc.) because Tailwind v4 already generates padding and gap utilities
     dynamically as multiples of its own --spacing base (4px) — adding
     --spacing-9: 96px here would silently redefine what gap-9 means
     project-wide instead of adding a new utility. Every value below is

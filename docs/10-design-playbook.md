@@ -34,6 +34,10 @@ Tailwind v4 is CSS-first; there is no `tailwind.config.js` theme to edit.
 
 `tokens.css` already exposes every token as a Tailwind utility through `@theme inline` — `bg-ground`, `text-ink`, `border-gold`, `text-firouzeh-text`. Use the utilities; don't re-declare colours in component files.
 
+### SCSS policy
+
+SCSS Modules are the preferred format for component-scoped authored styles. Keep `src/app/globals.css` and `designs/tokens.css` as plain CSS: Tailwind v4's CSS-first `@theme` pipeline is not designed to run through Sass preprocessing. Add `sass` when the first `*.module.scss` file is introduced; until then it would be an unused dependency.
+
 **Fonts are self-hosted. Non-negotiable.** From Iranian infrastructure a request to `fonts.googleapis.com` hangs and takes the stylesheet down with it.
 
 ```ts
