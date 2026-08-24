@@ -51,7 +51,27 @@ Built and maintained by one developer, hosted inside Iran, paid in rials.
 | i18n | `next-intl`, `fa` base locale, `next/root-params`, RTL throughout |
 | Auth | Better Auth, phone/OTP, **httpOnly server-owned sessions** |
 | Payments | Direct bank transfer at launch; ZarinPal behind a `PaymentGateway` interface |
-| Hosting | Liara or ParsPack — raced empirically, both are Iranian PaaS with a named Next.js platform |
+| Hosting | Liara for production; Vercel for non-production previews only |
+
+## Deployment
+
+Liara is the production target. Install its CLI once, create the `fazaileli-skincare-ir` Next.js app in Liara, configure the variables from `.env.example` in the Liara console, then deploy:
+
+```bash
+pnpm add --global @liara/cli@9.5.1
+liara login
+liara deploy
+```
+
+Vercel is preview-only. Link this checkout to the existing `aitch-tech/fazaileli-skincare-ir` project once, then create manual previews with:
+
+```bash
+pnpm dlx vercel@59.5.0 login
+pnpm dlx vercel@59.5.0 link --team aitch-tech --project fazaileli-skincare-ir
+pnpm dlx vercel@59.5.0 deploy
+```
+
+Git integration continues to create previews for non-`main` branches. `vercel.json` disables Git deployments from `main`, so production remains on Liara. Configure only non-production services and credentials in Vercel's Preview environment.
 
 ## Designs
 
