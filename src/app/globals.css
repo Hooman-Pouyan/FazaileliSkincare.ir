@@ -55,7 +55,8 @@
     -webkit-font-smoothing: antialiased;
   }
 
-  [lang="fa"] { line-height: var(--leading-fa); }
+  [lang="fa"],
+  [lang="ar"] { line-height: var(--leading-fa); }
   [lang="en"] { line-height: var(--leading-latin); }
 
   :focus-visible {

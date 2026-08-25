@@ -11,7 +11,13 @@
     "academy": "Academy",
     "studio": "My Studio",
     "search": "Search",
-    "account": "Account"
+    "account": "Account",
+    "language": "Change language",
+    "locales": {
+      "fa": "Persian",
+      "en": "English",
+      "ar": "Arabic"
+    }
   },
   "landing": {
     "headline": "No step is ever rushed",

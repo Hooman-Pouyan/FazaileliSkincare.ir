@@ -20,7 +20,7 @@ export async function generateMetadata({
     title: { default: `${t("name")} — ${t("tagline")}`, template: `%s | ${t("name")}` },
     description: t("tagline"),
     metadataBase: new URL("https://fazaieli.ir"),
-    alternates: { languages: { fa: "/fa", en: "/en" } },
+    alternates: { languages: { fa: "/fa", en: "/en", ar: "/ar" } },
   };
 }
 
