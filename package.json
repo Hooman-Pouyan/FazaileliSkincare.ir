@@ -22,7 +22,9 @@
     "db:up": "bash scripts/database.sh up",
     "db:url": "bash scripts/database.sh url",
     "db:verify": "bash scripts/database.sh verify",
-    "test": "vitest run",
+    "test": "vitest run --exclude '**/node_modules/**' --exclude '**/.tmp-app*/**'",
+    "test:unit": "vitest run --exclude '**/node_modules/**' --exclude '**/.tmp-app*/**' --exclude '**/*.integration.test.ts'",
+    "test:integration": "vitest run --exclude '**/node_modules/**' --exclude '**/.tmp-app*/**' integration.test",
     "test:e2e": "playwright test"
   },
   "dependencies": {

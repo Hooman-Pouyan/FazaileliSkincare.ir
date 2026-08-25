@@ -77,10 +77,22 @@ Every one of these sits behind a named interface chosen at the composition root.
 Adding a real provider is a configuration change plus one adapter, never a change
 to a route, action, or screen.
 
-## What I can and cannot verify without your machine
+## Test suites
 
-Runnable anywhere: `typecheck`, `lint`, `format`, and every unit test that does
-not open a database connection.
+| Command | Needs PostgreSQL | Contents |
+|---|---|---|
+| `pnpm test:unit` | no | 14 files — money, jalali, phone, rate-limit keys, notifier, request boundary, runtime config, schema contract, search normalization, reference seed shape, i18n routing, rail, auth schemas, next config |
+| `pnpm test:integration` | yes | the three `*.integration.test.ts` files — Better Auth runtime, the PostgreSQL rate-limit store, and the Better Auth schema mapping |
+| `pnpm test` | yes | both |
+| `pnpm test:e2e` | yes, plus a running server | Playwright |
 
-Requires your machine: anything touching PostgreSQL (`db:*`, the
-`*.integration.test.ts` files), `pnpm dev`, `pnpm build`, and Playwright.
+The split exists so most changes can be verified without provisioning a
+database, and so a schema or policy regression is caught by a suite that runs in
+seconds rather than one that needs a container.
+
+## What can be verified without your machine
+
+Runnable in any checkout: `typecheck`, `lint`, `format`, and `test:unit`.
+
+Requires your machine: `test:integration`, every `db:*` command, `pnpm dev`,
+`pnpm build`, and Playwright.
