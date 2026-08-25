@@ -14,3 +14,18 @@ next-env.d.ts
 .tmp-app2/
 .tmp-app3/
 .tmp-ds/
+
+# Agent/tool working state
+.artifacts/
+.claude/
+.omo/
+.serena/
+.codegraph
+.playwright-cli/
+output/
+
+# Large local design inputs — not source of truth, see docs/14-*
+*.skill
+Fazaieli Storefront (offline).html
+design-system/Fazaieli Storefront (offline).html
+design-system/Untitled
