@@ -51,6 +51,9 @@ src/
 ## Style of work
 
 - **No speculative fallback chains, no compatibility guards, no alternate field-name checks.** Use the canonical source. If a contract has a gap, document the gap — don't synthesise data from unrelated state.
+- **One mechanism per concern, and no working around a drift.** Styling is Tailwind on the token layer with shadcn primitives; state ownership is in `architecture/data-and-state-ownership.md`; navigation is one manifest. When something fights the stack, the answer is to remove what does not belong — not to add a second mechanism, pin a tool to an older mode, or reach for a hand-rolled equivalent of something the framework already provides.
+
+  The worked example is on the record: the auth screens carried the only CSS Module in `src/`, Turbopack rejected it, and `dev` was pinned to `--webpack` to keep going. One drift bought a second, and every developer paid for it in rebuild speed until the module was removed. If a genuine framework constraint forces an exception, it goes in the config that owns the policy with the reason written next to it, never in an inline disable.
 - **No silent caps.** If something bounds coverage — a top-N, a retry limit, a sample — say so in the output rather than letting it read as complete.
 - **Targeted changes stay targeted.** Asked for a small change, change only that. Suggest the rest; don't apply it unprompted.
 - Forms: one `<Field>` set over react-hook-form + Zod, and **one schema per form shared by client and server**.

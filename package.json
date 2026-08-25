@@ -7,7 +7,7 @@
     "node": ">=22.11 <25"
   },
   "scripts": {
-    "dev": "next dev --webpack",
+    "dev": "next dev",
     "build": "next build && if [ \"${VERCEL:-}\" != \"1\" ]; then cp -R public .next/standalone/ && cp -R .next/static .next/standalone/.next/; fi",
     "start": "node .next/standalone/server.js",
     "typecheck": "tsc --noEmit",

@@ -14,7 +14,6 @@ import {
   type VerifyValues,
 } from "../models/auth.schemas";
 import type { AuthCopy } from "../screens/auth-screen";
-import styles from "../auth-screen.module.css";
 import { pendingPhoneStorageKey } from "./login-form";
 
 export function VerifyForm({
@@ -68,8 +67,10 @@ export function VerifyForm({
 
   if (phone === null) {
     return (
-      <div className={styles.missing} role="status">
-        <p className={styles.intro}>{copy.missingPhone}</p>
+      <div className="grid gap-6" role="status">
+        <p className="mt-4 max-w-[34rem] text-[length:var(--text-body)] leading-[1.9] text-stone-text">
+          {copy.missingPhone}
+        </p>
         <Button type="button" onClick={returnToLogin}>
           {copy.returnToLogin}
         </Button>
@@ -86,16 +87,16 @@ export function VerifyForm({
 
   return (
     <form
-      className={styles.form}
+      className="grid gap-8"
       onSubmit={handleSubmit(onSubmit)}
       aria-busy={isSubmitting}
       noValidate
     >
-      <div className={styles.field}>
+      <div className="grid gap-2">
         <Label htmlFor="auth-code">{copy.codeLabel}</Label>
         <Input
           id="auth-code"
-          className={styles.codeInput}
+          className="[direction:ltr] text-center text-[length:var(--text-h3)] tracking-[0.32em] [font-variant-numeric:tabular-nums]"
           type="text"
           inputMode="numeric"
           autoComplete="one-time-code"
@@ -106,24 +107,35 @@ export function VerifyForm({
           disabled={isSubmitting}
           {...register("code")}
         />
-        <p id="auth-code-hint" className={styles.hint}>
+        <p
+          id="auth-code-hint"
+          className="m-0 text-[length:var(--text-micro)] leading-[1.9] text-stone-text"
+        >
           {copy.codeHint}
         </p>
         {errors.code ? (
-          <p id="auth-code-error" className={styles.error} role="alert">
+          <p
+            id="auth-code-error"
+            className="m-0 text-[length:var(--text-small)] leading-[1.7] text-danger"
+            role="alert"
+          >
             {copy.codeError}
           </p>
         ) : null}
       </div>
 
       {requestError ? (
-        <p className={styles.error} role="alert" aria-live="assertive">
+        <p
+          className="m-0 text-[length:var(--text-small)] leading-[1.7] text-danger"
+          role="alert"
+          aria-live="assertive"
+        >
           {copy.invalidCode}
         </p>
       ) : null}
 
       <Button
-        className={styles.submit}
+        className="w-full"
         size="lg"
         type="submit"
         disabled={isSubmitting}
@@ -131,7 +143,7 @@ export function VerifyForm({
         {isSubmitting ? copy.verifyingCode : copy.verifyCode}
       </Button>
       <Button
-        className={styles.secondaryAction}
+        className="min-h-12 text-[length:var(--text-small)] text-firouzeh-text underline decoration-[color:var(--hairline)] underline-offset-[0.35em]"
         type="button"
         variant="link"
         onClick={returnToLogin}

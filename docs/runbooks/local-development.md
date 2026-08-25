@@ -169,16 +169,21 @@ layout, and the root layout here lives under a dynamic segment
 `next.config.ts`. It bypasses rendering entirely, so it owns its own document and
 imports `globals.css` itself; no layout runs above it.
 
-## Known issue — `next dev` runs on webpack
+## Styling has one mechanism
 
-`dev` is pinned to `next dev --webpack`. Under Next 16.3.2 + Tailwind 4.3.3,
-Turbopack merges Tailwind's global `*` preflight selector into
-`src/modules/auth/auth-screen.module.css` and then rejects it as non-local; the
-stylesheet itself contains no such selector. Webpack compiles it correctly.
+Tailwind on the token layer, with shadcn primitives restyled through it. There
+are no CSS Modules in `src/`, and adding one is a drift rather than a choice:
+`designs/tokens.css` already documents how to reach every token from a utility —
+colours through the `@theme inline` bindings (`bg-ink`, `text-sand`), spacing
+through Tailwind's numeric scale, which lands on the same pixel values as
+`--space-N`.
 
-Cost: slower dev rebuilds. Exit: either the upstream fix lands, or the auth
-screen stops using a CSS Module — the rest of the codebase styles through
-Tailwind and the token layer, so the module is the outlier, not the rule.
+This is not only a consistency preference. The auth screens carried a 222-line
+CSS Module, and Turbopack merged Tailwind's global `*` preflight selector into it
+and then rejected it as non-local — so `dev` was pinned to `--webpack` to work
+around a file that should not have existed. One drift produced a second, and the
+project paid for it in dev-server speed on every change. Removing the module
+removed both.
 
 ## What is deliberately faked locally
 

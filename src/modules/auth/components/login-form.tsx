@@ -14,7 +14,6 @@ import {
   type ParsedLoginValues,
 } from "../models/auth.schemas";
 import type { AuthCopy } from "../screens/auth-screen";
-import styles from "../auth-screen.module.css";
 
 export const pendingPhoneStorageKey = "fazaieli.auth.pending-phone";
 
@@ -59,16 +58,16 @@ export function LoginForm({
 
   return (
     <form
-      className={styles.form}
+      className="grid gap-8"
       onSubmit={handleSubmit(onSubmit)}
       aria-busy={isSubmitting}
       noValidate
     >
-      <div className={styles.field}>
+      <div className="grid gap-2">
         <Label htmlFor="auth-phone">{copy.phoneLabel}</Label>
         <Input
           id="auth-phone"
-          className={styles.phoneInput}
+          className="[direction:ltr] text-start"
           type="tel"
           inputMode="tel"
           autoComplete="tel-national"
@@ -78,24 +77,35 @@ export function LoginForm({
           disabled={isSubmitting}
           {...register("phone")}
         />
-        <p id="auth-phone-hint" className={styles.hint}>
+        <p
+          id="auth-phone-hint"
+          className="m-0 text-[length:var(--text-micro)] leading-[1.9] text-stone-text"
+        >
           {copy.phoneHint}
         </p>
         {errors.phone ? (
-          <p id="auth-phone-error" className={styles.error} role="alert">
+          <p
+            id="auth-phone-error"
+            className="m-0 text-[length:var(--text-small)] leading-[1.7] text-danger"
+            role="alert"
+          >
             {copy.phoneError}
           </p>
         ) : null}
       </div>
 
       {requestError ? (
-        <p className={styles.error} role="alert" aria-live="assertive">
+        <p
+          className="m-0 text-[length:var(--text-small)] leading-[1.7] text-danger"
+          role="alert"
+          aria-live="assertive"
+        >
           {copy.genericError}
         </p>
       ) : null}
 
       <Button
-        className={styles.submit}
+        className="w-full"
         size="lg"
         type="submit"
         disabled={isSubmitting}
