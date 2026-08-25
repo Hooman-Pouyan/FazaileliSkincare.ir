@@ -20,7 +20,7 @@ describe("buildPagination", () => {
     expect(pagination.previousHref).toBeNull();
     expect(pagination.nextHref).toBeNull();
     expect(pagination.pages).toEqual([
-      { page: 1, href: "/fa/shop/concern/lak", isCurrent: true },
+      { page: 1, href: "/shop/concern/lak", isCurrent: true },
     ]);
   });
 
@@ -41,8 +41,8 @@ describe("buildPagination", () => {
       pageSize: 24,
     });
 
-    expect(pagination.previousHref).toBe("/fa/shop/concern/lak");
-    expect(pagination.nextHref).toBe("/fa/shop/concern/lak?page=3");
+    expect(pagination.previousHref).toBe("/shop/concern/lak");
+    expect(pagination.nextHref).toBe("/shop/concern/lak?page=3");
   });
 
   it("has no next link on the last page", () => {
@@ -53,7 +53,7 @@ describe("buildPagination", () => {
 
     expect(pagination.pageCount).toBe(3);
     expect(pagination.nextHref).toBeNull();
-    expect(pagination.previousHref).toBe("/fa/shop/concern/lak?page=2");
+    expect(pagination.previousHref).toBe("/shop/concern/lak?page=2");
   });
 
   it("flags a page beyond the end instead of quietly showing nothing", () => {
@@ -65,7 +65,7 @@ describe("buildPagination", () => {
     });
 
     expect(pagination.isOutOfRange).toBe(true);
-    expect(pagination.lastPageHref).toBe("/fa/shop/concern/lak?page=3");
+    expect(pagination.lastPageHref).toBe("/shop/concern/lak?page=3");
   });
 
   it("windows a long run of pages around the current one", () => {
@@ -113,7 +113,7 @@ describe("buildPagination", () => {
     });
 
     expect(pagination.nextHref).toBe(
-      "/fa/shop/concern/lak?brand=forlled&sort=price_asc&page=3",
+      "/shop/concern/lak?brand=forlled&sort=price_asc&page=3",
     );
   });
 });

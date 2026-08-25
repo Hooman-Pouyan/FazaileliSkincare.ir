@@ -49,7 +49,7 @@ function hrefForPage(
   query: CatalogueQuery,
   page: number,
 ): string {
-  return catalogueHref(locale, { ...query, page });
+  return catalogueHref({ ...query, page });
 }
 
 export function buildPagination(

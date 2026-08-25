@@ -56,7 +56,9 @@ export const NAVIGATION: readonly NavigationItem[] = [
   {
     id: "brand",
     labelKey: "home",
-    path: "",
+    // The landing page is `/`. It was `""` when this function prepended the
+    // locale itself; the navigation layer needs a real path.
+    path: "/",
     room: "landing",
     order: 0,
     desktop: "rail",
@@ -163,8 +165,16 @@ export function navigationFor(
   }).toSorted((a, b) => a.order - b.order);
 }
 
-export function hrefFor(item: NavigationItem, locale: string): string | null {
-  return item.path === null ? null : `/${locale}${item.path}`;
+/**
+ * The item's destination, without a locale.
+ *
+ * `Link` from `@/i18n/navigation` applies the prefix. This function used to
+ * prepend one as well, so `Link` prefixed the already-prefixed path and the
+ * rail sent a Persian reader from `/fa` to `/fa/fa/shop`. Two mechanisms for
+ * one concern, and the URL was the place it showed.
+ */
+export function hrefFor(item: NavigationItem): string | null {
+  return item.path;
 }
 
 /**
@@ -174,10 +184,19 @@ export function hrefFor(item: NavigationItem, locale: string): string | null {
  * active — `/fa/shop/p/x` is still Shop. The landing page is the only exact
  * match, or it would claim every route in the application.
  */
+/**
+ * Which room a pathname belongs to.
+ *
+ * The pathname must come from `@/i18n/navigation`'s `usePathname`, which
+ * reports the route without its locale prefix — `/shop`, not `/en/shop`. Under
+ * `as-needed` the raw `next/navigation` pathname is prefixed for English and
+ * Arabic and bare for Persian, so reading it here would light the rail in one
+ * locale and not the others.
+ */
 export function activeRoom(pathname: string): NavigationRoom | null {
   const segments = pathname.split("/").filter(Boolean);
-  const [, room] = segments;
-  if (room === undefined) return segments.length === 1 ? "landing" : null;
+  const [room] = segments;
+  if (room === undefined) return "landing";
 
   const match = NAVIGATION.find(
     (item) => item.room !== null && item.path === `/${room}`,

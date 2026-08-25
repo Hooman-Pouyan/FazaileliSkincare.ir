@@ -10,13 +10,23 @@ import type { BreadcrumbLink, ShopHubPage } from "../models/page-models";
  *
  * Pure functions returning plain objects — the route serialises them. Nothing
  * here reads the database or the request.
+ *
+ * Each builder takes an `absolute` resolver rather than an origin and a locale.
+ * Turning a pathname into a URL is next-intl's prefixing rule, and re-deriving
+ * it here would be a second implementation of it — structured data that
+ * disagrees with the page's own canonical is a self-inflicted SEO fault. The
+ * route passes `localeUrl` bound to its locale, so these stay pure and testable
+ * without a request or a React tree.
  */
+
+/** Turns a locale-agnostic pathname into the absolute URL for this request. */
+export type AbsoluteUrl = (pathname: string) => string;
 
 export type JsonLd = Record<string, unknown>;
 
 export function breadcrumbList(
-  origin: string,
   links: readonly BreadcrumbLink[],
+  absolute: AbsoluteUrl,
 ): JsonLd | null {
   if (links.length === 0) return null;
 
@@ -27,7 +37,7 @@ export function breadcrumbList(
       "@type": "ListItem",
       position: index + 1,
       name: link.label,
-      item: absolute(origin, link.href),
+      item: absolute(link.href),
     })),
   };
 }
@@ -41,7 +51,10 @@ export function breadcrumbList(
  * put a rotating set of items into structured data that the PDP already
  * describes properly, each with its own real offer.
  */
-export function hubItemList(origin: string, page: ShopHubPage): JsonLd | null {
+export function hubItemList(
+  page: ShopHubPage,
+  absolute: AbsoluteUrl,
+): JsonLd | null {
   if (page.concerns.length === 0) return null;
 
   return {
@@ -54,24 +67,23 @@ export function hubItemList(origin: string, page: ShopHubPage): JsonLd | null {
       "@type": "ListItem",
       position: index + 1,
       name: concern.name,
-      url: absolute(origin, concern.href),
+      url: absolute(concern.href),
     })),
   };
 }
 
-export function collectionPage(origin: string, page: ShopHubPage): JsonLd {
+export function collectionPage(
+  page: ShopHubPage,
+  absolute: AbsoluteUrl,
+): JsonLd {
   const node: JsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: page.meta.title,
-    url: absolute(origin, page.meta.canonicalHref),
+    url: absolute(page.meta.canonicalPath),
   };
   // Emitted only when there is one. An empty string is a worse signal than an
   // absent property.
   if (page.meta.description) node.description = page.meta.description;
   return node;
-}
-
-function absolute(origin: string, href: string): string {
-  return href.startsWith("http") ? href : `${origin}${href}`;
 }

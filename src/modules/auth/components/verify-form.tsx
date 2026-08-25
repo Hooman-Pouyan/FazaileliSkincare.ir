@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useState, useSyncExternalStore } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -41,7 +41,7 @@ export function VerifyForm({
 
   const returnToLogin = () => {
     sessionStorage.removeItem(pendingPhoneStorageKey);
-    router.push(`/${locale}/login`);
+    router.push("/login");
   };
 
   const onSubmit = async ({ code }: ParsedVerifyValues) => {
@@ -54,7 +54,7 @@ export function VerifyForm({
       });
       if (result.error) throw new Error("AUTH_REQUEST_FAILED");
       sessionStorage.removeItem(pendingPhoneStorageKey);
-      router.replace(`/${locale}`);
+      router.replace("/");
       router.refresh();
     } catch {
       setRequestError(true);

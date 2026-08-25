@@ -65,7 +65,7 @@ const EMPTY: ShopHubPage = {
   meta: {
     title: "فروشگاه",
     description: null,
-    canonicalHref: "/fa/shop",
+    canonicalPath: "/fa/shop",
     robots: "index,follow",
   },
 };

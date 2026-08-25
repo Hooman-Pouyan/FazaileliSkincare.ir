@@ -49,7 +49,7 @@ export async function SiteFooter() {
           </h2>
           <ul className="mt-4 grid gap-3">
             {rooms.map((item) => {
-              const href = hrefFor(item, locale);
+              const href = hrefFor(item);
               if (href === null || item.path === null) return null;
               return (
                 <li key={item.id}>

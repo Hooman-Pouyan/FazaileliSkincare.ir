@@ -89,6 +89,21 @@ carried gap has become a real problem.
 
 ---
 
+## Locale routing pass — 2026-08-25
+
+Raised by a real defect: from `/fa`, the rail's Shop entry navigated to
+`/fa/fa/shop`. Decisions in [`22-locale-routing-decisions.md`](22-locale-routing-decisions.md).
+
+| # | What | Kind | Status |
+|---|---|---|---|
+| R.1 | **Seventeen call sites each built their own locale prefix**, and `Link` added a second one. Typecheck, ESLint and 242 unit tests all passed — the defect existed only where the two mechanisms met. This is the clearest example so far of why "one mechanism per concern" is a correctness rule and not a style preference, and it is worth remembering the next time a second implementation looks harmless. | drift | resolved |
+| R.2 | **Persian now has no URL prefix.** `/` is the Persian landing and `/fa` redirects to it. If any Instagram bio, printed card or existing link points at `/fa`, it still works via the redirect — but the canonical is now the bare path, and that is the address worth publishing from here on. | SEO / product | **needs you** |
+| R.3 | **The sign-out button sent English and Arabic customers to the Persian landing page.** Found by the new guard on its first run, not by a person. Fixed. | correctness | resolved |
+| R.4 | **`x-default` is not emitted.** The question is whether it names Persian or a language-negotiated root, and it belongs with the Landing's SEO work in packet 6 rather than being decided in passing. | SEO | open |
+| R.5 | **`/en` and `/ar` were not fetched in a browser during this pass.** `/` was, and the English path is the same code with a different prefix, but the dev server in this VM compiles slowly enough that the request timed out. Worth one look when you next run it. | verification | open |
+
+---
+
 ## Landing direction pass — 2026-08-25, ahead of packet 6
 
 Raised by reconciling the maintainer's description of the first page against the

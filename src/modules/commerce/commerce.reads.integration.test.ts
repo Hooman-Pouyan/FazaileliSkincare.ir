@@ -207,7 +207,7 @@ describe("listProducts — scopes, filters and the URL contract", () => {
     expect(outcome.kind).toBe("ready");
     if (outcome.kind !== "ready") return;
     expect(outcome.page.meta.robots).toBe("noindex,follow");
-    expect(outcome.page.meta.canonicalHref).toBe("/fa/shop/concern/hydration");
+    expect(outcome.page.meta.canonicalPath).toBe("/fa/shop/concern/hydration");
     expect(outcome.page.appliedFilters).toHaveLength(1);
   });
 

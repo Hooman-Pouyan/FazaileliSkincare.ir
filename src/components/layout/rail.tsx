@@ -65,7 +65,7 @@ export async function Rail() {
     >
       {brand ? (
         <Link
-          href={hrefFor(brand, locale) ?? "/"}
+          href={hrefFor(brand) ?? "/"}
           aria-label={t(brand.labelKey)}
           className="grid size-11 place-items-center"
         >
@@ -81,7 +81,7 @@ export async function Rail() {
       <ul className="mt-12 flex flex-col items-center gap-4">
         {rooms.map((item) => {
           const Icon = ICONS[item.id];
-          const href = hrefFor(item, locale);
+          const href = hrefFor(item);
           if (!Icon || href === null) return null;
           return (
             <li key={item.id}>

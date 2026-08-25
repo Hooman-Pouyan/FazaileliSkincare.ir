@@ -59,22 +59,22 @@ describe("Rail", () => {
     const html = await markup();
 
     const order = ["shop", "book", "academy"].map((room) =>
-      html.indexOf(`/fa/${room}`),
+      html.indexOf(`/${room}`),
     );
     expect(order.every((index) => index > -1)).toBe(true);
     expect(order).toEqual([...order].sort((a, b) => a - b));
   });
 
   it("sends the brand medallion to the locale landing page", async () => {
-    expect(await markup()).toContain('href="/fa"');
+    expect(await markup()).toContain('href="/"');
   });
 
   it("points the identity entry at /account, not /studio", async () => {
     // Decision N-2: /studio is the planned cross-room aggregate and is not built
     const html = await markup();
 
-    expect(html).toContain("/fa/account");
-    expect(html).not.toContain("/fa/studio");
+    expect(html).toContain("/account");
+    expect(html).not.toContain("/studio");
   });
 
   it("carries the command and locale utilities", async () => {
@@ -86,7 +86,7 @@ describe("Rail", () => {
 
   it("omits the cart until its gate opens", async () => {
     // SHELL-04: an affordance that cannot act is not a production control
-    expect(await markup()).not.toContain("/fa/cart");
+    expect(await markup()).not.toContain("/cart");
   });
 
   it("names the navigation for assistive technology", async () => {

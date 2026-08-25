@@ -14,37 +14,37 @@ function queryFrom(search: string) {
 describe("facetToggleHref", () => {
   it("adds a value that is not applied", () => {
     expect(facetToggleHref("fa", queryFrom(""), "brand", "forlled")).toBe(
-      "/fa/shop/concern/lak?brand=forlled",
+      "/shop/concern/lak?brand=forlled",
     );
   });
 
   it("removes a value that is applied", () => {
     expect(
       facetToggleHref("fa", queryFrom("brand=forlled"), "brand", "forlled"),
-    ).toBe("/fa/shop/concern/lak");
+    ).toBe("/shop/concern/lak");
   });
 
   it("returns to page one whenever a filter changes", () => {
     // Given: page 7 of the unfiltered set is unlikely to exist once filtered,
     // and landing on an empty page reads as a broken catalogue
     expect(facetToggleHref("fa", queryFrom("page=7"), "brand", "forlled")).toBe(
-      "/fa/shop/concern/lak?brand=forlled",
+      "/shop/concern/lak?brand=forlled",
     );
   });
 
   it("keeps the sort when a filter changes", () => {
     expect(
       facetToggleHref("fa", queryFrom("sort=price_asc"), "brand", "forlled"),
-    ).toBe("/fa/shop/concern/lak?brand=forlled&sort=price_asc");
+    ).toBe("/shop/concern/lak?brand=forlled&sort=price_asc");
   });
 
   it("toggles availability on and off", () => {
     expect(facetToggleHref("fa", queryFrom(""), "in_stock", "1")).toBe(
-      "/fa/shop/concern/lak?in_stock=1",
+      "/shop/concern/lak?in_stock=1",
     );
     expect(
       facetToggleHref("fa", queryFrom("in_stock=1"), "in_stock", "1"),
-    ).toBe("/fa/shop/concern/lak");
+    ).toBe("/shop/concern/lak");
   });
 });
 
@@ -63,17 +63,17 @@ describe("appliedFilters", () => {
       {
         parameter: "brand",
         value: "forlled",
-        removeHref: "/fa/shop/concern/lak?brand=storyderm&in_stock=1",
+        removeHref: "/shop/concern/lak?brand=storyderm&in_stock=1",
       },
       {
         parameter: "brand",
         value: "storyderm",
-        removeHref: "/fa/shop/concern/lak?brand=forlled&in_stock=1",
+        removeHref: "/shop/concern/lak?brand=forlled&in_stock=1",
       },
       {
         parameter: "in_stock",
         value: "1",
-        removeHref: "/fa/shop/concern/lak?brand=forlled&brand=storyderm",
+        removeHref: "/shop/concern/lak?brand=forlled&brand=storyderm",
       },
     ]);
   });
@@ -85,7 +85,7 @@ describe("appliedFilters", () => {
       {
         parameter: "price_min",
         value: "480000",
-        removeHref: "/fa/shop/concern/lak",
+        removeHref: "/shop/concern/lak",
       },
     ]);
   });

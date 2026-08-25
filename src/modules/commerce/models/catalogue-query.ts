@@ -227,7 +227,7 @@ export function parseCatalogueQuery(
 
   return canonical
     ? { kind: "canonical", query }
-    : { kind: "redirect", query, href: catalogueHref("fa", query) };
+    : { kind: "redirect", query, href: catalogueHref(query) };
 }
 
 function scopePath(scope: CatalogueScope): string {
@@ -245,7 +245,14 @@ function scopePath(scope: CatalogueScope): string {
   }
 }
 
-export function catalogueHref(locale: string, query: CatalogueQuery): string {
+/**
+ * The canonical URL for a query, without a locale.
+ *
+ * `Link` and `redirect` from `@/i18n/navigation` add the prefix. This function
+ * used to add one too, which is how a already-prefixed href reached `Link` and
+ * came back doubled — decision R-1.
+ */
+export function catalogueHref(query: CatalogueQuery): string {
   const values: [string, string][] = [];
 
   for (const key of PARAMETER_ORDER) {
@@ -287,7 +294,7 @@ export function catalogueHref(locale: string, query: CatalogueQuery): string {
     }
   }
 
-  const path = `/${locale}${scopePath(query.scope)}`;
+  const path = scopePath(query.scope);
   if (values.length === 0) return path;
 
   const search = values

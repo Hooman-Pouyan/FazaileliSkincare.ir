@@ -47,11 +47,11 @@ export function facetToggleHref(
   const base = withoutPage(query);
 
   if (parameter === "in_stock") {
-    return catalogueHref(locale, { ...base, inStockOnly: !base.inStockOnly });
+    return catalogueHref({ ...base, inStockOnly: !base.inStockOnly });
   }
 
   const key = LIST_PARAMETERS[parameter];
-  return catalogueHref(locale, {
+  return catalogueHref({
     ...base,
     [key]: toggleList(base[key], value),
   });
@@ -90,7 +90,7 @@ export function appliedFilters(
     filters.push({
       parameter,
       value: (rials / 10n).toString(),
-      removeHref: catalogueHref(locale, { ...withoutPage(query), [key]: null }),
+      removeHref: catalogueHref({ ...withoutPage(query), [key]: null }),
     });
   }
 

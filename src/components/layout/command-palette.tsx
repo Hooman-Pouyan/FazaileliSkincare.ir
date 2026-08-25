@@ -8,8 +8,8 @@ import {
   ShoppingBag,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
 import {
   CommandDialog,
@@ -57,7 +57,6 @@ export function CommandPalette() {
   const { isOpen, close } = useCommandPalette();
   const t = useTranslations("command");
   const nav = useTranslations("nav");
-  const locale = useLocale();
   const router = useRouter();
   const [query, setQuery] = useState("");
 
@@ -65,7 +64,9 @@ export function CommandPalette() {
     (item) => item.path !== null,
   );
 
-  function go(href: string) {
+  // `router` comes from `@/i18n/navigation`, so it applies the locale prefix.
+  // Nothing here builds one, per decision R-1.
+  function go(href: Parameters<typeof router.push>[0]) {
     close();
     setQuery("");
     router.push(href);
@@ -95,7 +96,10 @@ export function CommandPalette() {
             <CommandItem
               value={`search-${trimmed}`}
               onSelect={() =>
-                go(`/${locale}/shop/search?q=${encodeURIComponent(trimmed)}`)
+                go({
+                  pathname: "/shop/search",
+                  query: { q: trimmed },
+                })
               }
             >
               <Search aria-hidden />
@@ -109,7 +113,7 @@ export function CommandPalette() {
 
         <CommandGroup heading={t("roomsHeading")}>
           {destinations.map((item) => {
-            const href = hrefFor(item, locale);
+            const href = hrefFor(item);
             const Icon = ICONS[item.id];
             if (href === null) return null;
             return (

@@ -42,34 +42,35 @@ describe("one definition, not two", () => {
   });
 });
 
-describe("locale prefixing", () => {
-  it("prefixes every destination with the active locale", () => {
-    expect(hrefFor(item("shop"), "fa")).toBe("/fa/shop");
-    expect(hrefFor(item("shop"), "en")).toBe("/en/shop");
-    expect(hrefFor(item("shop"), "ar")).toBe("/ar/shop");
-  });
-
-  it("sends the brand mark to the locale landing page, not to /", () => {
-    expect(hrefFor(item("brand"), "fa")).toBe("/fa");
+describe("destinations carry no locale", () => {
+  // Given: `hrefFor` used to prepend the locale and `Link` prepended it again,
+  // so the rail sent a Persian reader from `/` to `/fa/fa/shop`. Prefixing
+  // belongs to `@/i18n/navigation` and to nothing else — decision R-1.
+  it("returns the bare path, leaving the prefix to the navigation layer", () => {
+    expect(hrefFor(item("shop"))).toBe("/shop");
+    expect(hrefFor(item("brand"))).toBe("/");
   });
 
   it("returns no href for an item that opens something instead", () => {
-    expect(hrefFor(item("command"), "fa")).toBeNull();
-    expect(hrefFor(item("locale"), "fa")).toBeNull();
+    expect(hrefFor(item("command"))).toBeNull();
+    expect(hrefFor(item("locale"))).toBeNull();
   });
 });
 
 describe("active room matching", () => {
+  // The pathname here is the locale-stripped one `@/i18n/navigation` reports,
+  // which is what the rail reads. Under `as-needed` the raw Next pathname is
+  // bare in Persian and prefixed in English and Arabic, so matching on it would
+  // light the rail in one locale and not the others.
   it.each([
-    ["/fa", "landing"],
-    ["/en", "landing"],
-    ["/fa/shop", "shop"],
-    ["/fa/shop/concern/lak", "shop"],
-    ["/fa/shop/p/dev-product-1", "shop"],
-    ["/fa/shop/search", "shop"],
-    ["/fa/book", "book"],
-    ["/fa/academy", "academy"],
-    ["/fa/account", "account"],
+    ["/", "landing"],
+    ["/shop", "shop"],
+    ["/shop/concern/lak", "shop"],
+    ["/shop/p/dev-product-1", "shop"],
+    ["/shop/search", "shop"],
+    ["/book", "book"],
+    ["/academy", "academy"],
+    ["/account", "account"],
   ])("%s is in the %s room", (pathname, room) => {
     expect(activeRoom(pathname)).toBe(room);
   });
@@ -77,17 +78,17 @@ describe("active room matching", () => {
   it("keeps a room active for every route inside it", () => {
     // Given: a nested product page is still Shop, or the rail loses its place
     // the moment a customer opens anything
-    expect(isActive(item("shop"), "/fa/shop/p/dev-product-1")).toBe(true);
-    expect(isActive(item("book"), "/fa/shop/p/dev-product-1")).toBe(false);
+    expect(isActive(item("shop"), "/shop/p/dev-product-1")).toBe(true);
+    expect(isActive(item("book"), "/shop/p/dev-product-1")).toBe(false);
   });
 
   it("does not let the landing page claim every route", () => {
-    expect(isActive(item("brand"), "/fa/shop")).toBe(false);
-    expect(isActive(item("brand"), "/fa")).toBe(true);
+    expect(isActive(item("brand"), "/shop")).toBe(false);
+    expect(isActive(item("brand"), "/")).toBe(true);
   });
 
   it("returns no room for a path outside the manifest", () => {
-    expect(activeRoom("/fa/legal/privacy")).toBeNull();
+    expect(activeRoom("/legal/privacy")).toBeNull();
   });
 });
 
@@ -158,7 +159,7 @@ describe("availability gates", () => {
 
     expect(rail).toContain("cart");
     expect(bottom).toContain("cart");
-    expect(hrefFor(item("cart"), "fa")).toBe("/fa/cart");
+    expect(hrefFor(item("cart"))).toBe("/cart");
   });
 });
 

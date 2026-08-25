@@ -379,10 +379,10 @@ async function loadTiles(
 
     return {
       slug: row.slug,
-      href: `/${localeCode}/shop/p/${row.slug}`,
+      href: `/shop/p/${row.slug}`,
       name: row.name,
       brandName: row.brandName,
-      brandHref: `/${localeCode}/shop/brand/${row.brandSlug}`,
+      brandHref: `/shop/brand/${row.brandSlug}`,
       promise: row.promise,
       image,
       offer,
@@ -402,7 +402,7 @@ export async function listProducts(
   const parsed = parseCatalogueQuery(scope, search);
   if (parsed.kind === "invalid") return invalidQuery(parsed.issues);
   if (parsed.kind === "redirect") {
-    return redirect(catalogueHref(localeCode, parsed.query));
+    return redirect(catalogueHref(parsed.query));
   }
 
   const query = parsed.query;
@@ -473,7 +473,7 @@ export async function listProducts(
 
   const sortOptions: readonly SortOption[] = SORTS.map((value) => ({
     value,
-    href: catalogueHref(localeCode, { ...query, sort: value, page: 1 }),
+    href: catalogueHref({ ...query, sort: value, page: 1 }),
     isCurrent: value === query.sort,
   }));
 
@@ -500,7 +500,7 @@ export async function listProducts(
     appliedFilters: filters,
     clearFiltersHref:
       filters.length > 0
-        ? catalogueHref(localeCode, {
+        ? catalogueHref({
             ...query,
             brands: [],
             concerns: [],
@@ -516,7 +516,7 @@ export async function listProducts(
     meta: {
       title: scopeTitle.title,
       description: scopeTitle.introduction,
-      canonicalHref: catalogueHref(localeCode, {
+      canonicalPath: catalogueHref({
         ...query,
         brands: [],
         concerns: [],
@@ -544,7 +544,7 @@ async function resolveScopeTitle(
   localeCode: string,
   scope: CatalogueScope,
 ): Promise<ScopeTitle> {
-  const shopCrumb = { label: "فروشگاه", href: `/${localeCode}/shop` };
+  const shopCrumb = { label: "فروشگاه", href: `/shop` };
 
   if (scope.kind === "hub") {
     return { title: "فروشگاه", introduction: null, breadcrumbs: [shopCrumb] };
@@ -596,7 +596,7 @@ async function resolveScopeTitle(
       shopCrumb,
       {
         label: row.name,
-        href: catalogueHref(localeCode, {
+        href: catalogueHref({
           scope,
           brands: [],
           concerns: [],
@@ -726,7 +726,7 @@ export async function getShopHub(
     ANONYMOUS_GROUP,
   );
 
-  const hubHref = `/${localeCode}/shop`;
+  const hubHref = "/shop";
   const t = await getTranslations({ locale: localeCode, namespace: "shop" });
 
   return ready({
@@ -764,7 +764,7 @@ export async function getShopHub(
       // would be a second place for the hub's name to live.
       title: t("meta.title"),
       description: t("meta.description"),
-      canonicalHref: hubHref,
+      canonicalPath: hubHref,
       robots: "index,follow",
     },
   });
@@ -935,7 +935,7 @@ export async function getProduct(
   const floor =
     eligible.length > 0 ? eligible.reduce((a, b) => (a < b ? a : b)) : null;
 
-  const detailHref = `/${localeCode}/shop/p/${row.slug}`;
+  const detailHref = `/shop/p/${row.slug}`;
   const brandName = row.brandName ?? row.brandSlug;
 
   return ready({
@@ -949,7 +949,7 @@ export async function getProduct(
     brand: {
       slug: row.brandSlug,
       name: brandName,
-      href: `/${localeCode}/shop/brand/${row.brandSlug}`,
+      href: `/shop/brand/${row.brandSlug}`,
       countryCode: row.brandCountry,
     },
     category:
@@ -957,13 +957,13 @@ export async function getProduct(
         ? {
             slug: row.categorySlug,
             name: row.categoryName,
-            href: `/${localeCode}/shop/c/${row.categorySlug}`,
+            href: `/shop/c/${row.categorySlug}`,
           }
         : null,
     concerns: concernRows.map((entry) => ({
       slug: entry.slug,
       name: entry.name,
-      href: `/${localeCode}/shop/concern/${entry.slug}`,
+      href: `/shop/concern/${entry.slug}`,
     })),
     media: mediaRows
       .filter(
@@ -997,14 +997,14 @@ export async function getProduct(
         ? null
         : priceView(floor, localeCode),
     breadcrumbs: [
-      { label: "فروشگاه", href: `/${localeCode}/shop` },
-      { label: brandName, href: `/${localeCode}/shop/brand/${row.brandSlug}` },
+      { label: "فروشگاه", href: `/shop` },
+      { label: brandName, href: `/shop/brand/${row.brandSlug}` },
       { label: row.name, href: detailHref },
     ],
     meta: {
       title: row.name,
       description: row.promise,
-      canonicalHref: detailHref,
+      canonicalPath: detailHref,
       robots: "index,follow",
     },
   });

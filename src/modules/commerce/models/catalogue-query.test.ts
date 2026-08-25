@@ -34,7 +34,7 @@ describe("canonical form", () => {
 
     expect(result.kind).toBe("redirect");
     if (result.kind !== "redirect") return;
-    expect(result.href).toBe("/fa/shop/concern/lak");
+    expect(result.href).toBe("/shop/concern/lak");
   });
 
   it("redirects rather than serving page=1 spelled out", () => {
@@ -42,7 +42,7 @@ describe("canonical form", () => {
 
     expect(result.kind).toBe("redirect");
     if (result.kind !== "redirect") return;
-    expect(result.href).toBe("/fa/shop/concern/lak");
+    expect(result.href).toBe("/shop/concern/lak");
   });
 
   it("drops unknown parameters and redirects to the clean URL", () => {
@@ -54,7 +54,7 @@ describe("canonical form", () => {
 
     expect(result.kind).toBe("redirect");
     if (result.kind !== "redirect") return;
-    expect(result.href).toBe("/fa/shop/concern/lak?sort=price_asc");
+    expect(result.href).toBe("/shop/concern/lak?sort=price_asc");
   });
 
   it("sorts and deduplicates repeated filter values", () => {
@@ -66,9 +66,7 @@ describe("canonical form", () => {
     expect(result.kind).toBe("redirect");
     if (result.kind !== "redirect") return;
     expect(result.query.brands).toEqual(["forlled", "storyderm"]);
-    expect(result.href).toBe(
-      "/fa/shop/concern/lak?brand=forlled&brand=storyderm",
-    );
+    expect(result.href).toBe("/shop/concern/lak?brand=forlled&brand=storyderm");
   });
 
   it("keeps an already-canonical filtered URL as canonical", () => {
@@ -161,8 +159,8 @@ describe("prices cross the URL in toman and are stored in rials", () => {
 
     expect(result.kind).toBe("canonical");
     if (result.kind !== "canonical") return;
-    expect(catalogueHref("fa", result.query)).toBe(
-      "/fa/shop/concern/lak?price_min=480000",
+    expect(catalogueHref(result.query)).toBe(
+      "/shop/concern/lak?price_min=480000",
     );
   });
 });
@@ -172,15 +170,15 @@ describe("hrefs", () => {
     const bare = (scope: CatalogueScope) => {
       const result = parseCatalogueQuery(scope, params({}));
       if (result.kind !== "canonical") throw new Error("expected canonical");
-      return catalogueHref("fa", result.query);
+      return catalogueHref(result.query);
     };
 
-    expect(bare({ kind: "hub" })).toBe("/fa/shop");
-    expect(bare({ kind: "concern", slug: "lak" })).toBe("/fa/shop/concern/lak");
+    expect(bare({ kind: "hub" })).toBe("/shop");
+    expect(bare({ kind: "concern", slug: "lak" })).toBe("/shop/concern/lak");
     expect(bare({ kind: "brand", slug: "forlled" })).toBe(
-      "/fa/shop/brand/forlled",
+      "/shop/brand/forlled",
     );
-    expect(bare({ kind: "category", slug: "serum" })).toBe("/fa/shop/c/serum");
+    expect(bare({ kind: "category", slug: "serum" })).toBe("/shop/c/serum");
   });
 
   it("puts the search term in the query string, not the path", () => {
@@ -188,8 +186,8 @@ describe("hrefs", () => {
 
     expect(result.kind).toBe("canonical");
     if (result.kind !== "canonical") return;
-    expect(catalogueHref("fa", result.query)).toBe(
-      `/fa/shop/search?q=${encodeURIComponent("سرم")}`,
+    expect(catalogueHref(result.query)).toBe(
+      `/shop/search?q=${encodeURIComponent("سرم")}`,
     );
   });
 
@@ -208,19 +206,26 @@ describe("hrefs", () => {
     if (forward.kind === "invalid" || backward.kind === "invalid") {
       throw new Error("expected both to parse");
     }
-    expect(catalogueHref("fa", forward.query)).toBe(
-      catalogueHref("fa", backward.query),
-    );
-    expect(catalogueHref("fa", forward.query)).toBe(
-      "/fa/shop/concern/lak?brand=forlled&sort=price_asc&page=2",
+    expect(catalogueHref(forward.query)).toBe(catalogueHref(backward.query));
+    expect(catalogueHref(forward.query)).toBe(
+      "/shop/concern/lak?brand=forlled&sort=price_asc&page=2",
     );
   });
 
-  it("keeps the locale prefix it is given", () => {
-    const result = parseCatalogueQuery({ kind: "hub" }, params({}));
+  it("carries no locale at all — prefixing belongs to the navigation layer", () => {
+    // Given: this function used to take a locale and prepend it, and `Link`
+    // prepended one too, so `/shop` became `/fa/fa/shop`. Decision R-1 leaves
+    // the prefix to `@/i18n/navigation` alone.
+    const result = parseCatalogueQuery(
+      { kind: "concern", slug: "lak" },
+      params({ brand: "forlled" }),
+    );
     if (result.kind !== "canonical") throw new Error("expected canonical");
 
-    expect(catalogueHref("en", result.query)).toBe("/en/shop");
-    expect(catalogueHref("ar", result.query)).toBe("/ar/shop");
+    const href = catalogueHref(result.query);
+    expect(href).toBe("/shop/concern/lak?brand=forlled");
+    for (const locale of ["fa", "en", "ar"]) {
+      expect(href.startsWith(`/${locale}/`)).toBe(false);
+    }
   });
 });

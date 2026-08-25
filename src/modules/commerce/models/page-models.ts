@@ -7,6 +7,12 @@ import type { OfferState } from "./offer";
  * and they expose no query internals: a screen receives finished hrefs and
  * finished money strings, so no client leaf rebuilds URL policy or formats a
  * price — and therefore none of them can format it differently.
+ *
+ * "Finished" means finished except for the locale. Every href here is a
+ * locale-agnostic pathname — `/shop/concern/melasma`, never `/fa/shop/...` —
+ * because `Link` and `redirect` from `@/i18n/navigation` own prefixing and
+ * nothing else may. A model that prefixed its own hrefs and then handed them to
+ * `Link` produced `/fa/fa/shop`; see `docs/22-locale-routing-decisions.md`.
  */
 
 export type MediaView = Readonly<{
@@ -65,11 +71,15 @@ export type BreadcrumbLink = Readonly<{ label: string; href: string }>;
  * What a route needs to emit correct metadata without re-deriving anything.
  * `robots` follows D-18-3: scope and paginated pages are indexable, filtered and
  * sorted permutations are not, and search results never are.
+ *
+ * `canonicalPath` carries **no locale**, like every other href in these models.
+ * The route turns it into an absolute URL with `localeUrl`, which asks
+ * next-intl for the prefix rather than guessing at one — decision R-1.
  */
 export type PageMeta = Readonly<{
   title: string;
   description: string | null;
-  canonicalHref: string;
+  canonicalPath: string;
   robots: "index,follow" | "noindex,follow";
 }>;
 

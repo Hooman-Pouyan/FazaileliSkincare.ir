@@ -1,8 +1,7 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { type NavigationRoom, activeRoom } from "@/lib/navigation/manifest";
 
 /**

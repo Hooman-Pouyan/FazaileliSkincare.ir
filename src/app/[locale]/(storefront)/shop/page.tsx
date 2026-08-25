@@ -2,8 +2,8 @@ import { cache } from "react";
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
-import { routing } from "@/i18n/routing";
-import { SITE_ORIGIN } from "@/lib/site";
+import { type Locale, routing } from "@/i18n/routing";
+import { localeAlternates, localeUrl } from "@/lib/site";
 import { getShopHub } from "@/modules/commerce/commerce.reads";
 import { StructuredData } from "@/modules/commerce/components/structured-data";
 import { ShopHubScreen } from "@/modules/commerce/screens/shop-hub.screen";
@@ -18,7 +18,7 @@ import {
  * No Drizzle, no price arithmetic, no eligibility decision lives here.
  */
 
-type ShopPageProps = { params: Promise<{ locale: string }> };
+type ShopPageProps = { params: Promise<{ locale: Locale }> };
 
 /**
  * `generateMetadata` and the page both need the hub, and React's request cache
@@ -33,22 +33,20 @@ export async function generateMetadata({
 }: ShopPageProps): Promise<Metadata> {
   const { locale } = await params;
   const outcome = await readHub(locale);
-  const canonical = `/${locale}/shop`;
 
   if (outcome.kind !== "ready") {
-    return { title: canonical, robots: { index: false, follow: true } };
+    return { robots: { index: false, follow: true } };
   }
 
   return {
     title: outcome.page.meta.title,
     description: outcome.page.meta.description,
     alternates: {
-      canonical,
-      // Every locale exists as a route; the hub is a scope page and is
-      // self-canonical in each, per D-18-3.
-      languages: Object.fromEntries(
-        routing.locales.map((code) => [code, `/${code}/shop`]),
-      ),
+      // The hub is a scope page and is self-canonical in each locale, per
+      // D-18-3. Both of these ask next-intl for the prefix, so Persian is `/shop`
+      // and English is `/en/shop` without this file knowing that rule.
+      canonical: localeUrl(outcome.page.meta.canonicalPath, locale),
+      languages: localeAlternates(outcome.page.meta.canonicalPath),
     },
     // The hub is indexable. Filtered and sorted permutations are not, and that
     // rule lives with the PLP that emits them.
@@ -64,6 +62,8 @@ export default async function ShopHubPage({ params }: ShopPageProps) {
   setRequestLocale(locale);
 
   const outcome = await readHub(locale);
+  // One prefixing rule, next-intl's, shared by the canonical and the JSON-LD.
+  const absolute = (pathname: string) => localeUrl(pathname, locale);
 
   switch (outcome.kind) {
     case "ready":
@@ -71,8 +71,8 @@ export default async function ShopHubPage({ params }: ShopPageProps) {
         <>
           <StructuredData
             data={[
-              collectionPage(SITE_ORIGIN, outcome.page),
-              hubItemList(SITE_ORIGIN, outcome.page),
+              collectionPage(outcome.page, absolute),
+              hubItemList(outcome.page, absolute),
             ]}
           />
           <ShopHubScreen page={outcome.page} />

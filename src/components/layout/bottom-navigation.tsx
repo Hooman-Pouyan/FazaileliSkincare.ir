@@ -9,8 +9,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
-import { usePathname } from "next/navigation";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import {
   type NavigationItem,
   type NavigationItemId,
@@ -76,7 +75,7 @@ export function BottomNavigation() {
       className="fixed inset-x-0 bottom-0 z-40 flex border-t border-solid border-[color:var(--hairline)] bg-[color:var(--ground)] pb-[env(safe-area-inset-bottom)] text-[color:var(--stone-text)] md:hidden"
     >
       {items.map((item) => {
-        const href = hrefFor(item, locale);
+        const href = hrefFor(item);
         const isCurrent = item.room !== null && item.room === current;
 
         if (href === null) {

@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -43,7 +43,7 @@ export function LoginForm({
       });
       if (result.error) throw new Error("AUTH_REQUEST_FAILED");
       sessionStorage.setItem(pendingPhoneStorageKey, phone);
-      router.push(`/${locale}/verify`);
+      router.push("/verify");
     } catch {
       setRequestError(true);
     }
