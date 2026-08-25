@@ -38,5 +38,34 @@
     "currency": "تومان",
     "loading": "در حال بارگذاری…",
     "inStock": "موجود"
+  },
+  "footer": {
+    "legalHeading": "قوانین",
+    "terms": "شرایط استفاده",
+    "privacy": "حریم خصوصی",
+    "returns": "بازگشت کالا",
+    "contactHeading": "تماس",
+    "roomsHeading": "بخش‌ها",
+    "trustBadge": "نماد اعتماد الکترونیکی",
+    "copyright": "© {year} {name}"
+  },
+  "account": {
+    "title": "حساب من",
+    "signedInAs": "وارد شده با شمارهٔ",
+    "signOut": "خروج از حساب",
+    "signIn": "ورود"
+  },
+  "states": {
+    "loading": "در حال بارگذاری…",
+    "errorTitle": "مشکلی پیش آمد",
+    "errorBody": "این صفحه الان بارگذاری نشد. دوباره تلاش کنید.",
+    "retry": "تلاش دوباره",
+    "reference": "کد پیگیری",
+    "notFoundTitle": "پیدا نشد",
+    "notFoundBody": "چیزی که دنبالش بودید اینجا نیست.",
+    "localeUnavailableTitle": "این بخش هنوز به این زبان منتشر نشده",
+    "localeUnavailableBody": "فروشگاه فعلاً فقط به فارسی در دسترس است.",
+    "goPersian": "رفتن به نسخهٔ فارسی",
+    "backToShop": "بازگشت به فروشگاه"
   }
 }

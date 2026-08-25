@@ -38,3 +38,15 @@ export function maskIranianPhone(input: string): string {
   const phone = normalizeIranianPhone(input);
   return `${phone.slice(0, 3)}${"*".repeat(phone.length - 7)}${phone.slice(-4)}`;
 }
+
+/**
+ * Groups a canonical E.164 Iranian number for reading: +98 912 345 6789.
+ *
+ * Display only. Every lookup, uniqueness check and rate-limit key uses the
+ * unformatted canonical value from `normalizeIranianPhone`, or the same person
+ * would occupy two identities.
+ */
+export function formatIranianPhone(input: string): string {
+  const phone = normalizeIranianPhone(input);
+  return `${phone.slice(0, 3)} ${phone.slice(3, 6)} ${phone.slice(6, 9)} ${phone.slice(9)}`;
+}

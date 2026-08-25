@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   InvalidIranianPhoneError,
+  formatIranianPhone,
   maskIranianPhone,
   normalizeIranianPhone,
 } from "./phone";
@@ -33,5 +34,18 @@ describe("Iranian phone normalization", () => {
 
   it("masks the canonical value while preserving useful recognition digits", () => {
     expect(maskIranianPhone("۰۹۱۲۳۴۵۶۷۸۹")).toBe("+98******6789");
+  });
+});
+
+describe("display formatting", () => {
+  it("groups the canonical number for reading", () => {
+    expect(formatIranianPhone("+989123456789")).toBe("+98 912 345 6789");
+  });
+
+  it("normalizes before formatting, so every spelling reads the same", () => {
+    // Given: the same number typed with Persian digits and a local prefix
+    for (const input of ["۰۹۱۲۳۴۵۶۷۸۹", "09123456789", "+989123456789"]) {
+      expect(formatIranianPhone(input)).toBe("+98 912 345 6789");
+    }
   });
 });

@@ -38,5 +38,34 @@
     "currency": "Toman",
     "loading": "Loading…",
     "inStock": "In stock"
+  },
+  "footer": {
+    "legalHeading": "Legal",
+    "terms": "Terms of use",
+    "privacy": "Privacy",
+    "returns": "Returns",
+    "contactHeading": "Contact",
+    "roomsHeading": "Sections",
+    "trustBadge": "eNamad trust seal",
+    "copyright": "© {year} {name}"
+  },
+  "account": {
+    "title": "My account",
+    "signedInAs": "Signed in as",
+    "signOut": "Sign out",
+    "signIn": "Sign in"
+  },
+  "states": {
+    "loading": "Loading…",
+    "errorTitle": "Something went wrong",
+    "errorBody": "This page did not load. Please try again.",
+    "retry": "Try again",
+    "reference": "Reference",
+    "notFoundTitle": "Not found",
+    "notFoundBody": "What you were looking for is not here.",
+    "localeUnavailableTitle": "Not published in this language yet",
+    "localeUnavailableBody": "The shop is currently available in Persian only.",
+    "goPersian": "Go to the Persian site",
+    "backToShop": "Back to the shop"
   }
 }

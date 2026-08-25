@@ -38,5 +38,34 @@
     "currency": "تومان",
     "loading": "جارٍ التحميل…",
     "inStock": "متوفر"
+  },
+  "footer": {
+    "legalHeading": "الأحكام",
+    "terms": "شروط الاستخدام",
+    "privacy": "الخصوصية",
+    "returns": "إرجاع المنتجات",
+    "contactHeading": "اتصل بنا",
+    "roomsHeading": "الأقسام",
+    "trustBadge": "شعار الثقة الإلكتروني",
+    "copyright": "© {year} {name}"
+  },
+  "account": {
+    "title": "حسابي",
+    "signedInAs": "تم تسجيل الدخول بالرقم",
+    "signOut": "تسجيل الخروج",
+    "signIn": "تسجيل الدخول"
+  },
+  "states": {
+    "loading": "جارٍ التحميل…",
+    "errorTitle": "حدث خطأ ما",
+    "errorBody": "لم يتم تحميل هذه الصفحة. حاول مرة أخرى.",
+    "retry": "حاول مرة أخرى",
+    "reference": "رقم المرجع",
+    "notFoundTitle": "غير موجود",
+    "notFoundBody": "ما كنت تبحث عنه غير موجود هنا.",
+    "localeUnavailableTitle": "لم يُنشر بهذه اللغة بعد",
+    "localeUnavailableBody": "المتجر متاح حالياً بالفارسية فقط.",
+    "goPersian": "الانتقال إلى النسخة الفارسية",
+    "backToShop": "العودة إلى المتجر"
   }
 }

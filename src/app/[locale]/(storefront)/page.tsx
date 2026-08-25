@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { Rail } from "@/components/layout/rail";
 import { Button } from "@/components/ui/button";
 
 const DOORS = [
@@ -23,7 +22,6 @@ export default async function LandingPage({
 
   return (
     <>
-      <Rail />
       <main className="ms-14">
         {/* HERO — editorial scroll, asymmetric split, no card, no shadow */}
         <section className="flex min-h-screen items-stretch">
