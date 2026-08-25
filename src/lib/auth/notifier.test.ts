@@ -6,6 +6,7 @@ import {
   SmsDeliveryError,
   createOtpNotifier,
   type OtpDeliveryLog,
+  type OtpDeliveryRequest,
 } from "./notifier";
 
 const PHONE = "+989123456789";
@@ -13,6 +14,36 @@ const OTP = "123456";
 
 afterEach(() => {
   vi.useRealTimers();
+});
+
+describe("fake OTP notifier development reveal", () => {
+  it("hands the code to the reveal sink while the delivery log stays OTP-free", async () => {
+    const logs: OtpDeliveryLog[] = [];
+    const revealed: OtpDeliveryRequest[] = [];
+    const notifier = createOtpNotifier(
+      { provider: "fake" },
+      (event) => logs.push(event),
+      (input) => revealed.push(input),
+    );
+
+    await notifier.sendOtp({
+      phone:
+        "\u06f0\u06f9\u06f1\u06f2\u06f3\u06f4\u06f5\u06f6\u06f7\u06f8\u06f9",
+      otp: OTP,
+    });
+
+    expect(revealed).toEqual([{ phone: PHONE, otp: OTP }]);
+    expect(JSON.stringify(logs)).not.toContain(OTP);
+    expect(JSON.stringify(logs)).not.toContain(PHONE);
+  });
+
+  it("omits the reveal sink when none is supplied", async () => {
+    const notifier = createOtpNotifier({ provider: "fake" });
+
+    await expect(notifier.sendOtp({ phone: PHONE, otp: OTP })).resolves.toEqual(
+      { provider: "fake", status: "accepted" },
+    );
+  });
 });
 
 describe("fake OTP notifier", () => {

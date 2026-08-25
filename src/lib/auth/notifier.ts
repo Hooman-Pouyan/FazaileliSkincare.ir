@@ -61,16 +61,29 @@ function logDelivery(
   });
 }
 
+/**
+ * The delivery log stays masked and OTP-free for every provider. The fake
+ * provider additionally exposes the code through a separate `reveal` sink so a
+ * developer can complete a local sign-in without an SMS account. That sink is
+ * wired only outside production, and `resolveAuthRuntimeConfig` refuses this
+ * provider when NODE_ENV=production, so the two guards are independent.
+ */
+export type OtpReveal = (input: OtpDeliveryRequest) => void;
+
 export class FakeOtpNotifier implements OtpNotifier {
   readonly deliveries: OtpDeliveryRequest[] = [];
 
-  constructor(private readonly log?: OtpDeliveryLogger) {}
+  constructor(
+    private readonly log?: OtpDeliveryLogger,
+    private readonly reveal?: OtpReveal,
+  ) {}
 
   async sendOtp(input: OtpDeliveryRequest): Promise<OtpDeliveryResult> {
     const phone = normalizeIranianPhone(input.phone);
     assertOtp(input.otp);
     this.deliveries.push({ phone, otp: input.otp });
     logDelivery(this.log, "fake", phone, "accepted");
+    this.reveal?.({ phone, otp: input.otp });
     return { provider: "fake", status: "accepted" };
   }
 }
@@ -148,8 +161,9 @@ export class KavenegarOtpNotifier implements OtpNotifier {
 export function createOtpNotifier(
   config: SmsConfig,
   log?: OtpDeliveryLogger,
+  reveal?: OtpReveal,
 ): OtpNotifier {
-  if (config.provider === "fake") return new FakeOtpNotifier(log);
+  if (config.provider === "fake") return new FakeOtpNotifier(log, reveal);
   return new KavenegarOtpNotifier({
     apiKey: config.apiKey,
     template: config.template,
