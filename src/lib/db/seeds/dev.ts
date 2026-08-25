@@ -167,7 +167,9 @@ export async function seedDevCatalogue(
             sortOrder: line.sortOrder,
           })
           .onConflictDoUpdate({
-            target: productLine.slug,
+            // product_line is unique on (brand_id, slug), not slug alone — two
+            // brands may both have a "hydration" line.
+            target: [productLine.brandId, productLine.slug],
             set: { sortOrder: line.sortOrder, updatedAt: new Date() },
           })
           .returning({ id: productLine.id });
