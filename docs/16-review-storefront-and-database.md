@@ -252,7 +252,7 @@ C1, C2 and C7 are worth doing before any DB3 code. C3–C6 land inside the phase
 | MEDIUM-5 / C5 | Accept nullable cart-item provenance, `ON DELETE SET NULL`, and historical cart reference. | Transaction plan COM0/COM1 |
 | LOW-6 / C6 | Accept payment/shipment status-timestamp checks. | Transaction plan COM0 |
 | LOW-7 | Accept order-line uniqueness, E.164 phone check, and payment-event enum. Drop decorative `price.effective_at`; scheduled pricing remains deferred. Simplify the redundant publication index predicate. | AUTH0/COM0 |
-| LOW-8 | Keep this out of a cross-table DB constraint. Enforce exact-locale translation, active variant, eligible price, approved media, and publication in the DB3 read predicate and staff publication gate. | Database plan DB3 |
+| LOW-8 | Keep this out of a cross-table DB constraint. Enforce exact-locale translation, active variant, eligible price, approved media, and publication in the DB3 read predicate and staff publication gate. **Amended 2026-08-25:** approved primary media is enforced at the publication gate only, not in the runtime read predicate — see the note below. | `modules/commerce/models/publication.ts` |
 | D-a / auth recommendation | Accept phone OTP only for customers in v1. Staff use separately provisioned email/password plus mandatory TOTP. | Dedicated auth plan; decision map, ADR, domain model, master plan aligned |
 | D-b / Relay | Resolve D13 as “no cross-room/marketplace mega-menu”; a Shop-only Relay remains post-core and separately gated. | `00-decision-map.md` D13 and storefront Relay gate |
 | D-d / expiry | Make `expires_at > now()` an explicit availability predicate; cleanup is not correctness. | Database and transaction plans |
@@ -286,3 +286,27 @@ provider integration, and UI remain unimplemented pending maintainer review.
 Migration `0002` was hand-ordered after generation: `drizzle-kit` emitted the
 composite foreign key before the unique index it depends on, which PostgreSQL
 rejects. The committed file creates the index first.
+
+### Amendment — where approved media is enforced
+
+**Date:** 2026-08-25 · **Applies to:** LOW-8
+
+The disposition above named both the read predicate and the staff publication
+gate. The implementation splits them, and enforces approved primary media only
+at the gate.
+
+`isPubliclyVisible` — the runtime predicate every catalogue read applies —
+requires publication, approval, an exact-locale translation and an active
+variant. `publicationBlockers` — the staff gate — requires all of that plus
+approved primary media and either a price or a deliberate `on_request` marking.
+
+The reason is failure mode, not convenience. A runtime media requirement means
+deleting an image, or re-running an approval, silently makes stock unbuyable,
+with no signal to staff and no error anywhere. Enforced at the gate, a product
+cannot be published without a photograph in the first place; if one later
+disappears the page degrades to a placeholder and the product stays sellable.
+
+Development product 10 (`dev-product-10-no-media`) exists to hold this line: it
+is published, priced, in stock and has no media, and it must remain purchasable.
+If a future change makes it disappear, the media rule has migrated into the read
+path.
