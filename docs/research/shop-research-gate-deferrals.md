@@ -50,7 +50,8 @@ different: they are external facts, they exist, and they stay binding.
 | Deferred decision | Browse axes, URL grammar, filters, sorting, counts, search behavior, SEO, analytics, empty/error behavior, mobile RTL requirements |
 | Interim rule | The URL grammar in `storefront/plp.md` is treated as provisional-but-binding: it ships, it is honoured everywhere, and it is not forked. Facets are limited to those the schema can already answer — brand, concern, category, availability, price. No quick view. No merchandising slots beyond what the hub plan already names. |
 | Re-review trigger | Before the storefront is publicly indexable, because changing URL grammar after indexing costs redirects |
-| Unresolved gap carried | Whether sort defaults to relevance or newest, and whether zero-result searches suggest or simply state absence |
+| Unresolved gap carried | Whether zero-result searches suggest alternatives or simply state absence |
+| Decided 2026-08-25 | The sort default is `featured` — curated `merchandising_rank` order, which `product_public_catalog_idx` already covers. Relevance was not chosen because it is meaningless outside a search scope, and newest was not chosen because a small catalogue would reorder itself on every import. The full grammar is `modules/commerce/models/catalogue-query.ts`. |
 
 ### #6 — PDP content and guidance · `shop-pdp-and-guidance.md`
 
