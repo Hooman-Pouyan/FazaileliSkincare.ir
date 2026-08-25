@@ -1,5 +1,6 @@
 import { maskIranianPhone, normalizeIranianPhone } from "./phone";
 import { AUTH_OTP_POLICY } from "./rate-limit-key";
+import type { SmsConfig } from "./runtime-config";
 
 export type OtpDeliveryLog = Readonly<{
   event: "otp_delivery";
@@ -142,4 +143,16 @@ export class KavenegarOtpNotifier implements OtpNotifier {
     logDelivery(this.options.log, "kavenegar", phone, "accepted");
     return { provider: "kavenegar", status: "accepted" };
   }
+}
+
+export function createOtpNotifier(
+  config: SmsConfig,
+  log?: OtpDeliveryLogger,
+): OtpNotifier {
+  if (config.provider === "fake") return new FakeOtpNotifier(log);
+  return new KavenegarOtpNotifier({
+    apiKey: config.apiKey,
+    template: config.template,
+    log,
+  });
 }

@@ -4,6 +4,7 @@ import {
   KavenegarOtpNotifier,
   NotifierInputError,
   SmsDeliveryError,
+  createOtpNotifier,
   type OtpDeliveryLog,
 } from "./notifier";
 
@@ -15,6 +16,19 @@ afterEach(() => {
 });
 
 describe("fake OTP notifier", () => {
+  it("selects only the provider approved by runtime configuration", () => {
+    expect(createOtpNotifier({ provider: "fake" })).toBeInstanceOf(
+      FakeOtpNotifier,
+    );
+    expect(
+      createOtpNotifier({
+        provider: "kavenegar",
+        apiKey: "test-api-key",
+        template: "login",
+      }),
+    ).toBeInstanceOf(KavenegarOtpNotifier);
+  });
+
   it("normalizes delivery input but logs only a redacted result", async () => {
     const logs: OtpDeliveryLog[] = [];
     const notifier = new FakeOtpNotifier((event) => logs.push(event));
