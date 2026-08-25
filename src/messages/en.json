@@ -78,44 +78,66 @@
     "close": "Close"
   },
   "shop": {
-    "eyebrow": "Shop",
-    "title": "Skincare, chosen by concern",
-    "lede": "Professional products from Forlle'd Japan, Storyderm Korea and Thalgo France — selected for skin we have treated in the clinic.",
+    "eyebrow": "The shop",
+    "title": "Start with what you see in the mirror",
+    "lede": "Pigmentation, breakouts, dryness, fine lines — every skin has its own story. What you see here is what has worked on our clients' skin in the clinic: not everything on the market, but what we chose.",
+    "heroPrimary": "Browse products",
+    "heroSecondary": "Ask us first",
     "imagePending": "Product image",
     "enquiryHref": "https://wa.me/",
     "productCount": "{count, plural, one {# product} other {# products}}",
     "countBare": "{count, plural, one {#} other {#}}",
+    "rail": {
+      "previous": "Previous",
+      "next": "Next"
+    },
     "meta": {
-      "title": "Professional skincare shop",
-      "description": "Professional skincare from the official Forlle'd Japan representative in Mashhad — by pigmentation, acne, hydration, barrier repair and ageing."
+      "title": "Professional skincare shop | Forlle'd, Storyderm, Thalgo",
+      "description": "Professional skincare from the official Forlle'd Japan representative in Mashhad. For pigmentation, acne, hydration, barrier repair and ageing — shipped across Iran."
     },
     "concerns": {
-      "title": "Start with your skin concern",
-      "lede": "Rather than browsing brands, start from what you see in the mirror."
+      "title": "What does your skin need right now?",
+      "lede": "Rather than working through dozens of brands, pick the concern. Each path leads to products chosen for that one problem.",
+      "railLabel": "Skin concerns"
     },
     "featured": {
-      "title": "Selected by the institute"
+      "title": "What we recommend most",
+      "lede": "Mahdieh Fazaieli's picks from what we use in the clinic ourselves.",
+      "railLabel": "Recommended products"
+    },
+    "authenticity": {
+      "eyebrow": "Authenticity",
+      "title": "Genuine Forlle'd, straight from Japan",
+      "body": "The worry is fair: the market is full of counterfeits. We are the official Forlle'd Japan representative in Mashhad, and every product arrives through the official route. If you would like, we will check any package with you.",
+      "madeIn": "Made in Japan",
+      "action": "About the institute"
     },
     "brands": {
-      "title": "Brands",
-      "lede": "Each brand with its country of origin and what is currently in stock."
+      "title": "The brands we work with",
+      "lede": "Each one is here because we have seen what it does on skin."
     },
     "categories": {
-      "title": "By product type"
+      "title": "Or if you know what you are after",
+      "lede": "By product type."
+    },
+    "closing": {
+      "title": "Not sure which one is right for your skin?",
+      "body": "You do not have to guess. Send us a message and tell us what your skin is doing — we will point you in the right direction, whether or not you buy anything.",
+      "action": "Ask us"
     },
     "empty": {
-      "title": "Nothing to show yet",
-      "body": "The catalogue is still being prepared. In the meantime you can read about the institute.",
+      "title": "Nothing here yet",
+      "body": "We are still preparing the catalogue. In the meantime you can read about the institute and what we do.",
       "action": "Back to the front page"
     },
     "offer": {
       "currency": "toman",
-      "outOfStock": "Currently unavailable",
-      "onRequest": "Ask about price",
-      "professionalOnly": "For professionals — not sold online",
+      "outOfStock": "Not in stock right now",
+      "onRequest": "Ask about the price",
+      "professionalOnly": "For professionals only — not sold online",
       "professionalMark": "Professional",
       "variantRequired": "Choose a size on the product page",
-      "unavailable": "Not available"
+      "unavailable": "Not available at the moment"
     }
   }
 }

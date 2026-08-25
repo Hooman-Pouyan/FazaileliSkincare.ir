@@ -89,6 +89,14 @@ function tile(
 
 const PRICE = { amountRials: 4_800_000n, label: "۴۸۰٬۰۰۰" };
 
+const CONCERN = {
+  slug: "melasma",
+  name: "لک",
+  description: "لک‌های ناشی از آفتاب و بارداری",
+  href: "/shop/concern/melasma",
+  productCount: 3,
+} as const;
+
 describe("shop hub — sections appear only when they have something behind them", () => {
   it("renders the whole-page empty state when every axis is empty", () => {
     const html = render(EMPTY);
@@ -143,6 +151,58 @@ describe("shop hub — sections appear only when they have something behind them
     });
     expect(html).toContain('href="/fa/shop/p/serum"');
     expect(html).toContain('href="/fa/shop/brand/forlled"');
+  });
+});
+
+describe("shop hub — the page reads correctly before any script runs", () => {
+  // renderToStaticMarkup runs no effects, so this is the document a crawler and
+  // a reader with JavaScript disabled receive. Everything below must be in it.
+  it("puts the headline, the lede and both hero actions in the static HTML", () => {
+    const html = render(EMPTY);
+    expect(html).toContain(fa.shop.title);
+    expect(html).toContain(fa.shop.lede);
+    expect(html).toContain(fa.shop.heroPrimary);
+    expect(html).toContain(fa.shop.heroSecondary);
+  });
+
+  it("renders the authenticity claim once there is a catalogue, and not on an empty shop", () => {
+    // Counterfeit anxiety is a purchase objection, so the claim belongs beside
+    // things that can be bought. A shop with nothing in it asserting that its
+    // stock is genuine would be answering a question nobody asked.
+    const stocked = render({ ...EMPTY, concerns: [CONCERN] });
+    expect(stocked).toContain(fa.shop.authenticity.title);
+    expect(stocked).toContain("日本製");
+
+    expect(render(EMPTY)).not.toContain(fa.shop.authenticity.title);
+  });
+
+  it("renders rail items as a real list, not as slides a script must build", () => {
+    const html = render({
+      ...EMPTY,
+      featured: [
+        tile(
+          {
+            kind: "purchasable",
+            variantId: "v1",
+            amountRials: 4_800_000n,
+            onHand: 5,
+          },
+          PRICE,
+        ),
+      ],
+    });
+    expect(html).toContain("<li");
+    expect(html).toContain("سرم هیالورونیک");
+  });
+
+  it("never hides content behind the reveal", () => {
+    // `Reveal` adds `translate-y-3 opacity-0` only from an effect, and effects
+    // do not run here. A reveal built the other way round — hidden in the
+    // markup, shown by script — is the standard way a scroll animation costs a
+    // site its indexed content.
+    const html = render({ ...EMPTY, concerns: [CONCERN] });
+    expect(html).toContain(CONCERN.name);
+    expect(html).not.toContain("translate-y-3 opacity-0");
   });
 });
 

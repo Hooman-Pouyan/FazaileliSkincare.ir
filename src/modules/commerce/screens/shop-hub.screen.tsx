@@ -1,15 +1,19 @@
 import { useTranslations } from "next-intl";
-import { Container, Rule, Section } from "@/components/layout/container";
+import { Container, Section } from "@/components/layout/container";
 import { EmptyState } from "@/components/layout/empty-state";
-import { PageHeader } from "@/components/layout/page-header";
+import { Reveal } from "@/components/layout/reveal";
+import { ScrollRail } from "@/components/layout/scroll-rail";
 import { Link } from "@/i18n/navigation";
+import { Button } from "@/components/ui/button";
 import {
+  AuthenticityBand,
   BrandList,
   CategoryLinks,
   ConcernTiles,
   SectionHeading,
 } from "../components/hub-sections";
-import { ProductGrid, ProductTile } from "../components/product-tile";
+import { HubHero } from "../components/hub-hero";
+import { ProductTile } from "../components/product-tile";
 import type { ShopHubPage } from "../models/page-models";
 
 /**
@@ -18,15 +22,20 @@ import type { ShopHubPage } from "../models/page-models";
  * found: the dominant Iranian vendor has no concern axis at all.
  *
  * This is the Shop hub and only the Shop hub. Brand storytelling, the academy,
- * booking and testimonials belong to the Landing, per decision L-1; mixing them
- * in here would push the concern tiles below the fold and flatten the rooms the
- * shell exists to keep separate.
+ * booking and testimonials belong to the Landing, per decision L-1. The one
+ * exception is the authenticity band, which is not storytelling: counterfeit
+ * anxiety is a *purchase* objection, and answering it belongs where the buying
+ * happens.
  *
  * Every section renders from the page model or does not render at all. There is
- * no placeholder section and no "coming soon": an axis with nothing behind it is
- * a dead end dressed as a choice.
+ * no placeholder section and no "coming soon" — an axis with nothing behind it
+ * is a dead end dressed as a choice.
+ *
+ * Rhythm: ground → ground → lapis → surface → ground → ground. The dark band
+ * lands in the middle, which is the alternation `docs/09-brand-brief.md` asks
+ * for and the only field where gold and champagne pass contrast.
  */
-export function ShopHubScreen({ page }: { page: ShopHubPage }) {
+export function ShopHubScreen({ page }: { readonly page: ShopHubPage }) {
   const t = useTranslations("shop");
 
   const hasNothing =
@@ -38,7 +47,7 @@ export function ShopHubScreen({ page }: { page: ShopHubPage }) {
   if (hasNothing) {
     return (
       <main className="ms-14">
-        <PageHeader eyebrow={t("eyebrow")} title={t("title")} />
+        <HubHero />
         <Container>
           <EmptyState
             title={t("empty.title")}
@@ -59,10 +68,10 @@ export function ShopHubScreen({ page }: { page: ShopHubPage }) {
 
   return (
     <main className="ms-14">
-      <PageHeader eyebrow={t("eyebrow")} title={t("title")} lede={t("lede")} />
+      <HubHero />
 
       {page.concerns.length > 0 && (
-        <Section>
+        <Section id="concerns" className="scroll-mt-8">
           <Container>
             <SectionHeading
               title={t("concerns.title")}
@@ -76,20 +85,39 @@ export function ShopHubScreen({ page }: { page: ShopHubPage }) {
       {page.featured.length > 0 && (
         <Section tone="surface">
           <Container>
-            <SectionHeading title={t("featured.title")} />
-            <ProductGrid>
+            <SectionHeading
+              title={t("featured.title")}
+              lede={t("featured.lede")}
+            />
+            <ScrollRail
+              label={t("featured.railLabel")}
+              previousLabel={t("rail.previous")}
+              nextLabel={t("rail.next")}
+              itemClassName="[&>li]:w-[68vw] sm:[&>li]:w-[42vw] lg:[&>li]:w-[23rem]"
+            >
               {page.featured.map((product, index) => (
-                <ProductTile
+                <Reveal
+                  as="li"
                   key={product.slug}
-                  product={product}
-                  enquiryHref={t("enquiryHref")}
-                  priority={index < 4}
-                />
+                  delay={Math.min(index, 3) * 60}
+                >
+                  <ProductTile
+                    product={product}
+                    enquiryHref={t("enquiryHref")}
+                    priority={index < 2}
+                  />
+                </Reveal>
               ))}
-            </ProductGrid>
+            </ScrollRail>
           </Container>
         </Section>
       )}
+
+      <Section tone="lapis">
+        <Container>
+          <AuthenticityBand />
+        </Container>
+      </Section>
 
       {page.brands.length > 0 && (
         <Section>
@@ -102,13 +130,31 @@ export function ShopHubScreen({ page }: { page: ShopHubPage }) {
 
       {page.categories.length > 0 && (
         <Section>
-          <Container className="flex flex-col gap-8">
-            <Rule tone="soft" />
-            <SectionHeading title={t("categories.title")} />
+          <Container>
+            <SectionHeading
+              title={t("categories.title")}
+              lede={t("categories.lede")}
+            />
             <CategoryLinks categories={page.categories} />
           </Container>
         </Section>
       )}
+
+      <Section tone="surface">
+        <Container>
+          <Reveal className="flex max-w-[40em] flex-col gap-5">
+            <h2 className="text-h2 font-bold text-balance">
+              {t("closing.title")}
+            </h2>
+            <p className="text-lede leading-fa font-light text-stone-text">
+              {t("closing.body")}
+            </p>
+            <Button asChild size="lg" className="mt-2 w-fit">
+              <a href={t("enquiryHref")}>{t("closing.action")}</a>
+            </Button>
+          </Reveal>
+        </Container>
+      </Section>
     </main>
   );
 }
