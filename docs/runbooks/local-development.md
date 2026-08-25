@@ -18,6 +18,20 @@ pnpm db:seed reference
 pnpm dev
 ```
 
+## Port conflicts
+
+`FAZAIELI_DATABASE_PORT` in `.env.local` is the port the container publishes on
+`127.0.0.1`. If something already owns it — a Homebrew or Postgres.app instance,
+another project's container — `pnpm db:up` refuses with the offending port named
+and stops before compose leaves a half-created container behind.
+
+To move: change `FAZAIELI_DATABASE_PORT` **and** the port inside `DATABASE_URL`
+to the same new value, then `pnpm db:down && pnpm db:up`. `scripts/database.sh`
+and `drizzle.config.ts` both read `.env.local`, so the container, the migration
+runner and the app cannot drift onto different ports.
+
+To find the holder instead: `lsof -nP -iTCP:5432 -sTCP:LISTEN`.
+
 `pnpm db:url` prints the connection string the container is actually bound to;
 `pnpm db:reset` destroys and rebuilds it; `pnpm db:verify` provisions a
 throwaway database, migrates from zero, seeds twice, and runs the invariant and

@@ -9,7 +9,35 @@ readonly postgres_password="fazaieli_local"
 readonly postgres_user="fazaieli"
 
 project_name="${COMPOSE_PROJECT_NAME:-fazaieli-db-local}"
+
+# The published port lives in .env.local so the container, DATABASE_URL and the
+# app agree without repeating it on every command. An explicit environment
+# variable still wins, which is what verify_fresh_database relies on.
+if [[ -z "${FAZAIELI_DATABASE_PORT:-}" && -f "${repository_root}/.env.local" ]]; then
+  FAZAIELI_DATABASE_PORT="$(sed -n 's/^FAZAIELI_DATABASE_PORT="\?\([0-9]\{1,5\}\)"\?[[:space:]]*$/\1/p' \
+    "${repository_root}/.env.local" | tail -1)"
+fi
 export FAZAIELI_DATABASE_PORT="${FAZAIELI_DATABASE_PORT:-5432}"
+
+# Port 0 asks the kernel for a free port, so it can never collide.
+assert_port_available() {
+  local port="${FAZAIELI_DATABASE_PORT}"
+  if [[ "${port}" == "0" ]]; then
+    return 0
+  fi
+  if lsof -nP -iTCP:"${port}" -sTCP:LISTEN >/dev/null 2>&1; then
+    printf '%s\n' \
+      "Port ${port} is already in use, so the database container cannot bind it." \
+      "" \
+      "  What is holding it:  lsof -nP -iTCP:${port} -sTCP:LISTEN" \
+      "" \
+      "If that is another PostgreSQL you want to keep, choose a different port:" \
+      "  1. set FAZAIELI_DATABASE_PORT in .env.local (e.g. 5433)" \
+      "  2. update DATABASE_URL in .env.local to the same port" \
+      "  3. rerun this command" >&2
+    return 1
+  fi
+}
 
 run_compose() {
   docker compose --project-name "${project_name}" --file "${compose_file}" "$@"
@@ -41,6 +69,7 @@ database_url() {
 }
 
 start_postgres() {
+  assert_port_available
   run_compose up --detach --wait --wait-timeout 60 postgres
 }
 
