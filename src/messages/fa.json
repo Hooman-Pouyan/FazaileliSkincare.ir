@@ -67,5 +67,14 @@
     "localeUnavailableBody": "فروشگاه فعلاً فقط به فارسی در دسترس است.",
     "goPersian": "رفتن به نسخهٔ فارسی",
     "backToShop": "بازگشت به فروشگاه"
+  },
+  "command": {
+    "commandTitle": "جستجو و رفتن",
+    "commandDescription": "نام محصول را بنویسید یا یکی از بخش‌ها را انتخاب کنید.",
+    "searchLabel": "جستجوی محصول",
+    "searchPlaceholder": "نام محصول…",
+    "submit": "جستجو",
+    "roomsHeading": "بخش‌ها",
+    "close": "بستن"
   }
 }

@@ -70,12 +70,22 @@ research deferrals expire the moment it is shown to a customer.
 | 1 | This ledger and the status corrections it required | — | The three status sections match reality | **done** |
 | 2 | Fictional dev catalogue seed, production-refused | DB3 fixtures | `pnpm db:seed dev` fills brands, concerns, categories, products, variants, prices, stock, media across every offer state; refuses to run under `NODE_ENV=production` | **done** |
 | 3 | Catalogue read models, Arabic-form folding, `pg_trgm` GIN | DB3, C3, C4 | `getShopHub`, `listProducts`, `getProduct` enforce exact-locale, publication, active variant, eligible price, approved media and availability; infix search proves index use with `EXPLAIN (ANALYZE, BUFFERS)` | **done** — facet counts deliberately deferred to packet 6, see below |
-| 4 | Storefront module foundation and shell — header, footer, mobile navigation, command palette, locale/cart/account controls, minimal `/fa/account` | Stage 1 minimum, Stage 2 shell | Landing renders inside the shared shell at 390/768/1440 with Persian RTL passing; a signed-in customer can see their phone and sign out | |
+| 4 | Storefront module foundation and shell — header, footer, mobile navigation, command palette, locale/cart/account controls, minimal `/fa/account` | Stage 1 minimum, Stage 2 shell | Landing renders inside the shared shell at 390/768/1440 with Persian RTL passing; a signed-in customer can see their phone and sign out | **built — awaiting the maintainer's browser pass** |
 | 5 | `/fa/shop` product hub | Stage 2, DB4 | Concern-first hub renders from PostgreSQL with JavaScript disabled; route states and metadata present | |
 | 6 | PLP and search | Stage 3, `PLP0–5` | Concern, brand, category and `?q=` routes use canonical URL state, server results, live counts, stable pagination, verified empty and error states | |
 | 7 | PDP | Stage 4, `PDP1–6` | Offer states are truthful; `on_request`, professional-only, unavailable and variant-required cannot enter the cart | |
 | 8 | Cart presentation — drawer and `/fa/cart` | Stage 4, `CART1` | The shared cart model renders in both surfaces; no checkout, payment or settlement code exists | |
 | 9 | Transactional cart, reservations, `resolveCartOwner` | DB5, C5 | Concurrent requests cannot oversell; removal works; retries and guest-to-account merge are idempotent; the expiry predicate is observable | |
+
+### Known bounds — packet 4
+
+The command palette lists the room destinations and a search field. The five
+canonical concerns decision N-4 names are absent for now because they live in the
+database, and reading them in the shell would put a query on every page including
+the landing; they arrive with a cached reference read. There is no client-side
+filtering or autocomplete — `SHELL-03` puts results on the Search PLP and
+requires a plan amendment before a live transport exists, and four rooms is not
+a list that needs searching.
 
 ### Known bound — facet counts
 

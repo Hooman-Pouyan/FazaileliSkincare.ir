@@ -67,5 +67,14 @@
     "localeUnavailableBody": "المتجر متاح حالياً بالفارسية فقط.",
     "goPersian": "الانتقال إلى النسخة الفارسية",
     "backToShop": "العودة إلى المتجر"
+  },
+  "command": {
+    "commandTitle": "ابحث وانتقل",
+    "commandDescription": "اكتب اسم المنتج أو اختر أحد الأقسام.",
+    "searchLabel": "البحث عن منتج",
+    "searchPlaceholder": "اسم المنتج…",
+    "submit": "بحث",
+    "roomsHeading": "الأقسام",
+    "close": "إغلاق"
   }
 }

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { BottomNavigation } from "./bottom-navigation";
+import { CommandPalette } from "./command-palette";
 import { Rail } from "./rail";
 import { SiteFooter } from "./site-footer";
 
@@ -30,6 +31,7 @@ export function StorefrontShell({
       </div>
 
       <BottomNavigation />
+      <CommandPalette />
     </div>
   );
 }

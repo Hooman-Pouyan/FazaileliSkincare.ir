@@ -67,5 +67,14 @@
     "localeUnavailableBody": "The shop is currently available in Persian only.",
     "goPersian": "Go to the Persian site",
     "backToShop": "Back to the shop"
+  },
+  "command": {
+    "commandTitle": "Search and go",
+    "commandDescription": "Type a product name, or choose a section.",
+    "searchLabel": "Search products",
+    "searchPlaceholder": "Product name…",
+    "submit": "Search",
+    "roomsHeading": "Sections",
+    "close": "Close"
   }
 }
