@@ -151,3 +151,43 @@ Before any `package.json` is written or a new phase begins:
 An approved dependency is not automatically installed. Install it in the phase that owns its first concrete consumer, add its verification evidence, and remove or defer it if that consumer is rejected.
 
 Training data goes stale. The registry does not.
+
+---
+
+## Runtime range — widened deliberately, 2026-08-25
+
+`engines.node` was `22.x`. It is now `>=22.11 <25`.
+
+### Why it changed
+
+The maintainer's machine runs Node 24, so every `pnpm` invocation printed an
+engine warning. That warning is not cosmetic: pnpm writes it to **stdout**, so
+`psql "$(pnpm -s db:url)"` produced a connection string beginning with
+`[WARN] Unsupported engine` and failed with a baffling error. Use
+`bash scripts/database.sh url` in command substitution regardless.
+
+More importantly, the pin was describing a situation that had stopped being true.
+A range nobody honours is worse than a wider range that is enforced.
+
+### What the range means
+
+| Bound | Reason |
+|---|---|
+| `>=22.11` | The 22 LTS line, which `liara.json` deploys (`nodeVersion: "22"`). `.11` rather than `.0` because the earlier 22 patches predate the `require(esm)` behaviour Next 16 relies on. |
+| `<25` | Node 25 is not tested and is not an LTS line. Raising this is a decision, not a default. |
+
+### What did **not** change, and why that matters
+
+`liara.json` still deploys Node 22, and it remains the deployment target. Widening
+`engines` permits development on 24; it does not make 24 the production runtime.
+
+That would be a real risk — developing on one major and shipping another is how a
+runtime-specific bug reaches production unseen — so the database workflow now runs
+its matrix on **both 22 and 24**. Widening the range without widening the test
+would have moved the drift rather than removed it.
+
+### The condition to revisit
+
+When the deployment target moves to Node 24, `liara.json` and the lower bound
+change together, and the matrix drops 22. Until then both are supported and both
+are tested.

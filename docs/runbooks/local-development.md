@@ -134,11 +134,10 @@ psql "$(pnpm -s db:url)"     # connects to a database literally named "[WARN] �
 psql "$(bash scripts/database.sh url)"   # correct
 ```
 
-The warning itself is real: `package.json` pins `engines.node` to `22.x`, and the
-machine this was last run on had Node 24. The production image builds on 22, so
-development and production are on different major runtimes. Either install Node
-22 locally (`nvm use 22`), or widen `engines` deliberately and record it in
-`07-dependency-audit.md` — but do not leave the two disagreeing silently.
+`engines.node` is `>=22.11 <25`, so Node 22 and 24 are both supported and both
+are tested in CI. `liara.json` still deploys 22 — that is the production runtime,
+and the matrix exists so developing on 24 cannot hide a runtime-specific bug. See
+`07-dependency-audit.md` for the range and the condition to revisit it.
 
 ## Known issue — `next dev` runs on webpack
 
