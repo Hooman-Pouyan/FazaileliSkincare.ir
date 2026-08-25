@@ -14,8 +14,19 @@ project_name="${COMPOSE_PROJECT_NAME:-fazaieli-db-local}"
 # app agree without repeating it on every command. An explicit environment
 # variable still wins, which is what verify_fresh_database relies on.
 if [[ -z "${FAZAIELI_DATABASE_PORT:-}" && -f "${repository_root}/.env.local" ]]; then
-  FAZAIELI_DATABASE_PORT="$(sed -n 's/^FAZAIELI_DATABASE_PORT="\?\([0-9]\{1,5\}\)"\?[[:space:]]*$/\1/p' \
-    "${repository_root}/.env.local" | tail -1)"
+  # Parameter expansion, not sed: BSD sed on macOS does not accept the GNU \?
+  # operator, so a pattern that works on CI silently matched nothing here.
+  env_port_line="$(grep -E '^FAZAIELI_DATABASE_PORT=' "${repository_root}/.env.local" | tail -1 || true)"
+  if [[ -n "${env_port_line}" ]]; then
+    env_port="${env_port_line#*=}"
+    env_port="${env_port//\"/}"
+    env_port="${env_port//\'/}"
+    env_port="${env_port//[[:space:]]/}"
+    if [[ "${env_port}" =~ ^[0-9]{1,5}$ ]]; then
+      FAZAIELI_DATABASE_PORT="${env_port}"
+    fi
+  fi
+  unset env_port_line env_port
 fi
 export FAZAIELI_DATABASE_PORT="${FAZAIELI_DATABASE_PORT:-5432}"
 
