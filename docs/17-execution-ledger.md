@@ -20,7 +20,16 @@ internally consistent and none of them able to produce an ordered queue:
 | AUTH0–AUTH6 | [`system-design/authentication-and-account-security.md`](system-design/authentication-and-account-security.md) | Identity contract through production rollout |
 | Stage 0–6, with `PLP0–5` / `PDP1–6` / `CART1` | [`system-design/storefront.md`](system-design/storefront.md) and its page plans | Storefront delivery order |
 | C1–C8 | [`16-review-storefront-and-database.md`](16-review-storefront-and-database.md) | Review corrections |
-| D-18-n | [`18-storefront-direction-decisions.md`](18-storefront-direction-decisions.md) | Design authority, restricted-product behaviour, SEO |
+| D-18-n | [`21-landing-composition-decisions.md`](21-landing-composition-decisions.md)
+settles the first page: which surface owns brand storytelling, testimonials,
+academy and booking (L-1), the fixed beat order (L-2), the refusal of parallax,
+autoplay and looping rails with the substitutes that replace them (L-3), the
+one content-approval rule covering all three batches (L-4), the Forlle'd blossom
+vocabulary and the partner-brand colour rule (L-5, L-9), and Landing SEO bounded
+to verifiable claims (L-7). One item there is **proposed, not adopted**: the
+bounded petal reveal in L-5 waits on the maintainer.
+
+[`18-storefront-direction-decisions.md`](18-storefront-direction-decisions.md) | Design authority, restricted-product behaviour, SEO |
 
 A row below may satisfy parts of several at once. The leading number is a
 **position in the queue, not an identifier** — cite the underlying ID (`DB3`,
@@ -69,13 +78,14 @@ research deferrals expire the moment it is shown to a customer.
 |---|---|---|---|---|
 | 1 | This ledger and the status corrections it required | — | The three status sections match reality | **done** |
 | 2 | Fictional dev catalogue seed, production-refused | DB3 fixtures | `pnpm db:seed dev` fills brands, concerns, categories, products, variants, prices, stock, media across every offer state; refuses to run under `NODE_ENV=production` | **done** |
-| 3 | Catalogue read models, Arabic-form folding, `pg_trgm` GIN | DB3, C3, C4 | `getShopHub`, `listProducts`, `getProduct` enforce exact-locale, publication, active variant, eligible price, approved media and availability; infix search proves index use with `EXPLAIN (ANALYZE, BUFFERS)` | **done** — facet counts deliberately deferred to packet 6, see below |
+| 3 | Catalogue read models, Arabic-form folding, `pg_trgm` GIN | DB3, C3, C4 | `getShopHub`, `listProducts`, `getProduct` enforce exact-locale, publication, active variant, eligible price, approved media and availability; infix search proves index use with `EXPLAIN (ANALYZE, BUFFERS)` | **done** — facet counts deliberately deferred to packet 7, see below |
 | 4 | Storefront module foundation and shell — header, footer, mobile navigation, command palette, locale/cart/account controls, minimal `/fa/account` | Stage 1 minimum, Stage 2 shell | Landing renders inside the shared shell at 390/768/1440 with Persian RTL passing; a signed-in customer can see their phone and sign out | **built — awaiting the maintainer's browser pass** |
 | 5 | `/fa/shop` product hub | Stage 2, DB4 | Concern-first hub renders from PostgreSQL with JavaScript disabled; route states and metadata present | |
-| 6 | PLP and search | Stage 3, `PLP0–5` | Concern, brand, category and `?q=` routes use canonical URL state, server results, live counts, stable pagination, verified empty and error states | |
-| 7 | PDP | Stage 4, `PDP1–6` | Offer states are truthful; `on_request`, professional-only, unavailable and variant-required cannot enter the cart | |
-| 8 | Cart presentation — drawer and `/fa/cart` | Stage 4, `CART1` | The shared cart model renders in both surfaces; no checkout, payment or settlement code exists | |
-| 9 | Transactional cart, reservations, `resolveCartOwner` | DB5, C5 | Concurrent requests cannot oversell; removal works; retries and guest-to-account merge are idempotent; the expiry predicate is observable | |
+| 6 | Landing composition — the five IA beats, the ornament vocabulary, and the `testimonial` table with its draft-only importer | Stage 2, `L-1`–`L-7` | `/fa` renders the five beats in order at 390/768/1440 with Persian RTL passing and JavaScript disabled; every beat whose content is unapproved is **absent**, not empty-framed; motion is reveal-once on the existing duration and easing, and `prefers-reduced-motion` is verified; `Organization`+`LocalBusiness`+`WebSite` JSON-LD emits, with no `AggregateRating` | |
+| 7 | PLP and search | Stage 3, `PLP0–5` | Concern, brand, category and `?q=` routes use canonical URL state, server results, live counts, stable pagination, verified empty and error states | |
+| 8 | PDP | Stage 4, `PDP1–6` | Offer states are truthful; `on_request`, professional-only, unavailable and variant-required cannot enter the cart | |
+| 9 | Cart presentation — drawer and `/fa/cart` | Stage 4, `CART1` | The shared cart model renders in both surfaces; no checkout, payment or settlement code exists | |
+| 10 | Transactional cart, reservations, `resolveCartOwner` | DB5, C5 | Concurrent requests cannot oversell; removal works; retries and guest-to-account merge are idempotent; the expiry predicate is observable | |
 
 ### Known bounds — packet 4
 
@@ -87,17 +97,30 @@ filtering or autocomplete — `SHELL-03` puts results on the Search PLP and
 requires a plan amendment before a live transport exists, and four rooms is not
 a list that needs searching.
 
+### Known bound — the Landing is content-starved, deliberately
+
+Packet 6 builds the Landing's composition, not its content. All three source
+batches in `content/` are unpublished drafts — 42 testimonials with
+`publicationConsent = unknown`, 13 brands with unknown image rights, 10 academy
+offerings with unconfirmed prices and no dates.
+[`21-landing-composition-decisions.md`](21-landing-composition-decisions.md) L-4
+makes that one rule instead of three, and requires every dependent beat to
+degrade to *absent*. The page will therefore ship correct and thin. It gets
+thicker when the maintainer's three review passes land, in the order L-4 names:
+academy prices, testimonial consent, brand relationships. Those passes are the
+critical path for the Landing and they are not engineering work.
+
 ### Known bound — facet counts
 
 `listProducts` returns an empty `facets` array. PLP-03 requires each group's
 counts to be computed with that group's own selections removed, which is a
-separate query per group, and it lands with the facet rail in packet 6 that
+separate query per group, and it lands with the facet rail in packet 7 that
 renders them. Recorded here rather than left to read as a complete result.
 
 ### Direction decisions binding this block
 
 [`18-storefront-direction-decisions.md`](18-storefront-direction-decisions.md)
-settles three things packets 3–9 depend on: the order of design authority and
+settles three things packets 3–10 depend on: the order of design authority and
 where invention is permitted (D-18-1), professional-only products as visible and
 non-purchasable (D-18-2), and SEO as a per-route requirement rather than a later
 pass (D-18-3). D-18-3 closes the SEO half of the gate-5 deferral; the facet
@@ -109,7 +132,7 @@ manifest and sort defaults remain open.
 screen. Stage 1 item 7 already permits the alternative: *"implement each
 database-backed read only in its owning route slice after that slice's
 prerequisites close."* This block takes that route. Packet 4 builds only the
-foundation the shell needs; packets 5–8 each carry the module, page-model and
+foundation the shell needs; packets 5–9 each carry the module, page-model and
 fixture work their own route requires.
 
 The Stage 1 exit conditions are unchanged and still all apply — they are simply
@@ -124,7 +147,7 @@ browser-refetched read.
 
 | Work | Why | Comes back when |
 |---|---|---|
-| AUTH3 centralized authorization | Nothing in packets 1–8 is protected. Packet 9 needs cart ownership, which `resolveCartOwner` supplies without the full slice. | Any protected write beyond the cart |
+| AUTH3 centralized authorization | Nothing in packets 1–9 is protected. Packet 10 needs cart ownership, which `resolveCartOwner` supplies without the full slice. | Any protected write beyond the cart |
 | AUTH4 staff password and TOTP | Admin teaches nothing about the customer product right now | Before any admin screen |
 | AUTH5 security page, phone change, account closure | Same | After the storefront direction settles |
 | AUTH6 production hardening | No production to harden | With DB7 |

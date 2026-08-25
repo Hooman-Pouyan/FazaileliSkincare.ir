@@ -61,3 +61,25 @@ carried gap has become a real problem.
 - The rail's brand medallion is a bordered circle with a lapis dot, carried from the existing scaffold. The real mark, when there is one, replaces it in one place.
 - Room accent colours come from `--accent-*` tokens, so changing the active-state colour is a token edit, not a component edit.
 - `BottomNavigation` and `Rail` share the manifest but not markup. If a third surface appears, extract the shared item shape then — not before.
+
+---
+
+## Landing direction pass — 2026-08-25, ahead of packet 6
+
+Raised by reconciling the maintainer's description of the first page against the
+IA, the design playbook, and the three content batches. Decisions are in
+[`21-landing-composition-decisions.md`](21-landing-composition-decisions.md);
+what needs the maintainer is here.
+
+| # | What | Kind | Status |
+|---|---|---|---|
+| L.1 | **Academy prices are unconfirmed.** `content/academy/` records ۱۸م / ۳۹م / ۶م تومان as `needs_owner_confirmation`, and certificate issuers are unverified. This blocks the Landing's academy beat and the entire `/academy` room, and it is the single highest-leverage answer available. | content | **needs you** |
+| L.2 | **No testimonial may be published.** All 42 records carry `publicationConsent = unknown`. Consent has to be collected from named women about their own skin; it is not a flag anyone can set on their behalf. Beat 4's rail will render zero items until it exists. | content / consent | **needs you** |
+| L.3 | **Brand relationships and image rights are unresolved.** 13 marks, `imageRightsStatus = unknown` on all of them, official-representative status confirmed for Forlle'd only. No brand logo may be published; the Shop hub's brand row runs on seeded fiction until this lands. | content / legal | **needs you** |
+| L.4 | **Beat 2 needs two numbers** — years in practice and students trained. They are claims about the business and cannot be invented. Until supplied, the claim beat renders the two verifiable credentials only. | content | **needs you** |
+| L.5 | **The blossom petal reveal is proposed, not adopted.** Form and colour treatment are decided (L-5); the bounded six-petal reveal-once needs a yes before it is built. Refusing it costs the page nothing structurally. | UI / motion | **needs you** |
+| L.6 | **Parallax, autoplay carousels and looping testimonial rails were asked for and refused**, against `10-design-playbook.md` Step 5 and the testimonials README. Substitutes are sticky band pinning and a reader-paced RTL scroll-snap rail. Worth a look on screen before assuming the substitute delivers the feeling that was wanted. | UI / motion | open |
+| L.7 | **`LocalBusiness` JSON-LD needs the same three facts as the footer** — address, telephone, opening hours. Review item 4.2 now blocks structured data as well as the footer. | SEO / content | **needs you** |
+| L.8 | **The content review surface is deliberately not an admin.** AUTH4 is out of the block, so the plan is a generated review sheet per batch that writes answers back into the JSON with importers refusing anything still unknown. If that proves awkward in practice, the alternative is bringing a minimal admin forward — which inverts the block's sequence and should be a considered choice, not a drift. | process | open |
+| L.9 | **The 日本製 authenticity mark is a product idea, parked.** Counterfeit anxiety is the category's biggest objection and `اصالت` is already a PDP accordion section. Where an authenticity mark appears and what it asserts belongs with packet 8, not with landing ornament. | product | carried |
+| L.10 | **`/about`, `/results` and `/academy` do not exist**, so three of the Landing's five beats have no deeper destination. The beats terminate at the rooms that do exist and the deeper links are absent rather than dead. | structure | carried |
