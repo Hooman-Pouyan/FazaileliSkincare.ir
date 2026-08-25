@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { Rail } from "@/components/rail";
+import { Rail } from "@/components/layout/rail";
 import { Button } from "@/components/ui/button";
 
 const DOORS = [
@@ -12,7 +12,9 @@ const DOORS = [
 
 export default async function LandingPage({
   params,
-}: { params: Promise<{ locale: string }> }) {
+}: {
+  params: Promise<{ locale: string }>;
+}) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("landing");
@@ -37,7 +39,10 @@ export default async function LandingPage({
             </p>
             <div className="mt-2 flex flex-wrap items-center gap-4">
               <Button size="lg">{t("primaryCta")}</Button>
-              <Link href="/shop" className="border-b border-[var(--gold)] pb-1 text-[15px]">
+              <Link
+                href="/shop"
+                className="border-b border-[var(--gold)] pb-1 text-[15px]"
+              >
                 {t("secondaryCta")}
               </Link>
             </div>
@@ -63,9 +68,16 @@ export default async function LandingPage({
               href={door.href}
               className="group flex flex-col border-b border-[var(--hairline-soft)] md:border-b-0 md:[&:not(:last-child)]:border-e md:[&:not(:last-child)]:border-[var(--hairline-soft)]"
             >
-              <div className="flex h-64 items-center justify-center bg-[color-mix(in_oklab,var(--ink)_6%,var(--ground))]" aria-hidden />
+              <div
+                className="flex h-64 items-center justify-center bg-[color-mix(in_oklab,var(--ink)_6%,var(--ground))]"
+                aria-hidden
+              />
               <div className="flex flex-col gap-3 px-9 pb-11 pt-7">
-                <span className="h-px w-8" style={{ background: door.accent }} aria-hidden />
+                <span
+                  className="h-px w-8"
+                  style={{ background: door.accent }}
+                  aria-hidden
+                />
                 <h2 className="text-[28px] font-bold">{nav(door.key)}</h2>
                 <p className="max-w-[22em] text-[15px] leading-[1.9] text-[var(--stone-text)]">
                   {t(`doors.${door.key}`)}

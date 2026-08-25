@@ -17,7 +17,9 @@
       "fa": "Persian",
       "en": "English",
       "ar": "Arabic"
-    }
+    },
+    "primary": "Primary navigation",
+    "cart": "Cart"
   },
   "landing": {
     "headline": "No step is ever rushed",

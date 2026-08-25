@@ -4,8 +4,19 @@ import { cn } from "@/lib/utils";
  * Page gutter. The rail occupies 56px at the inline-start edge, so main
  * content is offset with `ms-14` at the layout level, not here.
  */
-export function Container({ className, ...props }: React.ComponentProps<"div">) {
-  return <div className={cn("mx-auto w-full max-w-[1440px] px-6 md:px-12 lg:px-20", className)} {...props} />;
+export function Container({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
+  return (
+    <div
+      className={cn(
+        "mx-auto w-full max-w-[1440px] px-6 md:px-12 lg:px-20",
+        className,
+      )}
+      {...props}
+    />
+  );
 }
 
 /**
@@ -18,7 +29,10 @@ export function Section({
   tone = "ground",
   bleed = false,
   ...props
-}: React.ComponentProps<"section"> & { tone?: "ground" | "surface" | "lapis"; bleed?: boolean }) {
+}: React.ComponentProps<"section"> & {
+  tone?: "ground" | "surface" | "lapis";
+  bleed?: boolean;
+}) {
   return (
     <section
       data-tone={tone}
@@ -35,10 +49,20 @@ export function Section({
 }
 
 /** A gold hairline. Separation comes from these, never from shadows. */
-export function Rule({ className, tone = "gold" }: { className?: string; tone?: "gold" | "soft" }) {
+export function Rule({
+  className,
+  tone = "gold",
+}: {
+  className?: string;
+  tone?: "gold" | "soft";
+}) {
   return (
     <hr
-      className={cn("h-px border-0", tone === "gold" ? "bg-[var(--hairline)]" : "bg-[var(--hairline-soft)]", className)}
+      className={cn(
+        "h-px border-0",
+        tone === "gold" ? "bg-[var(--hairline)]" : "bg-[var(--hairline-soft)]",
+        className,
+      )}
       aria-hidden
     />
   );
