@@ -75,6 +75,15 @@ export const productTranslation = pgTable("product_translation", {
 }, (table) => [
   primaryKey({ columns: [table.productId, table.localeCode] }),
   index("product_translation_search_idx").on(table.localeCode, table.normalizedSearchText),
+  // Trigram, not full text: PostgreSQL ships no Persian stemmer, so a text
+  // search configuration would be a guess. Trigrams give infix and typo
+  // tolerance over the already-normalized column, which is what a Persian
+  // shopper typing part of a product name actually needs. The btree above still
+  // serves locale-scoped prefix and exact lookups. (Review MEDIUM-3 / C3.)
+  index("product_translation_search_trgm_idx").using(
+    "gin",
+    sql`${table.normalizedSearchText} gin_trgm_ops`,
+  ),
 ]);
 
 export const productConcern = pgTable("product_concern", {

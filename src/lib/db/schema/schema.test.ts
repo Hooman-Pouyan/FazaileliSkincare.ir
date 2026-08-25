@@ -281,4 +281,24 @@ describe("database schema contract", () => {
       ),
     ).toEqual([]);
   });
+
+  it("indexes normalized search text for infix matching, not only prefixes", () => {
+    // Given: PostgreSQL has no Persian stemmer, so trigram is the launch choice
+    const translation = tableConfigs().find(
+      (table) => table.name === "product_translation",
+    );
+
+    // When: the indexes on the search column are inspected
+    const names = translation?.indexes.map((entry) => entry.config.name);
+
+    // Then: both the locale-scoped btree and the trigram GIN index exist —
+    // the btree serves prefix and exact lookups, the GIN serves infix and typos
+    expect(names).toContain("product_translation_search_idx");
+    expect(names).toContain("product_translation_search_trgm_idx");
+
+    const trigram = translation?.indexes.find(
+      (entry) => entry.config.name === "product_translation_search_trgm_idx",
+    );
+    expect(trigram?.config.method).toBe("gin");
+  });
 });

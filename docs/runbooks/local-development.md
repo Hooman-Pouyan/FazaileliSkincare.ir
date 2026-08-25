@@ -80,6 +80,21 @@ variant is inactive, one with no Persian translation, and two unpublished. The
 last three must **not** appear in the Persian catalogue — if they do, the
 publication or exact-locale predicate is broken.
 
+## After a normalization change
+
+`normalized_name` and `normalized_search_text` are computed at write time by
+`normalizeCatalogSearchText`, so changing that function leaves every stored row
+on the old rule and search quietly stops matching. Both seed profiles recompute
+normalization on conflict, so re-running the seed is the fix:
+
+```bash
+pnpm db:migrate && pnpm db:seed dev
+```
+
+The query path must call the same function on its input before comparing. There
+is no SQL-side equivalent — a query that skips it returns nothing for a
+correctly spelled Persian term.
+
 ## Signing in without SMS
 
 `SMS_PROVIDER="fake"` selects `FakeOtpNotifier`. It sends nothing and prints the

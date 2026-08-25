@@ -130,8 +130,8 @@ The stop is between the two.
 
 | ID | Correction | Lands in |
 |---|---|---|
-| C3 | `pg_trgm` GIN on `normalized_search_text` with `EXPLAIN` evidence | packet 3 |
-| C4 | `أإآٱ→ا`, `ة→ه` folding; document the ZWNJ consequence | packet 3 |
+| C3 | `pg_trgm` GIN on `normalized_search_text` with `EXPLAIN` evidence | packet 3 — index landed in migration `0003`; `EXPLAIN` evidence outstanding |
+| C4 | `أإآٱ→ا`, `ة→ه` folding; document the ZWNJ consequence | **done** |
 | C5 | `source_cart_item_id` nullable with `SET NULL`, add `source_cart_id` | packet 9 |
 | C6 | Status/timestamp checks on `payment` and `shipment` | DB6, out of block |
 

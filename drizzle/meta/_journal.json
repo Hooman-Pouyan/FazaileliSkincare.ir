@@ -22,6 +22,13 @@
       "when": 1787663256458,
       "tag": "0002_c1_c2_review_corrections",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1787674603128,
+      "tag": "0003_c3_trgm_search_index",
+      "breakpoints": true
     }
   ]
 }
