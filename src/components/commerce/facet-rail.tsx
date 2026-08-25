@@ -46,7 +46,7 @@ export function FacetGroup({
       <CollapsibleContent className="pb-5">
         {group.searchable && group.values.length > 10 && (
           <div className="relative mb-3">
-            <SearchIcon className="pointer-events-none absolute inset-inline-start-3 top-1/2 size-4 -translate-y-1/2 text-[var(--stone-text)]" />
+            <SearchIcon className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-[var(--stone-text)]" />
             <input
               type="search"
               value={query}

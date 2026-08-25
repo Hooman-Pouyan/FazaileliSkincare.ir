@@ -61,7 +61,7 @@ export async function Rail() {
   return (
     <nav
       aria-label={t("primary")}
-      className="fixed inset-block-0 inset-inline-start-0 z-40 flex w-14 flex-col items-center border-inline-end border-solid border-[color:var(--hairline)] bg-[color:var(--ground)] py-6 border-e"
+      className="fixed inset-y-0 start-0 z-40 flex w-14 flex-col items-center border-solid border-[color:var(--hairline)] bg-[color:var(--ground)] py-6 border-e"
     >
       {brand ? (
         <Link

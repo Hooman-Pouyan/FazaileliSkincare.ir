@@ -55,7 +55,7 @@ export function CartDrawer({
           >
             <ShoppingBagIcon />
             {count > 0 && (
-              <span className="absolute -top-1 inset-inline-end-0 grid size-4 place-items-center rounded-full bg-[var(--teal)] text-[10px] text-[var(--sand)] tabular-nums">
+              <span className="absolute -top-1 end-0 grid size-4 place-items-center rounded-full bg-[var(--teal)] text-[10px] text-[var(--sand)] tabular-nums">
                 {count}
               </span>
             )}

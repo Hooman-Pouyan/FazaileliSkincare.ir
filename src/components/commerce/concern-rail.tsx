@@ -50,7 +50,7 @@ export function ConcernRail({
                 <span
                   aria-hidden
                   className={cn(
-                    "absolute inset-block-start-0 inset-inline-0 h-0.5",
+                    "absolute top-0 inset-x-0 h-0.5",
                     on ? "bg-[var(--teal)]" : "bg-transparent",
                   )}
                 />

@@ -47,7 +47,7 @@ export function ProductTile({
             </span>
           )}
           {product.isProfessionalOnly && (
-            <span className="absolute top-3 inset-inline-start-3 border border-[var(--hairline)] bg-[var(--ground)] px-2.5 py-1 text-[11px] text-[var(--gold-text)]">
+            <span className="absolute top-3 start-3 border border-[var(--hairline)] bg-[var(--ground)] px-2.5 py-1 text-[11px] text-[var(--gold-text)]">
               حرفه‌ای
             </span>
           )}

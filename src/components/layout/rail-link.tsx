@@ -36,7 +36,7 @@ export function RailLink({
       {isCurrent && accent ? (
         <span
           aria-hidden
-          className="absolute inset-inline-start-[-14px] top-1/2 h-6 w-0.5 -translate-y-1/2"
+          className="absolute start-[-14px] top-1/2 h-6 w-0.5 -translate-y-1/2"
           style={{ background: accent }}
         />
       ) : null}

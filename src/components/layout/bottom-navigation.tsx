@@ -73,7 +73,7 @@ export function BottomNavigation() {
   return (
     <nav
       aria-label={t("primary")}
-      className="fixed inset-inline-0 inset-block-end-0 z-40 flex border-t border-solid border-[color:var(--hairline)] bg-[color:var(--ground)] pb-[env(safe-area-inset-bottom)] text-[color:var(--stone-text)] md:hidden"
+      className="fixed inset-x-0 bottom-0 z-40 flex border-t border-solid border-[color:var(--hairline)] bg-[color:var(--ground)] pb-[env(safe-area-inset-bottom)] text-[color:var(--stone-text)] md:hidden"
     >
       {items.map((item) => {
         const href = hrefFor(item, locale);

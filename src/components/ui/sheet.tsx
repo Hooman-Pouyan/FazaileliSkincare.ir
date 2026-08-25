@@ -53,20 +53,20 @@ function SheetContent({
         className={cn(
           "fixed z-50 flex flex-col gap-4 bg-[var(--surface)] transition-transform ease-[var(--easing)]",
           side === "end" &&
-            "inset-block-0 inset-inline-end-0 h-full w-4/5 max-w-md border-s border-[var(--hairline)]",
+            "inset-y-0 end-0 h-full w-4/5 max-w-md border-s border-[var(--hairline)]",
           side === "start" &&
-            "inset-block-0 inset-inline-start-0 h-full w-4/5 max-w-md border-e border-[var(--hairline)]",
+            "inset-y-0 start-0 h-full w-4/5 max-w-md border-e border-[var(--hairline)]",
           side === "bottom" &&
-            "inset-inline-0 bottom-0 h-auto rounded-t-[var(--radius-surface)] border-t border-[var(--hairline)]",
+            "inset-x-0 bottom-0 h-auto rounded-t-[var(--radius-surface)] border-t border-[var(--hairline)]",
           side === "top" &&
-            "inset-inline-0 top-0 h-auto border-b border-[var(--hairline)]",
+            "inset-x-0 top-0 h-auto border-b border-[var(--hairline)]",
           className,
         )}
         {...props}
       >
         {children}
         <SheetPrimitive.Close
-          className="absolute top-5 inset-inline-end-5 opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-[var(--firouzeh-text)]"
+          className="absolute top-5 end-5 opacity-70 transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-[var(--firouzeh-text)]"
           aria-label="بستن"
         >
           <XIcon className="size-5" />
