@@ -57,7 +57,7 @@ export function SearchCommand({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
-        showClose={false}
+        showCloseButton={false}
         className="top-[18%] max-w-xl -translate-y-0 p-0"
       >
         <Command shouldFilter={false} label="جستجو" className="overflow-hidden">

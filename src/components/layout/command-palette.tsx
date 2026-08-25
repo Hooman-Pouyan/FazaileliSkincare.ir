@@ -1,111 +1,130 @@
 "use client";
 
+import {
+  CalendarDays,
+  GraduationCap,
+  Home,
+  Search,
+  ShoppingBag,
+} from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { type FormEvent, useId } from "react";
-import { Link } from "@/i18n/navigation";
+import { useState } from "react";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { hrefFor, navigationFor } from "@/lib/navigation/manifest";
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  type NavigationItemId,
+  hrefFor,
+  navigationFor,
+} from "@/lib/navigation/manifest";
 import { useCommandPalette } from "./command-palette-context";
 
 /**
- * The cross-room shortcut: the canonical room destinations, and a field that
- * navigates to the Search PLP.
+ * The cross-room shortcut: canonical room destinations, and typing that goes to
+ * the Search PLP.
  *
- * Built on the Dialog primitive already in `components/ui`, which brings focus
- * trapping, escape dismissal, focus restoration and the labelled-dialog roles
- * with it. Nothing about modal behaviour is written here.
+ * Built on the shadcn `command` primitive over cmdk, so filtering, roving focus,
+ * escape dismissal, focus restoration and the combobox roles come from the
+ * library. Nothing about modal or listbox behaviour is written here.
  *
- * There is deliberately no client-side filtering and no autocomplete. `SHELL-03`
- * puts results, empty states and errors on the Search PLP rather than in a
- * dialog data source, and states plainly that live autocomplete requires an
- * amendment to that plan first — it would be a fourth Commerce read and would
- * put eligibility selection in the browser. With four rooms to choose from there
- * is also nothing to filter; `cmdk` earns its place when a list is long enough
- * to need searching, and that is the upgrade path if ticket #5 approves it.
+ * There is deliberately no product autocomplete. `SHELL-03` puts results, empty
+ * states and errors on the Search PLP rather than in a dialog data source, and
+ * requires an amendment to that plan before a live transport exists — it would
+ * be a fourth Commerce read and would put eligibility selection in the browser.
+ * Pressing Enter navigates; it does not fetch.
  *
- * The five canonical concerns (decision N-4) are not here yet for a specific
- * reason: they live in the database, and reading them would put a query on every
- * page including the landing. They arrive with the cached reference read, not by
- * making the shell dynamic.
+ * The five canonical concerns from decision N-4 are not here yet, and the reason
+ * is a cost rather than an oversight: they live in the database, and reading them
+ * in the shell would put a query on every page including the landing. They arrive
+ * with the cached reference read.
  */
+
+const ICONS: Partial<Record<NavigationItemId, LucideIcon>> = {
+  brand: Home,
+  shop: ShoppingBag,
+  book: CalendarDays,
+  academy: GraduationCap,
+};
+
 export function CommandPalette() {
   const { isOpen, close } = useCommandPalette();
   const t = useTranslations("command");
   const nav = useTranslations("nav");
   const locale = useLocale();
   const router = useRouter();
-  const fieldId = useId();
+  const [query, setQuery] = useState("");
 
-  const rooms = navigationFor("rail").filter((item) => item.room !== null);
+  const destinations = navigationFor("rail").filter(
+    (item) => item.path !== null,
+  );
 
-  function onSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const form = new FormData(event.currentTarget);
-    const query = String(form.get("q") ?? "").trim();
-    if (query === "") return;
-
+  function go(href: string) {
     close();
-    router.push(`/${locale}/shop/search?q=${encodeURIComponent(query)}`);
+    setQuery("");
+    router.push(href);
   }
 
+  const trimmed = query.trim();
+
   return (
-    <Dialog open={isOpen} onOpenChange={(next) => (next ? undefined : close())}>
-      <DialogContent className="max-w-[34rem]">
-        <DialogHeader>
-          <DialogTitle>{t("commandTitle")}</DialogTitle>
-          <DialogDescription>{t("commandDescription")}</DialogDescription>
-        </DialogHeader>
+    <CommandDialog
+      open={isOpen}
+      onOpenChange={(next) => {
+        if (!next) close();
+      }}
+      title={t("commandTitle")}
+      description={t("commandDescription")}
+    >
+      <CommandInput
+        value={query}
+        onValueChange={setQuery}
+        placeholder={t("searchPlaceholder")}
+      />
+      <CommandList>
+        <CommandEmpty>{t("commandDescription")}</CommandEmpty>
 
-        <form onSubmit={onSubmit} className="grid gap-4" role="search">
-          <div className="grid gap-2">
-            <Label htmlFor={fieldId}>{t("searchLabel")}</Label>
-            <Input
-              id={fieldId}
-              name="q"
-              type="search"
-              autoComplete="off"
-              placeholder={t("searchPlaceholder")}
-            />
-          </div>
-          <Button type="submit" className="w-full">
-            {t("submit")}
-          </Button>
-        </form>
-
-        <nav aria-label={t("roomsHeading")} className="mt-2">
-          <h3 className="m-0 text-[length:var(--text-micro)] font-semibold tracking-[0.12em] text-[color:var(--gold-text)]">
-            {t("roomsHeading")}
-          </h3>
-          <ul className="mt-3 grid gap-1">
-            {rooms.map((item) => {
-              if (item.path === null || hrefFor(item, locale) === null) {
-                return null;
+        {trimmed === "" ? null : (
+          <CommandGroup heading={t("searchLabel")}>
+            <CommandItem
+              value={`search-${trimmed}`}
+              onSelect={() =>
+                go(`/${locale}/shop/search?q=${encodeURIComponent(trimmed)}`)
               }
-              return (
-                <li key={item.id}>
-                  <Link
-                    href={item.path}
-                    onClick={close}
-                    className="grid min-h-11 items-center text-[length:var(--text-body)] text-[color:var(--ink)]"
-                  >
-                    {nav(item.labelKey)}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </nav>
-      </DialogContent>
-    </Dialog>
+            >
+              <Search aria-hidden />
+              <span>{t("submit")}</span>
+              <span className="text-[color:var(--stone-text)]" dir="auto">
+                {trimmed}
+              </span>
+            </CommandItem>
+          </CommandGroup>
+        )}
+
+        <CommandGroup heading={t("roomsHeading")}>
+          {destinations.map((item) => {
+            const href = hrefFor(item, locale);
+            const Icon = ICONS[item.id];
+            if (href === null) return null;
+            return (
+              <CommandItem
+                key={item.id}
+                value={nav(item.labelKey)}
+                onSelect={() => go(href)}
+              >
+                {Icon ? <Icon aria-hidden /> : null}
+                <span>{nav(item.labelKey)}</span>
+              </CommandItem>
+            );
+          })}
+        </CommandGroup>
+      </CommandList>
+    </CommandDialog>
   );
 }

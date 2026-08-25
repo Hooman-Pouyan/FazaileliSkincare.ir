@@ -54,6 +54,12 @@ src/
 - **One mechanism per concern, and no working around a drift.** Styling is Tailwind on the token layer with shadcn primitives; state ownership is in `architecture/data-and-state-ownership.md`; navigation is one manifest. When something fights the stack, the answer is to remove what does not belong — not to add a second mechanism, pin a tool to an older mode, or reach for a hand-rolled equivalent of something the framework already provides.
 
   The worked example is on the record: the auth screens carried the only CSS Module in `src/`, Turbopack rejected it, and `dev` was pinned to `--webpack` to keep going. One drift bought a second, and every developer paid for it in rebuild speed until the module was removed. If a genuine framework constraint forces an exception, it goes in the config that owns the policy with the reason written next to it, never in an inline disable.
+- **Reach for the design system before writing UI.** Need a block or a control? Look first in `src/components/ui` and the existing feature components; then at shadcn and the libraries its ecosystem supports — Radix, Base UI, and the rest — and add one properly. Hand-rolling a dialog, a combobox or a menu that a maintained primitive already provides is how accessibility and focus behaviour quietly diverge between screens.
+
+  **`shadcn add` overwrites a component that is already there.** It regenerates the stock file, so every customisation on it is lost: on 2026-08-25 it replaced the token-bound `dialog.tsx` with literal `bg-black/50`, a `shadow-lg`, Tailwind's default radii and physical `left`/`right` properties, and renamed a prop out from under `search-command.tsx`. After adding or updating any component, diff it and re-bind it to the token layer before committing.
+
+- **An architectural improvement is proposed before it is adopted.** Say what it changes and why, get it agreed, and record it in `docs/` — then build on it. The value of these decisions is that they are shared and durable; a better idea introduced silently is still drift, and the next person cannot tell it from a mistake.
+
 - **No silent caps.** If something bounds coverage — a top-N, a retry limit, a sample — say so in the output rather than letting it read as complete.
 - **Targeted changes stay targeted.** Asked for a small change, change only that. Suggest the rest; don't apply it unprompted.
 - Forms: one `<Field>` set over react-hook-form + Zod, and **one schema per form shared by client and server**.

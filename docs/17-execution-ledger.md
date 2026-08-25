@@ -155,6 +155,16 @@ The stop is between the two.
 
 ---
 
+## Closing a packet
+
+A packet is not finished when its code lands. It closes when its row here reads
+`done` **and** its section in [`20-packet-review-log.md`](20-packet-review-log.md)
+records what deserves a second look: calls made on thin evidence, deliberate
+omissions with their reasons, product questions the building surfaced, and the
+content or legal items only the owner can supply. Those accumulate deliberately,
+so a refinement pass over any packet starts from a written list rather than from
+memory.
+
 ## How to keep this honest
 
 A packet is `done` when its exit gate is met and the evidence exists — not when
