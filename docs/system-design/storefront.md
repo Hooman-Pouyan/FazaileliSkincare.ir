@@ -27,6 +27,7 @@ The Claude Design output is a capability and interaction inventory. It is not th
 - [`../ui/forms.md`](../ui/forms.md) - shared Field/Form, React Hook Form, Zod, Server Action, error, RTL, and accessibility contract.
 - [`storefront/component-foundation.md`](storefront/component-foundation.md) - complete capability disposition, component ownership, migration, and foundation tasks.
 - [`storefront/shell-and-product-hub.md`](storefront/shell-and-product-hub.md) - shared rail/mobile shell, command search, footer, landing integration, and `/shop`.
+- [`storefront/landing.md`](storefront/landing.md) - the Landing's composition, brand storytelling spine, ornament and motion vocabulary, proof surfaces, and how the unapproved source-content batches reach a development database without reaching a customer. Extends the shell plan's `LAND-01`-`LAND-04`.
 - [`storefront/plp.md`](storefront/plp.md) - concern, brand, category, and search listings.
 - [`storefront/pdp.md`](storefront/pdp.md) - product detail, variants, offer states, disclosures, pairing, and cart entry.
 - [`storefront/verification-and-rollout.md`](storefront/verification-and-rollout.md) - automated checks, browser QA, performance gates, evidence, and release/rollback.
@@ -311,7 +312,7 @@ The only Cart mutations are `addLine`, `setLineQuantity`, and `removeLine`. They
 
 ### Stage 2 - shell and PHP
 
-Follow [`storefront/shell-and-product-hub.md`](storefront/shell-and-product-hub.md).
+Follow [`storefront/shell-and-product-hub.md`](storefront/shell-and-product-hub.md), then [`storefront/landing.md`](storefront/landing.md) for the Landing's own composition and content requirements.
 
 **Exit:** the accepted navigation manifest, Persian Landing composition, and `/fa/shop` work through the shared shell at mobile, tablet, and desktop with approved route states, local/global navigation boundaries, and metadata.
 

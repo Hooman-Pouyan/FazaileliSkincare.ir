@@ -81,7 +81,7 @@ research deferrals expire the moment it is shown to a customer.
 | 3 | Catalogue read models, Arabic-form folding, `pg_trgm` GIN | DB3, C3, C4 | `getShopHub`, `listProducts`, `getProduct` enforce exact-locale, publication, active variant, eligible price, approved media and availability; infix search proves index use with `EXPLAIN (ANALYZE, BUFFERS)` | **done** — facet counts deliberately deferred to packet 7, see below |
 | 4 | Storefront module foundation and shell — header, footer, mobile navigation, command palette, locale/cart/account controls, minimal `/fa/account` | Stage 1 minimum, Stage 2 shell | Landing renders inside the shared shell at 390/768/1440 with Persian RTL passing; a signed-in customer can see their phone and sign out | **built — awaiting the maintainer's browser pass** |
 | 5 | `/fa/shop` product hub | Stage 2, DB4 | Concern-first hub renders from PostgreSQL with JavaScript disabled; route states and metadata present | |
-| 6 | Landing composition — the five IA beats, the ornament vocabulary, and the `testimonial` table with its draft-only importer | Stage 2, `L-1`–`L-7` | `/fa` renders the five beats in order at 390/768/1440 with Persian RTL passing and JavaScript disabled; every beat whose content is unapproved is **absent**, not empty-framed; motion is reveal-once on the existing duration and easing, and `prefers-reduced-motion` is verified; `Organization`+`LocalBusiness`+`WebSite` JSON-LD emits, with no `AggregateRating` | |
+| 6 | Landing composition — the five IA beats, the growth spine and ornament set, and the three source-content batches seeded as marked drafts. Plan: [`system-design/storefront/landing.md`](system-design/storefront/landing.md) | Stage 2, `LAND-01`–`LAND-11`, `CONTENT-01`–`CONTENT-04`, `L-1`–`L-15` | `/fa` renders the five beats in order at 390/768/1440 with Persian RTL passing and JavaScript disabled; every beat whose content is unapproved is **absent**, not empty-framed; motion is reveal-once on the existing duration and easing, and `prefers-reduced-motion` is verified; `Organization`+`LocalBusiness`+`WebSite` JSON-LD emits, with no `AggregateRating`; every batch is seeded idempotently, refuses under production, and no real testimonial is publishable | |
 | 7 | PLP and search | Stage 3, `PLP0–5` | Concern, brand, category and `?q=` routes use canonical URL state, server results, live counts, stable pagination, verified empty and error states | |
 | 8 | PDP | Stage 4, `PDP1–6` | Offer states are truthful; `on_request`, professional-only, unavailable and variant-required cannot enter the cart | |
 | 9 | Cart presentation — drawer and `/fa/cart` | Stage 4, `CART1` | The shared cart model renders in both surfaces; no checkout, payment or settlement code exists | |
@@ -109,6 +109,13 @@ degrade to *absent*. The page will therefore ship correct and thin. It gets
 thicker when the maintainer's three review passes land, in the order L-4 names:
 academy prices, testimonial consent, brand relationships. Those passes are the
 critical path for the Landing and they are not engineering work.
+
+Packet 6 does not wait on them. L-13 completes each batch into full development
+fixtures — real records unpublished, missing fields filled with clearly marked
+fiction — so every flow is walkable now and the real values overwrite the
+invented ones through the same idempotent importer when they arrive. Real
+testimonials are the one exception: they are imported and never rendered, and the
+preview rail runs on a separate fictional set.
 
 ### Known bound — facet counts
 

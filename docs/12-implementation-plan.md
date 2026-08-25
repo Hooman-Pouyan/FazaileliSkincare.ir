@@ -175,6 +175,48 @@ Vitest on `money.ts`, `jalali.ts`, and settlement idempotency. Playwright on one
 
 ---
 
+## Phase 2B — Landing composition and brand storytelling
+
+Written after the first-page direction pass; it did not exist when this plan was
+first drafted. Full plan: [`system-design/storefront/landing.md`](system-design/storefront/landing.md).
+Binding decisions: [`21-landing-composition-decisions.md`](21-landing-composition-decisions.md) `L-1`–`L-15`.
+
+### What it adds
+
+- The Landing's five beats carried by **one growth spine** — a blossom branch
+  that advances state per beat, each stage adjacent to a fact that is
+  independently true. Not a values row.
+- An **original in-repo SVG ornament set** (branch segments, bud, blossom, petal,
+  slash), token-bound, on lapis and teal bands only.
+- **One motion primitive**: reveal-once, existing duration and easing,
+  reduced-motion and no-JS paths verified. Sticky band pinning replaces parallax.
+  Parallax, autoplay carousels and looping rails are refused.
+- A reader-paced RTL **testimonial rail** and a **before/after** comparison, both
+  built as structure ahead of their content.
+- **Absence as a designed state** — every content-blocked beat disappears
+  entirely rather than rendering an empty frame.
+
+### Source content
+
+The three `content/` batches (42 testimonials, 13 brands, 10 academy offerings)
+are transcriptions from Instagram highlights and are all unpublished drafts.
+They reach the application **only through the seed path** — never a runtime JSON
+import — as tables with idempotent importers keyed on a stable identity. Missing
+fields are completed with clearly marked fictional development values so flows
+are walkable now; the real values overwrite them through the same importer later.
+
+Real testimonials are imported and **never rendered**: consent is `unknown` on
+all 42, and development previews use a separate fictional set.
+
+### Deferred out of this phase
+
+3D/WebGL brand storytelling (a lazy-loaded brand-story route, Phase 5 at the
+earliest), the bounded petal-reveal motion (awaiting approval), and every content
+gate — testimonial consent, academy prices, brand image rights, real before/after
+imagery, the two claim figures, and the `LocalBusiness` contact facts.
+
+---
+
 ## Phase 3 — Booking (~3 weeks)
 
 The capacity model is the whole phase: **3 practitioners, 2 rooms, 3 beds.** A booking consumes a practitioner _and_ a bed, and which one binds changes day to day.

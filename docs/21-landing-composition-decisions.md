@@ -1,4 +1,4 @@
-# Landing composition decisions — L-1 … L-10
+# Landing composition decisions — L-1 … L-15
 
 **Date:** 2026-08-25 · **Closes:** the composition questions raised for the first page
 **Pattern:** interim decisions with re-review triggers, as used in `19-navigation-decisions.md`
@@ -335,6 +335,154 @@ supplying an official brand-guidelines document.
 
 ---
 
+## L-11 · The blossom assets are drawn in-repo, not sourced
+
+**Decision.** The ornament set is authored originally for this repository as
+inline SVG — three branch segments, a bud, an open blossom, a petal, the slash.
+Nothing is traced from `designs/references/forlled/`, and nothing is downloaded
+from a third-party sakura set.
+
+**Why not source them.** Two reasons, and the second is the one that decides it.
+
+Licence origin is not a formality here. Most freely available sakura SVG sets are
+CC-BY (attribution in the page, which we would not want) or non-commercial (which
+this storefront is not). Shipping an asset we do not have the right to ship, on a
+site whose central pitch is that its Japanese products are genuine, is a bad
+trade at any price — and `09-brand-brief.md` records counterfeit anxiety as the
+category's biggest objection.
+
+The Forlle'd invitation is Forlle'd's artwork. Tracing it would be the same
+mistake with a shorter path.
+
+**Why drawing them is cheap.** They are contour hairlines. There is no
+photography, no shading and no gradient to reproduce — the reference's whole
+technique is parallel strokes. Six small pieces, token-bound, a few KB inline,
+no request, no licence, and they match the palette by construction rather than by
+recolouring someone else's file.
+
+**Re-review trigger.** Forlle'd supplies official brand assets with a written
+usage right, in which case they are quoted as theirs under L-5's partner-brand
+rule rather than replacing ours.
+
+---
+
+## L-12 · The Japanese register is carried by a growth spine, and 3D stays off the storefront path
+
+**Decision — the spine.** Authenticity, freshness, youth, health and 改善 are
+carried by **one branch that grows down the page**, changing state at each of the
+five beats, with every stage adjacent to a claim that is independently true.
+`landing.md` `LAND-05` holds the state table.
+
+**Why a spine rather than a section.** The obvious way to express those concepts
+is a row of four cards with icons and adjectives, and that is exactly the generic
+beauty-marketing artefact `09-brand-brief.md` says the site exists to escape. A
+concept stated in isolation is a claim about feeling; a concept placed beside the
+exclusive Forlle'd representation, the 日本製 mark, an ordered curriculum or a
+consented result is a claim about fact. One motif doing structural work across
+five beats is also cheaper, more coherent, and impossible to sprinkle.
+
+**Refused explicitly:** a values row, an icon-and-adjective grid, and any Japanese
+word set as decoration rather than said because it means something (L-9).
+
+**Decision — 3D.** WebGL and Three.js stay off the storefront critical path.
+
+**Why.** Three.js is roughly 600KB before any asset, against the mobile-first
+Iranian audience `09-brand-brief.md` describes, on a page whose job is to be
+understood in ten seconds. It is also a second motion mechanism, which
+`AGENTS.md` forbids without a reason the existing one cannot serve — and
+reveal-once SVG serves this one.
+
+**Where it could live.** A dedicated brand-story route, lazy-loaded behind an
+interaction, with the SVG spine as the no-WebGL fallback and reduced-motion
+rendering a still. That is a Phase 5 conversation, not a packet 6 one.
+
+**A note on authoring.** Blazor is a .NET UI framework and has no place in a
+Next.js application; if the intent was Blender for authoring the assets, that
+works — model there, export glTF, and the constraint above still applies to how
+it is delivered.
+
+---
+
+## L-13 · Source batches are seeded as marked drafts; real testimonials never render
+
+**Decision.** All three batches are completed into full development fixtures and
+loaded through the seed path — never imported at runtime. Details are in
+`landing.md` `CONTENT-01`–`CONTENT-04`; the reasoning is here.
+
+**Why seed rather than import.** Reading `content/*.json` in a route would put a
+second read mechanism beside PostgreSQL, duplicate the publication predicate that
+already exists in SQL, and break the contract every one of those READMEs states.
+Seeding runs the real code path, which is the entire point of having fixtures.
+
+**Why complete them fictionally.** The batches are transcriptions from Instagram
+highlights: they have titles and prices but no cohort dates, capacity, venue or
+instructors, and no testimonial authorship. A flow cannot be walked against a
+half-record. Completing them unblocks the walk-through now and costs nothing
+later, because the importer is idempotent on a stable key and the real values
+overwrite the invented ones when they arrive.
+
+**The risk, and the guard.** A plausible invention silently becoming believed is
+the failure mode. So every completed field is marked **in the row**, not in a
+comment — the fiction has to be visible to someone reading the database, not only
+to someone reading the seeder.
+
+**The exception that matters.** Real testimonials are imported with their real
+text and stay unpublished forever until consent exists (L-4). Development
+previews render a **separate fictional set**, so the rail can be judged full
+without a real quote leaving draft state. The importer has no branch that
+publishes a real record, and a test asserts that rather than trusting it.
+
+**Re-review trigger.** The first real approved content lands, at which point the
+fictional completion for that batch is deleted rather than left to rot beside it.
+
+---
+
+## L-14 · Brand logos render only against a recorded right
+
+**Decision.** Logo files live in `content/brands/logos/` with a per-brand note
+saying where the right to publish comes from. `imageRightsStatus` stays `unknown`
+until the note exists, and unknown means the mark does not render — the brand
+appears as its approved display name instead.
+
+**Why a note per brand.** Thirteen marks were transcribed from one screenshot.
+Official-representative status is confirmed for **Forlle'd only**; the other
+twelve are `works_with` candidates whose commercial relationship is still draft.
+Exclusive representation plausibly carries the right to display Forlle'd's mark.
+It carries nothing about the other twelve, and "we stock it" is not by itself a
+licence.
+
+**What the note needs.** One line: the source of the right (representation
+agreement, distributor permission, brand press kit with published terms), and the
+date it was confirmed. Not a legal opinion — a record of who said yes.
+
+---
+
+## L-15 · Before/after ships as structure now, and its content gate is legal as well as ethical
+
+**Decision.** The comparison component is built in packet 6 against placeholder
+imagery. It accepts no real image until two separate gates close.
+
+**Gate one — consent.** Per person, for this use, in a form that can be shown
+later. `09-brand-brief.md` already conditions showing her work on consent.
+
+**Gate two — advertising rules.** Before/after imagery in a medical-adjacent
+category makes an implied claim about results. Iranian advertising regulation
+and eNamad certification both bear on that, and this repository has no research
+on either. It sits beside terms, privacy and returns as a content-and-legal item
+with a long lead, not an engineering one.
+
+**Interaction, decided now so it is not decided twice.** A labelled pair, or a
+draggable divider the reader controls. No automatic wipe and no autoplay — under
+L-3, and because an animation that reveals a result on its own schedule is doing
+persuasion the reader did not ask for.
+
+**Why build it before the content exists.** The same reason as the testimonial
+rail: the structure is what makes collecting consent worth the effort, and
+placeholder imagery proves layout while explicitly proving nothing about art
+direction.
+
+---
+
 ## L-10 · Where the ideas landed
 
 Recorded so the maintainer's list can be checked off rather than re-read.
@@ -352,7 +500,12 @@ Recorded so the maintainer's list can be checked off rather than re-read.
 | Falling blossom leaves | **No as a loop.** A bounded six-petal reveal-once is proposed — L-5 |
 | Scroll-spy animation | **Yes**, passive reveal-once only. No sticky section nav, no scroll hijack — L-3 |
 | Brand and Ms Fazaieli storytelling | **Yes**, Landing beat 2, long form on `/about` — L-2. Two facts still needed |
-| Japanese cultural elements, kaizen | **Bounded** — L-9 |
+| Japanese cultural elements, kaizen | **Bounded** — L-9. Carried by the growth spine, not a values row — L-12 |
+| Blossom assets as several small SVGs | **Yes, drawn in-repo** rather than sourced or traced — L-11 |
+| 3D / Three.js brand animation | **Deferred off the storefront path**; a lazy-loaded brand-story route later — L-12 |
+| Use the Instagram batches as dev data | **Yes, through the seed path**, completed fictionally and marked — L-13 |
+| Brand logos | **Yes, against a recorded right per brand** — L-14 |
+| Before/after section | **Structure now, content gated** on consent and advertising rules — L-15 |
 
 ---
 
@@ -364,6 +517,10 @@ Recorded so the maintainer's list can be checked off rather than re-read.
 | L-3 | Every animated element on any storefront surface |
 | L-4 | The `testimonial`, academy and brand tables, their importers, beat 4 and the academy beat |
 | L-5 | The ornament vocabulary on every surface; the partner-brand colour rule; the motion allowance is held |
+| L-11, L-12 | Packet 6's ornament set and motion; any future 3D proposal |
+| L-13 | Every source-batch table, importer and fixture |
+| L-14 | The Shop hub's brand row and every brand surface |
+| L-15 | The before/after component and its content gate |
 | L-6 | Landing and any future campaign work |
 | L-7 | Landing metadata and JSON-LD |
 | L-8 | Packet 5 |
