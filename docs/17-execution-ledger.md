@@ -66,8 +66,8 @@ research deferrals expire the moment it is shown to a customer.
 | # | Packet | Satisfies | Exit gate | Status |
 |---|---|---|---|---|
 | 1 | This ledger and the status corrections it required | — | The three status sections match reality | **done** |
-| 2 | Fictional dev catalogue seed, production-refused | DB3 fixtures | `pnpm db:seed dev` fills brands, concerns, categories, products, variants, prices, stock, media across every offer state; refuses to run under `NODE_ENV=production` | next |
-| 3 | Catalogue read models, Arabic-form folding, `pg_trgm` GIN | DB3, C3, C4 | `getShopHub`, `listProducts`, `getProduct` enforce exact-locale, publication, active variant, eligible price, approved media and availability; infix search proves index use with `EXPLAIN (ANALYZE, BUFFERS)` | |
+| 2 | Fictional dev catalogue seed, production-refused | DB3 fixtures | `pnpm db:seed dev` fills brands, concerns, categories, products, variants, prices, stock, media across every offer state; refuses to run under `NODE_ENV=production` | **done** |
+| 3 | Catalogue read models, Arabic-form folding, `pg_trgm` GIN | DB3, C3, C4 | `getShopHub`, `listProducts`, `getProduct` enforce exact-locale, publication, active variant, eligible price, approved media and availability; infix search proves index use with `EXPLAIN (ANALYZE, BUFFERS)` | next |
 | 4 | Storefront module foundation and shell — header, footer, mobile navigation, command palette, locale/cart/account controls, minimal `/fa/account` | Stage 1 minimum, Stage 2 shell | Landing renders inside the shared shell at 390/768/1440 with Persian RTL passing; a signed-in customer can see their phone and sign out | |
 | 5 | `/fa/shop` product hub | Stage 2, DB4 | Concern-first hub renders from PostgreSQL with JavaScript disabled; route states and metadata present | |
 | 6 | PLP and search | Stage 3, `PLP0–5` | Concern, brand, category and `?q=` routes use canonical URL state, server results, live counts, stable pagination, verified empty and error states | |

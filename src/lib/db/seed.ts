@@ -3,6 +3,7 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { z } from "zod";
 import * as schema from "./schema";
+import { seedDevCatalogue } from "./seeds/dev";
 import { seedReference } from "./seeds/reference";
 
 // Same precedence Next.js uses. Plain `dotenv/config` reads .env only, so a
@@ -23,7 +24,7 @@ async function main(): Promise<void> {
   const input = z
     .object({
       databaseUrl: z.string().url(),
-      profile: z.literal("reference"),
+      profile: z.enum(["reference", "dev"]),
     })
     .parse({
       databaseUrl: process.env.DATABASE_URL,
@@ -34,7 +35,13 @@ async function main(): Promise<void> {
   const database = drizzle(client, { schema, casing: "snake_case" });
 
   try {
+    // The reference profile owns locales and concerns and is safe everywhere.
+    // The dev profile layers fictional catalogue data on top of it and refuses
+    // to run in production or beside a product it did not create.
     await seedReference(database);
+    if (input.profile === "dev") {
+      await seedDevCatalogue(database);
+    }
   } finally {
     await client.end({ timeout: 5 });
   }

@@ -14,7 +14,9 @@ export class ReferenceSeedError extends Error {
   }
 }
 
-export async function seedReference(database: PostgresJsDatabase<typeof schema>): Promise<void> {
+export async function seedReference(
+  database: PostgresJsDatabase<typeof schema>,
+): Promise<void> {
   await database.transaction(async (transaction) => {
     await transaction.update(locale).set({ isPrimary: false });
 
@@ -54,7 +56,10 @@ export async function seedReference(database: PostgresJsDatabase<typeof schema>)
             normalizedName: normalizeCatalogSearchText(translation.name),
           })
           .onConflictDoUpdate({
-            target: [concernTranslation.concernId, concernTranslation.localeCode],
+            target: [
+              concernTranslation.concernId,
+              concernTranslation.localeCode,
+            ],
             set: {
               name: translation.name,
               normalizedName: normalizeCatalogSearchText(translation.name),

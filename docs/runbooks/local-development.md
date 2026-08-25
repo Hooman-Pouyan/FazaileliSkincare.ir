@@ -14,7 +14,7 @@ node -e "console.log(require('node:crypto').randomBytes(32).toString('base64url'
 pnpm install
 pnpm db:up                          # postgres:16.9-alpine from compose.yaml
 pnpm db:migrate
-pnpm db:seed reference
+pnpm db:seed dev                    # reference data plus the fictional catalogue
 pnpm dev
 ```
 
@@ -57,6 +57,28 @@ To find the holder instead: `lsof -nP -iTCP:5432 -sTCP:LISTEN`.
 `pnpm db:reset` destroys and rebuilds it; `pnpm db:verify` provisions a
 throwaway database, migrates from zero, seeds twice, and runs the invariant and
 schema suites.
+
+## Seed profiles
+
+| Command | Contents |
+|---|---|
+| `pnpm db:seed reference` | Locales and concerns. Real reference data, safe in any environment. |
+| `pnpm db:seed dev` | The reference profile plus a fictional catalogue — three brands, three categories, ten products covering every offer and publication state, with placeholder imagery from `public/images/dev/`. |
+
+Everything in the `dev` profile is invented. It describes no real product, and
+`14-storyderm-draft-catalog-pipeline.md` still governs real catalogue data: no
+inferred prices, SKUs, stock, claims or sellable boundaries. Two independent
+guards keep the two apart — the seed refuses `NODE_ENV=production`, and it
+refuses any database already holding a product it did not create. Its rows are
+identifiable by their `dev-` slug and `DEV-` SKU prefixes, which is also how
+`clearDevCatalogue` removes only its own.
+
+The ten products are deliberately chosen so a route cannot pass by accident:
+one purchasable, one with two variants, one with no media, one out of stock, one
+`on_request` with no price row at all, one professional-only, one whose only
+variant is inactive, one with no Persian translation, and two unpublished. The
+last three must **not** appear in the Persian catalogue — if they do, the
+publication or exact-locale predicate is broken.
 
 ## Signing in without SMS
 
