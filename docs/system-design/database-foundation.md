@@ -230,11 +230,11 @@ The read-only review in [`../16-review-storefront-and-database.md`](../16-review
 
 | Phase | Deliverable | Exit gate | Status |
 |---|---|---|---|
-| DB0 | Canonical schema, migration 0000, snapshot, seed, Persian normalization | Fresh PostgreSQL migration and repeatable seed pass | Complete |
-| DB1 | Reproducible local/CI PostgreSQL 16 | New checkout can provision, migrate, seed twice, assert exactly one primary locale, and run invariant tests | Next |
-| DB2 | Better Auth runtime spike and identity mapping, parallel with DB3 | Customer phone OTP and staff password+TOTP create compatible users/sessions; limits, roles, and logout verified | Pending; blocks DB5, not public reads |
-| DB3 | Catalogue read models, Arabic/Persian normalization correction, `pg_trgm` GIN, and query fixtures | Persian hub/list/detail reads use PostgreSQL with stable pagination, exact-locale/purchasability policy, and measured infix search | Pending; may run parallel with DB2 |
-| DB4 | `/fa/shop`, PLP/search, and PDP vertical slice | Routes render from PostgreSQL with JavaScript disabled; empty/error states tested | Pending research gates |
+| DB0 | Canonical schema, migration 0000, snapshot, seed, Persian normalization | Fresh PostgreSQL migration and repeatable seed pass | Complete. Migration `0001` adds the Better Auth contract (`AUTH0`); `0002` lands review corrections C1 and C2 |
+| DB1 | Reproducible local/CI PostgreSQL 16 | New checkout can provision, migrate, seed twice, assert exactly one primary locale, and run invariant tests | Complete — `compose.yaml`, `scripts/database.sh`, `db:up`/`db:reset`/`db:verify`; port configured in `.env` |
+| DB2 | Better Auth runtime spike and identity mapping, parallel with DB3 | Customer phone OTP and staff password+TOTP create compatible users/sessions; limits, roles, and logout verified | Customer half complete (`AUTH0`–`AUTH2`): phone OTP, PostgreSQL sessions and rate limits, logout. Staff password+TOTP deferred with `AUTH4`. Still blocks DB5, not public reads |
+| DB3 | Catalogue read models, Arabic/Persian normalization correction, `pg_trgm` GIN, and query fixtures | Persian hub/list/detail reads use PostgreSQL with stable pagination, exact-locale/purchasability policy, and measured infix search | **Next.** Unblocked: research gates 4–6 closed by recorded deferral, and DB2's customer half removes the identity dependency |
+| DB4 | `/fa/shop`, PLP/search, and PDP vertical slice | Routes render from PostgreSQL with JavaScript disabled; empty/error states tested | Queued behind DB3; research gates closed by deferral, so no longer blocked |
 | DB5 | COM0 corrections plus Cart and reservation services | Concurrent requests cannot oversell; removal works; retries/merge are idempotent; expiry predicate is observable | Pending; requires DB2 |
 | DB6 | Checkout, settlement, fulfilment, return, and refund services | Duplicate callbacks/refunds apply once; stock, money, order, movement, audit, and outbox commit atomically | Pending |
 | DB7 | Liara staging/production operations and `/api/health` | Health, TLS, latency, backups, restore drill, migration role, slow-query visibility, and alerts pass | Pending credentials/provider setup |

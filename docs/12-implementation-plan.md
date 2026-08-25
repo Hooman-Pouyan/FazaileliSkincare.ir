@@ -75,11 +75,14 @@ fazaieli/
 
 ### Remaining in Phase 1
 
-- [ ] **Fonts** — drop the two `.woff2` files into `public/fonts/` (see its README). The app builds without them; it just doesn't look like the brand.
-- [ ] **Auth** — execute [`system-design/authentication-and-account-security.md`](system-design/authentication-and-account-security.md): customer phone/OTP only in v1, separately provisioned staff email/password plus mandatory TOTP, Drizzle adapter, role checks, account closure, and **httpOnly server-owned sessions**. Rate-limit OTP by phone _and_ IP; Better Auth's 3-attempt limit protects one code, not the SMS budget.
-- [ ] **`Notifier`** — one interface, Kavenegar/SMS.ir behind it. Templates in the database so a typo is not a deploy.
+_Status as of 2026-08-25. The ordered queue lives in [`17-execution-ledger.md`](17-execution-ledger.md)._
+
+- [x] **Auth, customer half** — `AUTH0`–`AUTH2` delivered: Better Auth schema contract, phone normalization, per-phone and per-IP PostgreSQL rate limits, phone-OTP runtime, httpOnly server-owned sessions, and Persian `/[locale]/login` and `/verify` screens. Its verification checkpoint is parked by the maintainer.
+- [x] **`Notifier`** — one interface with a fake adapter and a Kavenegar adapter behind it. Templates in the database remain outstanding; the provider is configuration, not a code change.
+- [ ] **Auth, staff half** — `AUTH3`–`AUTH6`: centralized authorization, provisioned staff password plus mandatory TOTP, security page and account closure, production hardening. Deferred out of the current block.
+- [ ] **Fonts** — Vazirmatn is self-hosted in `public/fonts/`. Bodoni Moda is still missing, so display type falls back.
 - [ ] **Legal pages** — terms, privacy, returns. ⚠️ **eNamad will not certify the domain without them**, and they are commitments the owner makes, not text a developer invents.
-- [ ] `/api/health` touching the DB · backups verified by an actual restore · first deploy to Liara and ParsPack, raced.
+- [ ] `/api/health` touching the DB · backups verified by an actual restore · first deploy to Liara and ParsPack, raced. Moved to `DB7` by review correction C8: a health endpoint with nothing deployed to watch it is ceremony.
 
 **Done when:** the landing page is live at fazaieli.ir in Persian and you can log in with your phone.
 

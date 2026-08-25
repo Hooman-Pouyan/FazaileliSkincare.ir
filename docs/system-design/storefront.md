@@ -83,20 +83,27 @@ The shared shell owns global movement between rooms. Page models own local navig
 - Seventeen commerce presentation files covering concern navigation, product tiles/grid, facets, sorting, pagination, search command, prices, stock, PDP gallery/disclosure/pairing, quantity, and cart drawer.
 - Verified 48-table PostgreSQL schema for identity/auth, translated catalogue reference data, products/media/variants, group prices, price history, inventory movements, and audit/outbox delivery.
 - Cart/order/payment schema with anonymous ownership, explicit reservation rows, immutable order-line snapshots, integer-rial totals, claims/events, and one-settlement-per-payment idempotency.
-- Migration `0000`, Drizzle journal/snapshot, deterministic `fa`/`en`/`ar` reference seed, and Persian/Arabic search-normalization tests.
-- Vitest and Playwright scripts, with rail, i18n routing, schema, reference-seed, and search-normalization coverage.
+- Migrations `0000`–`0002` with journal and snapshots, deterministic `fa`/`en`/`ar` reference seed, and Persian/Arabic search-normalization tests. `0001` locks the Better Auth contract; `0002` lands review corrections C1 and C2.
+- Reproducible local PostgreSQL (`compose.yaml`, `scripts/database.sh`), with the published port configured once in `.env`.
+- Customer phone-OTP authentication: server-owned httpOnly sessions, per-phone and per-IP PostgreSQL rate limits, `/[locale]/login` and `/verify`, and a fake SMS provider for local development.
+- Separated test suites: `pnpm test:unit` runs 14 files with no database; `pnpm test:integration` runs the three that need one.
 
 ### Missing
+
+_Reviewed 2026-08-25. Ordered delivery lives in [`../17-execution-ledger.md`](../17-execution-ledger.md)._
 
 - Shared storefront footer, mobile navigation, and full command-palette integration.
 - `/shop`, PLP, PDP, search, and cart routes.
 - A canonical Commerce read module joining Drizzle data into page models.
-- Exact-locale publication rules and a finalized PLP URL contract.
-- Verified catalogue records, ordered product-media rows, explicit product pairings, and approved hub merchandising sources.
+- Exact-locale publication rules and a finalized PLP URL contract. The URL grammar in the PLP plan is provisional-but-binding under the gate 5 deferral: it ships, it is honoured everywhere, and it is not forked.
+- Verified catalogue records, ordered product-media rows, explicit product pairings, and approved hub merchandising sources. A fictional, production-refused development seed stands in until real catalogue data exists — it is fixture data, never promotable.
 - Cart ownership/actions and transactional reservation lifecycle behavior.
-- Better Auth runtime mapping, local/CI database provisioning, `/api/health`, and hosted Liara staging/production operations.
 - Zustand dependency and the approved request-safe module store/provider pattern; TanStack Query remains gated until its first approved browser-refetched read.
 - Route-level loading/error/not-found/empty handling, metadata, structured data, integration tests, and browser coverage.
+
+No longer missing: Better Auth runtime mapping and local/CI database
+provisioning both landed. `/api/health` and hosted Liara operations moved to
+`DB7` by review correction C8 and are out of the storefront program.
 
 ## 5. Scope
 

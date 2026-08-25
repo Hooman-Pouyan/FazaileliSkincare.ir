@@ -4,6 +4,7 @@ Written before code, deliberately. Every decision here has a stated reason and a
 
 | Doc | What it settles |
 |---|---|
+| [`17-execution-ledger.md`](17-execution-ledger.md) | **What is next.** The ordered queue, what is settled, what is deliberately deferred, and the decoder for the five numbering schemes |
 | [`00-decision-map.md`](00-decision-map.md) | **Start here.** Decisions, deferrals, open questions, phased plan, and the three things most likely to go wrong |
 | [`01-adr-001-stack.md`](01-adr-001-stack.md) | Next.js 16.3 vs TanStack Start · Drizzle vs TypeORM vs Prisma · shadcn vs Ant Design · the wall between this project and coordeck |
 | [`02-adr-002-infrastructure.md`](02-adr-002-infrastructure.md) | Liara vs ParsPack vs Darkube vs ArvanCloud · bank transfer and ZarinPal · sanctions-safe builds · backups, TLS, secrets, logging |
@@ -16,6 +17,8 @@ Written before code, deliberately. Every decision here has a stated reason and a
 | [`system-design/storefront.md`](system-design/storefront.md) | Storefront master plan and links to component foundation, PHP, PLP/search, PDP/cart, verification, and rollout plans |
 | [`system-design/authentication-and-account-security.md`](system-design/authentication-and-account-security.md) | Customer phone OTP · staff password/TOTP · sessions · authorization · phone change · account closure · phased security rollout |
 | [`system-design/cart-checkout-payment-fulfilment-and-returns.md`](system-design/cart-checkout-payment-fulfilment-and-returns.md) | Cart continuation · Iranian checkout/shipping · bank transfer/ZarinPal · settlement · fulfilment · returns/refunds · phased transaction rollout |
+| [`runbooks/local-development.md`](runbooks/local-development.md) | Running and exercising the app locally: env files, port configuration, signing in without SMS, and which suites need a database |
+| [`research/shop-research-gate-deferrals.md`](research/shop-research-gate-deferrals.md) | Storefront gates 4, 5 and 6: what is deferred, the interim rule each carries, and what forces re-review |
 | [`ui/forms.md`](ui/forms.md) | Shared Field/Form, React Hook Form, Zod, Server Action, accessibility, RTL, and error contract |
 
 ## The three decisions most expensive to reverse
