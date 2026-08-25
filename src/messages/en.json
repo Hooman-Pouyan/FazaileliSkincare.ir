@@ -76,5 +76,46 @@
     "submit": "Search",
     "roomsHeading": "Sections",
     "close": "Close"
+  },
+  "shop": {
+    "eyebrow": "Shop",
+    "title": "Skincare, chosen by concern",
+    "lede": "Professional products from Forlle'd Japan, Storyderm Korea and Thalgo France — selected for skin we have treated in the clinic.",
+    "imagePending": "Product image",
+    "enquiryHref": "https://wa.me/",
+    "productCount": "{count, plural, one {# product} other {# products}}",
+    "countBare": "{count, plural, one {#} other {#}}",
+    "meta": {
+      "title": "Professional skincare shop",
+      "description": "Professional skincare from the official Forlle'd Japan representative in Mashhad — by pigmentation, acne, hydration, barrier repair and ageing."
+    },
+    "concerns": {
+      "title": "Start with your skin concern",
+      "lede": "Rather than browsing brands, start from what you see in the mirror."
+    },
+    "featured": {
+      "title": "Selected by the institute"
+    },
+    "brands": {
+      "title": "Brands",
+      "lede": "Each brand with its country of origin and what is currently in stock."
+    },
+    "categories": {
+      "title": "By product type"
+    },
+    "empty": {
+      "title": "Nothing to show yet",
+      "body": "The catalogue is still being prepared. In the meantime you can read about the institute.",
+      "action": "Back to the front page"
+    },
+    "offer": {
+      "currency": "toman",
+      "outOfStock": "Currently unavailable",
+      "onRequest": "Ask about price",
+      "professionalOnly": "For professionals — not sold online",
+      "professionalMark": "Professional",
+      "variantRequired": "Choose a size on the product page",
+      "unavailable": "Not available"
+    }
   }
 }

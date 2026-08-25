@@ -7,6 +7,7 @@ import { DirectionProvider } from "@/components/direction-provider";
 import { CommandPaletteProvider } from "@/components/layout/command-palette-context";
 import { Toaster } from "@/components/ui/sonner";
 import "../globals.css";
+import { SITE_ORIGIN } from "@/lib/site";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -25,7 +26,7 @@ export async function generateMetadata({
       template: `%s | ${t("name")}`,
     },
     description: t("tagline"),
-    metadataBase: new URL("https://fazaieli.ir"),
+    metadataBase: new URL(SITE_ORIGIN),
     alternates: { languages: { fa: "/fa", en: "/en", ar: "/ar" } },
   };
 }

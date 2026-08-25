@@ -1,0 +1,92 @@
+import { cache } from "react";
+import type { Metadata } from "next";
+import { notFound, redirect } from "next/navigation";
+import { setRequestLocale } from "next-intl/server";
+import { routing } from "@/i18n/routing";
+import { SITE_ORIGIN } from "@/lib/site";
+import { getShopHub } from "@/modules/commerce/commerce.reads";
+import { StructuredData } from "@/modules/commerce/components/structured-data";
+import { ShopHubScreen } from "@/modules/commerce/screens/shop-hub.screen";
+import {
+  collectionPage,
+  hubItemList,
+} from "@/modules/commerce/utils/structured-data";
+
+/**
+ * Framework policy only, per `docs/architecture/module-contracts.md`: await
+ * params, call the module's public read, map the typed outcome to a response.
+ * No Drizzle, no price arithmetic, no eligibility decision lives here.
+ */
+
+type ShopPageProps = { params: Promise<{ locale: string }> };
+
+/**
+ * `generateMetadata` and the page both need the hub, and React's request cache
+ * makes that one query rather than two. Without it the alternative is a second
+ * source for the page title, which is the duplication the page model exists to
+ * prevent.
+ */
+const readHub = cache(getShopHub);
+
+export async function generateMetadata({
+  params,
+}: ShopPageProps): Promise<Metadata> {
+  const { locale } = await params;
+  const outcome = await readHub(locale);
+  const canonical = `/${locale}/shop`;
+
+  if (outcome.kind !== "ready") {
+    return { title: canonical, robots: { index: false, follow: true } };
+  }
+
+  return {
+    title: outcome.page.meta.title,
+    description: outcome.page.meta.description,
+    alternates: {
+      canonical,
+      // Every locale exists as a route; the hub is a scope page and is
+      // self-canonical in each, per D-18-3.
+      languages: Object.fromEntries(
+        routing.locales.map((code) => [code, `/${code}/shop`]),
+      ),
+    },
+    // The hub is indexable. Filtered and sorted permutations are not, and that
+    // rule lives with the PLP that emits them.
+    robots: {
+      index: outcome.page.meta.robots === "index,follow",
+      follow: true,
+    },
+  };
+}
+
+export default async function ShopHubPage({ params }: ShopPageProps) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+
+  const outcome = await readHub(locale);
+
+  switch (outcome.kind) {
+    case "ready":
+      return (
+        <>
+          <StructuredData
+            data={[
+              collectionPage(SITE_ORIGIN, outcome.page),
+              hubItemList(SITE_ORIGIN, outcome.page),
+            ]}
+          />
+          <ShopHubScreen page={outcome.page} />
+        </>
+      );
+    case "redirect":
+      redirect(outcome.href);
+    case "not-found":
+    case "locale-unavailable":
+    case "invalid-query":
+      // The hub takes no query and always exists where a locale exists, so any
+      // other outcome is a routing mistake rather than a customer-visible
+      // condition. `not-found` renders the shared state rather than inventing a
+      // fourth meaning here.
+      notFound();
+  }
+}

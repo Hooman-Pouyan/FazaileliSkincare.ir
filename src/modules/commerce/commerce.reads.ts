@@ -9,6 +9,7 @@ import {
   lte,
   sql,
 } from "drizzle-orm";
+import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import {
   brand,
@@ -726,6 +727,7 @@ export async function getShopHub(
   );
 
   const hubHref = `/${localeCode}/shop`;
+  const t = await getTranslations({ locale: localeCode, namespace: "shop" });
 
   return ready({
     concerns: concerns
@@ -757,8 +759,11 @@ export async function getShopHub(
     featured,
     searchHref: `${hubHref}/search`,
     meta: {
-      title: "فروشگاه",
-      description: null,
+      // Copy resolved here, not in the route: the page model is the one
+      // presentation-ready shape, and a route that translates its own title
+      // would be a second place for the hub's name to live.
+      title: t("meta.title"),
+      description: t("meta.description"),
       canonicalHref: hubHref,
       robots: "index,follow",
     },
