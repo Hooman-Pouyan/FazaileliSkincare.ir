@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
  * Radius is 2px, never rounded-full. Min height 44px for touch.
  */
 const buttonVariants = cva(
-  "inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-control)] text-[15px] font-medium outline-none transition-colors duration-200 disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--firouzeh-text)] [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
+  "inline-flex shrink-0 items-center justify-center gap-[var(--space-2)] whitespace-nowrap rounded-[var(--radius-control)] text-[length:var(--text-body)] font-medium outline-none transition-colors duration-[var(--duration)] disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--firouzeh-text)] [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-[var(--space-4)]",
   {
     variants: {
       variant: {
@@ -27,10 +27,10 @@ const buttonVariants = cva(
         link: "bg-transparent p-0 text-[var(--firouzeh-text)] underline-offset-4 hover:underline",
       },
       size: {
-        default: "h-11 px-7",
-        sm: "h-11 px-5 text-[14px]",
-        lg: "h-13 px-10 text-[16px]",
-        icon: "size-11",
+        default: "h-[var(--space-7)] px-[var(--space-5)]",
+        sm: "h-[var(--space-7)] px-[var(--space-4)] text-[length:var(--text-small)]",
+        lg: "h-[var(--space-7)] px-[var(--space-6)]",
+        icon: "size-[var(--space-7)]",
       },
     },
     defaultVariants: { variant: "default", size: "default" },
