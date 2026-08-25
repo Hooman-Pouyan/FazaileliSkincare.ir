@@ -5,6 +5,7 @@ Written before code, deliberately. Every decision here has a stated reason and a
 | Doc | What it settles |
 |---|---|
 | [`17-execution-ledger.md`](17-execution-ledger.md) | **What is next.** The ordered queue, what is settled, what is deliberately deferred, and the decoder for the five numbering schemes |
+| [`18-storefront-direction-decisions.md`](18-storefront-direction-decisions.md) | Design authority and where invention is allowed · professional-only products · the per-route SEO contract |
 | [`00-decision-map.md`](00-decision-map.md) | **Start here.** Decisions, deferrals, open questions, phased plan, and the three things most likely to go wrong |
 | [`01-adr-001-stack.md`](01-adr-001-stack.md) | Next.js 16.3 vs TanStack Start · Drizzle vs TypeORM vs Prisma · shadcn vs Ant Design · the wall between this project and coordeck |
 | [`02-adr-002-infrastructure.md`](02-adr-002-infrastructure.md) | Liara vs ParsPack vs Darkube vs ArvanCloud · bank transfer and ZarinPal · sanctions-safe builds · backups, TLS, secrets, logging |

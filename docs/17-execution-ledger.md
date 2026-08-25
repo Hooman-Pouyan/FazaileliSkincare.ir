@@ -20,6 +20,7 @@ internally consistent and none of them able to produce an ordered queue:
 | AUTH0–AUTH6 | [`system-design/authentication-and-account-security.md`](system-design/authentication-and-account-security.md) | Identity contract through production rollout |
 | Stage 0–6, with `PLP0–5` / `PDP1–6` / `CART1` | [`system-design/storefront.md`](system-design/storefront.md) and its page plans | Storefront delivery order |
 | C1–C8 | [`16-review-storefront-and-database.md`](16-review-storefront-and-database.md) | Review corrections |
+| D-18-n | [`18-storefront-direction-decisions.md`](18-storefront-direction-decisions.md) | Design authority, restricted-product behaviour, SEO |
 
 A row below may satisfy parts of several at once. The leading number is a
 **position in the queue, not an identifier** — cite the underlying ID (`DB3`,
@@ -74,6 +75,15 @@ research deferrals expire the moment it is shown to a customer.
 | 7 | PDP | Stage 4, `PDP1–6` | Offer states are truthful; `on_request`, professional-only, unavailable and variant-required cannot enter the cart | |
 | 8 | Cart presentation — drawer and `/fa/cart` | Stage 4, `CART1` | The shared cart model renders in both surfaces; no checkout, payment or settlement code exists | |
 | 9 | Transactional cart, reservations, `resolveCartOwner` | DB5, C5 | Concurrent requests cannot oversell; removal works; retries and guest-to-account merge are idempotent; the expiry predicate is observable | |
+
+### Direction decisions binding this block
+
+[`18-storefront-direction-decisions.md`](18-storefront-direction-decisions.md)
+settles three things packets 3–9 depend on: the order of design authority and
+where invention is permitted (D-18-1), professional-only products as visible and
+non-purchasable (D-18-2), and SEO as a per-route requirement rather than a later
+pass (D-18-3). D-18-3 closes the SEO half of the gate-5 deferral; the facet
+manifest and sort defaults remain open.
 
 ### Restructuring note — Stage 1 runs vertically
 
