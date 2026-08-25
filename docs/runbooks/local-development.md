@@ -7,7 +7,7 @@ below is development-only and is structurally refused in production.
 ## First run
 
 ```bash
-cp .env.example .env.local          # then fill the two generated secrets
+cp .env.example .env                # then fill the two generated secrets
 node -e "console.log(require('node:crypto').randomBytes(32).toString('base64url'))"   # BETTER_AUTH_SECRET
 node -e "console.log(require('node:crypto').randomBytes(32).toString('base64url'))"   # AUTH_IDENTIFIER_PEPPER
 
@@ -26,9 +26,30 @@ another project's container — `pnpm db:up` refuses with the offending port nam
 and stops before compose leaves a half-created container behind.
 
 To move: change `FAZAIELI_DATABASE_PORT` **and** the port inside `DATABASE_URL`
-to the same new value, then `pnpm db:down && pnpm db:up`. `scripts/database.sh`
-and `drizzle.config.ts` both read `.env.local`, so the container, the migration
-runner and the app cannot drift onto different ports.
+to the same new value, then `pnpm db:down && pnpm db:up`.
+
+## Which file holds what
+
+`.env` is the local development configuration and the file to edit. `.env.local`
+is the per-machine override layer, empty by default, for a collision or a
+credential that is yours alone. Both are gitignored; `.env.example` is the
+committed template.
+
+Every consumer reads them in the same order — `.env.local`, then `.env`, and an
+explicit environment variable beats both:
+
+| Consumer | Reads |
+|---|---|
+| Next.js (`pnpm dev`, `pnpm build`) | natively |
+| `drizzle.config.ts` (`db:migrate`, `db:studio`) | explicit dotenv load |
+| `src/lib/db/seed.ts` (`db:seed`) | explicit dotenv load |
+| `scripts/database.sh` (`db:up`, `db:reset`, `db:verify`) | `FAZAIELI_DATABASE_PORT` only |
+
+Plain `import "dotenv/config"` reads `.env` alone, which is why the two TypeScript
+entry points load the pair explicitly instead. `scripts/database.sh` passes an
+explicit `DATABASE_URL` when it drives migrations and seeds, and dotenv never
+overwrites a value already in the environment, so `db:verify`'s throwaway
+database is unaffected by either file.
 
 To find the holder instead: `lsof -nP -iTCP:5432 -sTCP:LISTEN`.
 

@@ -13,20 +13,30 @@ project_name="${COMPOSE_PROJECT_NAME:-fazaieli-db-local}"
 # The published port lives in .env.local so the container, DATABASE_URL and the
 # app agree without repeating it on every command. An explicit environment
 # variable still wins, which is what verify_fresh_database relies on.
-if [[ -z "${FAZAIELI_DATABASE_PORT:-}" && -f "${repository_root}/.env.local" ]]; then
-  # Parameter expansion, not sed: BSD sed on macOS does not accept the GNU \?
-  # operator, so a pattern that works on CI silently matched nothing here.
-  env_port_line="$(grep -E '^FAZAIELI_DATABASE_PORT=' "${repository_root}/.env.local" | tail -1 || true)"
-  if [[ -n "${env_port_line}" ]]; then
-    env_port="${env_port_line#*=}"
-    env_port="${env_port//\"/}"
-    env_port="${env_port//\'/}"
-    env_port="${env_port//[[:space:]]/}"
-    if [[ "${env_port}" =~ ^[0-9]{1,5}$ ]]; then
-      FAZAIELI_DATABASE_PORT="${env_port}"
+# Same precedence Next.js and drizzle.config.ts use: .env.local wins over .env.
+# An explicit environment variable still beats both, which is what
+# verify_fresh_database relies on to request an ephemeral port.
+read_configured_port() {
+  local file value
+  for file in "${repository_root}/.env.local" "${repository_root}/.env"; do
+    [[ -f "${file}" ]] || continue
+    # Parameter expansion, not sed: BSD sed on macOS rejects the GNU \? operator,
+    # so a pattern that works on CI silently matched nothing here.
+    value="$(grep -E '^FAZAIELI_DATABASE_PORT=' "${file}" | tail -1 || true)"
+    [[ -n "${value}" ]] || continue
+    value="${value#*=}"
+    value="${value//\"/}"
+    value="${value//\'/}"
+    value="${value//[[:space:]]/}"
+    if [[ "${value}" =~ ^[0-9]{1,5}$ ]]; then
+      printf '%s\n' "${value}"
+      return 0
     fi
-  fi
-  unset env_port_line env_port
+  done
+}
+
+if [[ -z "${FAZAIELI_DATABASE_PORT:-}" ]]; then
+  FAZAIELI_DATABASE_PORT="$(read_configured_port)"
 fi
 export FAZAIELI_DATABASE_PORT="${FAZAIELI_DATABASE_PORT:-5432}"
 
