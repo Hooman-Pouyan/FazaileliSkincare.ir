@@ -9,6 +9,13 @@ const nextConfig: NextConfig = {
     remotePatterns: [{ protocol: "https", hostname: "**.arvanstorage.ir" }],
     formats: ["image/avif", "image/webp"],
   },
+  experimental: {
+    // The root layout lives under a dynamic segment (app/[locale]/layout.tsx),
+    // which is one of the two cases Next names for global-not-found: there is no
+    // single non-localized layout a root not-found could compose from. This
+    // bypasses rendering entirely and returns the page directly.
+    globalNotFound: true,
+  },
   // Cache Components + Instant Navigations are Phase 2 polish — see docs/01-adr-001-stack.md.
   // cacheComponents: true,
   // partialPrefetching: true,

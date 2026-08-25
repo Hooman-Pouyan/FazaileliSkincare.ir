@@ -12,10 +12,13 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: "border-[var(--hairline)] bg-transparent text-[var(--gold-text)]",
+        default:
+          "border-[var(--hairline)] bg-transparent text-[var(--gold-text)]",
         stock: "border-transparent bg-transparent text-[var(--teal)] p-0",
-        professional: "border-[var(--hairline-soft)] bg-transparent text-[var(--stone-text)]",
-        onDark: "border-[var(--gold-light)] bg-transparent text-[var(--champagne)]",
+        professional:
+          "border-[var(--hairline-soft)] bg-transparent text-[var(--stone-text)]",
+        onDark:
+          "border-[var(--gold-light)] bg-transparent text-[var(--champagne)]",
       },
     },
     defaultVariants: { variant: "default" },
@@ -30,7 +33,13 @@ function Badge({
 }: React.ComponentProps<"span"> &
   VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
   const Comp = asChild ? Slot.Root : "span";
-  return <Comp data-slot="badge" className={cn(badgeVariants({ variant }), className)} {...props} />;
+  return (
+    <Comp
+      data-slot="badge"
+      className={cn(badgeVariants({ variant }), className)}
+      {...props}
+    />
+  );
 }
 
 export { Badge, badgeVariants };

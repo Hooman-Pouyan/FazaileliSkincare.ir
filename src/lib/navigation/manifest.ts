@@ -117,7 +117,7 @@ export const NAVIGATION: readonly NavigationItem[] = [
   },
   {
     id: "locale",
-    labelKey: "locale",
+    labelKey: "language",
     path: null,
     room: null,
     order: 60,

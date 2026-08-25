@@ -5,10 +5,25 @@ import { toPersianDigits } from "@/lib/money";
 
 /** 44px targets on both controls — this is a phone-first audience. */
 export function QuantityStepper({
-  value, onChange, min = 1, max = 99, className,
-}: { value: number; onChange: (v: number) => void; min?: number; max?: number; className?: string }) {
+  value,
+  onChange,
+  min = 1,
+  max = 99,
+  className,
+}: {
+  value: number;
+  onChange: (v: number) => void;
+  min?: number;
+  max?: number;
+  className?: string;
+}) {
   return (
-    <div className={cn("inline-flex items-center border border-[var(--hairline-soft)]", className)}>
+    <div
+      className={cn(
+        "inline-flex items-center border border-[var(--hairline-soft)]",
+        className,
+      )}
+    >
       <button
         type="button"
         aria-label="کاهش"
@@ -18,7 +33,10 @@ export function QuantityStepper({
       >
         <MinusIcon className="size-4" />
       </button>
-      <span aria-live="polite" className="w-9 text-center text-[16px] font-medium tabular-nums">
+      <span
+        aria-live="polite"
+        className="w-9 text-center text-[16px] font-medium tabular-nums"
+      >
         {toPersianDigits(String(value))}
       </span>
       <button

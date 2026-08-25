@@ -27,7 +27,13 @@ export function ProductGrid({
 }
 
 /** Reserve space so CLS stays under 0.1. */
-export function ProductGridSkeleton({ count = 6, columns = 3 }: { count?: number; columns?: 2 | 3 | 4 }) {
+export function ProductGridSkeleton({
+  count = 6,
+  columns = 3,
+}: {
+  count?: number;
+  columns?: 2 | 3 | 4;
+}) {
   return (
     <ProductGrid columns={columns}>
       {Array.from({ length: count }, (_, i) => (

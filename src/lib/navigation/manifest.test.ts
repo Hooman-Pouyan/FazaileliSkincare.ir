@@ -161,3 +161,25 @@ describe("availability gates", () => {
     expect(hrefFor(item("cart"), "fa")).toBe("/fa/cart");
   });
 });
+
+describe("labels resolve against the real message catalogue", () => {
+  it("uses a key that exists in every locale", async () => {
+    // Given: the manifest invented `nav.locale` while the catalogue had
+    // `nav.language`, and a test that echoed the key back could not see it. The
+    // dev server could, immediately, in all three locales.
+    const locales = ["fa", "en", "ar"] as const;
+
+    for (const locale of locales) {
+      const messages = (await import(`@/messages/${locale}.json`)).default as {
+        nav?: Record<string, unknown>;
+      };
+      const nav = messages.nav ?? {};
+
+      const missing = NAVIGATION.map((entry) => entry.labelKey).filter(
+        (key) => !(key in nav),
+      );
+
+      expect(missing, `${locale} is missing ${missing.join(", ")}`).toEqual([]);
+    }
+  });
+});

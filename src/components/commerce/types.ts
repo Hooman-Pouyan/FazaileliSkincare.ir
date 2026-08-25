@@ -37,7 +37,10 @@ export interface FacetGroupModel {
   defaultOpen?: boolean;
 }
 
-export interface SortOption { value: string; label: string }
+export interface SortOption {
+  value: string;
+  label: string;
+}
 
 export interface CartLineModel {
   id: string;

@@ -19,11 +19,18 @@ export function ProductTile({
   priority?: boolean;
   className?: string;
 }) {
-  const eyebrow = [product.brandName, product.lineName].filter(Boolean).join(" · ");
+  const eyebrow = [product.brandName, product.lineName]
+    .filter(Boolean)
+    .join(" · ");
 
   return (
     <article className={cn("group flex flex-col gap-4", className)}>
-      <Link href={`/shop/p/${product.slug}`} className="block" tabIndex={-1} aria-hidden={false}>
+      <Link
+        href={`/shop/p/${product.slug}`}
+        className="block"
+        tabIndex={-1}
+        aria-hidden={false}
+      >
         <div className="relative aspect-[4/5] w-full overflow-hidden bg-[var(--sand)]">
           {product.imageUrl ? (
             <Image
@@ -49,30 +56,45 @@ export function ProductTile({
 
       <div className="flex flex-col gap-1.5">
         {eyebrow && (
-          <p className="text-[11px] uppercase tracking-[0.13em] text-[var(--gold-text)]">{eyebrow}</p>
+          <p className="text-[11px] uppercase tracking-[0.13em] text-[var(--gold-text)]">
+            {eyebrow}
+          </p>
         )}
         <h3 className="text-[19px] font-medium leading-[1.6]">
-          <Link href={`/shop/p/${product.slug}`} className="hover:text-[var(--lapis)]">
+          <Link
+            href={`/shop/p/${product.slug}`}
+            className="hover:text-[var(--lapis)]"
+          >
             {product.name}
           </Link>
         </h3>
         {product.promise && (
-          <p className="text-[14px] leading-[1.85] text-[var(--stone-text)]">{product.promise}</p>
+          <p className="text-[14px] leading-[1.85] text-[var(--stone-text)]">
+            {product.promise}
+          </p>
         )}
         {product.sizeLabel && (
-          <p className="text-[13px] text-[var(--stone-text)]">{product.sizeLabel}</p>
+          <p className="text-[13px] text-[var(--stone-text)]">
+            {product.sizeLabel}
+          </p>
         )}
 
         <div className="mt-1.5">
-          {product.priceVisibility === "on_request" || product.priceRials == null ? (
+          {product.priceVisibility === "on_request" ||
+          product.priceRials == null ? (
             <PriceOnRequest href={enquiryHref} />
           ) : (
-            <Price amountRials={product.priceRials} compareAtRials={product.compareAtRials} />
+            <Price
+              amountRials={product.priceRials}
+              compareAtRials={product.compareAtRials}
+            />
           )}
         </div>
 
         {!product.inStock && (
-          <p className="text-[13px] text-[var(--stone-text)]">فعلاً موجود نیست</p>
+          <p className="text-[13px] text-[var(--stone-text)]">
+            فعلاً موجود نیست
+          </p>
         )}
       </div>
     </article>

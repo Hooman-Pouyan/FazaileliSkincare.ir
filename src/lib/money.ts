@@ -8,7 +8,18 @@
 
 export type Rials = bigint;
 
-const PERSIAN_DIGITS = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"] as const;
+const PERSIAN_DIGITS = [
+  "۰",
+  "۱",
+  "۲",
+  "۳",
+  "۴",
+  "۵",
+  "۶",
+  "۷",
+  "۸",
+  "۹",
+] as const;
 
 export const toRials = (toman: number | bigint): Rials => BigInt(toman) * 10n;
 export const toTomanString = (rials: Rials): string => (rials / 10n).toString();

@@ -2,7 +2,11 @@
 import * as React from "react";
 import { ChevronDownIcon, SearchIcon } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { Slider } from "@/components/ui/slider";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { formatToman } from "@/lib/money";
@@ -19,15 +23,22 @@ import type { FacetGroupModel } from "./types";
  * no filter at all.
  */
 export function FacetGroup({
-  group, onToggle,
-}: { group: FacetGroupModel; onToggle: (groupKey: string, value: string) => void }) {
+  group,
+  onToggle,
+}: {
+  group: FacetGroupModel;
+  onToggle: (groupKey: string, value: string) => void;
+}) {
   const [query, setQuery] = React.useState("");
   const values = query
     ? group.values.filter((v) => v.label.includes(query))
     : group.values;
 
   return (
-    <Collapsible defaultOpen={group.defaultOpen ?? true} className="border-b border-[var(--hairline-soft)]">
+    <Collapsible
+      defaultOpen={group.defaultOpen ?? true}
+      className="border-b border-[var(--hairline-soft)]"
+    >
       <CollapsibleTrigger className="group flex w-full items-center justify-between py-4 text-start text-[15px] font-medium focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--firouzeh-text)]">
         {group.label}
         <ChevronDownIcon className="size-4 text-[var(--stone-text)] transition-transform group-data-[state=open]:rotate-180" />
@@ -67,13 +78,17 @@ export function FacetGroup({
                     )}
                   >
                     <span>{v.label}</span>
-                    <span className="text-[12.5px] tabular-nums text-[var(--stone-text)]">{v.count}</span>
+                    <span className="text-[12.5px] tabular-nums text-[var(--stone-text)]">
+                      {v.count}
+                    </span>
                   </label>
                 </li>
               );
             })}
             {values.length === 0 && (
-              <li className="text-[13.5px] text-[var(--stone-text)]">چیزی پیدا نشد</li>
+              <li className="text-[13.5px] text-[var(--stone-text)]">
+                چیزی پیدا نشد
+              </li>
             )}
           </ul>
         </ScrollArea>
@@ -83,8 +98,16 @@ export function FacetGroup({
 }
 
 export function PriceFacet({
-  min, max, value, onChange,
-}: { min: bigint; max: bigint; value: [bigint, bigint]; onChange: (v: [bigint, bigint]) => void }) {
+  min,
+  max,
+  value,
+  onChange,
+}: {
+  min: bigint;
+  max: bigint;
+  value: [bigint, bigint];
+  onChange: (v: [bigint, bigint]) => void;
+}) {
   const toNum = (b: bigint) => Number(b / 10n);
   return (
     <Collapsible defaultOpen className="border-b border-[var(--hairline-soft)]">
@@ -98,7 +121,9 @@ export function PriceFacet({
           max={toNum(max)}
           step={50_000}
           value={[toNum(value[0]), toNum(value[1])]}
-          onValueChange={([lo, hi]) => onChange([BigInt(lo ?? 0) * 10n, BigInt(hi ?? 0) * 10n])}
+          onValueChange={([lo, hi]) =>
+            onChange([BigInt(lo ?? 0) * 10n, BigInt(hi ?? 0) * 10n])
+          }
         />
         <div className="mt-2 flex items-center justify-between text-[13px] tabular-nums text-[var(--stone-text)]">
           <span>{formatToman(value[0])} تومان</span>
@@ -110,7 +135,12 @@ export function PriceFacet({
 }
 
 export function FacetRail({
-  groups, onToggle, onClear, activeCount = 0, className, children,
+  groups,
+  onToggle,
+  onClear,
+  activeCount = 0,
+  className,
+  children,
 }: {
   groups: FacetGroupModel[];
   onToggle: (groupKey: string, value: string) => void;
@@ -120,17 +150,28 @@ export function FacetRail({
   children?: React.ReactNode;
 }) {
   return (
-    <aside aria-label="فیلترها" className={cn("flex w-full flex-col lg:w-64", className)}>
+    <aside
+      aria-label="فیلترها"
+      className={cn("flex w-full flex-col lg:w-64", className)}
+    >
       <div className="flex items-baseline justify-between border-b border-[var(--hairline)] pb-3">
-        <h2 className="text-[13px] font-medium uppercase tracking-[0.14em] text-[var(--gold-text)]">فیلترها</h2>
+        <h2 className="text-[13px] font-medium uppercase tracking-[0.14em] text-[var(--gold-text)]">
+          فیلترها
+        </h2>
         {activeCount > 0 && onClear && (
-          <button type="button" onClick={onClear} className="text-[13px] text-[var(--firouzeh-text)] hover:underline">
+          <button
+            type="button"
+            onClick={onClear}
+            className="text-[13px] text-[var(--firouzeh-text)] hover:underline"
+          >
             پاک کردن ({activeCount})
           </button>
         )}
       </div>
       {children}
-      {groups.map((g) => <FacetGroup key={g.key} group={g} onToggle={onToggle} />)}
+      {groups.map((g) => (
+        <FacetGroup key={g.key} group={g} onToggle={onToggle} />
+      ))}
     </aside>
   );
 }

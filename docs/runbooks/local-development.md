@@ -154,9 +154,20 @@ that matter here:
   the root element carries `data-scroll-behavior="smooth"`.
 - **`middleware.ts` is `proxy.ts`**, which this repository already follows.
 
-`.next/types/validator.ts` is generated from the routes that exist at the time it
-runs, so it goes stale when routes are added or removed and can fail `typecheck`
-on its own. Restarting `next dev` or running `pnpm build` regenerates it.
+`.next/types/` and `.next/dev/types/` are generated from the routes that exist at
+the time they run, and `tsconfig.json` includes both. They go stale when routes
+are added or removed — or when `next dev` is killed mid-write — and then fail
+`pnpm typecheck` with errors that look like they are in your code. Restarting
+`next dev` or running `pnpm build` regenerates them.
+
+## Unmatched URLs use `global-not-found.tsx`
+
+`not-found.tsx` cannot serve this application. Next composes it from the root
+layout, and the root layout here lives under a dynamic segment
+(`app/[locale]/layout.tsx`) — one of the two cases the Next 16 docs name for
+`global-not-found`, which is enabled by `experimental.globalNotFound` in
+`next.config.ts`. It bypasses rendering entirely, so it owns its own document and
+imports `globals.css` itself; no layout runs above it.
 
 ## Known issue — `next dev` runs on webpack
 

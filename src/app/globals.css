@@ -29,7 +29,7 @@
     --card-foreground: var(--ink);
     --popover: var(--surface);
     --popover-foreground: var(--ink);
-    --primary: var(--ink);            /* not lapis — fields are not fills behind text */
+    --primary: var(--ink); /* not lapis — fields are not fills behind text */
     --primary-foreground: var(--sand);
     --secondary: var(--surface);
     --secondary-foreground: var(--ink);
@@ -45,7 +45,9 @@
     --radius: var(--radius-control);
   }
 
-  * { border-color: var(--border); }
+  * {
+    border-color: var(--border);
+  }
 
   body {
     background: var(--ground);
@@ -56,8 +58,12 @@
   }
 
   [lang="fa"],
-  [lang="ar"] { line-height: var(--leading-fa); }
-  [lang="en"] { line-height: var(--leading-latin); }
+  [lang="ar"] {
+    line-height: var(--leading-fa);
+  }
+  [lang="en"] {
+    line-height: var(--leading-latin);
+  }
 
   :focus-visible {
     outline: 2px solid var(--firouzeh-text);
@@ -81,10 +87,18 @@
   --animate-accordion-up: accordion-up 240ms var(--easing);
 }
 @keyframes accordion-down {
-  from { height: 0; }
-  to { height: var(--radix-accordion-content-height); }
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
 }
 @keyframes accordion-up {
-  from { height: var(--radix-accordion-content-height); }
-  to { height: 0; }
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
 }

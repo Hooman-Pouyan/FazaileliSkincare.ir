@@ -4,14 +4,20 @@ import { Slider as SliderPrimitive } from "radix-ui";
 import { cn } from "@/lib/utils";
 
 /** Price range. Radix reads direction from DirectionProvider, so it mirrors. */
-function Slider({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Root>) {
+function Slider({
+  className,
+  ...props
+}: React.ComponentProps<typeof SliderPrimitive.Root>) {
   const count = Array.isArray(props.value ?? props.defaultValue)
     ? (props.value ?? props.defaultValue)!.length
     : 1;
   return (
     <SliderPrimitive.Root
       data-slot="slider"
-      className={cn("relative flex w-full touch-none select-none items-center py-3", className)}
+      className={cn(
+        "relative flex w-full touch-none select-none items-center py-3",
+        className,
+      )}
       {...props}
     >
       <SliderPrimitive.Track className="relative h-px w-full grow bg-[var(--stone)]">

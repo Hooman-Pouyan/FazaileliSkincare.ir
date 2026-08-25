@@ -1,6 +1,15 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
-export interface DisclosureSection { key: string; title: string; body: React.ReactNode }
+export interface DisclosureSection {
+  key: string;
+  title: string;
+  body: React.ReactNode;
+}
 
 /**
  * PDP progressive disclosure. Accordion, never tabs — tabs hide content from
@@ -9,9 +18,17 @@ export interface DisclosureSection { key: string; title: string; body: React.Rea
  * `اصالت کالا` is included as a slot even before IRC codes are decided, so
  * filling it in later needs no schema or layout change.
  */
-export function ProductDisclosure({ sections }: { sections: DisclosureSection[] }) {
+export function ProductDisclosure({
+  sections,
+}: {
+  sections: DisclosureSection[];
+}) {
   return (
-    <Accordion type="multiple" defaultValue={[sections[0]?.key ?? ""]} className="w-full">
+    <Accordion
+      type="multiple"
+      defaultValue={[sections[0]?.key ?? ""]}
+      className="w-full"
+    >
       {sections.map((s) => (
         <AccordionItem key={s.key} value={s.key}>
           <AccordionTrigger>{s.title}</AccordionTrigger>
@@ -29,9 +46,15 @@ export function buildDefaultSections(p: {
   ircCode?: string | null;
 }): DisclosureSection[] {
   const out: DisclosureSection[] = [];
-  if (p.ingredients) out.push({ key: "ingredients", title: "ترکیبات کلیدی", body: p.ingredients });
+  if (p.ingredients)
+    out.push({
+      key: "ingredients",
+      title: "ترکیبات کلیدی",
+      body: p.ingredients,
+    });
   if (p.usage) out.push({ key: "usage", title: "روش استفاده", body: p.usage });
-  if (p.suitableFor) out.push({ key: "suitable", title: "برای چه پوستی", body: p.suitableFor });
+  if (p.suitableFor)
+    out.push({ key: "suitable", title: "برای چه پوستی", body: p.suitableFor });
   out.push({
     key: "authenticity",
     title: "اصالت کالا",

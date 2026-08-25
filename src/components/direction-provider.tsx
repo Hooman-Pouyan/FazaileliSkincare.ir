@@ -14,5 +14,9 @@ export function DirectionProvider({
   dir: "rtl" | "ltr";
   children: React.ReactNode;
 }) {
-  return <Direction.DirectionProvider dir={dir}>{children}</Direction.DirectionProvider>;
+  return (
+    <Direction.DirectionProvider dir={dir}>
+      {children}
+    </Direction.DirectionProvider>
+  );
 }

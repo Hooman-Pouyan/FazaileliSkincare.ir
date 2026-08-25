@@ -27,7 +27,11 @@ const ROOM_LABEL: Record<SearchHit["room"], string> = {
  * appear together outside /studio.
  */
 export function SearchCommand({
-  hits, query, onQueryChange, open, onOpenChange,
+  hits,
+  query,
+  onQueryChange,
+  open,
+  onOpenChange,
 }: {
   hits: SearchHit[];
   query: string;
@@ -52,7 +56,10 @@ export function SearchCommand({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent showClose={false} className="top-[18%] max-w-xl -translate-y-0 p-0">
+      <DialogContent
+        showClose={false}
+        className="top-[18%] max-w-xl -translate-y-0 p-0"
+      >
         <Command shouldFilter={false} label="جستجو" className="overflow-hidden">
           <div className="flex items-center gap-3 border-b border-[var(--hairline)] px-5">
             <SearchIcon className="size-4 shrink-0 text-[var(--stone-text)]" />
@@ -77,7 +84,9 @@ export function SearchCommand({
                   <Command.Item
                     key={h.id}
                     value={h.id}
-                    onSelect={() => { window.location.href = h.href; }}
+                    onSelect={() => {
+                      window.location.href = h.href;
+                    }}
                     className={cn(
                       "flex cursor-pointer items-center justify-between gap-4 rounded-[var(--radius-control)] px-3 py-2.5 text-[14.5px]",
                       "data-[selected=true]:bg-[color-mix(in_oklab,var(--ink)_6%,transparent)]",
@@ -85,7 +94,11 @@ export function SearchCommand({
                   >
                     <span className="flex flex-col gap-0.5">
                       <span>{h.label}</span>
-                      {h.meta && <span className="text-[12.5px] text-[var(--stone-text)]">{h.meta}</span>}
+                      {h.meta && (
+                        <span className="text-[12.5px] text-[var(--stone-text)]">
+                          {h.meta}
+                        </span>
+                      )}
                     </span>
                     {h.priceRials != null && (
                       <span className="shrink-0 text-[13.5px] tabular-nums text-[var(--stone-text)]">

@@ -21,14 +21,24 @@ export function ConcernRail({
   concerns,
   activeSlug,
   className,
-}: { concerns: ConcernModel[]; activeSlug?: string; className?: string }) {
+}: {
+  concerns: ConcernModel[];
+  activeSlug?: string;
+  className?: string;
+}) {
   return (
-    <nav aria-label="دغدغهٔ پوست" className={cn("border-t border-[var(--hairline)]", className)}>
+    <nav
+      aria-label="دغدغهٔ پوست"
+      className={cn("border-t border-[var(--hairline)]", className)}
+    >
       <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
         {concerns.map((c) => {
           const on = c.slug === activeSlug;
           return (
-            <li key={c.slug} className="border-s border-[var(--hairline-soft)] first:border-s-0">
+            <li
+              key={c.slug}
+              className="border-s border-[var(--hairline-soft)] first:border-s-0"
+            >
               <Link
                 href={`/shop/concern/${c.slug}`}
                 aria-current={on ? "page" : undefined}
@@ -39,9 +49,19 @@ export function ConcernRail({
               >
                 <span
                   aria-hidden
-                  className={cn("absolute inset-block-start-0 inset-inline-0 h-0.5", on ? "bg-[var(--teal)]" : "bg-transparent")}
+                  className={cn(
+                    "absolute inset-block-start-0 inset-inline-0 h-0.5",
+                    on ? "bg-[var(--teal)]" : "bg-transparent",
+                  )}
                 />
-                <span className={cn("text-[17.5px] leading-[1.6]", on ? "font-bold" : "font-light text-[color-mix(in_oklab,var(--ink)_62%,transparent)]")}>
+                <span
+                  className={cn(
+                    "text-[17.5px] leading-[1.6]",
+                    on
+                      ? "font-bold"
+                      : "font-light text-[color-mix(in_oklab,var(--ink)_62%,transparent)]",
+                  )}
+                >
                   {c.label}
                 </span>
                 {c.count != null && (
@@ -59,9 +79,18 @@ export function ConcernRail({
 }
 
 /** PHP hub tile — a photographic panel, not a box with an icon. */
-export function ConcernTile({ concern, imageUrl }: { concern: ConcernModel; imageUrl?: string | null }) {
+export function ConcernTile({
+  concern,
+  imageUrl,
+}: {
+  concern: ConcernModel;
+  imageUrl?: string | null;
+}) {
   return (
-    <Link href={`/shop/concern/${concern.slug}`} className="group flex flex-col">
+    <Link
+      href={`/shop/concern/${concern.slug}`}
+      className="group flex flex-col"
+    >
       <div
         className="aspect-[3/2] w-full bg-[var(--sand)] bg-cover bg-center"
         style={imageUrl ? { backgroundImage: `url(${imageUrl})` } : undefined}
@@ -71,7 +100,9 @@ export function ConcernTile({ concern, imageUrl }: { concern: ConcernModel; imag
         <span aria-hidden className="h-px w-8 bg-[var(--teal)]" />
         <h3 className="text-[24px] font-bold">{concern.label}</h3>
         {concern.description && (
-          <p className="max-w-[24em] text-[14.5px] leading-[1.9] text-[var(--stone-text)]">{concern.description}</p>
+          <p className="max-w-[24em] text-[14.5px] leading-[1.9] text-[var(--stone-text)]">
+            {concern.description}
+          </p>
         )}
       </div>
     </Link>

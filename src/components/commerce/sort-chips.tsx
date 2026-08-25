@@ -7,7 +7,11 @@ import type { SortOption } from "./types";
  * six options: zero clicks to see what's available.
  */
 export function SortChips({
-  options, value, onChange, label = "مرتب‌سازی", className,
+  options,
+  value,
+  onChange,
+  label = "مرتب‌سازی",
+  className,
 }: {
   options: SortOption[];
   value: string;

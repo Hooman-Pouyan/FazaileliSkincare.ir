@@ -38,8 +38,12 @@ export function Price({
           {formatToman(compareAtRials, locale)}
         </span>
       )}
-      <span className={cn("font-medium", sizes[size])}>{formatToman(amountRials, locale)}</span>
-      <span className="text-[13px] font-light text-[var(--stone-text)]">{currencyLabel}</span>
+      <span className={cn("font-medium", sizes[size])}>
+        {formatToman(amountRials, locale)}
+      </span>
+      <span className="text-[13px] font-light text-[var(--stone-text)]">
+        {currencyLabel}
+      </span>
     </p>
   );
 }
@@ -53,7 +57,11 @@ export function PriceOnRequest({
   label = "استعلام قیمت",
   href,
   className,
-}: { label?: string; href: string; className?: string }) {
+}: {
+  label?: string;
+  href: string;
+  className?: string;
+}) {
   return (
     <a
       href={href}
@@ -63,7 +71,15 @@ export function PriceOnRequest({
       )}
     >
       {label}
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden>
+      <svg
+        width="15"
+        height="15"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        aria-hidden
+      >
         <path d="M21 11.5a8.4 8.4 0 0 1-12.3 7.5L3 20.5l1.6-5.5A8.4 8.4 0 1 1 21 11.5Z" />
       </svg>
     </a>

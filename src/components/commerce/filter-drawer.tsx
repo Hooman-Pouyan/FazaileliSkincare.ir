@@ -1,7 +1,15 @@
 "use client";
 import * as React from "react";
 import { SlidersHorizontalIcon } from "lucide-react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetFooter, SheetClose } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+  SheetFooter,
+  SheetClose,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -10,7 +18,10 @@ import { cn } from "@/lib/utils";
  * becomes a sheet below lg — never a cramped inline accordion.
  */
 export function FilterDrawer({
-  activeCount = 0, resultCount, children, className,
+  activeCount = 0,
+  resultCount,
+  children,
+  className,
 }: {
   activeCount?: number;
   resultCount?: number;
@@ -20,10 +31,16 @@ export function FilterDrawer({
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" size="sm" className={cn("lg:hidden", className)}>
+        <Button
+          variant="outline"
+          size="sm"
+          className={cn("lg:hidden", className)}
+        >
           <SlidersHorizontalIcon />
           فیلترها
-          {activeCount > 0 && <span className="tabular-nums">({activeCount})</span>}
+          {activeCount > 0 && (
+            <span className="tabular-nums">({activeCount})</span>
+          )}
         </Button>
       </SheetTrigger>
       <SheetContent side="end" className="flex flex-col">

@@ -14,11 +14,22 @@ const Accordion = (p: React.ComponentProps<typeof AccordionPrimitive.Root>) => (
   <AccordionPrimitive.Root data-slot="accordion" {...p} />
 );
 
-const AccordionItem = ({ className, ...p }: React.ComponentProps<typeof AccordionPrimitive.Item>) => (
-  <AccordionPrimitive.Item data-slot="accordion-item" className={cn("border-b border-[var(--hairline-soft)]", className)} {...p} />
+const AccordionItem = ({
+  className,
+  ...p
+}: React.ComponentProps<typeof AccordionPrimitive.Item>) => (
+  <AccordionPrimitive.Item
+    data-slot="accordion-item"
+    className={cn("border-b border-[var(--hairline-soft)]", className)}
+    {...p}
+  />
 );
 
-function AccordionTrigger({ className, children, ...props }: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
+function AccordionTrigger({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
   return (
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger
@@ -38,14 +49,23 @@ function AccordionTrigger({ className, children, ...props }: React.ComponentProp
   );
 }
 
-function AccordionContent({ className, children, ...props }: React.ComponentProps<typeof AccordionPrimitive.Content>) {
+function AccordionContent({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<typeof AccordionPrimitive.Content>) {
   return (
     <AccordionPrimitive.Content
       data-slot="accordion-content"
       className="overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
       {...props}
     >
-      <div className={cn("pb-6 text-[16px] leading-[2.05] text-[color-mix(in_oklab,var(--ink)_78%,transparent)]", className)}>
+      <div
+        className={cn(
+          "pb-6 text-[16px] leading-[2.05] text-[color-mix(in_oklab,var(--ink)_78%,transparent)]",
+          className,
+        )}
+      >
         {children}
       </div>
     </AccordionPrimitive.Content>

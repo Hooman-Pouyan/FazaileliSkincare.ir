@@ -2,7 +2,14 @@
 import * as React from "react";
 import Image from "next/image";
 import { ShoppingBagIcon, Trash2Icon } from "lucide-react";
-import { Sheet, SheetContent, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { EmptyState } from "@/components/layout/empty-state";
@@ -18,7 +25,11 @@ import type { CartLineModel } from "./types";
  * anyone who lands on the URL directly.
  */
 export function CartDrawer({
-  lines, onQuantityChange, onRemove, checkoutHref = "/checkout", trigger,
+  lines,
+  onQuantityChange,
+  onRemove,
+  checkoutHref = "/checkout",
+  trigger,
 }: {
   lines: CartLineModel[];
   onQuantityChange: (id: string, q: number) => void;
@@ -26,14 +37,22 @@ export function CartDrawer({
   checkoutHref?: string;
   trigger?: React.ReactNode;
 }) {
-  const subtotal = lines.reduce((sum, l) => sum + l.unitPriceRials * BigInt(l.quantity), 0n);
+  const subtotal = lines.reduce(
+    (sum, l) => sum + l.unitPriceRials * BigInt(l.quantity),
+    0n,
+  );
   const count = lines.reduce((n, l) => n + l.quantity, 0);
 
   return (
     <Sheet>
       <SheetTrigger asChild>
         {trigger ?? (
-          <Button variant="ghost" size="icon" aria-label={`سبد خرید (${count})`} className="relative">
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label={`سبد خرید (${count})`}
+            className="relative"
+          >
             <ShoppingBagIcon />
             {count > 0 && (
               <span className="absolute -top-1 inset-inline-end-0 grid size-4 place-items-center rounded-full bg-[var(--teal)] text-[10px] text-[var(--sand)] tabular-nums">
@@ -50,21 +69,46 @@ export function CartDrawer({
         </SheetHeader>
 
         {lines.length === 0 ? (
-          <EmptyState title="سبد شما خالی است" body="از دغدغهٔ پوستتان شروع کنید — محصولات هر بخش را خودمان انتخاب کرده‌ایم." />
+          <EmptyState
+            title="سبد شما خالی است"
+            body="از دغدغهٔ پوستتان شروع کنید — محصولات هر بخش را خودمان انتخاب کرده‌ایم."
+          />
         ) : (
           <>
             <ul className="flex-1 overflow-y-auto px-6">
               {lines.map((l) => (
-                <li key={l.id} className="flex gap-4 border-b border-[var(--hairline-soft)] py-5 last:border-b-0">
+                <li
+                  key={l.id}
+                  className="flex gap-4 border-b border-[var(--hairline-soft)] py-5 last:border-b-0"
+                >
                   <div className="relative aspect-[4/5] w-[72px] shrink-0 overflow-hidden bg-[var(--sand)]">
-                    {l.imageUrl && <Image src={l.imageUrl} alt="" fill sizes="72px" className="object-cover" />}
+                    {l.imageUrl && (
+                      <Image
+                        src={l.imageUrl}
+                        alt=""
+                        fill
+                        sizes="72px"
+                        className="object-cover"
+                      />
+                    )}
                   </div>
                   <div className="flex flex-1 flex-col gap-2">
-                    <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--gold-text)]">{l.brandName}</p>
-                    <p className="text-[15px] font-medium leading-[1.55]">{l.name}</p>
-                    {l.sizeLabel && <p className="text-[12.5px] text-[var(--stone-text)]">{l.sizeLabel}</p>}
+                    <p className="text-[11px] uppercase tracking-[0.12em] text-[var(--gold-text)]">
+                      {l.brandName}
+                    </p>
+                    <p className="text-[15px] font-medium leading-[1.55]">
+                      {l.name}
+                    </p>
+                    {l.sizeLabel && (
+                      <p className="text-[12.5px] text-[var(--stone-text)]">
+                        {l.sizeLabel}
+                      </p>
+                    )}
                     <div className="mt-1 flex items-center justify-between gap-3">
-                      <QuantityStepper value={l.quantity} onChange={(q) => onQuantityChange(l.id, q)} />
+                      <QuantityStepper
+                        value={l.quantity}
+                        onChange={(q) => onQuantityChange(l.id, q)}
+                      />
                       <button
                         type="button"
                         onClick={() => onRemove(l.id)}
@@ -74,7 +118,11 @@ export function CartDrawer({
                         <Trash2Icon className="size-4" />
                       </button>
                     </div>
-                    <Price amountRials={l.unitPriceRials * BigInt(l.quantity)} size="sm" className="mt-1" />
+                    <Price
+                      amountRials={l.unitPriceRials * BigInt(l.quantity)}
+                      size="sm"
+                      className="mt-1"
+                    />
                   </div>
                 </li>
               ))}
@@ -84,7 +132,10 @@ export function CartDrawer({
               <div className="flex items-baseline justify-between">
                 <span className="text-[15px] font-medium">جمع سبد</span>
                 <span className="text-[20px] font-bold tabular-nums">
-                  {formatToman(subtotal)} <span className="text-[13px] font-light text-[var(--stone-text)]">تومان</span>
+                  {formatToman(subtotal)}{" "}
+                  <span className="text-[13px] font-light text-[var(--stone-text)]">
+                    تومان
+                  </span>
                 </span>
               </div>
               <p className="text-[12.5px] leading-[1.8] text-[var(--stone-text)]">
