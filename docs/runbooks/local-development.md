@@ -177,6 +177,14 @@ The split exists so most changes can be verified without provisioning a
 database, and so a schema or policy regression is caught by a suite that runs in
 seconds rather than one that needs a container.
 
+`vitest.setup.mts` loads `.env.local` and `.env` into `process.env` before any
+test module evaluates. Vitest does not do this on its own, and the
+database-backed suites guard themselves with `databaseUrl ? describe :
+describe.skip` — so without it that guard was always false and the auth
+integration suite skipped silently while the run reported green. **If
+`test:integration` reports skipped files, the environment is not reaching them;
+that is a failure to investigate, not a pass.**
+
 ## What can be verified without your machine
 
 Runnable in any checkout: `typecheck`, `lint`, `format`, and `test:unit`.
