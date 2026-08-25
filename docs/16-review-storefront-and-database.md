@@ -267,4 +267,22 @@ Residual question decisions for this planning pass:
 3. The primary locale seed must assert exactly one primary row after every seed run.
 4. Protocol-phase tables remain available but receive no further implementation until the merchandising protocol is approved.
 
-**Implementation state:** documentation aligned; schema fixes, application services, APIs, provider integration, and UI remain unimplemented pending maintainer review.
+**Implementation state:** documentation aligned. Application services, APIs,
+provider integration, and UI remain unimplemented pending maintainer review.
+
+### Correction implementation log
+
+| ID | State | Evidence |
+|---|---|---|
+| C1 | **Implemented** — `customer_order.contact_phone` landed in migration `0001` (AUTH0); `customer_order_contact_check` dropped in migration `0002` | `drizzle/0002_c1_c2_review_corrections.sql`; `schema.test.ts` "lets an order outlive its customer instead of blocking the delete" |
+| C2 | **Implemented** — composite `payment_settlement (payment_id, order_id) -> payment (id, order_id)`, backed by a unique index on `payment (id, order_id)`; both independent foreign keys dropped | `drizzle/0002_c1_c2_review_corrections.sql`; `schema.test.ts` "reaches an order only through the payment being settled" |
+| C3 | Open — belongs to DB3 | — |
+| C4 | Open — belongs to DB3 | — |
+| C5 | Open — belongs to DB5 | — |
+| C6 | Open — belongs to DB6 | — |
+| C7 | Implemented — documentation edits | this bundle |
+| C8 | Implemented — phase order recorded | `system-design/database-foundation.md` |
+
+Migration `0002` was hand-ordered after generation: `drizzle-kit` emitted the
+composite foreign key before the unique index it depends on, which PostgreSQL
+rejects. The committed file creates the index first.

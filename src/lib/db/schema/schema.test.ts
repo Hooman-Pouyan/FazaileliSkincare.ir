@@ -232,4 +232,53 @@ describe("database schema contract", () => {
     // Then: the historical contact is required independently of person identity
     expect(contactPhone?.notNull).toBe(true);
   });
+
+  it("lets an order outlive its customer instead of blocking the delete", () => {
+    // Given: person_id is ON DELETE SET NULL and contact_phone is the snapshot
+    const order = tableConfigs().find(
+      (table) => table.name === "customer_order",
+    );
+
+    // When: the historical contact check is looked for
+    const contactCheck = order?.checks.find(
+      (check) => check.name === "customer_order_contact_check",
+    );
+
+    // Then: it is gone, so setting person_id to null cannot abort the cascade
+    expect(contactCheck).toBeUndefined();
+  });
+
+  it("reaches an order only through the payment being settled", () => {
+    // Given: the settlement row, which must never name a foreign order
+    const settlement = tableConfigs().find(
+      (table) => table.name === "payment_settlement",
+    );
+
+    // When: its foreign keys are inspected
+    const references = settlement?.foreignKeys.map((key) => {
+      const { columns, foreignColumns } = key.reference();
+      return {
+        columns: columns.map((column) => column.name),
+        foreignTable: foreignColumns[0]?.table
+          ? getTableConfig(foreignColumns[0].table as PgTable).name
+          : undefined,
+        foreignColumns: foreignColumns.map((column) => column.name),
+      };
+    });
+
+    // Then: payment and order travel together, and no independent order key
+    // remains for a transposed variable to satisfy
+    expect(references).toContainEqual({
+      columns: ["paymentId", "orderId"],
+      foreignTable: "payment",
+      foreignColumns: ["id", "orderId"],
+    });
+    expect(
+      references?.filter(
+        (reference) =>
+          reference.foreignTable === "customer_order" &&
+          reference.columns.length === 1,
+      ),
+    ).toEqual([]);
+  });
 });

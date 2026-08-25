@@ -15,6 +15,13 @@
       "when": 1787636410170,
       "tag": "0001_peaceful_bloodstrike",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1787663256458,
+      "tag": "0002_c1_c2_review_corrections",
+      "breakpoints": true
     }
   ]
 }

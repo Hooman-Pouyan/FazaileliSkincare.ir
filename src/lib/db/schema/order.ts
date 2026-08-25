@@ -60,10 +60,13 @@ export const customerOrder = pgTable(
       table.createdAt,
       table.id,
     ),
-    check(
-      "customer_order_contact_check",
-      sql`${table.personId} is not null or ${table.guestPhone} is not null`,
-    ),
+    // customer_order_contact_check is deliberately absent. It required a
+    // person or a guest phone, but personId is ON DELETE SET NULL: deleting a
+    // registered customer who had ordered set personId to null and the check
+    // aborted the delete inside a cascade, as an opaque constraint error rather
+    // than a domain rule. contactPhone is a NOT NULL snapshot taken at
+    // placement and already guarantees every order carries its own contact, so
+    // the order survives the customer row. (Review HIGH-1 / C1.)
     check(
       "customer_order_contact_phone_e164_check",
       sql`${table.contactPhone} ~ '^\\+[1-9][0-9]{7,14}$'`,
