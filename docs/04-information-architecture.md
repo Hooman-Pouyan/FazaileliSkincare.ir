@@ -59,7 +59,7 @@ And "not a classic menu header and cards for body" rules out the default ecommer
 └────────────────────────────────────────────────────────────────┘
 ```
 
-A **56px vertical rail** instead of a horizontal header. On desktop it sits at the inline-start edge — right in Persian, left in English, mirrored automatically by logical properties. On mobile it collapses to a bottom bar with the same marks.
+A **56px vertical rail** instead of a horizontal header. On desktop it sits at the inline-start edge — right in Persian and Arabic, left in English, mirrored automatically by logical properties. On mobile it collapses to a bottom bar with the same marks.
 
 Why a rail: it removes the header entirely, gives every page full width for the photography (which is the best asset this brand has), and makes "which room am I in" ambient rather than inferred. The logo medallion at the top is the one place the ornate mark gets to be itself.
 
@@ -167,11 +167,11 @@ On light ground, text-safe substitutes: `--firouzeh-text #146E82` (5.51:1) and `
 
 ## Bilingual & RTL
 
-- Locale-prefixed routes `/fa/...` and `/en/...`, `fa` default. `<html lang dir>` per locale.
+- Locale-prefixed routes `/fa/...`, `/en/...` and `/ar/...`, with `fa` as the default. `<html lang dir>` per locale.
 - **Every** spacing property logical: `margin-inline-start`, `padding-inline`, `text-align: start`. Grep for `left`/`right` in CSS as a pre-commit check.
 - Directional icons mirror; the medallion never does.
 - Numbers, currency and dates through locale formatters. Never concatenate a price.
-- **Persian is the source text**, English the translation. Writing English first produces stilted Persian.
+- **Persian is the source text**; English and Arabic are translations. Writing a translation first produces stilted Persian.
 - ⚠️ RTL is verified **screen by screen as each is built** (the gallery harness is deferred). Every screen gets a Persian pass before it is called done — a checkout that breaks in RTL costs a customer, and Persian is the primary locale, not the afterthought.
 
 ## Accessibility floor

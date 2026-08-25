@@ -1,6 +1,6 @@
 # Storyderm draft catalogue and shop data pipeline
 
-**Status:** Accepted as the Phase 2 working plan. No database, seed, image-ingestion, API, or Server Action implementation is implied by this document.
+**Status:** Accepted Phase 2 working plan. Database foundation and reference seed implemented in `7f212b7`; Storyderm ingestion, catalogue reads, APIs, and Server Actions remain pending.
 **Date:** 2026-08-24 · Companion to [`03-domain-model.md`](03-domain-model.md), [`10-design-playbook.md`](10-design-playbook.md), and [`12-implementation-plan.md`](12-implementation-plan.md).
 
 ---
@@ -126,19 +126,19 @@ The source manifest retains unmapped files; the database only receives a media r
 
 ## Current database readiness
 
-The repository is **schema-scaffolded, not database-ready**.
+The repository now has a **verified schema foundation, but not a database-backed shop**.
 
-| Present now                                                             | Missing before integration                                                                  |
-| ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| PostgreSQL Drizzle client in `src/lib/db/index.ts`                      | A local PostgreSQL provisioner or documented existing instance                              |
-| Identity, catalogue, and commerce schema files                          | Generated and reviewed SQL in the committed `drizzle/` directory                            |
-| `drizzle.config.ts` targeting PostgreSQL                                | Evidence that the schema has been migrated into any database                                |
-| `db:generate`, `db:migrate`, `db:studio`, and `db:seed` package scripts | The referenced `src/lib/db/seed.ts` file; `pnpm db:seed` currently points to a missing file |
-| `DATABASE_URL` and S3 placeholders in `.env.example`                    | Product-media schema, ingestion/derivative tooling, and object-store configuration          |
-| Flat `ProductSummary` view-model components                             | Catalogue queries/read models connecting Drizzle to PLP/PDP components                      |
-| Shop UI primitives                                                      | Catalogue routes, API routes, Server Actions, and authorization implementation              |
+| Implemented now | Still missing before integration |
+|---|---|
+| PostgreSQL Drizzle client and canonical 48-table schema | Reproducible local/CI PostgreSQL provisioner and hosted staging/production instances |
+| Reviewed migration `0000`, journal, and snapshot committed under `drizzle/` | Deployment migration role, automated backup policy, and restore drill |
+| Successful empty-database migration on PostgreSQL 16.9 with UTF-8 | Continuous migration/invariant checks in CI |
+| Product review, media provenance/rights, variants, prices, inventory movements, and reservation rows | Curated Storyderm manifest, verified product truth, image derivatives, and object storage |
+| Deterministic `reference` seed for `fa`/`en`/`ar` and reviewed concerns | Guarded `storyderm-draft` and `commerce-demo` seed profiles |
+| Persian/Arabic search normalization and catalogue filter relationships | Catalogue hub/list/detail queries, measured search plans, and live facet counts |
+| Cart, order, payment, claim, event, settlement, audit, and outbox persistence primitives | Transaction services, concurrency/failure tests, Server Actions, callbacks, and authorization |
 
-There are currently no catalogue Server Actions or API route handlers. The existing commerce components accept view models; they are not proof of a database-backed shop.
+There are still no catalogue Server Actions or API route handlers. The existing commerce components accept view models; they are not proof of a database-backed shop. See [`system-design/database-foundation.md`](system-design/database-foundation.md) for the ERD, implemented invariants, API status, and phased continuation plan.
 
 ---
 
@@ -159,6 +159,8 @@ There are currently no catalogue Server Actions or API route handlers. The exist
 
 **Goal:** any developer can create the same local schema from the repository.
 
+**Progress:** schema changes, reviewed migration `0000`, journal/snapshot, and fresh PostgreSQL 16 migration proof are complete. Checked-in local/CI provisioning and the database-backed health endpoint remain open, so the full P1 gate is not yet complete.
+
 1. Add a local PostgreSQL 16 Compose service with a named volume and health check, or document an equivalent existing local Postgres 16 instance.
 2. Copy `.env.example` to an untracked `.env` and set a local-only `DATABASE_URL`; the current `drizzle.config.ts` loads `.env` through `dotenv/config`.
 3. Add the product review/media schema changes.
@@ -173,6 +175,8 @@ The accepted Drizzle workflow is **generate → review committed SQL → migrate
 ### P2 · Add deterministic seed profiles
 
 **Goal:** repeatable realistic catalogue data without contaminating production.
+
+**Progress:** the transactional, idempotent `reference` profile is implemented and verified by two consecutive runs. `storyderm-draft` and `commerce-demo` are deliberately still pending because verified product grouping, rights, SKU, price, and stock truth are unavailable.
 
 Implement `src/lib/db/seed.ts` with explicit profiles:
 

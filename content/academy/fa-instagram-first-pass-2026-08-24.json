@@ -1,0 +1,563 @@
+{
+  "schemaVersion": 1,
+  "batchId": "instagram-academy-first-pass-2026-08-24",
+  "locale": "fa",
+  "sourceKind": "instagram_story_screenshot",
+  "sourceRetention": "Source screenshots are not committed in this batch. Original filenames, dimensions, and SHA-256 checksums are retained for owner comparison.",
+  "transcriptionPolicy": "Persian text is transcribed from the screenshots with story chrome and line wrapping removed. Spacing, half-spaces, punctuation, and Latin brand casing are lightly normalized without marketing rewrites. Unclear source wording is explicitly flagged.",
+  "currencyPolicy": "Every structured price is an integer count of rials. The abbreviated Toman wording from the screenshot is preserved separately and requires owner confirmation before seeding.",
+  "sourceOfferingCount": 3,
+  "recordCount": 10,
+  "records": [
+    {
+      "candidateKey": "course-fa-foundational-skincare",
+      "slugCandidate": "foundational-skincare",
+      "offeringKindCandidate": "course",
+      "courseStructureCandidate": "standalone",
+      "titleFa": "دوره مقدماتی",
+      "sourceTitleFa": "دوره مقدماتی ۹ روزه",
+      "sourceImages": [
+        {
+          "imageIndex": 1,
+          "fileName": "codex-clipboard-76774a98-aa41-4ce4-b522-8e549d5e8182.png",
+          "sha256": "2efa3bcb187ef2895b42eea72321bc84ee93af83fb2e2706969bc50fbb19916f",
+          "width": 774,
+          "height": 1288
+        },
+        {
+          "imageIndex": 2,
+          "fileName": "codex-clipboard-ff48b1e2-82bd-4e81-930f-1ecef77ee465.png",
+          "sha256": "7d44e5b7b0dc52d9ca48cddd4035840fe117a1a7630e7c64a32130ebc7e961c0",
+          "width": 794,
+          "height": 1290
+        }
+      ],
+      "deliveryModeCandidate": "in_person",
+      "durationDays": 9,
+      "theoryDays": 4,
+      "practicalDays": 5,
+      "price": {
+        "amountRialsCandidate": 180000000,
+        "sourceTextFa": "۱۸م تومان",
+        "interpretationStatus": "needs_owner_confirmation"
+      },
+      "certificateCandidates": [
+        {
+          "kindCandidate": "technical_and_vocational",
+          "sourceTextFa": "با مدرک فنی و حرفه‌ای",
+          "verificationStatus": "needs_owner_confirmation"
+        }
+      ],
+      "curriculumFa": [
+        {
+          "order": 1,
+          "title": "شناخت آناتومی پوست"
+        },
+        {
+          "order": 2,
+          "title": "شناخت لایه‌های پوست و تأثیر آن در سطح پوست"
+        },
+        {
+          "order": 3,
+          "title": "شناخت انواع تایپ‌های پوستی"
+        },
+        {
+          "order": 4,
+          "title": "شناخت انواع بیماری‌ها و آسیب‌های پوستی"
+        },
+        {
+          "order": 5,
+          "title": "نحوه مشاوره و آنالیز پوست"
+        },
+        {
+          "order": 6,
+          "title": "نحوه صحیح تجویز هوم‌کر با توجه به مشکل پوست (اولیه - ثانویه)"
+        },
+        {
+          "order": 7,
+          "title": "شناخت انواع برندهای معتبر و تفاوت آن‌ها در درمان"
+        },
+        {
+          "order": 8,
+          "title": "شناخت انواع لایه‌بردارها و کاربرد آن‌ها در درمان"
+        },
+        {
+          "order": 9,
+          "title": "شناخت تفاوت لایه‌بردارهای آنزیمی و شیمیایی"
+        },
+        {
+          "order": 10,
+          "title": "آموزش ماساژ وکلام و فرم‌دهی",
+          "transcriptionUncertainty": "The source appears to read «وکلام»; owner confirmation is required before editorial normalization."
+        },
+        {
+          "order": 11,
+          "title": "شناخت تکسچر مواد در محصولات بیوتی و نحوه انتخاب در کابین"
+        },
+        {
+          "order": 12,
+          "title": "شناخت پوست خشک و انواع آن و علت ایجاد"
+        },
+        {
+          "order": 13,
+          "title": "شناخت پوست چرب و انواع آن و چگونگی درمان"
+        },
+        {
+          "order": 14,
+          "title": "شناخت انواع لک و راه‌های درمان"
+        },
+        {
+          "order": 15,
+          "title": "علت‌های درونی و بیرونی ایجاد انواع آکنه و راه‌های درمان"
+        },
+        {
+          "order": 16,
+          "title": "شناخت انواع پوست حساس، فلاشینگ و چگونگی درمان"
+        },
+        {
+          "order": 17,
+          "title": "ترکیب‌شناسی و فیشال ترکیبی با توجه به شناخت اکتیوها"
+        },
+        {
+          "order": 18,
+          "title": "آشنایی با کربوکسی‌تراپی و عملکرد آن (ترکیبی با فیشال)"
+        },
+        {
+          "order": 19,
+          "title": "کار با دستگاه هیدرودرمی و پلاژن به شکل ترکیبی"
+        },
+        {
+          "order": 20,
+          "title": "مشکلات دور چشم و راه‌های درمان (میلیا - تیرگی - پنجه کلاغی)"
+        },
+        {
+          "order": 21,
+          "title": "ویال‌شناسی، سرم، کنسانتره و تفاوت‌ها"
+        },
+        {
+          "order": 22,
+          "title": "ضدآفتاب‌ها (شیمیایی و فیزیکی) و درصدهای SPF (UVA-UVB-UVC)"
+        },
+        {
+          "order": 23,
+          "title": "چیدمان پروتکل درمان (درمان دو مشکل در یک جلسه)"
+        },
+        {
+          "order": 24,
+          "title": "دمودکس و راه‌های تشخیص و نحوه تجویز و درمان"
+        },
+        {
+          "order": 25,
+          "title": "شناخت اکتیوها در محصولات کابین و هوم‌کر"
+        }
+      ],
+      "includedOfferingCandidates": [],
+      "benefitsFa": [],
+      "participationPolicy": null,
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "reviewStatus": "draft",
+      "publicationStatus": "unpublished",
+      "seedEligibility": "needs_owner_review"
+    },
+    {
+      "candidateKey": "course-fa-advanced-skincare",
+      "slugCandidate": "advanced-skincare",
+      "offeringKindCandidate": "course",
+      "courseStructureCandidate": "bundled_course",
+      "titleFa": "دوره پیشرفته",
+      "sourceTitleFa": "دوره پیشرفته ۱۵ روزه",
+      "sourceImages": [
+        {
+          "imageIndex": 3,
+          "fileName": "codex-clipboard-229ad3c6-8b9d-4691-b581-cff6b027e689.png",
+          "sha256": "a6cde142572bc4b697c1ceaadecf9972e6e49deab43dbe70e76b07512141f374",
+          "width": 772,
+          "height": 1270
+        }
+      ],
+      "deliveryModeCandidate": "in_person",
+      "durationDays": 15,
+      "theoryDays": 6,
+      "practicalDays": 9,
+      "price": {
+        "amountRialsCandidate": 390000000,
+        "sourceTextFa": "۳۹م تومان",
+        "interpretationStatus": "needs_owner_confirmation"
+      },
+      "certificateCandidates": [
+        {
+          "kindCandidate": "technical_and_vocational",
+          "sourceTextFa": "با مدرک فنی و حرفه‌ای",
+          "verificationStatus": "needs_owner_confirmation"
+        },
+        {
+          "kindCandidate": "academy_attendance",
+          "sourceTextFa": "مدرک حضور در آکادمی مهدیه فضائلی",
+          "verificationStatus": "needs_owner_confirmation"
+        }
+      ],
+      "curriculumFa": [],
+      "includedOfferingCandidates": [
+        {
+          "candidateKey": "course-fa-foundational-skincare",
+          "sourceTextFa": "تمام موارد دوره مقدماتی"
+        },
+        {
+          "candidateKey": "workshop-fa-time-machine",
+          "sourceTextFa": "کارگاه تایم ماشین"
+        },
+        {
+          "candidateKey": "workshop-fa-o2-princess-shine",
+          "sourceTextFa": "کارگاه O₂ و پرنسس شاین (ترکیبی)"
+        },
+        {
+          "candidateKey": "workshop-fa-forlled-japan",
+          "sourceTextFa": "کارگاه فورلد (دریافت تریتمنت پک)",
+          "inclusionNoteFa": "دریافت تریتمنت پک"
+        },
+        {
+          "candidateKey": "workshop-fa-stem-cells",
+          "sourceTextFa": "کارگاه سلول‌های بنیادی"
+        }
+      ],
+      "benefitsFa": [
+        "تمام ورکشاپ‌های طول سال رایگان",
+        "دریافت مدرک فنی و حرفه‌ای و مدرک حضور در آکادمی مهدیه فضائلی",
+        "آپدیت رایگان"
+      ],
+      "participationPolicy": null,
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "reviewStatus": "draft",
+      "publicationStatus": "unpublished",
+      "seedEligibility": "needs_owner_review"
+    },
+    {
+      "candidateKey": "workshop-fa-time-machine",
+      "slugCandidate": "time-machine-workshop",
+      "offeringKindCandidate": "course",
+      "courseStructureCandidate": "short_workshop",
+      "titleFa": "کارگاه تایم ماشین",
+      "sourceTitleFa": "کارگاه تایم ماشین",
+      "sourceImages": [
+        {
+          "imageIndex": 4,
+          "fileName": "codex-clipboard-eb6aefa4-48f7-45e4-8e72-9bb1bd5a7e7f.png",
+          "sha256": "07b80c1631aa3893c1fb5b24d682c2ed232ff8e52a33ac530442118fb50b6f76",
+          "width": 766,
+          "height": 1296
+        }
+      ],
+      "deliveryModeCandidate": "in_person",
+      "durationDays": 2,
+      "theoryDays": null,
+      "practicalDays": null,
+      "price": {
+        "amountRialsCandidate": 60000000,
+        "sourceTextFa": "۶م تومان برای هر دوره",
+        "interpretationStatus": "needs_owner_confirmation"
+      },
+      "certificateCandidates": [],
+      "curriculumFa": [],
+      "includedOfferingCandidates": [],
+      "benefitsFa": [],
+      "participationPolicy": {
+        "sourceOptionsFa": [
+          "خرید کابین برند مربوطه به شکل کامل (کابین یک درمان کامل)",
+          "در صورت عدم تمایل به خرید کابین، پرداخت ورودی ۶م تومان الزامی می‌باشد."
+        ],
+        "privateClassAvailableCandidate": false
+      },
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "reviewStatus": "draft",
+      "publicationStatus": "unpublished",
+      "seedEligibility": "needs_owner_review"
+    },
+    {
+      "candidateKey": "workshop-fa-o2-princess-shine",
+      "slugCandidate": "o2-princess-shine-workshop",
+      "offeringKindCandidate": "course",
+      "courseStructureCandidate": "short_workshop",
+      "titleFa": "کارگاه ترکیبی O₂ پرنسس شاین",
+      "sourceTitleFa": "کارگاه ترکیبی O₂ پرنسس شاین",
+      "sourceImages": [
+        {
+          "imageIndex": 4,
+          "fileName": "codex-clipboard-eb6aefa4-48f7-45e4-8e72-9bb1bd5a7e7f.png",
+          "sha256": "07b80c1631aa3893c1fb5b24d682c2ed232ff8e52a33ac530442118fb50b6f76",
+          "width": 766,
+          "height": 1296
+        }
+      ],
+      "deliveryModeCandidate": "in_person",
+      "durationDays": 2,
+      "theoryDays": null,
+      "practicalDays": null,
+      "price": {
+        "amountRialsCandidate": 60000000,
+        "sourceTextFa": "۶م تومان برای هر دوره",
+        "interpretationStatus": "needs_owner_confirmation"
+      },
+      "certificateCandidates": [],
+      "curriculumFa": [],
+      "includedOfferingCandidates": [],
+      "benefitsFa": [],
+      "participationPolicy": {
+        "sourceOptionsFa": [
+          "خرید کابین برند مربوطه به شکل کامل (کابین یک درمان کامل)",
+          "در صورت عدم تمایل به خرید کابین، پرداخت ورودی ۶م تومان الزامی می‌باشد."
+        ],
+        "privateClassAvailableCandidate": false
+      },
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "reviewStatus": "draft",
+      "publicationStatus": "unpublished",
+      "seedEligibility": "needs_owner_review"
+    },
+    {
+      "candidateKey": "workshop-fa-stem-cells",
+      "slugCandidate": "stem-cells-workshop",
+      "offeringKindCandidate": "course",
+      "courseStructureCandidate": "short_workshop",
+      "titleFa": "کارگاه سلول‌های بنیادی",
+      "sourceTitleFa": "کارگاه سلول‌های بنیادی",
+      "sourceImages": [
+        {
+          "imageIndex": 4,
+          "fileName": "codex-clipboard-eb6aefa4-48f7-45e4-8e72-9bb1bd5a7e7f.png",
+          "sha256": "07b80c1631aa3893c1fb5b24d682c2ed232ff8e52a33ac530442118fb50b6f76",
+          "width": 766,
+          "height": 1296
+        }
+      ],
+      "deliveryModeCandidate": "in_person",
+      "durationDays": 2,
+      "theoryDays": null,
+      "practicalDays": null,
+      "price": {
+        "amountRialsCandidate": 60000000,
+        "sourceTextFa": "۶م تومان برای هر دوره",
+        "interpretationStatus": "needs_owner_confirmation"
+      },
+      "certificateCandidates": [],
+      "curriculumFa": [],
+      "includedOfferingCandidates": [],
+      "benefitsFa": [],
+      "participationPolicy": {
+        "sourceOptionsFa": [
+          "خرید کابین برند مربوطه به شکل کامل (کابین یک درمان کامل)",
+          "در صورت عدم تمایل به خرید کابین، پرداخت ورودی ۶م تومان الزامی می‌باشد."
+        ],
+        "privateClassAvailableCandidate": false
+      },
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "reviewStatus": "draft",
+      "publicationStatus": "unpublished",
+      "seedEligibility": "needs_owner_review"
+    },
+    {
+      "candidateKey": "workshop-fa-forlled-japan",
+      "slugCandidate": "forlled-japan-workshop",
+      "offeringKindCandidate": "course",
+      "courseStructureCandidate": "short_workshop",
+      "titleFa": "کارگاه فورلد ژاپن",
+      "sourceTitleFa": "کارگاه فورلد ژاپن",
+      "sourceImages": [
+        {
+          "imageIndex": 4,
+          "fileName": "codex-clipboard-eb6aefa4-48f7-45e4-8e72-9bb1bd5a7e7f.png",
+          "sha256": "07b80c1631aa3893c1fb5b24d682c2ed232ff8e52a33ac530442118fb50b6f76",
+          "width": 766,
+          "height": 1296
+        }
+      ],
+      "deliveryModeCandidate": "in_person",
+      "durationDays": 2,
+      "theoryDays": null,
+      "practicalDays": null,
+      "price": {
+        "amountRialsCandidate": 60000000,
+        "sourceTextFa": "۶م تومان برای هر دوره",
+        "interpretationStatus": "needs_owner_confirmation"
+      },
+      "certificateCandidates": [],
+      "curriculumFa": [],
+      "includedOfferingCandidates": [],
+      "benefitsFa": [],
+      "participationPolicy": {
+        "sourceOptionsFa": [
+          "خرید کابین برند مربوطه به شکل کامل (کابین یک درمان کامل)",
+          "در صورت عدم تمایل به خرید کابین، پرداخت ورودی ۶م تومان الزامی می‌باشد."
+        ],
+        "privateClassAvailableCandidate": false
+      },
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "reviewStatus": "draft",
+      "publicationStatus": "unpublished",
+      "seedEligibility": "needs_owner_review"
+    },
+    {
+      "candidateKey": "workshop-fa-mccosmetics",
+      "slugCandidate": "mccosmetics-workshop",
+      "offeringKindCandidate": "course",
+      "courseStructureCandidate": "short_workshop",
+      "titleFa": "کارگاه MCCosmetics",
+      "sourceTitleFa": "کارگاه mccosmetic",
+      "sourceImages": [
+        {
+          "imageIndex": 4,
+          "fileName": "codex-clipboard-eb6aefa4-48f7-45e4-8e72-9bb1bd5a7e7f.png",
+          "sha256": "07b80c1631aa3893c1fb5b24d682c2ed232ff8e52a33ac530442118fb50b6f76",
+          "width": 766,
+          "height": 1296
+        }
+      ],
+      "deliveryModeCandidate": "in_person",
+      "durationDays": 2,
+      "theoryDays": null,
+      "practicalDays": null,
+      "price": {
+        "amountRialsCandidate": 60000000,
+        "sourceTextFa": "۶م تومان برای هر دوره",
+        "interpretationStatus": "needs_owner_confirmation"
+      },
+      "certificateCandidates": [],
+      "curriculumFa": [],
+      "includedOfferingCandidates": [],
+      "benefitsFa": [],
+      "participationPolicy": {
+        "sourceOptionsFa": [
+          "خرید کابین برند مربوطه به شکل کامل (کابین یک درمان کامل)",
+          "در صورت عدم تمایل به خرید کابین، پرداخت ورودی ۶م تومان الزامی می‌باشد."
+        ],
+        "privateClassAvailableCandidate": false
+      },
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "reviewStatus": "draft",
+      "publicationStatus": "unpublished",
+      "seedEligibility": "needs_owner_review"
+    },
+    {
+      "candidateKey": "workshop-fa-dermaplaning",
+      "slugCandidate": "dermaplaning-workshop",
+      "offeringKindCandidate": "course",
+      "courseStructureCandidate": "short_workshop",
+      "titleFa": "کارگاه درماپلنینگ",
+      "sourceTitleFa": "کارگاه درماپلنینگ",
+      "sourceImages": [
+        {
+          "imageIndex": 4,
+          "fileName": "codex-clipboard-eb6aefa4-48f7-45e4-8e72-9bb1bd5a7e7f.png",
+          "sha256": "07b80c1631aa3893c1fb5b24d682c2ed232ff8e52a33ac530442118fb50b6f76",
+          "width": 766,
+          "height": 1296
+        }
+      ],
+      "deliveryModeCandidate": "in_person",
+      "durationDays": 2,
+      "theoryDays": null,
+      "practicalDays": null,
+      "price": {
+        "amountRialsCandidate": 60000000,
+        "sourceTextFa": "۶م تومان برای هر دوره",
+        "interpretationStatus": "needs_owner_confirmation"
+      },
+      "certificateCandidates": [],
+      "curriculumFa": [],
+      "includedOfferingCandidates": [],
+      "benefitsFa": [],
+      "participationPolicy": {
+        "sourceOptionsFa": [
+          "خرید کابین برند مربوطه به شکل کامل (کابین یک درمان کامل)",
+          "در صورت عدم تمایل به خرید کابین، پرداخت ورودی ۶م تومان الزامی می‌باشد."
+        ],
+        "privateClassAvailableCandidate": false
+      },
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "reviewStatus": "draft",
+      "publicationStatus": "unpublished",
+      "seedEligibility": "needs_owner_review"
+    },
+    {
+      "candidateKey": "workshop-fa-absorbable-filler",
+      "slugCandidate": "absorbable-filler-workshop",
+      "offeringKindCandidate": "course",
+      "courseStructureCandidate": "short_workshop",
+      "titleFa": "کارگاه فیلر جذبی",
+      "sourceTitleFa": "کارگاه فیلر جذبی",
+      "sourceImages": [
+        {
+          "imageIndex": 4,
+          "fileName": "codex-clipboard-eb6aefa4-48f7-45e4-8e72-9bb1bd5a7e7f.png",
+          "sha256": "07b80c1631aa3893c1fb5b24d682c2ed232ff8e52a33ac530442118fb50b6f76",
+          "width": 766,
+          "height": 1296
+        }
+      ],
+      "deliveryModeCandidate": "in_person",
+      "durationDays": 2,
+      "theoryDays": null,
+      "practicalDays": null,
+      "price": {
+        "amountRialsCandidate": 60000000,
+        "sourceTextFa": "۶م تومان برای هر دوره",
+        "interpretationStatus": "needs_owner_confirmation"
+      },
+      "certificateCandidates": [],
+      "curriculumFa": [],
+      "includedOfferingCandidates": [],
+      "benefitsFa": [],
+      "participationPolicy": {
+        "sourceOptionsFa": [
+          "خرید کابین برند مربوطه به شکل کامل (کابین یک درمان کامل)",
+          "در صورت عدم تمایل به خرید کابین، پرداخت ورودی ۶م تومان الزامی می‌باشد."
+        ],
+        "privateClassAvailableCandidate": false
+      },
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "reviewStatus": "draft",
+      "publicationStatus": "unpublished",
+      "seedEligibility": "needs_owner_review"
+    },
+    {
+      "candidateKey": "workshop-fa-biorepeel",
+      "slugCandidate": "biorepeel-workshop",
+      "offeringKindCandidate": "course",
+      "courseStructureCandidate": "short_workshop",
+      "titleFa": "کارگاه بایورپیل",
+      "sourceTitleFa": "کارگاه بایورپیل",
+      "sourceImages": [
+        {
+          "imageIndex": 4,
+          "fileName": "codex-clipboard-eb6aefa4-48f7-45e4-8e72-9bb1bd5a7e7f.png",
+          "sha256": "07b80c1631aa3893c1fb5b24d682c2ed232ff8e52a33ac530442118fb50b6f76",
+          "width": 766,
+          "height": 1296
+        }
+      ],
+      "deliveryModeCandidate": "in_person",
+      "durationDays": 2,
+      "theoryDays": null,
+      "practicalDays": null,
+      "price": {
+        "amountRialsCandidate": 60000000,
+        "sourceTextFa": "۶م تومان برای هر دوره",
+        "interpretationStatus": "needs_owner_confirmation"
+      },
+      "certificateCandidates": [],
+      "curriculumFa": [],
+      "includedOfferingCandidates": [],
+      "benefitsFa": [],
+      "participationPolicy": {
+        "sourceOptionsFa": [
+          "خرید کابین برند مربوطه به شکل کامل (کابین یک درمان کامل)",
+          "در صورت عدم تمایل به خرید کابین، پرداخت ورودی ۶م تومان الزامی می‌باشد."
+        ],
+        "privateClassAvailableCandidate": false
+      },
+      "transcriptionStatus": "human_first_pass_needs_owner_review",
+      "reviewStatus": "draft",
+      "publicationStatus": "unpublished",
+      "seedEligibility": "needs_owner_review"
+    }
+  ]
+}

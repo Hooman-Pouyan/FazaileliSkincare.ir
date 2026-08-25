@@ -43,7 +43,7 @@ That sentence is the brand. Careful, exacting, quality-obsessed, faintly stern. 
 
 Copy rules that follow:
 
-- **Persian is the source language.** English is the translation, never the reverse — writing English first produces stilted Persian.
+- **Persian is the source language.** English and Arabic are translations, never the reverse — writing a translation first produces stilted Persian.
 - Second person, respectful — «شما», not «تو».
 - **Never promise. Show.** «نتیجه، نه وعده» over «معجزه برای پوست شما».
 - Willing to say no: *"if your acne is active and severe, get a consultation before buying this"* is on-brand. It builds more trust than any badge.

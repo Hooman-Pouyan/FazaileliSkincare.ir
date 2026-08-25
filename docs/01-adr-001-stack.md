@@ -72,6 +72,7 @@ Six things from that codebase are good practice and worth re-implementing from s
 
 - **Orval / OpenAPI codegen** — coordeck is a client of someone else's backend. Fazaieli owns its own data, through server actions and Drizzle. Not applicable.
 - **JWT in `localStorage` via persisted Zustand** — defensible behind a corporate login, wrong for a public storefront taking payments, where XSS becomes account takeover with money attached. Fazaieli uses **httpOnly server-owned sessions**.
+- That rejection applies to persisted authentication/server truth, not to Zustand itself. Zustand is required for request-safe module-scoped interaction state under the ownership contract in `docs/architecture/data-and-state-ownership.md`.
 - **The `radix-nova` / zinc dashboard theme** — replaced entirely by the sampled brand palette.
 - **A `nitro-nightly` pin** — never under a payment flow.
 - **`@import url(fonts.googleapis.com)` in the stylesheet** — this was the most useful *finding* in the whole audit, and it is a lesson rather than an inheritance: from Iranian infrastructure that request hangs or fails and takes the stylesheet with it. **Every font ships from `/public/fonts`.** (Coordeck sits on AWS, so it isn't bitten by this — but it would be the moment anyone loads it from Iran.)
@@ -156,13 +157,15 @@ That constraint is what actually prevents two customers booking the same bed in 
 |---|---|---|
 | Framework | **Next.js 16.3 App Router**, `output: "standalone"` | Turbopack is the default bundler; Node 20.9+ and TypeScript 5.1+ required |
 | Data | **Drizzle + drizzle-kit + PostgreSQL 16** | Managed Postgres on the same provider |
-| Auth | **Better Auth**, phone/OTP primary, **httpOnly server-owned sessions** | Iranian users log in by SMS, not email |
+| Auth | **Better Auth**, customer phone/OTP, staff password+TOTP, **httpOnly server-owned sessions** | Customers use SMS; provisioned staff use a separate privileged path |
 | i18n | **next-intl**, locale-prefixed routes, `fa` base | Per-module message files, and **`next/root-params`** so `lang` is readable in any Server Component without prop-drilling |
 | RTL | CSS logical properties throughout + a `dir`-aware component pass | Grep for `left`/`right` as a pre-commit check |
 | UI | **shadcn/ui installed fresh** — `rsc: true`, fazaieli's own tokens | Not Ant Design — see the decision below |
-| Dates | UTC `timestamptz` stored, **Jalali** rendered via `date-fns-jalali` | Iranian holidays get their own table |
+| Dates | UTC `timestamptz` stored; Persian formatting via `Intl.DateTimeFormat`, arithmetic via `jalaali-js` | One canonical Jalali utility; Iranian holidays get their own table |
 | Money | **Integer rials**, Toman at the view layer only | Never floats, never mixed units |
 | Forms | react-hook-form + **Zod schemas shared client/server** | Server always re-validates |
+| Client interaction state | **Zustand 5**, request-safe module-scoped stores | Draft filters, drawers, command state and selections only; never server commerce truth or errors |
+| Browser-refetched server state | **TanStack Query 5**, gated to its first concrete consumer | Cart synchronization/autocomplete/live availability when approved; PHP/PLP/PDP remain Server Component reads |
 | Payments | ZarinPal behind a `PaymentGateway` interface | See ADR-002 |
 | SMS | Kavenegar / SMS.ir behind one `Notifier` | Foreign providers won't serve you |
 | Errors | Self-hosted GlitchTip | Sentry SaaS may be unreachable from Iran |

@@ -85,17 +85,16 @@ This is the part that will delay your launch if it isn't started this week:
 
 ### Integration pattern (non-negotiable details)
 
-ZarinPal's REST flow is: `POST /pg/v4/payment/request.json` → redirect the customer to the gateway with the returned `authority` → they come back to your callback → `POST /pg/v4/payment/verify.json` → you get a `ref_id`.
+The merchant-terminal contract must be captured from the current ZarinPal documentation and the capabilities enabled for the real terminal during COM5. The familiar merchant REST v4 flow is request → redirect with `authority` → callback → server-side verify → `ref_id`; current ZarinPal account/invoice/refund documentation also exposes GraphQL at `/api/v4/graphql`. The adapter implements the contract actually issued to this merchant and records its version; application settlement never depends on which provider transport is selected.
 
 The rules that keep you out of trouble:
 
 - **Amount is computed server-side from the cart at request time.** Never from a form field.
-- **`authority` is stored with a unique constraint** and linked to exactly one order. The callback is idempotent — a customer refreshing the return page must not create a second verification or a second stock decrement.
-- **Verify is the source of truth**, not the callback's query string. A `Status=OK` in the URL means nothing until verify returns `code 100`.
-- **`code 101`** means "already verified" — treat it as success, not as an error.
+- The provider session/authority is stored with a unique constraint and linked to exactly one payment and order. The callback is idempotent — a customer refreshing the return page must not create a second verification or a second stock decrement.
+- **Server-to-server verify is the source of truth**, not the callback query string. For REST v4, `Status=OK` means nothing until verify returns code `100`; code `101` is the idempotent already-verified success. Equivalent success/already-processed states must be contract-tested if the terminal uses another current API.
 - **Stock is decremented inside the same transaction as the successful verify**, not when the item is added to the cart. Cart items hold a soft reservation with a TTL instead.
 - **Every gateway call and response is written to a `payment_events` table** before anything else happens. When a customer says "my money was taken", that table is your only defence.
-- All of this sits behind one `PaymentGateway` interface with `request()` / `verify()` / `refund()`. Swapping ZarinPal for a bank PSP later touches one file.
+- Payment request and verification sit behind one `PaymentGateway` interface with `request()` / `verify()`. V1 refunds are issued through the real banking/gateway channel and then recorded idempotently by staff; an automated `refund()` adapter is added only after an approved provider contract proves that capability. Swapping ZarinPal for a bank PSP later replaces the adapter, not the settlement transaction.
 
 ---
 

@@ -154,7 +154,7 @@ const buttonVariants = cva("...", {
 <Button className={isActive ? "bg-teal" : "bg-transparent"} />
 ```
 
-**Icons: Lucide, stroke 1.4–1.6, 16/20/24 grid.** Never emoji. Room marks are custom inline SVG (diamond / circle-split / rhombus), not Lucide.
+**Icons: Lucide, stroke 1.4–1.6, 16/20/24 grid.** Never emoji. Rail destinations use recognizable Lucide symbols; the brand medallion remains custom.
 
 ---
 

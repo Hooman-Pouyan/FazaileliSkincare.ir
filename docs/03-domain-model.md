@@ -46,8 +46,8 @@ That's the "decoupled yet coherent" property you asked for, expressed in code ra
 
 | Entity | Notes |
 |---|---|
-| **Person** | Phone number is the natural key (E.164, normalised `+98…`). Email optional. `firstName`, `lastName`, `displayName`, `locale` (`fa`/`en`). |
-| **Account** | Auth credentials, OTP state, sessions. One per Person. |
+| **Person** | Phone number is the natural key (E.164, normalised `+98…`). Email optional. `firstName`, `lastName`, `displayName`, `locale` (`fa`/`en`/`ar`). |
+| **Account** | Better Auth credentials, OTP/TOTP state, and sessions. Customers use phone OTP; provisioned staff use email/password plus mandatory TOTP. One identity per Person. |
 | **Role** | `customer` · `student` · `practitioner` · `staff` · `admin`. A Person can hold several — a student who also buys serums. |
 | **Address** | Iranian shape: province → city → postal code (10 digits) → line. Not a US address form. |
 | **SkinProfile** | Type, concerns, allergies, current routine, contraindications. |
@@ -56,7 +56,7 @@ That's the "decoupled yet coherent" property you asked for, expressed in code ra
 
 **Invariants**
 - One verified phone number ⇒ one Person. Merging duplicates later is painful; enforce it now.
-- OTP codes: 5–6 digits, single use, 2-minute TTL, max 5 attempts per number per hour. Rate-limit by phone *and* IP — SMS costs you money and is a favourite abuse target.
+- Customer OTP codes: 6 digits, single use, 2-minute TTL, 3 verification attempts per code, maximum 5 sends per phone per hour, and additional IP limits. SMS costs money and is a favourite abuse target. The exact limits and session policy live in [`system-design/authentication-and-account-security.md`](system-design/authentication-and-account-security.md).
 
 ---
 
@@ -76,6 +76,8 @@ That's the "decoupled yet coherent" property you asked for, expressed in code ra
 | **Payment** | `method` (`gateway` · `bank_transfer` · `cash_on_pickup`), `status`, `amountRials`. Gateway payments carry `authority` + `refId`, unique on `authority`. |
 | **BankTransferClaim** | For `bank_transfer`: `expectedAmountRials`, customer-submitted `trackingNumber`, `last4OfCard`, `transferredAt`, optional receipt image, plus `confirmedBy` and `confirmedAt`. |
 | **Shipment** | Post/Tipax/courier, tracking code, delivered-at. |
+| **ReturnRequest / ReturnLine** | A customer claim and per-order-line quantities; approval, receipt, inspection, refund, and restock remain separate audited decisions. |
+| **Refund** | An idempotent partial/full refund ledger attached to the original payment and order. Successful refunds can never exceed settled funds. |
 | **Coupon** | Percentage or fixed, scoped to categories or to students. |
 
 **Invariants**
@@ -84,6 +86,8 @@ That's the "decoupled yet coherent" property you asked for, expressed in code ra
 - `onHand` decrements in the same transaction that records a successful gateway verify. Cart reservations expire on a TTL.
 - An Order in `paid` never returns to `pending`. State machine: `draft → awaiting_payment | awaiting_transfer → paid → fulfilled → completed`, with `cancelled` / `refunded` as terminal branches.
 - Admin needs **bulk price adjustment** — select by brand or category, apply a percentage, preview, commit as one audited batch. Editing 120 products one at a time after an exchange-rate move is how price lists go stale.
+
+The complete transaction states, shipping baseline, settlement boundary, late-transfer behavior, fulfilment, returns, and refund rules are in [`system-design/cart-checkout-payment-fulfilment-and-returns.md`](system-design/cart-checkout-payment-fulfilment-and-returns.md).
 
 ---
 
@@ -196,7 +200,7 @@ Fix these words now and use them everywhere — code, admin UI, and conversation
 - **Fulfilment:** nationwide post/courier **and** pickup at the institute. `ShippingMethod` is a strategy with its own rate rules; pickup is a method with zero cost and no address.
 - **Booking capacity:** 3 practitioners, 2 rooms, 3 beds, ~2-hour services with per-service protocols.
 - **Admin:** role-based permissions from day one, even while you are the only user.
-- **Locale:** `fa` is the base locale, `en` secondary and switched on later. Content columns are bilingual from the first migration so English is a content task, never a schema task.
+- **Locale:** `fa` is the base locale; `en` and `ar` are secondary. Localized content stays a content task rather than a schema redesign.
 
 ## Still open
 

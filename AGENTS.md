@@ -39,10 +39,12 @@ src/
 - **One feature unit is `src/modules/<module>/`**, and every module has the same shape. No exceptions — uniformity is what stops a solo codebase drifting into mud by month six.
 - Modules do **not** import each other's types. Commerce, Booking and Academy meet in exactly two places: the shared payment abstraction, and the `/studio` read model, which owns no writes.
 - i18n message files are **co-located**: `src/modules/<module>/i18n/<locale>.json`.
+- **State has one owner.** Server Components/Drizzle own server truth; the URL owns applied shareable search/filter/sort/page state; module-scoped Zustand stores own shared client interaction state; React Hook Form owns form buffers. Never copy prices, stock, eligibility, reservations, totals, results, or errors into Zustand.
+- TanStack Query is only for an explicitly approved browser-refetched server read. It does not replace the server-rendered PHP/PLP/PDP path or become a second source copied into Zustand. See `docs/architecture/data-and-state-ownership.md`.
 
 ## RTL
 
-- Persian is the **primary** locale, not the afterthought. English is the translation.
+- Persian is the **primary** locale, not the afterthought. English and Arabic are translations.
 - Every spacing and alignment property is logical: `margin-inline-start`, `padding-inline`, `text-align: start`, `inset-inline-end`. **Grep for `left`/`right` in CSS as a pre-commit check.**
 - Every screen gets a Persian pass before it is called done. A checkout that breaks in RTL costs a customer.
 

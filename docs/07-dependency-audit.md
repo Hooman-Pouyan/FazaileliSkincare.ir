@@ -16,6 +16,22 @@
 
 ## Verified versions — 2026-08-24
 
+### Dependency ownership policy
+
+- Every dependency must name one current concern, first consumer, owning phase/module, and why the platform or existing dependency is insufficient.
+- Prefer one primary library per concern. Two libraries may coexist only when their responsibilities are explicitly non-overlapping, as with Zustand interaction state and TanStack Query browser-refetched server state.
+- Record dependencies as **installed**, **required-not-installed**, **approved-gated**, **deferred**, **rejected**, or **removal-watch**. “Approved” alone does not authorize an unused installation.
+- Before installation, verify the exact version, peer ranges, license, runtime/bundle effect, server/client compatibility, Iran-hosting/network behavior, and current official API.
+- A dependency that adds a provider, cache, persistence, generated files, background network behavior, or global singleton must document that lifecycle and its tests.
+- Remove a dependency when its only accepted consumer is removed; do not preserve it for speculative reuse.
+
+Current state-management classifications:
+
+| Dependency | Status | First owner/trigger |
+|---|---|---|
+| `zustand` | Required-not-installed | Foundation: request-safe Commerce/shell interaction store and PLP draft-filter coordination |
+| `@tanstack/react-query` | Approved-gated | First accepted browser-refetched server read, most likely Cart drawer synchronization or approved autocomplete |
+
 | Package | Latest stable | Note |
 |---|---|---|
 | `next` | **16.3.2** | Node 20.9+, Turbopack default |
@@ -33,6 +49,8 @@
 | `zod` | **4.4.3** | ⚠️ Zod **4** — see below |
 | `react-hook-form` | **7.86.0** | |
 | `@hookform/resolvers` | **5.9.1** | |
+| `zustand` | **5.0.15** | Required architecture dependency; not yet installed in the current scaffold |
+| `@tanstack/react-query` | **5.102.3** | Approved secondary dependency; install only with the first accepted browser-refetched server-state consumer |
 | `radix-ui` | **1.6.7** | Unified Radix primitives package used by the scaffold |
 | `tw-animate-css` | **1.4.0** | Tailwind v4 animation utilities imported by `globals.css` |
 | `react-day-picker` | **10.0.1** | ⚠️ major 10 |
@@ -84,23 +102,41 @@ The registry's newest releases are not a compatible set for this scaffold. `type
 
 ## Verified API shapes
 
+### State-management dependency decision
+
+Zustand and TanStack Query are complementary, not alternatives and not replacements for Next.js Server Components.
+
+| Concern | Decision |
+|---|---|
+| Shared client interaction state | **Zustand required.** Module-scoped stores own draft filters, drawer/command state, selected variants, gallery selection, and other coordinated UI interactions. |
+| Applied search/filter/sort/page state | **URL-owned.** It must remain shareable, canonical, and restorable through browser history. Zustand may hold an explicit draft before Apply. |
+| Initial PHP/PLP/PDP/catalogue state | **Server-owned.** Page-shaped reads and Server Components remain the primary path. |
+| Form buffers | **React Hook Form-owned.** Do not duplicate form values into Zustand without an approved cross-step draft requirement. |
+| Browser-refetched server state | **TanStack Query approved with a first-consumer gate.** Expected candidates are cart drawer synchronization, approved autocomplete, live booking availability, and account/order status refresh. |
+
+Zustand 5's Next.js guidance requires request-safe scoped stores and keeps React Server Components outside the store. Persistence is default-off because browser storage can create hydration, privacy, and stale-contract problems. TanStack Query requires an explicit QueryClient/hydration/cache boundary; adding that boundary is justified only when browser refetching or cache synchronization is an accepted requirement.
+
+The complete ownership, hydration, URL reconciliation, selector, Query key, retry, invalidation, and adoption rules live in [`architecture/data-and-state-ownership.md`](architecture/data-and-state-ownership.md).
+
 **Better Auth 1.7 phone/OTP** — matches the plan, confirmed from the docs:
 
 ```ts
 phoneNumber({
   sendOTP: ({ phoneNumber, code }, ctx) => { /* Kavenegar / SMS.ir */ },
   signUpOnVerification: {
-    getTempEmail: (phone) => `${phone}@fazaieli.ir`,
-    getTempName:  (phone) => phone,
+    getTempEmail: (phone) => placeholderEmailFromPhone(phone),
+    getTempName:  () => "کاربر",
   },
 })
 // client: authClient.phoneNumber.sendOtp({ phoneNumber })
 //         authClient.phoneNumber.verify({ phoneNumber, code })
 ```
 
-Defaults: 6-digit code, 300s expiry, 3 attempts, session created on verification. The docs advise **not awaiting `sendOTP`** — it prevents SMS-provider latency leaking into response timing.
+Defaults: 6-digit code, 300s expiry, 3 attempts, session created on verification. This project overrides expiry to 120 seconds, creates a non-PII HMAC-derived address under `.invalid`, and schedules the send through Next.js `after()` with a bounded provider call. The docs advise **not awaiting `sendOTP`** in the response path — it prevents SMS-provider latency leaking into response timing.
 
 That aligns with our own OTP invariants (single use, short TTL, rate-limited by phone *and* IP), and it does not replace them: Better Auth's 3-attempt limit protects one code; it does not stop someone burning your SMS budget by requesting a hundred codes.
+
+Customer password sign-up remains disabled. The same pinned package supplies separately provisioned staff email/password plus mandatory TOTP; the complete adapter, session, rate-limit, proxy, and account-lifecycle contract is [`system-design/authentication-and-account-security.md`](system-design/authentication-and-account-security.md).
 
 ---
 
@@ -111,5 +147,7 @@ Before any `package.json` is written or a new phase begins:
 1. Query the registry for every package's actual latest version.
 2. Fetch the official docs for anything whose API I have not verified **in this session**.
 3. Record the date and the findings here.
+
+An approved dependency is not automatically installed. Install it in the phase that owns its first concrete consumer, add its verification evidence, and remove or defer it if that consumer is rejected.
 
 Training data goes stale. The registry does not.

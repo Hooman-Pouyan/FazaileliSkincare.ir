@@ -12,7 +12,7 @@ Fazaieli Design System — مؤسسه مهدیه فضائلی
 A specialist skincare academy and treatment practice in Mashhad, Iran, run by
 Mahdieh Fazaieli — a practitioner and a certified instructor of the Technical &
 Vocational Organization, and the official representative of Forlle'd Japan.
-The site is Persian-first and right-to-left; English is secondary and switches
+The site is Persian-first and right-to-left; English and Arabic are secondary and switch
 on later.
 
 Three decoupled spaces share one shell and one account. Shop sells professional
@@ -63,7 +63,7 @@ images and drawers, nothing in between, never rounded-full. Asymmetric 60/40 and
 70/30 splits echoing the arched niches in the treatment room. Minimum 96px
 between sections on desktop. Photography carries the pages.
 
-RTL — Persian is the source language, English the translation. Logical
+RTL — Persian is the source language; English and Arabic are translations. Logical
 properties throughout (margin-inline-start, text-align: start), so one layout
 mirrors. Directional icons mirror; the gold medallion never does.
 

@@ -36,7 +36,7 @@ fazaieli/
         ├── db/                   client + schema/{identity,catalog,commerce,…}
         ├── money.ts              integer rials; toman is a view transform
         ├── jalali.ts             the ONLY module touching calendar conversion
-        ├── auth/                 Better Auth, phone/OTP, httpOnly sessions
+        ├── auth/                 Better Auth: customer phone/OTP, staff password+TOTP, httpOnly sessions
         ├── payments/             PaymentGateway interface + bank transfer
         └── notifications/        Notifier interface (SMS first)
 ```
@@ -45,36 +45,38 @@ fazaieli/
 
 ---
 
+**The state contract:** Server Components/Drizzle own server truth; the URL owns applied shareable search/filter/sort/page state; module-scoped Zustand owns coordinated client interaction; React Hook Form owns form buffers. TanStack Query is introduced only for a named browser-refetched server read and its data is never copied into Zustand. The complete cross-cutting contracts are indexed in [`architecture/README.md`](architecture/README.md).
+
 ## Phase 0 — running in parallel, not by me
 
 `05-paperwork-playbook.md`. eNamad, ZarinPal, the business licence, the tax question, the company bank account. **This is the critical path to taking money, and no amount of code shortens it.**
 
 ---
 
-## Phase 1 — Foundation ✅ *scaffolded*
+## Phase 1 — Foundation ✅ _scaffolded_
 
-**Status: built and verified.** `next build` passes on Next 16.3.2 with TypeScript 6.0.3, both locales prerendering.
+**Status: built and verified.** `next build` passes on Next 16.3.2 with TypeScript 6.0.3, all three locales prerendering.
 
-| Delivered | Detail |
-|---|---|
-| `package.json` | Every version pinned exactly, verified against the registry (`07-dependency-audit.md`). The production build copies `public/` and `.next/static/` into Next's standalone artifact before `pnpm start`. |
-| `next.config.ts` | `output: "standalone"` for the Iranian container. Cache Components and Partial Prefetching present but **commented off** — Phase 2 polish. |
-| `pnpm-workspace.yaml` | `allowBuilds` explicitly approves the native build scripts required by Next and the toolchain. |
-| `.npmrc` | Registry-mirror note for when the public registry is unreachable from an Iranian IP. |
-| `src/proxy.ts` | Locale routing. Next 16 renamed `middleware.ts` → `proxy.ts`, Node runtime. |
-| `src/i18n/*` | `next-intl` 4.13, `fa` base, `localePrefix: "always"`. |
-| `globals.css` | Tailwind v4 → `designs/tokens.css` → shadcn semantic names bound to our tokens in one place. |
-| `src/lib/money.ts` | Integer rials, `formatToman`, Persian digits, the `٬` separator, **and `transferAmountFor()`** — the deterministic per-order remainder that makes bank-statement matching a glance. |
-| `src/lib/jalali.ts` | `Intl.DateTimeFormat('fa-IR-u-ca-persian')` for formatting + `jalaali-js` for arithmetic. |
-| `src/lib/db/schema/` | identity · catalog · commerce, with the invariants encoded as constraints. |
-| `components/ui/button.tsx` | cva variants. Primary is **ink on sand**, 2px radius, 44px min height. |
-| `components/rail.tsx` | The 56px rail, logical properties throughout, mirrors for free. |
-| Landing page | Hero → three doors → lapis band. No cards, no shadows. |
+| Delivered                  | Detail                                                                                                                                                                                                 |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `package.json`             | Every version pinned exactly, verified against the registry (`07-dependency-audit.md`). The production build copies `public/` and `.next/static/` into Next's standalone artifact before `pnpm start`. |
+| `next.config.ts`           | `output: "standalone"` for the Iranian container. Cache Components and Partial Prefetching present but **commented off** — Phase 2 polish.                                                             |
+| `pnpm-workspace.yaml`      | `allowBuilds` explicitly approves the native build scripts required by Next and the toolchain.                                                                                                         |
+| `.npmrc`                   | Registry-mirror note for when the public registry is unreachable from an Iranian IP.                                                                                                                   |
+| `src/proxy.ts`             | Locale routing. Next 16 renamed `middleware.ts` → `proxy.ts`, Node runtime.                                                                                                                            |
+| `src/i18n/*`               | `next-intl` 4.13, `fa` base with `en` and `ar`, `localePrefix: "always"`.                                                                                                                              |
+| `globals.css`              | Tailwind v4 → `designs/tokens.css` → shadcn semantic names bound to our tokens in one place.                                                                                                           |
+| `src/lib/money.ts`         | Integer rials, `formatToman`, Persian digits, the `٬` separator, **and `transferAmountFor()`** — the deterministic per-order remainder that makes bank-statement matching a glance.                    |
+| `src/lib/jalali.ts`        | `Intl.DateTimeFormat('fa-IR-u-ca-persian')` for formatting + `jalaali-js` for arithmetic.                                                                                                              |
+| `src/lib/db/schema/`       | identity · catalog · commerce, with the invariants encoded as constraints.                                                                                                                             |
+| `components/ui/button.tsx` | cva variants. Primary is **ink on sand**, 2px radius, 44px min height.                                                                                                                                 |
+| `components/rail.tsx`      | The 56px rail, logical properties throughout, mirrors for free.                                                                                                                                        |
+| Landing page               | Hero → three doors → lapis band. No cards, no shadows.                                                                                                                                                 |
 
 ### Remaining in Phase 1
 
 - [ ] **Fonts** — drop the two `.woff2` files into `public/fonts/` (see its README). The app builds without them; it just doesn't look like the brand.
-- [ ] **Auth** — Better Auth with the `phoneNumber` plugin, Drizzle adapter, **httpOnly server-owned sessions**. Rate-limit OTP by phone *and* IP; Better Auth's 3-attempt limit protects one code, not your SMS budget.
+- [ ] **Auth** — execute [`system-design/authentication-and-account-security.md`](system-design/authentication-and-account-security.md): customer phone/OTP only in v1, separately provisioned staff email/password plus mandatory TOTP, Drizzle adapter, role checks, account closure, and **httpOnly server-owned sessions**. Rate-limit OTP by phone _and_ IP; Better Auth's 3-attempt limit protects one code, not the SMS budget.
 - [ ] **`Notifier`** — one interface, Kavenegar/SMS.ir behind it. Templates in the database so a typo is not a deploy.
 - [ ] **Legal pages** — terms, privacy, returns. ⚠️ **eNamad will not certify the domain without them**, and they are commitments the owner makes, not text a developer invents.
 - [ ] `/api/health` touching the DB · backups verified by an actual restore · first deploy to Liara and ParsPack, raced.
@@ -83,9 +85,36 @@ fazaieli/
 
 ---
 
-## Phase 2 — Shop · *this is what "live" means* (~4 weeks)
+## Phase 1B — Database foundation ✅ _implemented and verified_
+
+**Status:** migration `0000` is committed with its Drizzle journal and snapshot. The 48-table, 20-enum identity/catalogue/commerce schema migrated successfully from zero on PostgreSQL 16.9; deterministic Persian reference seeds, foreign-key index coverage, and critical database constraints were verified against the real database.
+
+Delivered:
+
+- locale-table ownership for `fa`, `en`, and `ar` rather than a fixed language enum;
+- Better Auth-compatible identity, account, session, verification, and rate-limit tables, pending runtime adapter verification;
+- translation-owned catalogue copy, product review/media provenance, variants, group prices, price history, and inventory movements;
+- explicit reservation rows, versioned carts/orders/payments, immutable order-line snapshots, bank-transfer claims, payment events, one settlement per payment, audit log, and notification outbox;
+- Persian/Arabic character, digit, whitespace, and half-space search normalization;
+- reference-only seed data with no invented Storyderm products, SKUs, prices, or stock.
+
+Still required before the shop is database-backed:
+
+1. reproducible local/CI PostgreSQL;
+2. Better Auth runtime mapping with customer phone OTP and staff email/password+TOTP;
+3. catalogue hub/list/detail Drizzle read models;
+4. server-rendered PLP/search/PDP routes;
+5. transactional cart, reservation, checkout, and settlement services with concurrency tests;
+6. Liara staging/production PostgreSQL, backups, restore drill, and deploy migration role.
+
+The authoritative schema, ERD, API-readiness matrix, and phased continuation plan are in [`system-design/database-foundation.md`](system-design/database-foundation.md).
+
+---
+
+## Phase 2 — Shop · _this is what "live" means_ (~4 weeks)
 
 ### Data
+
 `drizzle-kit generate` → review the SQL → commit → `migrate`. Migrations are **read before they run**; that is the point of choosing Drizzle.
 
 Seed: brands (Forlle'd/Storyderm/Thalgo with `countryOfOrigin`), concerns (لک · جوش و آکنه · آبرسانی · ترمیم سد پوستی · ضدپیری), then the verified product list.
@@ -93,7 +122,10 @@ Seed: brands (Forlle'd/Storyderm/Thalgo with `countryOfOrigin`), concerns (لک 
 The temporary Storyderm image set is a **draft input, not catalogue truth**. Its manifest, idempotent seed profiles, image-derivative pipeline, database gaps, and draft-to-production gates are specified in [`14-storyderm-draft-catalog-pipeline.md`](14-storyderm-draft-catalog-pipeline.md). Do not infer prices, stock, SKUs, claims, or sellable product boundaries from filenames.
 
 ### Routes
+
 `/shop` (PHP hub) · `/shop/concern/[slug]` · `/shop/brand/[slug]` · `/shop/c/[category]` · `/shop/p/[slug]` · `/cart` · `/checkout` · `/checkout/transfer/[orderId]` · `/order/[orderNumber]` · `/order/[orderNumber]/invoice`
+
+The authoritative staged storefront route hierarchy, Landing/PHP/PLP/PDP compositions, primary/secondary navigation manifest, and current Cart stopping boundary are in [`system-design/storefront.md`](system-design/storefront.md) and its linked page plans. The core storefront program implements locale-prefixed Landing integration, PHP, concern/brand/category/search PLPs, PDP, and the approved Cart slice only. Checkout, transfer, order, invoice, payment, settlement, fulfilment, returns, and refunds are a separate review/implementation program in [`system-design/cart-checkout-payment-fulfilment-and-returns.md`](system-design/cart-checkout-payment-fulfilment-and-returns.md); that plan does not authorize implementation until the maintainer's second review and its product/legal gates pass.
 
 **Server-render the concern PLPs.** Every competitor studied — ZO and Khanoumi included — renders their concern pages client-side and returns empty grids to crawlers. This is a cheap, decisive Persian-SEO advantage (`08-competitive-research.md`).
 
@@ -102,8 +134,8 @@ The temporary Storyderm image set is a **draft input, not catalogue truth**. Its
 ```ts
 "use server";
 export async function addToCart(input: unknown) {
-  const data = addToCartSchema.parse(input);   // 1. Zod parse, always first
-  const session = await requireSession();      // 2. authorisation, always second
+  const data = addToCartSchema.parse(input); // 1. Zod parse, always first
+  const session = await requireSession(); // 2. authorisation, always second
   // 3. only now touch the database
 }
 ```
@@ -126,19 +158,23 @@ gateway ───────┘
 
 ⚠️ **A customer-uploaded receipt is a claim, not proof.** Nothing auto-confirms from it. Only a staff member who has matched the real bank statement calls `settleOrder`. This is the one place the site could be defrauded at scale.
 
-Stock is **reserved** while awaiting transfer (24–48h TTL, expiring — or abandoned orders quietly make bestsellers unbuyable), and **decremented** only inside `settleOrder`.
+Stock is **reserved** for 24 hours while awaiting transfer and **decremented** only inside `settleOrder`. Expired rows do not count toward availability, or abandoned orders would quietly make bestsellers unbuyable.
+
+The transaction plan fixes the exact launch durations at 20 minutes for Cart, 15 minutes for gateway checkout, and 24 hours for bank-transfer orders. Availability always filters `status='active' AND expires_at > now()`; cleanup is not correctness. It also defines the order/payment/refund state machines, shipping baseline, immutable snapshots, composite settlement FK, late-transfer recovery, fulfilment, and return workflow.
 
 ### Admin
+
 `/admin/transfers` first. Once launch happens on bank transfer, **that screen is the daily operation** — a queue showing each order's unique expected amount, matched and confirmed in one click. It will be used more than any storefront page. Then orders, products, `/admin/prices` (percentage adjustment by brand or category, previewed, committed as one audited batch with `price_history`).
 
 ### Tests
+
 Vitest on `money.ts`, `jalali.ts`, and settlement idempotency. Playwright on one path: browse → cart → checkout → transfer claim → admin confirm → paid.
 
 ---
 
 ## Phase 3 — Booking (~3 weeks)
 
-The capacity model is the whole phase: **3 practitioners, 2 rooms, 3 beds.** A booking consumes a practitioner *and* a bed, and which one binds changes day to day.
+The capacity model is the whole phase: **3 practitioners, 2 rooms, 3 beds.** A booking consumes a practitioner _and_ a bed, and which one binds changes day to day.
 
 ```sql
 ALTER TABLE appointment ADD CONSTRAINT no_practitioner_overlap

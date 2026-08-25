@@ -1,6 +1,6 @@
 # fazaieli.ir
 
-The website for the **Mahdieh Fazaieli** skincare institute in Mashhad — a Persian-first (English later) platform with four surfaces that stay decoupled but coherent:
+The website for the **Mahdieh Fazaieli** skincare institute in Mashhad — a Persian-first platform with English and Arabic locales and four surfaces that stay decoupled but coherent:
 
 | Surface | What it does |
 |---|---|
@@ -48,7 +48,7 @@ Built and maintained by one developer, hosted inside Iran, paid in rials.
 | Framework | Next.js 16.3 App Router, `output: "standalone"` |
 | Data | Drizzle ORM + PostgreSQL 16, hosted in Iran |
 | UI | shadcn/ui installed fresh on the sampled brand tokens |
-| i18n | `next-intl`, `fa` base locale, `next/root-params`, RTL throughout |
+| i18n | `next-intl`, `fa` base locale with `en` and `ar`, `next/root-params`, RTL throughout |
 | Auth | Better Auth, phone/OTP, **httpOnly server-owned sessions** |
 | Payments | Direct bank transfer at launch; ZarinPal behind a `PaymentGateway` interface |
 | Hosting | Liara for production; Vercel for non-production previews only |

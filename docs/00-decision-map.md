@@ -6,7 +6,7 @@
 
 ## What this project is
 
-One Persian-first (English later, RTL-first) platform for the Mahdieh Fazaieli institute, with four surfaces that must feel decoupled but coherent:
+One Persian-first (English and Arabic secondary, RTL-first) platform for the Mahdieh Fazaieli institute, with four surfaces that must feel decoupled but coherent:
 
 - **Landing** — personal brand, credentials, official representation of Forlle'd / Storyderm
 - **Shop** — skincare catalogue browsed **by concern first** → cart → order → rial payment
@@ -29,16 +29,16 @@ Confirmed from the account and the space: official representative of **Forlle'd*
 | D4 | **PostgreSQL 16 in Iran**, single instance | Range types + exclusion constraints solve multi-resource double-booking in the database | Low churn |
 | D5 | **Trial Liara and ParsPack, then commit** | Both are correct answers; the app is a portable Docker container against Postgres, so a hello-world race settles it with evidence in one afternoon | Cheap by construction |
 | D6 | **ZarinPal first**, behind a `PaymentGateway` interface | Fastest onboarding. **You have a registered company**, so a direct bank PSP (lower fees) is available later — the interface makes that a one-file change | Cheap |
-| D7 | ⚠️ **Server-owned sessions in httpOnly cookies**, phone/OTP primary | The existing dashboard keeps JWTs in `localStorage`. Acceptable there; **not acceptable for a public storefront handling payments** — XSS becomes account takeover with money attached. Do not carry that pattern over. | Expensive later |
+| D7 | ⚠️ **Server-owned sessions in httpOnly cookies**; customers use phone/OTP only in v1; staff use provisioned email/password plus mandatory TOTP | The existing dashboard keeps JWTs in `localStorage`. Acceptable there; **not acceptable for a public storefront handling payments** — XSS becomes account takeover with money attached. Customer passwords add reset and recovery risk without improving the Iranian purchase path; privileged staff credentials earn that complexity and require a second factor. | Expensive later |
 | D8 | **Integer rials** stored, Toman at the view layer | The most common money bug in Iranian ecommerce | Expensive later |
 | D9 | **UTC storage, Jalali rendering** | Booking must be Shamsi; storing Shamsi is a trap | Expensive later |
-| D10 | **Persian first, English later** | Full i18n and RTL infrastructure from day one, Persian content only at launch. English switches on with no rework | By design |
+| D10 | **Persian first; English and Arabic secondary** | Full i18n and RTL infrastructure from day one. Persian remains the source text; English and Arabic are maintained translations. | By design |
 | D11 | **Browse by concern first** — acne, brightening, hydration, barrier repair | Type and brand become filters. Matches how a skincare customer actually thinks | Content-level |
 | D12 | **Skincare only at launch**, schema open for healthcare | Catalogue models attributes flexibly so new categories need no migration | By design |
-| D13 | **Vertical rail + command palette**, no mega-menu, no card grid | Your brief; makes three spaces read as decoupled-yet-one | Iterate freely |
+| D13 | **Vertical rail + command palette**, no cross-room/marketplace mega-menu, no card grid | Your brief; makes three spaces read as decoupled-yet-one. A separately approved, post-core **Shop-only Relay** may deepen Shop navigation without replacing the rail, PHP, or command palette. | Iterate freely |
 | D16 | **Palette sampled from the institute, not from the Instagram templates** | The building is more elegant than the post graphics. Measured: lapis `#161B4A`/`#2D389A`, antique gold `#A27F34`, firouzeh `#2BB8D4`, deep teal `#24403E`, cool white `#F7F8F8`. The blue is Persian ultramarine, not navy; the green is teal, not bamboo sage | Design-level |
 | D17 | **Gold, turquoise and champagne are dark-field colours** | Measured contrast: gold is 3.51:1 on white (fails) but 6.17:1 on lapis. The site alternates ink-on-white with deep lapis sections — the rhythm is derived, not imposed | Structural |
-| D21 | **Direct bank transfer as a first-class payment method** | Decouples launch from eNamad/ZarinPal approval entirely — the shop can take real orders while the paperwork runs. Each order expects a slightly unique amount so bank-statement matching is a glance. ⚠️ Only a staff member seeing the real statement confirms; a customer receipt image is a claim, not proof. | Structural |
+| D21 | **Direct bank transfer as a first-class payment method** | Decouples launch from eNamad/ZarinPal approval entirely. A matching remainder is allowed only when it is an explicit invoice adjustment included in the order total; claim expected amount is derived from the payment. ⚠️ Only a staff member seeing the real statement confirms; a customer receipt image is a claim, not proof. | Structural |
 | D22 | **Customer-group pricing** — public · student · professional | Cheap now, expensive to retrofit. Groups with no row fall back to public, so only exceptions are entered. | By design |
 | D23 | **Per-product price visibility** — `public` or `on_request` | Some products show «استعلام قیمت» routing to WhatsApp instead of a price. Never silently addable to a cart. | By design |
 | D24 | **Bulk price tooling from the first admin build** | Rial pricing on imported stock moves with the exchange rate. Percentage adjustment by brand or category, previewed, committed as one audited batch, with price history. | By design |
@@ -48,6 +48,8 @@ Confirmed from the account and the space: official representative of **Forlle'd*
 | D18 | ⚠️ **Before/after photos require per-case consent records, default-deny** | Identifiable faces on medical-adjacent treatment. A missing consent row hides the case; revocation is one admin action | Non-negotiable |
 | D14 | **Flexible role-based permissions from the start** | Staff will appear later; retrofitting authorisation is expensive | By design |
 | D15 | **Fulfilment: nationwide post/courier + pickup at the institute** | Modelled as pluggable rate strategies so Tehran peyk can switch on later | Cheap |
+
+| D26 | **Zustand required for shared client interaction state; TanStack Query gated to browser-refetched server state** | URLs remain canonical for applied search/filter/sort/page state and Server Components remain canonical for PHP/PLP/PDP data. Zustand prevents interaction logic scattering across components without becoming a second catalogue/cart database. TanStack Query is introduced only with a named browser-refetching consumer and never copied into Zustand. | Medium — cross-cutting contract |
 
 ## Practices borrowed from the coordeck case study — as ideas, not code
 
@@ -60,6 +62,10 @@ Confirmed from the account and the space: official representative of **Forlle'd*
 | **One form abstraction**, right-sized | Six real forms — checkout, address, booking intake, enrolment, OTP login, admin product. Too few for a factory, too many to hand-roll inconsistently. One `<Field>` set, one Zod schema per form shared client and server. |
 
 **Left behind deliberately:** OpenAPI/Orval codegen (fazaieli owns its own data) · JWT in `localStorage` (wrong for a storefront handling payments) · the zinc dashboard theme · a nightly Nitro pin · a runtime `fonts.googleapis.com` import — that last one was the most useful *finding* of the audit, and the lesson carries even though the code does not: **every font ships from `/public/fonts`**, because from Iranian infrastructure that request hangs and takes the stylesheet with it.
+
+### State ownership adaptation
+
+Server/Drizzle owns domain truth; the URL owns applied shareable query state; module-scoped Zustand owns coordinated UI interaction; React Hook Form owns form buffers; TanStack Query owns only approved browser-refetched server state. The complete contract is [`architecture/data-and-state-ownership.md`](architecture/data-and-state-ownership.md).
 
 ## Deliberately deferred
 

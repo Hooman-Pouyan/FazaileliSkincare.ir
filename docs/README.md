@@ -11,6 +11,12 @@ Written before code, deliberately. Every decision here has a stated reason and a
 | [`04-information-architecture.md`](04-information-architecture.md) | The rail-and-rooms shell · the five surfaces · the palette sampled from the institute, with measured contrast · RTL rules |
 | [`05-paperwork-playbook.md`](05-paperwork-playbook.md) | The non-technical track: company file, business licence, eNamad, ZarinPal, tax e-invoicing — in sequence, runnable in parallel |
 | [`14-storyderm-draft-catalog-pipeline.md`](14-storyderm-draft-catalog-pipeline.md) | Temporary Storyderm asset policy · current database readiness · deterministic seeds · thumbnails/media · PLP/PDP query boundaries · production promotion gates |
+| [`architecture/README.md`](architecture/README.md) | Cross-cutting module, state, routing, error/action, testing, i18n/RTL, and naming contracts |
+| [`system-design/database-foundation.md`](system-design/database-foundation.md) | Implemented PostgreSQL schema · ERD · invariants · API readiness · environment topology · phased database and transaction plan |
+| [`system-design/storefront.md`](system-design/storefront.md) | Storefront master plan and links to component foundation, PHP, PLP/search, PDP/cart, verification, and rollout plans |
+| [`system-design/authentication-and-account-security.md`](system-design/authentication-and-account-security.md) | Customer phone OTP · staff password/TOTP · sessions · authorization · phone change · account closure · phased security rollout |
+| [`system-design/cart-checkout-payment-fulfilment-and-returns.md`](system-design/cart-checkout-payment-fulfilment-and-returns.md) | Cart continuation · Iranian checkout/shipping · bank transfer/ZarinPal · settlement · fulfilment · returns/refunds · phased transaction rollout |
+| [`ui/forms.md`](ui/forms.md) | Shared Field/Form, React Hook Form, Zod, Server Action, accessibility, RTL, and error contract |
 
 ## The three decisions most expensive to reverse
 

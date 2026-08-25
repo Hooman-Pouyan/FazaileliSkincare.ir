@@ -1,7 +1,7 @@
 # Shop product-discovery decision map
 
 **Created:** 2026-08-24  
-**Status:** Bootstrapped; research not yet started  
+**Status:** Strategy decided; Iran requirements and competitive baseline researched; ticket #4 is the next frontier  
 **Scope:** Shop-first depth for `fazaieli.ir`. Booking and Academy are considered only where they strengthen, constrain, or receive a handoff from Commerce.
 
 This is the canonical map for deciding what the Shop should offer before expanding the implementation plan. Each unresolved ticket is sized for one focused session and produces a linked asset rather than expanding this file with raw research.
@@ -56,7 +56,9 @@ Which legal, payment, authenticity, pricing, delivery, returns, accessibility, c
 
 ### Answer
 
-Unresolved. Produce `docs/research/shop-iran-requirements.md` with dated sources, observed evidence separated from inference, and explicit coverage gaps.
+The evidence-backed baseline is complete in [`docs/research/shop-iran-requirements.md`](research/shop-iran-requirements.md). It turns the reviewed Electronic Commerce Act, current ZarinPal documentation, connectivity evidence, and observed Iranian public-commerce patterns into bounded launch requirements while separating direct evidence, product inference, and confirmation gates.
+
+This does **not** mean legal readiness. Current implementing regulations, eNAMAD, TTAC/IRC, tax/invoice treatment, postal/carrier rules, withdrawal exceptions, health-data rules, provider contract details, and Iranian-network production behavior still require the named counsel, accountant, regulatory, provider, carrier, owner, and QA evidence before checkout or affected public claims go live. Public Shop reads and non-claiming data foundations may proceed within that boundary.
 
 ## #3: What Does The Competitive Market Prove?
 
@@ -69,7 +71,9 @@ Across leading Iranian beauty retailers, global premium skincare, clinical skinc
 
 ### Answer
 
-Unresolved. Extend the existing competitor work with mobile journeys and deeper PHP, PLP, PDP, search, cart, checkout, account, authenticity, loyalty, consultation, and post-purchase coverage. Produce `docs/research/shop-competitive-benchmark.md`. Record inaccessible sources and sample limits rather than implying complete coverage.
+Resolved to the evidence threshold needed for journey design in [`docs/research/shop-competitive-benchmark.md`](research/shop-competitive-benchmark.md). Deep desktop coverage of Face Reality and Emily Rockwell establishes the practitioner method, progressive guidance, consultation, and Academy-graduate → verified professional access → starter inventory → support → visibility/referral flywheel. A dated follow-up adds live desktop/mobile evidence from Khanoumi and Roja Shop plus a mobile Torob price-comparison pass.
+
+The synthesis is to combine practitioner authority, self-service plus escalation, Persian mobile commerce, canonical product/variant identity, visible authenticity/provenance, total-price clarity, and accessible support/policies—without copying discount-marketplace density, lead-gated guidance, mixed professional/public catalogues, or fragmented accounts. This is a direction-setting benchmark, not a complete market survey: checkout, authenticated flows, Face Reality/Emily mobile, and inaccessible Mootanroo/Rojelab remain explicit gaps and must be tested inside the later checkout, retention, and end-to-end mobile tickets before those surfaces are approved.
 
 ## #4: Which Customer Jobs And Journeys Must The Shop Resolve?
 
@@ -121,7 +125,7 @@ What is the smallest high-confidence purchase flow for guest and returning custo
 
 ### Answer
 
-Unresolved. Produce `docs/research/shop-transaction-journey.md` with customer-visible states, staff-visible states, abuse/fraud cases, service-level expectations, and feasibility dependencies.
+The technical baseline is now review-ready in [`system-design/cart-checkout-payment-fulfilment-and-returns.md`](system-design/cart-checkout-payment-fulfilment-and-returns.md): guest/account cart ownership, Iranian address and flat-rate shipping, bank transfer, ZarinPal, reservations, settlement, fulfilment, returns, refunds, staff queues, failure recovery, and rollout are specified phase by phase. This does **not** close the product/legal research: the business-approved returns policy, delivery commitments, support service levels, and provider feasibility evidence remain gates before implementation or production launch.
 
 ## #8: What Creates Repeat Purchase Without Discount-Marketplace Behavior?
 
@@ -268,4 +272,4 @@ Unresolved. Write the phased implementation plan only after the written specific
 
 ## Frontier
 
-Tickets **#2 and #3** are the first unresolved frontier and may be researched independently. Their evidence is required before customer journeys or feature prioritisation are treated as decisions.
+Ticket **#4** is now the next decision: define the canonical customer jobs, confidence thresholds, and handoffs using the completed #2 launch boundary and #3 market direction. The confirmation gates from #2 continue to block production checkout/legal claims, and the named #3 surface gaps remain required evidence for tickets #7, #8, and #12; they are not silently treated as passing results.
