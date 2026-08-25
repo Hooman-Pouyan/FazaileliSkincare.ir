@@ -9,6 +9,7 @@ const EXPECTED_TABLES = [
   "auth_account",
   "auth_rate_limit",
   "auth_session",
+  "auth_two_factor",
   "auth_verification",
   "bank_transfer_claim",
   "brand",
@@ -64,7 +65,9 @@ describe("database schema contract", () => {
   it("exports the complete identity, catalogue, inventory, and commerce model", () => {
     // Given: the schema barrel used by Drizzle migrations
     // When: its PostgreSQL tables are enumerated
-    const names = tableConfigs().map((table) => table.name).sort();
+    const names = tableConfigs()
+      .map((table) => table.name)
+      .sort();
 
     // Then: every approved table is present exactly once
     expect(names).toEqual([...EXPECTED_TABLES].sort());
@@ -72,7 +75,9 @@ describe("database schema contract", () => {
 
   it("uses reservation rows instead of a mutable reserved inventory counter", () => {
     // Given: the inventory aggregate
-    const inventory = tableConfigs().find((table) => table.name === "inventory");
+    const inventory = tableConfigs().find(
+      (table) => table.name === "inventory",
+    );
 
     // When: its persisted columns are inspected
     const columns = inventory?.columns.map((column) => column.name);
@@ -84,11 +89,15 @@ describe("database schema contract", () => {
   it("keeps localized catalogue copy in translation tables", () => {
     // Given: the product aggregate and its translations
     const product = tableConfigs().find((table) => table.name === "product");
-    const translation = tableConfigs().find((table) => table.name === "product_translation");
+    const translation = tableConfigs().find(
+      (table) => table.name === "product_translation",
+    );
 
     // When: their column ownership is inspected
     const productColumns = product?.columns.map((column) => column.name);
-    const translationColumns = translation?.columns.map((column) => column.name);
+    const translationColumns = translation?.columns.map(
+      (column) => column.name,
+    );
 
     // Then: display copy is locale-owned, not fixed to language-specific product columns
     expect(productColumns).not.toContain("name_fa");
@@ -103,5 +112,124 @@ describe("database schema contract", () => {
       "suitableFor",
       "normalizedSearchText",
     ]);
+  });
+
+  it("locks phone, placeholder email, and closed-account identity invariants", () => {
+    // Given: the canonical identity table
+    const identity = tableConfigs().find((table) => table.name === "person");
+
+    // When: Better Auth and account-lifecycle columns and checks are inspected
+    const columns = identity?.columns.map((column) => column.name);
+    const checks = identity?.checks.map((constraint) => constraint.name);
+
+    // Then: E.164, placeholder, and closed-account rules are database-owned
+    expect(columns).toContain("twoFactorEnabled");
+    expect(columns).toContain("closedAt");
+    expect(checks).toEqual(
+      expect.arrayContaining([
+        "person_phone_e164_check",
+        "person_placeholder_email_check",
+        "person_closed_account_check",
+      ]),
+    );
+  });
+
+  it("matches the Better Auth 1.7.1 core and plugin field mappings", () => {
+    // Given: the four Better Auth core models mapped into the domain schema
+    const tables = new Map(tableConfigs().map((table) => [table.name, table]));
+
+    // When: their persisted fields are inspected
+    const fields = Object.fromEntries(
+      ["person", "auth_session", "auth_account", "auth_verification"].map(
+        (name) => [
+          name,
+          tables.get(name)?.columns.map((column) => column.name),
+        ],
+      ),
+    );
+
+    // Then: every adapter-owned core field has one canonical column
+    expect(fields.person).toEqual(
+      expect.arrayContaining([
+        "id",
+        "displayName",
+        "email",
+        "emailVerified",
+        "image",
+        "phone",
+        "phoneVerified",
+        "twoFactorEnabled",
+        "createdAt",
+        "updatedAt",
+      ]),
+    );
+    expect(fields.auth_session).toEqual(
+      expect.arrayContaining([
+        "id",
+        "expiresAt",
+        "token",
+        "createdAt",
+        "updatedAt",
+        "ipAddress",
+        "userAgent",
+        "personId",
+      ]),
+    );
+    expect(fields.auth_account).toEqual(
+      expect.arrayContaining([
+        "id",
+        "issuer",
+        "accountId",
+        "providerId",
+        "personId",
+        "password",
+        "createdAt",
+        "updatedAt",
+      ]),
+    );
+    expect(fields.auth_verification).toEqual([
+      "id",
+      "identifier",
+      "value",
+      "expiresAt",
+      "createdAt",
+      "updatedAt",
+    ]);
+  });
+
+  it("persists Better Auth TOTP state and lockout counters", () => {
+    // Given: Better Auth's two-factor plugin table
+    const twoFactor = tableConfigs().find(
+      (table) => table.name === "auth_two_factor",
+    );
+
+    // When: its persisted fields are inspected
+    const columns = twoFactor?.columns.map((column) => column.name);
+
+    // Then: secrets, backup codes, verification state, and lockout state are durable
+    expect(columns).toEqual([
+      "id",
+      "secret",
+      "backupCodes",
+      "personId",
+      "verified",
+      "failedVerificationCount",
+      "lockedUntil",
+    ]);
+  });
+
+  it("stores an immutable contact-phone snapshot on every order", () => {
+    // Given: the order aggregate retained after account closure
+    const order = tableConfigs().find(
+      (table) => table.name === "customer_order",
+    );
+
+    // When: its contact fields are inspected
+    const contactPhone = order?.columns.find(
+      (column) => column.name === "contactPhone",
+    );
+
+    // Then: the historical contact is required independently of person identity
+    expect(contactPhone?.notNull).toBe(true);
   });
 });

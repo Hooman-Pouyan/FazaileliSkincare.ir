@@ -15,8 +15,8 @@ BEGIN
   FROM pg_catalog.pg_tables
   WHERE schemaname = 'public';
 
-  IF actual_count <> 48 THEN
-    RAISE EXCEPTION 'expected 48 public tables, found %', actual_count;
+  IF actual_count <> 49 THEN
+    RAISE EXCEPTION 'expected 49 public tables, found %', actual_count;
   END IF;
 
   SELECT count(*)
@@ -35,8 +35,8 @@ BEGIN
   INTO actual_count
   FROM drizzle.__drizzle_migrations;
 
-  IF actual_count <> 1 THEN
-    RAISE EXCEPTION 'expected migration 0000 exactly once, found % records', actual_count;
+  IF actual_count <> 2 THEN
+    RAISE EXCEPTION 'expected migrations 0000 and 0001 exactly once, found % records', actual_count;
   END IF;
 
   IF NOT EXISTS (
@@ -55,6 +55,44 @@ BEGIN
     SELECT 1 FROM pg_catalog.pg_constraint WHERE conname = 'customer_order_totals_check'
   ) THEN
     RAISE EXCEPTION 'missing server-owned order totals constraint';
+  END IF;
+
+  IF EXISTS (
+    SELECT required.name
+    FROM (
+      VALUES
+        ('person_phone_e164_check'),
+        ('person_placeholder_email_check'),
+        ('person_closed_account_check'),
+        ('auth_two_factor_failed_count_check'),
+        ('customer_order_contact_phone_e164_check')
+    ) AS required(name)
+    LEFT JOIN pg_catalog.pg_constraint AS constraint_row
+      ON constraint_row.conname = required.name
+    WHERE constraint_row.oid IS NULL
+  ) THEN
+    RAISE EXCEPTION 'missing AUTH0 identity or order constraint';
+  END IF;
+
+  IF to_regclass('public.auth_account_issuer_account_unique') IS NULL THEN
+    RAISE EXCEPTION 'missing Better Auth issuer-account uniqueness index';
+  END IF;
+
+  SELECT count(*)
+  INTO actual_count
+  FROM information_schema.columns
+  WHERE table_schema = 'public'
+    AND is_nullable = 'NO'
+    AND (table_name, column_name) IN (
+      ('person', 'two_factor_enabled'),
+      ('auth_account', 'issuer'),
+      ('auth_two_factor', 'secret'),
+      ('auth_two_factor', 'backup_codes'),
+      ('customer_order', 'contact_phone')
+    );
+
+  IF actual_count <> 5 THEN
+    RAISE EXCEPTION 'expected 5 required AUTH0 columns, found %', actual_count;
   END IF;
 
   IF to_regclass('public.locale_one_primary_unique') IS NULL THEN

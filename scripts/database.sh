@@ -62,8 +62,9 @@ assert_database_invariants() {
 }
 
 run_schema_tests() {
-  pnpm exec vitest run \
+  DATABASE_URL="$(database_url)" pnpm exec vitest run \
     src/lib/db/schema/schema.test.ts \
+    src/lib/db/schema/better-auth.integration.test.ts \
     src/lib/db/normalize-catalog-search.test.ts \
     src/lib/db/seeds/reference-data.test.ts
 }
