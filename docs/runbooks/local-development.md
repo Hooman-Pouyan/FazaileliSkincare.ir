@@ -124,6 +124,22 @@ AUTH_RUNTIME_CONFIG_INVALID: AUTH_TRUSTED_ORIGINS must include BETTER_AUTH_URL
 
 In production the reason is withheld and only the stable code is thrown.
 
+## Two things that bite in the shell
+
+`pnpm db:url` prints a pnpm engine warning to stdout before the connection
+string, so this silently produces a broken URL:
+
+```bash
+psql "$(pnpm -s db:url)"     # connects to a database literally named "[WARN] …"
+psql "$(bash scripts/database.sh url)"   # correct
+```
+
+The warning itself is real: `package.json` pins `engines.node` to `22.x`, and the
+machine this was last run on had Node 24. The production image builds on 22, so
+development and production are on different major runtimes. Either install Node
+22 locally (`nvm use 22`), or widen `engines` deliberately and record it in
+`07-dependency-audit.md` — but do not leave the two disagreeing silently.
+
 ## Known issue — `next dev` runs on webpack
 
 `dev` is pinned to `next dev --webpack`. Under Next 16.3.2 + Tailwind 4.3.3,

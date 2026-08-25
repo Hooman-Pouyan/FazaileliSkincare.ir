@@ -18,6 +18,7 @@ Written before code, deliberately. Every decision here has a stated reason and a
 | [`system-design/storefront.md`](system-design/storefront.md) | Storefront master plan and links to component foundation, PHP, PLP/search, PDP/cart, verification, and rollout plans |
 | [`system-design/authentication-and-account-security.md`](system-design/authentication-and-account-security.md) | Customer phone OTP · staff password/TOTP · sessions · authorization · phone change · account closure · phased security rollout |
 | [`system-design/cart-checkout-payment-fulfilment-and-returns.md`](system-design/cart-checkout-payment-fulfilment-and-returns.md) | Cart continuation · Iranian checkout/shipping · bank transfer/ZarinPal · settlement · fulfilment · returns/refunds · phased transaction rollout |
+| [`evidence/c3-trgm-search.md`](evidence/c3-trgm-search.md) | Migrations applied from zero · C1 and C2 proven behaviourally · where the trigram index actually earns its place |
 | [`runbooks/local-development.md`](runbooks/local-development.md) | Running and exercising the app locally: env files, port configuration, signing in without SMS, and which suites need a database |
 | [`research/shop-research-gate-deferrals.md`](research/shop-research-gate-deferrals.md) | Storefront gates 4, 5 and 6: what is deferred, the interim rule each carries, and what forces re-review |
 | [`ui/forms.md`](ui/forms.md) | Shared Field/Form, React Hook Form, Zod, Server Action, accessibility, RTL, and error contract |

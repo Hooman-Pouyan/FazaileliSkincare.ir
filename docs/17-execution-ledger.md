@@ -50,7 +50,8 @@ landing route.
 | Phone normalization, rate limiting, Notifier boundary | AUTH1 | 20 files under `src/lib/auth` |
 | Customer phone-OTP runtime and screens | AUTH2, DB2 customer half | 68 unit tests, production build, `/[locale]/login` and `/verify` |
 | Local-first development seam | — | [`runbooks/local-development.md`](runbooks/local-development.md) |
-| Order survives customer deletion; settlement bound to its payment | C1, C2 | Migration `0002`, schema contract suite |
+| Order survives customer deletion; settlement bound to its payment | C1, C2 | Migration `0002`, schema contract suite, and behavioural proof against a real database in [`evidence/c3-trgm-search.md`](evidence/c3-trgm-search.md) |
+| Persian search folding, trigram index, offer state, catalogue visibility | C3, C4, DB3 policy | 134 unit tests; `EXPLAIN` evidence recorded |
 | Research gates 4, 5, 6 closed by recorded deferral | Stage 0 | [`research/shop-research-gate-deferrals.md`](research/shop-research-gate-deferrals.md) |
 
 ---
@@ -130,7 +131,7 @@ The stop is between the two.
 
 | ID | Correction | Lands in |
 |---|---|---|
-| C3 | `pg_trgm` GIN on `normalized_search_text` with `EXPLAIN` evidence | packet 3 — index landed in migration `0003`; `EXPLAIN` evidence outstanding |
+| C3 | `pg_trgm` GIN on `normalized_search_text` with `EXPLAIN` evidence | **done** — migration `0003`, evidence in [`evidence/c3-trgm-search.md`](evidence/c3-trgm-search.md) |
 | C4 | `أإآٱ→ا`, `ة→ه` folding; document the ZWNJ consequence | **done** |
 | C5 | `source_cart_item_id` nullable with `SET NULL`, add `source_cart_id` | packet 9 |
 | C6 | Status/timestamp checks on `payment` and `shipment` | DB6, out of block |
