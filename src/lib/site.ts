@@ -28,9 +28,22 @@ export function localeUrl(pathname: string, locale: Locale): string {
   return `${SITE_ORIGIN}${getPathname({ href: pathname, locale })}`;
 }
 
-/** Every locale's URL for the same pathname, ready for `alternates.languages`. */
-export function localeAlternates(pathname: string): Record<Locale, string> {
-  return Object.fromEntries(
-    routing.locales.map((locale) => [locale, localeUrl(pathname, locale)]),
-  ) as Record<Locale, string>;
+/**
+ * Every locale's URL for the same pathname, ready for `alternates.languages`.
+ *
+ * `x-default` names the Persian URL rather than being omitted or pointed at a
+ * negotiated root. R-2 left this open because the answer depended on whether
+ * the root negotiates; R-3 settled that it does not, so the answer is Persian
+ * — the same address `fa` gets, which is what `x-default` is for: where to
+ * send a reader whose language the site does not serve.
+ */
+export function localeAlternates(
+  pathname: string,
+): Record<Locale | "x-default", string> {
+  return {
+    ...(Object.fromEntries(
+      routing.locales.map((locale) => [locale, localeUrl(pathname, locale)]),
+    ) as Record<Locale, string>),
+    "x-default": localeUrl(pathname, routing.defaultLocale),
+  };
 }

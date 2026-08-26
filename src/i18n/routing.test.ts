@@ -11,6 +11,25 @@ describe("locale routing", () => {
     expect(locales).toContain("ar");
   });
 
+  /**
+   * The gate for decision R-3.
+   *
+   * next-intl defaults `localeDetection` to `true`, so this is a value that
+   * comes back on its own the moment someone rewrites the config from the
+   * documentation. When it is on, `/` 307s an English client to `/en` and the
+   * Persian canonical becomes header-dependent — which nothing else in the
+   * suite can see, because every test here runs without an `Accept-Language`
+   * and therefore always gets Persian.
+   */
+  it("serves the unprefixed root to everyone rather than negotiating it", () => {
+    // Given: the storefront's routing configuration
+    // When: locale detection is read
+    const detection = routing.localeDetection;
+
+    // Then: the browser's headers never decide which document `/` returns
+    expect(detection).toBe(false);
+  });
+
   it("uses RTL direction when the Arabic locale is rendered", () => {
     // Given: an Arabic storefront request
     // When: its document direction is resolved

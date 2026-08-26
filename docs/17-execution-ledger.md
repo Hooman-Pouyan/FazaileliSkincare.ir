@@ -313,14 +313,13 @@ Nothing below is a defect. Each is a decision, a fact or a permission only you c
 | Hub composition and voice pass — 2026-08-25                    | M.5   | The authenticity band renders only when the catalogue has something                                                                   | product         |
 | Hub composition and voice pass — 2026-08-25                    | M.7   | The blossom ornament shipped early                                                                                                    | UI              |
 | Hub composition and voice pass — 2026-08-25                    | M.8   | `ScrollRail` hides its scrollbar                                                                                                      | UI              |
-| Locale routing pass — 2026-08-25                               | R.4   | `x-default` is not emitted                                                                                                            | SEO             |
 | Locale routing pass — 2026-08-25                               | R.5   | `/en` and `/ar` were not fetched in a browser during this pass                                                                        | verification    |
 | Landing direction pass — 2026-08-25, ahead of packet 6         | L.6   | Parallax, autoplay carousels and looping testimonial rails were asked for and refused                                                 | UI / motion     |
 | Landing direction pass — 2026-08-25, ahead of packet 6         | L.8   | The content review surface is deliberately not an admin                                                                               | process         |
 | Landing direction pass — 2026-08-25, ahead of packet 6         | L.12  | The Japanese concepts are carried by a growth spine, not a values row                                                                 | UI              |
 | Landing direction pass — 2026-08-25, ahead of packet 6         | L.14  | Source batches are completed with fictional development values                                                                        | data            |
 
-**Totals:** 46 waiting on the maintainer, 51 open.
+**Totals:** 46 waiting on the maintainer, 50 open.
 
 <!-- END:open-items -->
 

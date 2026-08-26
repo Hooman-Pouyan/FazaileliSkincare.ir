@@ -20,6 +20,23 @@ export const routing = defineRouting({
   locales: ["fa", "en", "ar"],
   defaultLocale: "fa",
   localePrefix: "as-needed",
+
+  /**
+   * `/` is Persian for everyone. See decision R-3 in
+   * `docs/22-locale-routing-decisions.md`.
+   *
+   * next-intl defaults this to `true`, which negotiates the unprefixed root
+   * against `Accept-Language` and 307s an English client to `/en`. That made
+   * the Persian canonical depend on a request header — the site's single most
+   * important URL served two different documents depending on who asked, and
+   * Googlebot sending `Accept-Language: en` never reached the Persian home
+   * page at all. R-2 chose the bare path precisely to make `/` the strongest
+   * canonical the site has; leaving detection on quietly undid that.
+   *
+   * Locale is a choice the reader makes with the locale control, and the
+   * choice is a URL. It is never made for them by their browser's headers.
+   */
+  localeDetection: false,
 });
 
 export type Locale = (typeof routing.locales)[number];

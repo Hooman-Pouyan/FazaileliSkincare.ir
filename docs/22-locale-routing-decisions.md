@@ -1,4 +1,4 @@
-# Locale routing decisions — R-1, R-2
+# Locale routing decisions — R-1, R-2, R-3
 
 **Date:** 2026-08-25 · **Trigger:** the rail sent a Persian reader from `/fa` to `/fa/fa/shop`
 **Pattern:** interim decisions with re-review triggers, as used in `19-navigation-decisions.md`
@@ -82,9 +82,91 @@ site's authority across `/` and `/fa` for no gain.
 a 307 to `/`, the rail's Shop entry is `href="/shop"`, the locale controls point
 at `/en` and `/ar`, and no message is missing.
 
-**Still to confirm.** `x-default` is not emitted yet. It belongs with the
-Landing's SEO work in packet 6, where the question is whether `x-default` names
-Persian or a language-negotiated root.
+**Settled by `R-3`.** This said `x-default` was not emitted yet, and that the
+question was whether it names Persian or a language-negotiated root. `R-3`
+decided there is no negotiated root, so `x-default` names Persian. It is
+emitted. Review item `R.4` closes with it.
 
 **Re-review trigger.** Evidence that Persian and English audiences want different
 root behaviour, or a decision to serve a language-negotiated root.
+
+---
+
+## R-3 · The unprefixed root is Persian for everyone, not negotiated
+
+**Decision.** `localeDetection: false` in `src/i18n/routing.ts`. `/` serves the
+Persian document to every client regardless of `Accept-Language`. English and
+Arabic are reached by their own URLs — `/en`, `/ar` — and by the locale control,
+which is a link. No request header ever decides which document a URL returns.
+
+`x-default` follows from it and names the Persian URL, which is the same address
+`fa` gets and the same address the canonical names.
+
+**What was actually happening.** next-intl defaults `localeDetection` to `true`,
+and nobody chose that — it arrived with `defineRouting` and no one had reason to
+look. The effect, measured on 2026-08-26:
+
+| Request to `/`                       | Response          |
+| ------------------------------------ | ----------------- |
+| No `Accept-Language`                 | `200`, Persian    |
+| `Accept-Language: fa-IR`             | `200`, Persian    |
+| `Accept-Language: en-US`             | **`307` → `/en`** |
+| `Accept-Language: ar`                | **`307` → `/ar`** |
+| Googlebot with `Accept-Language: en` | **`307` → `/en`** |
+
+**Why that is worse than it looks.** `R-2` chose the bare path _because_ it is
+the strongest canonical the site has, and detection quietly took that back. The
+site's single most important URL was serving two different documents depending
+on who asked, which is the definition of a URL that cannot be canonicalised.
+Google's own guidance is that automatic redirection by `Accept-Language`
+prevents users and crawlers from seeing all versions of a site; here the version
+being hidden was the Persian one, from a crawler that had asked for the home
+page of a Persian business. Every argument in `08-competitive-research.md` rests
+on Persian listings being the thing that gets indexed.
+
+It also cost a real reader something. A Persian speaker in Mashhad on a phone
+sold with an English system locale — which is most of them — clicked an
+Instagram link to a Persian skincare institute and got an English page. Nothing
+in the codebase was wrong; the default simply assumed the browser knows better
+than the URL, and for this audience it does not.
+
+**Why detection is the wrong mechanism here even in principle.** Locale is a
+choice, and `R-1` already established that in this codebase a choice is a URL.
+`Accept-Language` is not a choice — it is a system setting most people have
+never seen, frequently wrong, and unrelated to what someone wants to read. The
+locale control already exists, it is a link, it works without JavaScript, and it
+is addressable. Detection is a second mechanism owning the same concern, which
+is what `AGENTS.md` forbids and what produced `/fa/fa/shop` in `R-1`.
+
+**What this touches:**
+
+- `src/i18n/routing.ts` — the one option, with the reasoning beside it.
+- `localeAlternates` in `src/lib/site.ts` now emits `x-default`, so it lands on
+  every route through the one function rather than per route.
+- Nothing else. `localePrefix: "as-needed"` is unchanged, `/fa` still redirects
+  to `/`, and no component learned anything new.
+
+**The gate.** `src/i18n/routing.test.ts` asserts `localeDetection === false`.
+That assertion exists because the value is a _default_ — it comes back on its
+own the moment someone rewrites the config from next-intl's documentation, and
+nothing else in the suite can see it, since every other test runs without an
+`Accept-Language` and therefore always gets Persian. `src/lib/site.test.ts`
+asserts `x-default` equals the Persian URL.
+
+**Verified in a running server**, after the change: `/` returns `200` with
+`<html lang="fa">` for `en-US`, `ar`, `fa-IR`, no header at all, and for
+Googlebot sending `Accept-Language: en`. `/en` and `/ar` still return `200` when
+asked for directly, `/fa` still returns `307` to `/`, and `/` and `/shop/all`
+both emit four `hreflang` links whose `x-default` matches their canonical.
+
+**What this does not do.** It does not detect, suggest, or remember a locale. A
+first-time English speaker on `/` sees Persian and uses the locale control. If
+that ever proves to be a real cost, the answer is an _in-page invitation_ — a
+dismissible line offering the English URL — never a redirect, because the
+redirect is the part that breaks canonicalisation.
+
+**Re-review trigger.** Evidence of a real non-Persian audience arriving at `/`
+and leaving, which would justify the in-page invitation above. A cookie that
+remembers an explicit choice is also acceptable under this decision, because a
+choice the reader made is not a header the browser sent — but it must never
+change what a crawler or a first-time visitor receives at `/`.
