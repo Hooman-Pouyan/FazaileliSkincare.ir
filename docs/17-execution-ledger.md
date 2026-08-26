@@ -76,16 +76,16 @@ no production provider, no verified catalogue, and no money moving.
 research deferrals expire the moment it is shown to a customer.
 
 | #   | Packet                                                                                                                                                                                                                                      | Satisfies                                                             | Exit gate                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | Status                                                                                                                                                                                              |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1   | This ledger and the status corrections it required                                                                                                                                                                                          | —                                                                     | The three status sections match reality                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | **done**                                                                                                                                                                                            |
 | 2   | Fictional dev catalogue seed, production-refused                                                                                                                                                                                            | DB3 fixtures                                                          | `pnpm db:seed dev` fills brands, concerns, categories, products, variants, prices, stock, media across every offer state; refuses to run under `NODE_ENV=production`                                                                                                                                                                                                                                                                                                                                            | **done**                                                                                                                                                                                            |
 | 3   | Catalogue read models, Arabic-form folding, `pg_trgm` GIN                                                                                                                                                                                   | DB3, C3, C4                                                           | `getShopHub`, `listProducts`, `getProduct` enforce exact-locale, publication, active variant, eligible price, approved media and availability; infix search proves index use with `EXPLAIN (ANALYZE, BUFFERS)`                                                                                                                                                                                                                                                                                                  | **done** — facet counts deliberately deferred to packet 7, see below                                                                                                                                |
 | 4   | Storefront module foundation and shell — header, footer, mobile navigation, command palette, locale/cart/account controls, minimal `/fa/account`                                                                                            | Stage 1 minimum, Stage 2 shell                                        | Landing renders inside the shared shell at 390/768/1440 with Persian RTL passing; a signed-in customer can see their phone and sign out                                                                                                                                                                                                                                                                                                                                                                         | **done** — browser pass at 390/768/1440 in Persian across six routes; review items 4.11 and 6c.3                                                                                                    |
 | 5   | `/fa/shop` product hub                                                                                                                                                                                                                      | Stage 2, DB4                                                          | Concern-first hub renders from PostgreSQL with JavaScript disabled; route states and metadata present                                                                                                                                                                                                                                                                                                                                                                                                           | **done** — rendered against the real catalogue at three widths, 17 tiles; review items 5.8 and M.9. Still on hardcoded editorial imagery, which is `R-5`                                            |
-| 6   | Landing composition — the five IA beats, the growth spine and ornament set, and the three source-content batches seeded as marked drafts. Plan: [`system-design/storefront/landing.md`](system-design/storefront/landing.md)                | Stage 2, `LAND-01`–`LAND-11`, `CONTENT-01`–`CONTENT-04`, `L-1`–`L-15` | `/fa` renders the five beats in order at 390/768/1440 with Persian RTL passing and JavaScript disabled; every beat whose content is unapproved is **absent**, not empty-framed; motion is reveal-once on the existing duration and easing, and `prefers-reduced-motion` is verified; `Organization`+`LocalBusiness`+`WebSite` JSON-LD emits, with no `AggregateRating`; every batch is seeded idempotently, refuses under production, and no real testimonial is publishable                                    |                                                                                                                                                                                                     | **done** — eight beats at 390/768/1440 in Persian, with JavaScript off and under `prefers-reduced-motion`; `E-1`'s parallax constraints verified. Review items 6.11 and 6c.1–6c.8 |
+| 6   | Landing composition — the five IA beats, the growth spine and ornament set, and the three source-content batches seeded as marked drafts. Plan: [`system-design/storefront/landing.md`](system-design/storefront/landing.md)                | Stage 2, `LAND-01`–`LAND-11`, `CONTENT-01`–`CONTENT-04`, `L-1`–`L-15` | `/fa` renders the five beats in order at 390/768/1440 with Persian RTL passing and JavaScript disabled; every beat whose content is unapproved is **absent**, not empty-framed; motion is reveal-once on the existing duration and easing, and `prefers-reduced-motion` is verified; `Organization`+`LocalBusiness`+`WebSite` JSON-LD emits, with no `AggregateRating`; every batch is seeded idempotently, refuses under production, and no real testimonial is publishable                                    |                                                                                                                                                                                                     | **done** — eight beats at 390/768/1440 in Persian, with JavaScript off and under `prefers-reduced-motion`; `E-1`'s parallax constraints verified. Review items 6.11 and 6c.1–6c.8                                                                                                                                                     |
 | 7   | PLP and search                                                                                                                                                                                                                              | Stage 3, `PLP0–5`                                                     | Concern, brand, category and `?q=` routes use canonical URL state, server results, live counts, stable pagination, verified empty and error states                                                                                                                                                                                                                                                                                                                                                              |                                                                                                                                                                                                     |
 | 7B  | **Catalogue truth and the content spine.** Plans: [`system-design/catalogue/storyderm-catalogue.md`](system-design/catalogue/storyderm-catalogue.md) and [`system-design/content/content-spine.md`](system-design/content/content-spine.md) | `CAT0–CAT5`, `CONTENT0–CONTENT5`, `C-1`–`C-17`, `docs/14` P0–P2       | `/fa/shop/all` lists the real Storyderm catalogue from real imagery served through derivatives, with an editorial band below the breadcrumb and an FAQ accordion below the results, both read from PostgreSQL; the manifest reconciles to ninety source files; every invented commercial figure carries a `DEMO-` marker in the row; held, unpublished and professional-only rows are provably absent; `FAQPage` markup matches the rendered questions exactly; both seeds are idempotent and refuse production | **done** — `db:reset && db:seed demo` clean, `test:integration` 4 files and 50 tests green and actually run rather than skipped, 48 of 50 products listed with the two `C-17` holds provably absent |
-| 8   | PDP                                                                                                                                                                                                                                         | Stage 4, `PDP1–6`                                                     | Offer states are truthful; `on_request`, professional-only, unavailable and variant-required cannot enter the cart                                                                                                                                                                                                                                                                                                                                                                                              |                                                                                                                                                                                                     |
+| 8   | PDP                                                                                                                                                                                                                                         | Stage 4, `PDP1–6`                                                     | Offer states are truthful; `on_request`, professional-only, unavailable and variant-required cannot enter the cart                                                                                                                                                                                                                                                                                                                                                                                              |                                                                                                                                                                                                     | **done** — `f8fc15d`. The route existed nowhere since packet 3; all forty-eight visible products now resolve. Migration `0006` adds `product_pair`. Composition from the design system's own `Product.jsx`. All four offer states verified at 390/768/1440 with JavaScript off. Review section backfilled after the fact — see `8.10` |
 | 9   | Cart presentation — drawer and `/fa/cart`                                                                                                                                                                                                   | Stage 4, `CART1`                                                      | The shared cart model renders in both surfaces; no checkout, payment or settlement code exists                                                                                                                                                                                                                                                                                                                                                                                                                  |                                                                                                                                                                                                     |
 | 10  | Transactional cart, reservations, `resolveCartOwner`                                                                                                                                                                                        | DB5, C5                                                               | Concurrent requests cannot oversell; removal works; retries and guest-to-account merge are idempotent; the expiry predicate is observable                                                                                                                                                                                                                                                                                                                                                                       |                                                                                                                                                                                                     |
 
@@ -155,6 +155,36 @@ its own day without any of this being rewritten.
 
 ---
 
+### Known bound — the cart is in flight, and its Query gate is not closed
+
+The cart landed in the working tree uncommitted on 2026-08-26: nineteen files
+under `src/modules/cart/`, migration `0007` (which is correction `C5` —
+`source_cart_id` added, `source_cart_item_id` made nullable with `SET NULL`),
+and **TanStack Query and Zustand installed**.
+
+Installing Query was **not** unilateral, and that is worth stating plainly
+because it looks like the kind of thing that would be:
+`architecture/data-and-state-ownership.md` pre-approves it as _"the approved
+secondary tool for bounded browser-refetched server state, introduced with its
+first approved consumer"_, and names cart-drawer synchronisation as the example.
+The cart is that first consumer.
+
+**What is not yet done is the gate that approval is conditional on.** The
+contract requires all five, and the code carries good comments rather than a
+record:
+
+- name the route and user journey that requires browser refetching;
+- demonstrate why Server Component navigation or refresh alone is insufficient;
+- record query keys, cache lifetime, retry, invalidation, hydration, error and
+  offline behaviour;
+- add focused integration **and browser** evidence;
+- confirm no server-owned commerce state was duplicated into Zustand.
+
+That record lands **with** the cart commit, not after it. `8.10` is what happens
+otherwise, one packet earlier.
+
+---
+
 ### Direction decisions binding this block
 
 [`18-storefront-direction-decisions.md`](18-storefront-direction-decisions.md)
@@ -215,104 +245,108 @@ Generated by `pnpm docs:open-items` from [`20-packet-review-log.md`](20-packet-r
 
 Nothing below is a defect. Each is a decision, a fact or a permission only you can supply, and each blocks something.
 
-| Where | # | What | Kind |
-| ----- | - | ---- | ---- |
-| Packet 4 — the storefront shell | 4.2 | The footer omits the address and telephone | content |
-| Packet 4 — the storefront shell | 4.3 | Terms, privacy and returns are linked but unwritten | content / legal |
-| Packet 5 — the Shop hub | 5.3 | `enquiryHref` is `https://wa.me/` with no number | content |
-| Design-system adherence and the facet manifest — 2026-08-26 | D.4 | The `Divider` is in use | UI |
-| Design-system adherence and the facet manifest — 2026-08-26 | D.7 | Six requested filters were not built, each for a stated reason | product |
-| Design-system adherence and the facet manifest — 2026-08-26 | D.8 | The FAQ block ships as structure with no content | content / SEO |
-| Design-system adherence and the facet manifest — 2026-08-26 | D.14 | Arabic catalogue vocabulary is unreviewed, so `/ar` lists products with no facets | content |
-| Packet 6, closing — the browser pass — 2026-08-26 | 6c.5 | Eleven of 25 interactive elements are under 44px at 390 | UI / a11y |
-| Packet 6, second pass — scroll storytelling — 2026-08-26 | 6b.3 | Ten testimonials are held, and not for a consent reason | legal |
-| Packet 6, second pass — scroll storytelling — 2026-08-26 | 6b.4 | The 33 display quotes are my edits of other people's words | content |
-| Packet 6, second pass — scroll storytelling — 2026-08-26 | 6b.9 | `p01` and the transparent Forlle'd hero are still `Permission not verified` | legal |
-| Packet 6 — the Landing — 2026-08-26 | 6.2 | The forty-two real testimonials are deliberately not imported | content / legal |
-| Packet 6 — the Landing — 2026-08-26 | 6.3 | Before/after ships as a tested component with nothing behind it, so the beat is absent | content / legal |
-| Packet 6 — the Landing — 2026-08-26 | 6.6 | Beat 2 renders two credentials and no numbers | content |
-| Packet 6 — the Landing — 2026-08-26 | 6.10 | The bounded petal reveal in `L-5` is still not built | UI / motion |
-| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.3 | Fifty products from ninety files, grouped by hand | product |
-| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.4 | Persian product names are composed, not translated | product |
-| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.6 | Two products are deliberately held back | product |
-| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.7 | Concern, skin-state and phase placement is the one inference in the manifest | product |
-| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.8 | Every FAQ answer is written by me, in her voice, and cannot publish | content |
-| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.9 | Image rights are still `unknown` on all ninety packshots | legal |
-| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.18 | Retired files are stuck inside `.git/_agent-quarantine/` | process |
-| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.21 | The `brand` facet offers one value that matches every result | product |
-| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.16 | Uncommitted work appeared in `src/app` and `src/components/layout` during this session | process |
-| Hub blocks and the motion stack — 2026-08-26 | C.1 | B1, B3 and B10 are built | UI |
-| Hub blocks and the motion stack — 2026-08-26 | C.7 | Nine bands is a judgement, not a measurement | UI |
-| Shop hero and asset pass — 2026-08-26 | A.1 | The hero is now a shop hero, not a second landing hero | UI |
-| Shop hero and asset pass — 2026-08-26 | A.2 | The Forlle'd hero photograph is marked `Permission not verified` | legal |
-| Hub composition and voice pass — 2026-08-25 | M.1 | The Persian copy was rewritten to sound like a person | content / voice |
-| Hub composition and voice pass — 2026-08-25 | M.4 | The hero takes a video and has none | content |
-| Hub composition and voice pass — 2026-08-25 | M.6 | Concern panels are flat sand with a hover wash | UI / content |
-| Locale routing pass — 2026-08-25 | R.2 | Persian now has no URL prefix | SEO / product |
-| Landing direction pass — 2026-08-25, ahead of packet 6 | L.1 | Academy prices are unconfirmed | content |
-| Landing direction pass — 2026-08-25, ahead of packet 6 | L.2 | No testimonial may be published | content / consent |
-| Landing direction pass — 2026-08-25, ahead of packet 6 | L.3 | Brand relationships and image rights are unresolved | content / legal |
-| Landing direction pass — 2026-08-25, ahead of packet 6 | L.4 | Beat 2 needs two numbers | content |
-| Landing direction pass — 2026-08-25, ahead of packet 6 | L.5 | The blossom petal reveal is proposed, not adopted | UI / motion |
-| Landing direction pass — 2026-08-25, ahead of packet 6 | L.7 | `LocalBusiness` JSON-LD needs the same three facts as the footer | SEO / content |
-| Landing direction pass — 2026-08-25, ahead of packet 6 | L.15 | Brand logos need one line each recording where the right comes from | legal |
-| Landing direction pass — 2026-08-25, ahead of packet 6 | L.16 | Before/after carries a second gate beyond consent | legal |
+| Where                                                          | #     | What                                                                                   | Kind              |
+| -------------------------------------------------------------- | ----- | -------------------------------------------------------------------------------------- | ----------------- |
+| Packet 4 — the storefront shell                                | 4.2   | The footer omits the address and telephone                                             | content           |
+| Packet 4 — the storefront shell                                | 4.3   | Terms, privacy and returns are linked but unwritten                                    | content / legal   |
+| Packet 5 — the Shop hub                                        | 5.3   | `enquiryHref` is `https://wa.me/` with no number                                       | content           |
+| Design-system adherence and the facet manifest — 2026-08-26    | D.4   | The `Divider` is in use                                                                | UI                |
+| Design-system adherence and the facet manifest — 2026-08-26    | D.7   | Six requested filters were not built, each for a stated reason                         | product           |
+| Design-system adherence and the facet manifest — 2026-08-26    | D.8   | The FAQ block ships as structure with no content                                       | content / SEO     |
+| Design-system adherence and the facet manifest — 2026-08-26    | D.14  | Arabic catalogue vocabulary is unreviewed, so `/ar` lists products with no facets      | content           |
+| Packet 8 — the product page — 2026-08-26                       | 8.4   | The authenticity section renders empty rather than promising an IRC code               | content           |
+| Packet 8 — the product page — 2026-08-26                       | 8.5   | 137 `product_pair` rows are invented, and marked so                                    | product           |
+| Packet 8 — the product page — 2026-08-26                       | 8.6   | `resolveEnquiryHref` now fails closed, which changes what `5.3` looks like             | product           |
+| Packet 6, closing — the browser pass — 2026-08-26              | 6c.5  | Eleven of 25 interactive elements are under 44px at 390                                | UI / a11y         |
+| Packet 6, second pass — scroll storytelling — 2026-08-26       | 6b.3  | Ten testimonials are held, and not for a consent reason                                | legal             |
+| Packet 6, second pass — scroll storytelling — 2026-08-26       | 6b.4  | The 33 display quotes are my edits of other people's words                             | content           |
+| Packet 6, second pass — scroll storytelling — 2026-08-26       | 6b.9  | `p01` and the transparent Forlle'd hero are still `Permission not verified`            | legal             |
+| Packet 6 — the Landing — 2026-08-26                            | 6.2   | The forty-two real testimonials are deliberately not imported                          | content / legal   |
+| Packet 6 — the Landing — 2026-08-26                            | 6.3   | Before/after ships as a tested component with nothing behind it, so the beat is absent | content / legal   |
+| Packet 6 — the Landing — 2026-08-26                            | 6.6   | Beat 2 renders two credentials and no numbers                                          | content           |
+| Packet 6 — the Landing — 2026-08-26                            | 6.10  | The bounded petal reveal in `L-5` is still not built                                   | UI / motion       |
+| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.3  | Fifty products from ninety files, grouped by hand                                      | product           |
+| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.4  | Persian product names are composed, not translated                                     | product           |
+| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.6  | Two products are deliberately held back                                                | product           |
+| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.7  | Concern, skin-state and phase placement is the one inference in the manifest           | product           |
+| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.8  | Every FAQ answer is written by me, in her voice, and cannot publish                    | content           |
+| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.9  | Image rights are still `unknown` on all ninety packshots                               | legal             |
+| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.18 | Retired files are stuck inside `.git/_agent-quarantine/`                               | process           |
+| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.21 | The `brand` facet offers one value that matches every result                           | product           |
+| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.16 | Uncommitted work appeared in `src/app` and `src/components/layout` during this session | process           |
+| Hub blocks and the motion stack — 2026-08-26                   | C.1   | B1, B3 and B10 are built                                                               | UI                |
+| Hub blocks and the motion stack — 2026-08-26                   | C.7   | Nine bands is a judgement, not a measurement                                           | UI                |
+| Shop hero and asset pass — 2026-08-26                          | A.1   | The hero is now a shop hero, not a second landing hero                                 | UI                |
+| Shop hero and asset pass — 2026-08-26                          | A.2   | The Forlle'd hero photograph is marked `Permission not verified`                       | legal             |
+| Hub composition and voice pass — 2026-08-25                    | M.1   | The Persian copy was rewritten to sound like a person                                  | content / voice   |
+| Hub composition and voice pass — 2026-08-25                    | M.4   | The hero takes a video and has none                                                    | content           |
+| Hub composition and voice pass — 2026-08-25                    | M.6   | Concern panels are flat sand with a hover wash                                         | UI / content      |
+| Locale routing pass — 2026-08-25                               | R.2   | Persian now has no URL prefix                                                          | SEO / product     |
+| Landing direction pass — 2026-08-25, ahead of packet 6         | L.1   | Academy prices are unconfirmed                                                         | content           |
+| Landing direction pass — 2026-08-25, ahead of packet 6         | L.2   | No testimonial may be published                                                        | content / consent |
+| Landing direction pass — 2026-08-25, ahead of packet 6         | L.3   | Brand relationships and image rights are unresolved                                    | content / legal   |
+| Landing direction pass — 2026-08-25, ahead of packet 6         | L.4   | Beat 2 needs two numbers                                                               | content           |
+| Landing direction pass — 2026-08-25, ahead of packet 6         | L.5   | The blossom petal reveal is proposed, not adopted                                      | UI / motion       |
+| Landing direction pass — 2026-08-25, ahead of packet 6         | L.7   | `LocalBusiness` JSON-LD needs the same three facts as the footer                       | SEO / content     |
+| Landing direction pass — 2026-08-25, ahead of packet 6         | L.15  | Brand logos need one line each recording where the right comes from                    | legal             |
+| Landing direction pass — 2026-08-25, ahead of packet 6         | L.16  | Before/after carries a second gate beyond consent                                      | legal             |
 
 ### Open — decided when it next matters
 
-| Where | # | What | Kind |
-| ----- | - | ---- | ---- |
-| Packet 2 — fictional development catalogue | 2.1 | Ten products across five concerns is enough to exercise every offer state but not enough to judge a grid, a facet rail, or pagination | product |
-| Packet 3 — catalogue reads | 3.1 | Sort default is `featured` | product |
-| Packet 3 — catalogue reads | 3.2 | Price bounds cross the URL in toman, storage is rials | product |
-| Packet 3 — catalogue reads | 3.5 | Media resolution uses `cardObjectKey`/`detailObjectKey` verbatim | technical |
-| Packet 3 — catalogue reads | 3.6 | Professional-only products are visible and non-purchasable (D-18-2) | product / legal |
-| Packet 4 — the storefront shell | 4.1 | The bottom bar carries four items and excludes Booking and Academy | product |
-| Packet 4 — the storefront shell | 4.4 | The eNamad slot is an empty bordered square | UI |
-| Packet 4 — the storefront shell | 4.8 | Bodoni Moda ships as variable TrueType, not woff2 | performance |
-| Packet 4 — the storefront shell | 4.14 | Two spellings for the same token are in use | drift |
-| Packet 5 — the Shop hub | 5.2 | The hub's metadata copy now comes from the read, and the route caches the read | technical |
-| Packet 5 — the Shop hub | 5.6 | Country names come from `Intl.DisplayNames`, not the catalogue | i18n |
-| Packet 5 — the Shop hub | 5.7 | The featured rail is `merchandisingRank` with no editorial control | product |
-| Design-system adherence and the facet manifest — 2026-08-26 | D.6 | `line` renders only when the results are one brand | product |
-| Design-system adherence and the facet manifest — 2026-08-26 | D.9 | Promotional banners below the breadcrumb were refused as furniture and allowed as campaigns | product |
-| Design-system adherence and the facet manifest — 2026-08-26 | D.11 | The design system's `FacetRail` collapses its groups and puts a search box inside any facet over ~10 values | UI |
-| Packet 7 — PLP and search | 7.2 | The scope's own axis is not offered as a facet | product |
-| Packet 7 — PLP and search | 7.7 | `invalid-query` renders not-found rather than dropping the bad parameter | product |
-| Packet 7 — PLP and search | 7.8 | The facet rail sits below the results on mobile, not behind a drawer | UI |
-| Packet 7 — PLP and search | 7.10 | `getShopHub` and `listProducts` now run several queries each | performance |
-| Packet 6, second pass — scroll storytelling — 2026-08-26 | 6b.5 | Testimonials are Persian-only on purpose | content |
-| Packet 6, second pass — scroll storytelling — 2026-08-26 | 6b.7 | The Landing's editorial photography is static paths, not object keys | structure |
-| Packet 6, second pass — scroll storytelling — 2026-08-26 | 6b.8 | The Forlle'd beat links to `/shop`, not `/shop/brand/forlled` | product |
-| Packet 6 — the Landing — 2026-08-26 | 6.5 | `LAND-06` restricts the ornament to lapis and teal bands | UI |
-| Shop hub and PLP refinement backlog — 2026-08-26 | R.1 | Infinite scroll instead of pagination | product |
-| Shop hub and PLP refinement backlog — 2026-08-26 | R.2 | Filter changes lose the scroll position | UX / a11y |
-| Shop hub and PLP refinement backlog — 2026-08-26 | R.3 | Density — tighter, closer to Ant Design | design |
-| Shop hub and PLP refinement backlog — 2026-08-26 | R.4 | The product tile is plain and its packshot is cropped | UI |
-| Shop hub and PLP refinement backlog — 2026-08-26 | R.4a | Three.js product spin | UI / perf |
-| Shop hub and PLP refinement backlog — 2026-08-26 | R.5 | The hub still runs on four hardcoded editorial image paths | content |
-| Shop hub and PLP refinement backlog — 2026-08-26 | R.6 | The price filter's Apply button | product |
-| Shop hub and PLP refinement backlog — 2026-08-26 | R.7 | The filter rail should be sticky | UI |
-| Shop hub and PLP refinement backlog — 2026-08-26 | R.8 | The top of the PLP is a stack, not a composition | UI / design |
-| Shop hub and PLP refinement backlog — 2026-08-26 | R.10 | The integration suite leaves the development database damaged | technical |
-| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.5 | Three files are unresolved and stay that way | product |
-| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.11 | Offline asset and data tooling is Python | structure |
-| Hub blocks and the motion stack — 2026-08-26 | C.3 | anime.js is bounded to choreography | technical |
-| Hub blocks and the motion stack — 2026-08-26 | C.4 | `getShopHub` now runs three extra queries | performance |
-| Hub blocks and the motion stack — 2026-08-26 | C.6 | The mosaic photography shows other brands' products | UI / content |
-| Shop hero and asset pass — 2026-08-26 | A.4 | Six cleared Japanese photographs are sitting unused | UI |
-| Shop hero and asset pass — 2026-08-26 | A.5 | `public/images` is 173MB | technical |
-| Hub composition and voice pass — 2026-08-25 | M.2 | No carousel library | technical |
-| Hub composition and voice pass — 2026-08-25 | M.3 | GSAP, anime.js, AOS, Swiper and Three.js were all refused, with the trigger that would change each | technical |
-| Hub composition and voice pass — 2026-08-25 | M.5 | The authenticity band renders only when the catalogue has something | product |
-| Hub composition and voice pass — 2026-08-25 | M.7 | The blossom ornament shipped early | UI |
-| Hub composition and voice pass — 2026-08-25 | M.8 | `ScrollRail` hides its scrollbar | UI |
-| Landing direction pass — 2026-08-25, ahead of packet 6 | L.6 | Parallax, autoplay carousels and looping testimonial rails were asked for and refused | UI / motion |
-| Landing direction pass — 2026-08-25, ahead of packet 6 | L.8 | The content review surface is deliberately not an admin | process |
-| Landing direction pass — 2026-08-25, ahead of packet 6 | L.12 | The Japanese concepts are carried by a growth spine, not a values row | UI |
-| Landing direction pass — 2026-08-25, ahead of packet 6 | L.14 | Source batches are completed with fictional development values | data |
+| Where                                                          | #     | What                                                                                                                                  | Kind            |
+| -------------------------------------------------------------- | ----- | ------------------------------------------------------------------------------------------------------------------------------------- | --------------- |
+| Packet 2 — fictional development catalogue                     | 2.1   | Ten products across five concerns is enough to exercise every offer state but not enough to judge a grid, a facet rail, or pagination | product         |
+| Packet 3 — catalogue reads                                     | 3.1   | Sort default is `featured`                                                                                                            | product         |
+| Packet 3 — catalogue reads                                     | 3.2   | Price bounds cross the URL in toman, storage is rials                                                                                 | product         |
+| Packet 3 — catalogue reads                                     | 3.5   | Media resolution uses `cardObjectKey`/`detailObjectKey` verbatim                                                                      | technical       |
+| Packet 3 — catalogue reads                                     | 3.6   | Professional-only products are visible and non-purchasable (D-18-2)                                                                   | product / legal |
+| Packet 4 — the storefront shell                                | 4.1   | The bottom bar carries four items and excludes Booking and Academy                                                                    | product         |
+| Packet 4 — the storefront shell                                | 4.4   | The eNamad slot is an empty bordered square                                                                                           | UI              |
+| Packet 4 — the storefront shell                                | 4.8   | Bodoni Moda ships as variable TrueType, not woff2                                                                                     | performance     |
+| Packet 4 — the storefront shell                                | 4.14  | Two spellings for the same token are in use                                                                                           | drift           |
+| Packet 5 — the Shop hub                                        | 5.2   | The hub's metadata copy now comes from the read, and the route caches the read                                                        | technical       |
+| Packet 5 — the Shop hub                                        | 5.6   | Country names come from `Intl.DisplayNames`, not the catalogue                                                                        | i18n            |
+| Packet 5 — the Shop hub                                        | 5.7   | The featured rail is `merchandisingRank` with no editorial control                                                                    | product         |
+| Design-system adherence and the facet manifest — 2026-08-26    | D.6   | `line` renders only when the results are one brand                                                                                    | product         |
+| Design-system adherence and the facet manifest — 2026-08-26    | D.9   | Promotional banners below the breadcrumb were refused as furniture and allowed as campaigns                                           | product         |
+| Design-system adherence and the facet manifest — 2026-08-26    | D.11  | The design system's `FacetRail` collapses its groups and puts a search box inside any facet over ~10 values                           | UI              |
+| Packet 7 — PLP and search                                      | 7.2   | The scope's own axis is not offered as a facet                                                                                        | product         |
+| Packet 7 — PLP and search                                      | 7.7   | `invalid-query` renders not-found rather than dropping the bad parameter                                                              | product         |
+| Packet 7 — PLP and search                                      | 7.8   | The facet rail sits below the results on mobile, not behind a drawer                                                                  | UI              |
+| Packet 7 — PLP and search                                      | 7.10  | `getShopHub` and `listProducts` now run several queries each                                                                          | performance     |
+| Packet 8 — the product page — 2026-08-26                       | 8.3   | `object-contain`, not the design system's `cover`                                                                                     | UI              |
+| Packet 6, second pass — scroll storytelling — 2026-08-26       | 6b.5  | Testimonials are Persian-only on purpose                                                                                              | content         |
+| Packet 6, second pass — scroll storytelling — 2026-08-26       | 6b.7  | The Landing's editorial photography is static paths, not object keys                                                                  | structure       |
+| Packet 6, second pass — scroll storytelling — 2026-08-26       | 6b.8  | The Forlle'd beat links to `/shop`, not `/shop/brand/forlled`                                                                         | product         |
+| Packet 6 — the Landing — 2026-08-26                            | 6.5   | `LAND-06` restricts the ornament to lapis and teal bands                                                                              | UI              |
+| Shop hub and PLP refinement backlog — 2026-08-26               | R.1   | Infinite scroll instead of pagination                                                                                                 | product         |
+| Shop hub and PLP refinement backlog — 2026-08-26               | R.2   | Filter changes lose the scroll position                                                                                               | UX / a11y       |
+| Shop hub and PLP refinement backlog — 2026-08-26               | R.3   | Density — tighter, closer to Ant Design                                                                                               | design          |
+| Shop hub and PLP refinement backlog — 2026-08-26               | R.4   | The product tile is plain and its packshot is cropped                                                                                 | UI              |
+| Shop hub and PLP refinement backlog — 2026-08-26               | R.4a  | Three.js product spin                                                                                                                 | UI / perf       |
+| Shop hub and PLP refinement backlog — 2026-08-26               | R.5   | The hub still runs on four hardcoded editorial image paths                                                                            | content         |
+| Shop hub and PLP refinement backlog — 2026-08-26               | R.6   | The price filter's Apply button                                                                                                       | product         |
+| Shop hub and PLP refinement backlog — 2026-08-26               | R.7   | The filter rail should be sticky                                                                                                      | UI              |
+| Shop hub and PLP refinement backlog — 2026-08-26               | R.8   | The top of the PLP is a stack, not a composition                                                                                      | UI / design     |
+| Shop hub and PLP refinement backlog — 2026-08-26               | R.10  | The integration suite leaves the development database damaged                                                                         | technical       |
+| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.5  | Three files are unresolved and stay that way                                                                                          | product         |
+| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.11 | Offline asset and data tooling is Python                                                                                              | structure       |
+| Hub blocks and the motion stack — 2026-08-26                   | C.3   | anime.js is bounded to choreography                                                                                                   | technical       |
+| Hub blocks and the motion stack — 2026-08-26                   | C.4   | `getShopHub` now runs three extra queries                                                                                             | performance     |
+| Hub blocks and the motion stack — 2026-08-26                   | C.6   | The mosaic photography shows other brands' products                                                                                   | UI / content    |
+| Shop hero and asset pass — 2026-08-26                          | A.4   | Six cleared Japanese photographs are sitting unused                                                                                   | UI              |
+| Shop hero and asset pass — 2026-08-26                          | A.5   | `public/images` is 173MB                                                                                                              | technical       |
+| Hub composition and voice pass — 2026-08-25                    | M.2   | No carousel library                                                                                                                   | technical       |
+| Hub composition and voice pass — 2026-08-25                    | M.3   | GSAP, anime.js, AOS, Swiper and Three.js were all refused, with the trigger that would change each                                    | technical       |
+| Hub composition and voice pass — 2026-08-25                    | M.5   | The authenticity band renders only when the catalogue has something                                                                   | product         |
+| Hub composition and voice pass — 2026-08-25                    | M.7   | The blossom ornament shipped early                                                                                                    | UI              |
+| Hub composition and voice pass — 2026-08-25                    | M.8   | `ScrollRail` hides its scrollbar                                                                                                      | UI              |
+| Landing direction pass — 2026-08-25, ahead of packet 6         | L.6   | Parallax, autoplay carousels and looping testimonial rails were asked for and refused                                                 | UI / motion     |
+| Landing direction pass — 2026-08-25, ahead of packet 6         | L.8   | The content review surface is deliberately not an admin                                                                               | process         |
+| Landing direction pass — 2026-08-25, ahead of packet 6         | L.12  | The Japanese concepts are carried by a growth spine, not a values row                                                                 | UI              |
+| Landing direction pass — 2026-08-25, ahead of packet 6         | L.14  | Source batches are completed with fictional development values                                                                        | data            |
 
-**Totals:** 40 waiting on the maintainer, 49 open.
+**Totals:** 43 waiting on the maintainer, 50 open.
 
 <!-- END:open-items -->
 

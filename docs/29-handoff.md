@@ -86,7 +86,28 @@ was built CDN-ready and left empty.
 
 ---
 
-## 4. The four gates. Never delete one to make something pass.
+### Since this handoff was written — packets closed on the maintainer's machine
+
+`472fae6..9eb7835`, seven commits. Read them; three found defects that no static
+gate could have seen.
+
+- **Packet 6 closed** with the browser pass at 390/768/1440 in three states.
+  Parallax listeners were still running on phones — `hidden lg:block` satisfies
+  `E-1`'s _room_ constraint but `display: none` does not stop a
+  `requestAnimationFrame` loop, which is the _headroom_ half.
+- **Packet 7B closed** against a clean database, and corrected a number I had
+  already written into `docs/27`: `ItemList` is **48**, not 47. `R-10` is worse
+  than it reads — it silently changes what a measurement says.
+- **`localeDetection` defaulted to `true`.** `/` served English to anyone with
+  an English `Accept-Language`, Googlebot included, which took back the
+  canonical `R-2` chose the bare path for.
+- **`loading.tsx` was turning every `notFound()` into a 200.** This answers
+  `R-9`'s second half, and not the way `R-9` framed it: it was never
+  first-byte-versus-completeness, it was broken status codes.
+- **Packet 8 — the product page** — shipped, then had its review section
+  backfilled after the fact. See `8.10`, and do not repeat it.
+
+## 4. The five gates. Never delete one to make something pass.
 
 1. **`src/lib/design/tailwind-candidates.test.ts`** — compiles every class name
    in `src/` against the real theme. It has caught a dead utility in **four**
@@ -101,6 +122,12 @@ was built CDN-ready and left empty.
 4. **`src/components/layout/shell-offset.test.ts`** — the shell owns the rail
    offset; a screen never adds `ms-14`. This exists because the same rule,
    scoped to one screen's test, failed to stop two other screens repeating it.
+5. **`src/lib/navigation/route-status.test.ts`** — a route that decides
+   `notFound()` must answer 404. Added 2026-08-26 after a `loading.tsx` was
+   found turning every not-found into a **200**: the Suspense boundary flushes
+   the status line before the page has decided anything. Four soft-404s on
+   enumerable facet URLs. A status code is invisible to typecheck, to ESLint and
+   to every render test in the suite.
 
 Plus `pnpm docs:open-items --check` in CI: the register in the ledger is
 generated from the review log and a stale one fails the build.
@@ -112,11 +139,20 @@ generated from the review log and a stale one fails the build.
 - **This runs in Cowork.** `mcp__remote-devices__device_bash` reaches the
   maintainer's machine through a mounted folder at `$HOME/mnt/FazaileliSkincare.ir`.
   The cloud `Bash` tool is a _different_ filesystem and cannot see the repo.
-- **You cannot run the database.** No Docker, no Postgres, no network on the
-  device VM. `pnpm typecheck`, `pnpm lint` and `pnpm test:unit` all run; **the
-  integration suite does not.** The working method is: write it, run everything
-  you can, hand the maintainer one command, read what he pastes back. That loop
-  has caught three real defects already.
+- **Whether you can run the database depends on where you are running.**
+  This section originally said you cannot, and that described _Cowork_ — a
+  sandboxed VM with the repo on a mount, no Docker and no network. A session
+  running **on the maintainer's machine** has Postgres, a dev server and a
+  browser, and should use all three: packets 6, 7B and 8 were only closed
+  because someone could. Check before you assume.
+
+  If you are in the sandbox: `pnpm typecheck`, `pnpm lint` and `pnpm test:unit`
+  run; the integration suite does not. The method is then write it, run
+  everything you can, hand the maintainer one command, read what he pastes back.
+  That loop caught three real defects. **A browser pass and a `curl` of a real
+  response find things no unit test can** — the soft-404s, the `Accept-Language`
+  redirect and a raw object key in every image `src` were all found that way.
+
 - **The mount refuses deletion.** `rm` fails with `Operation not permitted`.
   Use `mv` into `.git/_agent-quarantine/`. Files there are outside git's index
   and excluded from vitest, but they are still on his disk.
@@ -204,10 +240,13 @@ Arabic catalogue vocabulary.
 
 ## 8. Traps that have already caught someone
 
-- **Uncommitted work in the tree is not mine.** `src/app/apple-icon.png`,
-  `favicon.ico`, `icon.png`, a deleted `icon.svg`, `src/components/brand/logo.tsx`
-  and edits to the rail, footer and bottom navigation appeared during the session
-  and were deliberately left unstaged. Ask before committing them.
+- **Check whose the uncommitted work is before you commit it.** In the
+  2026-08-26 session a favicon set, `logo.tsx` and rail/footer edits sat unstaged
+  because they were not that session's; they were properly landed later in
+  `4771e15`. The tree currently carries the **cart**, in flight — nineteen files
+  under `src/modules/cart/`, migration `0007`, and TanStack Query and Zustand
+  newly installed. Do not sweep it into an unrelated commit, and see the ledger's
+  _Known bound — the cart is in flight_ for the gate it still owes.
 - **`str.replace` on a non-matching string is a silent no-op.** Two edits were
   lost that way in this session because Prettier had reformatted the anchor.
   Assert the anchor exists before replacing.
