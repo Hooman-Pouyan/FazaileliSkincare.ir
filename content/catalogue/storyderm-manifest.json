@@ -1,0 +1,2953 @@
+{
+  "$comment": "Hand-curated. The only input to the catalogue seed — C-16. Regenerate with scripts/catalogue/curate-storyderm.py after editing that script, never by hand.",
+  "brand": {
+    "slug": "storyderm",
+    "countryCode": "KR",
+    "isOfficialRepresentative": false,
+    "names": {
+      "fa": "استوری‌درم",
+      "en": "Storyderm"
+    }
+  },
+  "sourceRoot": "public/images/brands/storyderm",
+  "reviewedBy": null,
+  "reconciliation": {
+    "filesOnDisk": 90,
+    "mapped": 87,
+    "unresolved": 3
+  },
+  "lines": [
+    {
+      "slug": "ultra-lift",
+      "sourceFolder": "1.Ultra Lift",
+      "names": {
+        "fa": "اولترا لیفت",
+        "en": "Ultra Lift"
+      },
+      "sortOrder": 10
+    },
+    {
+      "slug": "princess-shine",
+      "sourceFolder": "2.Princess Shine",
+      "names": {
+        "fa": "پرنسس شاین",
+        "en": "Princess Shine"
+      },
+      "sortOrder": 20
+    },
+    {
+      "slug": "o2-white",
+      "sourceFolder": "3.O2 White",
+      "names": {
+        "fa": "او۲ وایت",
+        "en": "O2 White"
+      },
+      "sortOrder": 30
+    },
+    {
+      "slug": "timemachine-calming",
+      "sourceFolder": "4.TimeMachine Calming",
+      "names": {
+        "fa": "تایم‌ماشین کامینگ",
+        "en": "TimeMachine Calming"
+      },
+      "sortOrder": 40
+    },
+    {
+      "slug": "clinic-a",
+      "sourceFolder": "5.Clinic-A",
+      "names": {
+        "fa": "کلینیک آ",
+        "en": "Clinic-A"
+      },
+      "sortOrder": 50
+    },
+    {
+      "slug": "anti-wrinkle-care",
+      "sourceFolder": "6.Anti Wrinkle Care",
+      "names": {
+        "fa": "آنتی رینکل",
+        "en": "Anti Wrinkle Care"
+      },
+      "sortOrder": 60
+    },
+    {
+      "slug": "personal-care",
+      "sourceFolder": "7.Personal Care",
+      "names": {
+        "fa": "پرسنال کر",
+        "en": "Personal Care"
+      },
+      "sortOrder": 70
+    },
+    {
+      "slug": "protection",
+      "sourceFolder": "8.Protection",
+      "names": {
+        "fa": "پروتکشن",
+        "en": "Protection"
+      },
+      "sortOrder": 80
+    },
+    {
+      "slug": "mask",
+      "sourceFolder": "9.Mask",
+      "names": {
+        "fa": "ماسک",
+        "en": "Mask"
+      },
+      "sortOrder": 90
+    },
+    {
+      "slug": "anti-red",
+      "sourceFolder": "10.Anti-Red",
+      "names": {
+        "fa": "آنتی رد",
+        "en": "Anti-Red"
+      },
+      "sortOrder": 100
+    }
+  ],
+  "products": [
+    {
+      "draftKey": "storyderm-ultra-a-z-cream",
+      "slug": "ultra-a-z-cream",
+      "line": "ultra-lift",
+      "category": "cream",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 10,
+      "names": {
+        "form": {
+          "fa": "کرم",
+          "en": "Cream",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Ultra A-Z Cream",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["aging"],
+        "skinStates": ["dry", "normal"],
+        "phases": ["hydrate"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-ULTRA-A-Z-CREAM-01",
+          "sizeValue": 50,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰ میلی‌لیتر",
+            "en": "50 ml"
+          },
+          "demoPriceRials": 41800000,
+          "demoStock": 7
+        },
+        {
+          "sku": "DEMO-ULTRA-A-Z-CREAM-02",
+          "sizeValue": 220,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۲۲۰ میلی‌لیتر",
+            "en": "220 ml"
+          },
+          "demoPriceRials": 128000000,
+          "demoStock": 3
+        }
+      ],
+      "media": [
+        {
+          "path": "1.Ultra Lift/Ultra A-Z Cream 50ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "1.Ultra Lift/Ultra A-Z Cream 220ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-ultra-essence-aqua",
+      "slug": "ultra-essence-aqua",
+      "line": "ultra-lift",
+      "category": "toner",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 20,
+      "names": {
+        "form": {
+          "fa": "تونر",
+          "en": "Toner",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Ultra Essence Aqua",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["aging", "hydration"],
+        "skinStates": ["normal", "dry"],
+        "phases": ["hydrate"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-ULTRA-ESSENCE-AQUA-01",
+          "sizeValue": 150,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱۵۰ میلی‌لیتر",
+            "en": "150 ml"
+          },
+          "demoPriceRials": 29500000,
+          "demoStock": 9
+        },
+        {
+          "sku": "DEMO-ULTRA-ESSENCE-AQUA-02",
+          "sizeValue": 500,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰۰ میلی‌لیتر",
+            "en": "500 ml"
+          },
+          "demoPriceRials": 78000000,
+          "demoStock": 2
+        }
+      ],
+      "media": [
+        {
+          "path": "1.Ultra Lift/Ultra Essence Aqua 150ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "1.Ultra Lift/Ultra Essence Aqua 500ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-ultra-essence-clean",
+      "slug": "ultra-essence-clean",
+      "line": "ultra-lift",
+      "category": "cleanser",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 30,
+      "names": {
+        "form": {
+          "fa": "پاک‌کننده",
+          "en": "Cleanser",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Ultra Essence Clean",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["aging"],
+        "skinStates": ["normal", "dry"],
+        "phases": ["cleanse"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-ULTRA-ESSENCE-CLEAN-01",
+          "sizeValue": 150,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱۵۰ میلی‌لیتر",
+            "en": "150 ml"
+          },
+          "demoPriceRials": 26400000,
+          "demoStock": 11
+        }
+      ],
+      "media": [
+        {
+          "path": "1.Ultra Lift/Ultra Essence Clean 150ml.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-ultra-lift-powder",
+      "slug": "ultra-lift-powder",
+      "line": "ultra-lift",
+      "category": "powder",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 40,
+      "names": {
+        "form": {
+          "fa": "پودر",
+          "en": "Powder",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Ultra Lift Powder",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["aging"],
+        "skinStates": ["normal", "combination"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-ULTRA-LIFT-POWDER-01",
+          "sizeValue": 4,
+          "sizeUnit": "unit",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۴ عدد",
+            "en": "4 pcs"
+          },
+          "demoPriceRials": 34900000,
+          "demoStock": 5
+        }
+      ],
+      "media": [
+        {
+          "path": "1.Ultra Lift/Ultra lift powder 1.5g 4ea.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "1.Ultra Lift/Ultra lift powder 1.5g 4ea_2.png",
+          "role": "gallery",
+          "ordinal": 1
+        },
+        {
+          "path": "1.Ultra Lift/Ultra Lift Powder 1.5g 4ea (4).png",
+          "role": "gallery",
+          "ordinal": 2
+        },
+        {
+          "path": "1.Ultra Lift/Ultra Lift Powder 1.5g 4ea (5).png",
+          "role": "gallery",
+          "ordinal": 3
+        }
+      ],
+      "note": "Four frames of one subject, grouped as a single product per rule 2. The 4 × 1.5 g pack is read from the filename; the sachet weight is not modelled as a size unit."
+    },
+    {
+      "draftKey": "storyderm-princess-shine-ampoule",
+      "slug": "princess-shine-ampoule",
+      "line": "princess-shine",
+      "category": "ampoule",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 50,
+      "names": {
+        "form": {
+          "fa": "آمپول",
+          "en": "Ampoule",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Princess Shine Ampoule",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak"],
+        "skinStates": ["normal", "combination"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-PRINCESS-SHINE-AMPOULE-01",
+          "sizeValue": 30,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۳۰ میلی‌لیتر",
+            "en": "30 ml"
+          },
+          "demoPriceRials": 56000000,
+          "demoStock": 6
+        }
+      ],
+      "media": [
+        {
+          "path": "2.Princess Shine/Princess Shine Ampoule 30ml.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-princess-shine-aqua",
+      "slug": "princess-shine-aqua",
+      "line": "princess-shine",
+      "category": "toner",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 60,
+      "names": {
+        "form": {
+          "fa": "تونر",
+          "en": "Toner",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Princess Shine Aqua",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak", "hydration"],
+        "skinStates": ["normal", "combination"],
+        "phases": ["hydrate"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-PRINCESS-SHINE-AQUA-01",
+          "sizeValue": 150,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱۵۰ میلی‌لیتر",
+            "en": "150 ml"
+          },
+          "demoPriceRials": 28900000,
+          "demoStock": 8
+        },
+        {
+          "sku": "DEMO-PRINCESS-SHINE-AQUA-02",
+          "sizeValue": 500,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰۰ میلی‌لیتر",
+            "en": "500 ml"
+          },
+          "demoPriceRials": 74500000,
+          "demoStock": 2
+        }
+      ],
+      "media": [
+        {
+          "path": "2.Princess Shine/Princess Shine Aqua 150ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "2.Princess Shine/Princess Shine Aqua 500ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-princess-shine-clean",
+      "slug": "princess-shine-clean",
+      "line": "princess-shine",
+      "category": "cleanser",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 70,
+      "names": {
+        "form": {
+          "fa": "پاک‌کننده",
+          "en": "Cleanser",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Princess Shine Clean",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak"],
+        "skinStates": ["normal", "combination"],
+        "phases": ["cleanse"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-PRINCESS-SHINE-CLEAN-01",
+          "sizeValue": 100,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱۰۰ میلی‌لیتر",
+            "en": "100 ml"
+          },
+          "demoPriceRials": 24200000,
+          "demoStock": 12
+        },
+        {
+          "sku": "DEMO-PRINCESS-SHINE-CLEAN-02",
+          "sizeValue": 500,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰۰ میلی‌لیتر",
+            "en": "500 ml"
+          },
+          "demoPriceRials": 68000000,
+          "demoStock": 3
+        }
+      ],
+      "media": [
+        {
+          "path": "2.Princess Shine/Princess shine clean 100ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "2.Princess Shine/Princess shine clean 500ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-princess-peel",
+      "slug": "princess-peel",
+      "line": "princess-shine",
+      "category": "peel",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 80,
+      "names": {
+        "form": {
+          "fa": "پیلینگ",
+          "en": "Peel",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Princess Peel",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak"],
+        "skinStates": ["normal", "combination"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-PRINCESS-PEEL-01",
+          "sizeValue": 4,
+          "sizeUnit": "unit",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۴ عدد",
+            "en": "4 pcs"
+          },
+          "demoPriceRials": 39500000,
+          "demoStock": 4
+        }
+      ],
+      "media": [
+        {
+          "path": "2.Princess Shine/Princess peel 2ml 4ea.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "2.Princess Shine/Princess Peel_IMG (1).jpg",
+          "role": "gallery",
+          "ordinal": 1
+        },
+        {
+          "path": "2.Princess Shine/Princess Peel_IMG (2).jpg",
+          "role": "gallery",
+          "ordinal": 2
+        },
+        {
+          "path": "2.Princess Shine/Princess Peel_IMG (3).jpg",
+          "role": "gallery",
+          "ordinal": 3
+        },
+        {
+          "path": "2.Princess Shine/Princess Peel_IMG (4).jpg",
+          "role": "gallery",
+          "ordinal": 4
+        },
+        {
+          "path": "2.Princess Shine/Princess Peel_IMG (5).jpg",
+          "role": "gallery",
+          "ordinal": 5
+        },
+        {
+          "path": "2.Princess Shine/Princess Peel_IMG (6).jpg",
+          "role": "gallery",
+          "ordinal": 6
+        },
+        {
+          "path": "2.Princess Shine/Princess Peel_IMG (7).jpg",
+          "role": "gallery",
+          "ordinal": 7
+        },
+        {
+          "path": "2.Princess Shine/Princess Peel_IMG (8).jpg",
+          "role": "gallery",
+          "ordinal": 8
+        },
+        {
+          "path": "2.Princess Shine/Princess Peel_IMG (9).jpg",
+          "role": "gallery",
+          "ordinal": 9
+        },
+        {
+          "path": "2.Princess Shine/Princess Peel_IMG (10).jpg",
+          "role": "gallery",
+          "ordinal": 10
+        }
+      ],
+      "note": "The ten Princess Peel_IMG frames are one gallery of a single subject, not ten products — rule 2. Packshot is primary."
+    },
+    {
+      "draftKey": "storyderm-o2-white-aqua",
+      "slug": "o2-white-aqua",
+      "line": "o2-white",
+      "category": "toner",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 90,
+      "names": {
+        "form": {
+          "fa": "تونر",
+          "en": "Toner",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "O2 White Aqua",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak", "hydration"],
+        "skinStates": ["oily", "combination"],
+        "phases": ["hydrate"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-O2-WHITE-AQUA-01",
+          "sizeValue": 150,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱۵۰ میلی‌لیتر",
+            "en": "150 ml"
+          },
+          "demoPriceRials": 28500000,
+          "demoStock": 10
+        },
+        {
+          "sku": "DEMO-O2-WHITE-AQUA-02",
+          "sizeValue": 500,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰۰ میلی‌لیتر",
+            "en": "500 ml"
+          },
+          "demoPriceRials": 73000000,
+          "demoStock": 2
+        }
+      ],
+      "media": [
+        {
+          "path": "3.O2 White/O2 White Aqua 150ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "3.O2 White/O2 White Aqua 500ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-o2-white-clean",
+      "slug": "o2-white-clean",
+      "line": "o2-white",
+      "category": "cleanser",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 100,
+      "names": {
+        "form": {
+          "fa": "پاک‌کننده",
+          "en": "Cleanser",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "O2 White Clean",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak"],
+        "skinStates": ["oily", "combination"],
+        "phases": ["cleanse"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-O2-WHITE-CLEAN-01",
+          "sizeValue": 100,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱۰۰ میلی‌لیتر",
+            "en": "100 ml"
+          },
+          "demoPriceRials": 23800000,
+          "demoStock": 14
+        },
+        {
+          "sku": "DEMO-O2-WHITE-CLEAN-02",
+          "sizeValue": 500,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰۰ میلی‌لیتر",
+            "en": "500 ml"
+          },
+          "demoPriceRials": 66500000,
+          "demoStock": 3
+        }
+      ],
+      "media": [
+        {
+          "path": "3.O2 White/O2 white clean 100ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "3.O2 White/O2 white clean 500ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-o2-white-essence",
+      "slug": "o2-white-essence",
+      "line": "o2-white",
+      "category": "essence",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 110,
+      "names": {
+        "form": {
+          "fa": "اسنس",
+          "en": "Essence",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "O2 White Essence",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak"],
+        "skinStates": ["oily", "combination", "normal"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-O2-WHITE-ESSENCE-01",
+          "sizeValue": 30,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۳۰ میلی‌لیتر",
+            "en": "30 ml"
+          },
+          "demoPriceRials": 47200000,
+          "demoStock": 7
+        },
+        {
+          "sku": "DEMO-O2-WHITE-ESSENCE-02",
+          "sizeValue": 220,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۲۲۰ میلی‌لیتر",
+            "en": "220 ml"
+          },
+          "demoPriceRials": 119000000,
+          "demoStock": 2
+        }
+      ],
+      "media": [
+        {
+          "path": "3.O2 White/O2 white essence 30ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "3.O2 White/O2 white essence 220ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-o2-jewelry-peel",
+      "slug": "o2-jewelry-peel",
+      "line": "o2-white",
+      "category": "peel",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 120,
+      "names": {
+        "form": {
+          "fa": "پیلینگ",
+          "en": "Peel",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "O2 Jewelry Peel",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak"],
+        "skinStates": ["oily", "combination"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-O2-JEWELRY-PEEL-01",
+          "sizeValue": 4,
+          "sizeUnit": "unit",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۴ عدد",
+            "en": "4 pcs"
+          },
+          "demoPriceRials": 38000000,
+          "demoStock": 5
+        }
+      ],
+      "media": [
+        {
+          "path": "3.O2 White/O2 Jewelry Peel 2ml 4ea.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-timemachine-calming-aqua",
+      "slug": "timemachine-calming-aqua",
+      "line": "timemachine-calming",
+      "category": "toner",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 130,
+      "names": {
+        "form": {
+          "fa": "تونر",
+          "en": "Toner",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "TimeMachine Calming Aqua",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["barrier", "hydration"],
+        "skinStates": ["sensitive", "dry"],
+        "phases": ["hydrate"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-TIMEMACHINE-CALMING-AQUA-01",
+          "sizeValue": 150,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱۵۰ میلی‌لیتر",
+            "en": "150 ml"
+          },
+          "demoPriceRials": 30200000,
+          "demoStock": 9
+        },
+        {
+          "sku": "DEMO-TIMEMACHINE-CALMING-AQUA-02",
+          "sizeValue": 500,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰۰ میلی‌لیتر",
+            "en": "500 ml"
+          },
+          "demoPriceRials": 79500000,
+          "demoStock": 2
+        }
+      ],
+      "media": [
+        {
+          "path": "4.TimeMachine Calming/Timemachine Calming Aqua 150ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "4.TimeMachine Calming/Timemachine Calming Aqua 500ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-timemachine-water-clean",
+      "slug": "timemachine-water-clean",
+      "line": "timemachine-calming",
+      "category": "cleanser",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 140,
+      "names": {
+        "form": {
+          "fa": "پاک‌کننده",
+          "en": "Cleanser",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "TimeMachine Water Clean",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["barrier"],
+        "skinStates": ["sensitive", "dry"],
+        "phases": ["cleanse"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-TIMEMACHINE-WATER-CLEAN-01",
+          "sizeValue": 150,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱۵۰ میلی‌لیتر",
+            "en": "150 ml"
+          },
+          "demoPriceRials": 25600000,
+          "demoStock": 13
+        },
+        {
+          "sku": "DEMO-TIMEMACHINE-WATER-CLEAN-02",
+          "sizeValue": 500,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰۰ میلی‌لیتر",
+            "en": "500 ml"
+          },
+          "demoPriceRials": 69000000,
+          "demoStock": 3
+        }
+      ],
+      "media": [
+        {
+          "path": "4.TimeMachine Calming/Timemachine Water Clean 150ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "4.TimeMachine Calming/Timemachine Water Clean 500ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-timemachine-hyal-1000",
+      "slug": "timemachine-hyal-1000",
+      "line": "timemachine-calming",
+      "category": "essence",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 150,
+      "names": {
+        "form": {
+          "fa": "اسنس",
+          "en": "Essence",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "TimeMachine Hyal 1000",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["hydration", "barrier"],
+        "skinStates": ["dry", "sensitive"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-TIMEMACHINE-HYAL-1000-01",
+          "sizeValue": 30,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۳۰ میلی‌لیتر",
+            "en": "30 ml"
+          },
+          "demoPriceRials": 49800000,
+          "demoStock": 0
+        },
+        {
+          "sku": "DEMO-TIMEMACHINE-HYAL-1000-02",
+          "sizeValue": 220,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۲۲۰ میلی‌لیتر",
+            "en": "220 ml"
+          },
+          "demoPriceRials": 124000000,
+          "demoStock": 0
+        }
+      ],
+      "media": [
+        {
+          "path": "4.TimeMachine Calming/TimeMachine Hyal 1000 30ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "4.TimeMachine Calming/TimeMachine Hyal 1000 220ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": "Seeded out of stock in both sizes, deliberately — the listing must have a published, priced, unavailable product to render (C-6)."
+    },
+    {
+      "draftKey": "storyderm-timemachine-peel",
+      "slug": "timemachine-peel",
+      "line": "timemachine-calming",
+      "category": "peel",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 160,
+      "names": {
+        "form": {
+          "fa": "پیلینگ",
+          "en": "Peel",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "TimeMachine Peel",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["barrier"],
+        "skinStates": ["sensitive", "dry"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-TIMEMACHINE-PEEL-01",
+          "sizeValue": 4,
+          "sizeUnit": "unit",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۴ عدد",
+            "en": "4 pcs"
+          },
+          "demoPriceRials": 37500000,
+          "demoStock": 6
+        }
+      ],
+      "media": [
+        {
+          "path": "4.TimeMachine Calming/Timemachine peel.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "4.TimeMachine Calming/Timemachine Peel2.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": "Two frames of one subject. The pack count is not stated on either file; 4 × 2 ml follows the sibling peels in this brand and is marked demo."
+    },
+    {
+      "draftKey": "storyderm-clinic-a-aqua",
+      "slug": "clinic-a-aqua",
+      "line": "clinic-a",
+      "category": "toner",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 170,
+      "names": {
+        "form": {
+          "fa": "تونر",
+          "en": "Toner",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Clinic-A Aqua",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["acne"],
+        "skinStates": ["oily", "combination"],
+        "phases": ["hydrate"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-CLINIC-A-AQUA-01",
+          "sizeValue": 150,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱۵۰ میلی‌لیتر",
+            "en": "150 ml"
+          },
+          "demoPriceRials": 27800000,
+          "demoStock": 10
+        },
+        {
+          "sku": "DEMO-CLINIC-A-AQUA-02",
+          "sizeValue": 500,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰۰ میلی‌لیتر",
+            "en": "500 ml"
+          },
+          "demoPriceRials": 71500000,
+          "demoStock": 2
+        }
+      ],
+      "media": [
+        {
+          "path": "5.Clinic-A/Clinic-A Aqua 150ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "5.Clinic-A/Clinic-A Aqua 500ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-clinic-a-clean",
+      "slug": "clinic-a-clean",
+      "line": "clinic-a",
+      "category": "cleanser",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 180,
+      "names": {
+        "form": {
+          "fa": "پاک‌کننده",
+          "en": "Cleanser",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Clinic-A Clean",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["acne"],
+        "skinStates": ["oily", "combination"],
+        "phases": ["cleanse"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-CLINIC-A-CLEAN-01",
+          "sizeValue": 150,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱۵۰ میلی‌لیتر",
+            "en": "150 ml"
+          },
+          "demoPriceRials": 24900000,
+          "demoStock": 15
+        },
+        {
+          "sku": "DEMO-CLINIC-A-CLEAN-02",
+          "sizeValue": 500,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰۰ میلی‌لیتر",
+            "en": "500 ml"
+          },
+          "demoPriceRials": 67000000,
+          "demoStock": 4
+        }
+      ],
+      "media": [
+        {
+          "path": "5.Clinic-A/Clinic-A Clean 150ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "5.Clinic-A/Clinic-A Clean 500ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-clinic-a-cream",
+      "slug": "clinic-a-cream",
+      "line": "clinic-a",
+      "category": "cream",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 190,
+      "names": {
+        "form": {
+          "fa": "کرم",
+          "en": "Cream",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Clinic-A Cream",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["acne"],
+        "skinStates": ["oily", "combination"],
+        "phases": ["hydrate"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-CLINIC-A-CREAM-01",
+          "sizeValue": 50,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰ میلی‌لیتر",
+            "en": "50 ml"
+          },
+          "demoPriceRials": 38400000,
+          "demoStock": 8
+        },
+        {
+          "sku": "DEMO-CLINIC-A-CREAM-02",
+          "sizeValue": 220,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۲۲۰ میلی‌لیتر",
+            "en": "220 ml"
+          },
+          "demoPriceRials": 112000000,
+          "demoStock": 2
+        }
+      ],
+      "media": [
+        {
+          "path": "5.Clinic-A/Clinic-A Cream 50ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "5.Clinic-A/Clinic-A Cream 220ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-clinic-a-spot",
+      "slug": "clinic-a-spot",
+      "line": "clinic-a",
+      "category": "serum",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "on_request",
+      "merchandisingRank": 200,
+      "names": {
+        "form": {
+          "fa": "سرم",
+          "en": "Serum",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Clinic-A Spot",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["acne"],
+        "skinStates": ["oily", "combination"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-CLINIC-A-SPOT-01",
+          "sizeValue": 15,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱۵ میلی‌لیتر",
+            "en": "15 ml"
+          },
+          "demoPriceRials": null,
+          "demoStock": 4
+        }
+      ],
+      "media": [
+        {
+          "path": "5.Clinic-A/Clinic-A Spot 15ml.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": "Seeded price_visibility=on_request so the listing has a real «استعلام قیمت» row that cannot enter a cart (C-6). It carries no price row at all — an on-request product with a hidden zero price is a number waiting to be displayed by mistake."
+    },
+    {
+      "draftKey": "storyderm-anti-wrinkle-eye-contour",
+      "slug": "anti-wrinkle-eye-contour",
+      "line": "anti-wrinkle-care",
+      "category": "eye-care",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 210,
+      "names": {
+        "form": {
+          "fa": "کرم دور چشم",
+          "en": "Eye cream",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Anti-Wrinkle Eye Contour",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["aging"],
+        "skinStates": ["normal", "dry"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-ANTI-WRINKLE-EYE-CONTOUR-01",
+          "sizeValue": 15,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱۵ میلی‌لیتر",
+            "en": "15 ml"
+          },
+          "demoPriceRials": 43600000,
+          "demoStock": 7
+        }
+      ],
+      "media": [
+        {
+          "path": "6.Anti Wrinkle Care/Anti-wrinkle eye contour 15ml.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-anti-wrinkle-face-contour",
+      "slug": "anti-wrinkle-face-contour",
+      "line": "anti-wrinkle-care",
+      "category": "cream",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 220,
+      "names": {
+        "form": {
+          "fa": "کرم",
+          "en": "Cream",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Anti-Wrinkle Face Contour",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["aging"],
+        "skinStates": ["normal", "dry"],
+        "phases": ["hydrate"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-ANTI-WRINKLE-FACE-CONTOUR-01",
+          "sizeValue": 50,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰ میلی‌لیتر",
+            "en": "50 ml"
+          },
+          "demoPriceRials": 52400000,
+          "demoStock": 5
+        }
+      ],
+      "media": [
+        {
+          "path": "6.Anti Wrinkle Care/Anti-wrinkle face contour 50ml.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-time-patch",
+      "slug": "time-patch",
+      "line": "anti-wrinkle-care",
+      "category": "patch",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 230,
+      "names": {
+        "form": {
+          "fa": "پچ",
+          "en": "Patch",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Time Patch",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["aging"],
+        "skinStates": ["normal", "combination"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-TIME-PATCH-01",
+          "sizeValue": 5,
+          "sizeUnit": "unit",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵ عدد",
+            "en": "5 pcs"
+          },
+          "demoPriceRials": 29800000,
+          "demoStock": 9
+        }
+      ],
+      "media": [
+        {
+          "path": "6.Anti Wrinkle Care/Time patch 2ea 5pouch.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "6.Anti Wrinkle Care/Time Patch2.png",
+          "role": "gallery",
+          "ordinal": 1
+        },
+        {
+          "path": "6.Anti Wrinkle Care/Time patch needle.png",
+          "role": "gallery",
+          "ordinal": 2
+        }
+      ],
+      "note": "Three frames of one subject: retail pack, styled shot, and a macro of the microneedle surface."
+    },
+    {
+      "draftKey": "storyderm-smooth-multi-balm-24h",
+      "slug": "smooth-multi-balm-24h",
+      "line": "personal-care",
+      "category": "balm",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 240,
+      "names": {
+        "form": {
+          "fa": "بالم",
+          "en": "Balm",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "24h Smooth Multi Balm",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["barrier"],
+        "skinStates": ["dry", "sensitive"],
+        "phases": ["protect"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-SMOOTH-MULTI-BALM-24H-01",
+          "sizeValue": 50,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰ میلی‌لیتر",
+            "en": "50 ml"
+          },
+          "demoPriceRials": 21500000,
+          "demoStock": 16
+        },
+        {
+          "sku": "DEMO-SMOOTH-MULTI-BALM-24H-02",
+          "sizeValue": 200,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۲۰۰ میلی‌لیتر",
+            "en": "200 ml"
+          },
+          "demoPriceRials": 58000000,
+          "demoStock": 4
+        }
+      ],
+      "media": [
+        {
+          "path": "7.Personal Care/24h Smooth Multi Balm 50ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "7.Personal Care/24h Smooth Multi Balm 200ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-black-cavi-heating-gel",
+      "slug": "black-cavi-heating-gel",
+      "line": "personal-care",
+      "category": "gel",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 250,
+      "names": {
+        "form": {
+          "fa": "ژل",
+          "en": "Gel",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Black Cavi Heating Gel",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["aging"],
+        "skinStates": ["normal", "combination"],
+        "phases": ["treat"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-BLACK-CAVI-HEATING-GEL-01",
+          "sizeValue": 80,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۸۰ میلی‌لیتر",
+            "en": "80 ml"
+          },
+          "demoPriceRials": 33200000,
+          "demoStock": 6
+        }
+      ],
+      "media": [
+        {
+          "path": "7.Personal Care/Black Cavi Heating Gel 80ml.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-ex-cloud-peel",
+      "slug": "ex-cloud-peel",
+      "line": "personal-care",
+      "category": "peel",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 260,
+      "names": {
+        "form": {
+          "fa": "پیلینگ",
+          "en": "Peel",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "EX Cloud Peel",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak"],
+        "skinStates": ["normal", "combination"],
+        "phases": ["treat"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-EX-CLOUD-PEEL-01",
+          "sizeValue": 80,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۸۰ میلی‌لیتر",
+            "en": "80 ml"
+          },
+          "demoPriceRials": 35800000,
+          "demoStock": 7
+        }
+      ],
+      "media": [
+        {
+          "path": "7.Personal Care/EX Cloud Peel 80ml.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-laser-repair-serum",
+      "slug": "laser-repair-serum",
+      "line": "personal-care",
+      "category": "serum",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 270,
+      "names": {
+        "form": {
+          "fa": "سرم",
+          "en": "Serum",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Laser Repair Serum",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["barrier"],
+        "skinStates": ["sensitive", "dry"],
+        "phases": ["treat"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-LASER-REPAIR-SERUM-01",
+          "sizeValue": 50,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰ میلی‌لیتر",
+            "en": "50 ml"
+          },
+          "demoPriceRials": 54900000,
+          "demoStock": 6
+        },
+        {
+          "sku": "DEMO-LASER-REPAIR-SERUM-02",
+          "sizeValue": 220,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۲۲۰ میلی‌لیتر",
+            "en": "220 ml"
+          },
+          "demoPriceRials": 139000000,
+          "demoStock": 2
+        }
+      ],
+      "media": [
+        {
+          "path": "7.Personal Care/Laser Repair Serum 50ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "7.Personal Care/Laser Repair Serum 220ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-omso-enzyme-wash",
+      "slug": "omso-enzyme-wash",
+      "line": "personal-care",
+      "category": "cleanser",
+      "disposition": "hold",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 280,
+      "names": {
+        "form": {
+          "fa": "پاک‌کننده",
+          "en": "Cleanser",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Omso Enzyme Wash",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak"],
+        "skinStates": ["oily", "combination"],
+        "phases": ["cleanse"],
+        "source": "range_name"
+      },
+      "variants": [],
+      "media": [
+        {
+          "path": "7.Personal Care/Omso Enzyme Wash 50g.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": "HELD (C-17). The filename spells 'Omso'; two sibling files in the same folder spell 'Osmo'. One of the two is a typo and the manifest cannot tell which, so the product is seeded unpublished with no variant until the spelling is confirmed."
+    },
+    {
+      "draftKey": "storyderm-osmo-snail-cream",
+      "slug": "osmo-snail-cream",
+      "line": "personal-care",
+      "category": "cream",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 290,
+      "names": {
+        "form": {
+          "fa": "کرم",
+          "en": "Cream",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Osmo Snail Cream",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["barrier", "hydration"],
+        "skinStates": ["dry", "sensitive"],
+        "phases": ["hydrate"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-OSMO-SNAIL-CREAM-01",
+          "sizeValue": 50,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰ میلی‌لیتر",
+            "en": "50 ml"
+          },
+          "demoPriceRials": 36700000,
+          "demoStock": 0
+        }
+      ],
+      "media": [
+        {
+          "path": "7.Personal Care/Osmo Snail Cream 50ml.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": "Seeded out of stock deliberately — the second of the two unavailable rows C-6 requires."
+    },
+    {
+      "draftKey": "storyderm-osmo-vita7-ampoule",
+      "slug": "osmo-vita7-ampoule",
+      "line": "personal-care",
+      "category": "ampoule",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 300,
+      "names": {
+        "form": {
+          "fa": "آمپول",
+          "en": "Ampoule",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Osmo Vita7 Ampoule",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak"],
+        "skinStates": ["normal", "combination"],
+        "phases": ["treat"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-OSMO-VITA7-AMPOULE-01",
+          "sizeValue": 30,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۳۰ میلی‌لیتر",
+            "en": "30 ml"
+          },
+          "demoPriceRials": 51300000,
+          "demoStock": 8
+        }
+      ],
+      "media": [
+        {
+          "path": "7.Personal Care/Osmo Vita7 Ampoule 30ml.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-peptide-gold-lifting-pack",
+      "slug": "peptide-gold-lifting-pack",
+      "line": "personal-care",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 310,
+      "names": {
+        "form": {
+          "fa": "ماسک",
+          "en": "Mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Peptide Gold Lifting Pack",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["aging"],
+        "skinStates": ["normal", "dry"],
+        "phases": ["treat"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-PEPTIDE-GOLD-LIFTING-PACK-01",
+          "sizeValue": 15,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱۵ میلی‌لیتر",
+            "en": "15 ml"
+          },
+          "demoPriceRials": 26900000,
+          "demoStock": 11
+        }
+      ],
+      "media": [
+        {
+          "path": "7.Personal Care/Peptide Gold Lifting Pack 15ml.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-pure-origin-cell",
+      "slug": "pure-origin-cell",
+      "line": "personal-care",
+      "category": "ampoule",
+      "disposition": "hold",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 320,
+      "names": {
+        "form": {
+          "fa": "آمپول",
+          "en": "Ampoule",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Pure Origin Cell",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["aging", "barrier"],
+        "skinStates": ["dry", "sensitive"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-PURE-ORIGIN-CELL-01",
+          "sizeValue": 30,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۳۰ میلی‌لیتر",
+            "en": "30 ml"
+          },
+          "demoPriceRials": 96000000,
+          "demoStock": 3
+        },
+        {
+          "sku": "DEMO-PURE-ORIGIN-CELL-02",
+          "sizeValue": 5,
+          "sizeUnit": "unit",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵ عدد",
+            "en": "5 pcs"
+          },
+          "demoPriceRials": 72000000,
+          "demoStock": 4
+        }
+      ],
+      "media": [
+        {
+          "path": "7.Personal Care/Pure Origin Cell Ampoule 30ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "7.Personal Care/Pure Origin Cell 7ml x 5ea.png",
+          "role": "gallery",
+          "ordinal": 1
+        },
+        {
+          "path": "7.Personal Care/Pure Origin Cell box package.png",
+          "role": "package",
+          "ordinal": 1
+        }
+      ],
+      "note": "HELD (C-17). A 30 ml ampoule and a 5 × 7 ml vial set share the name. They are either two presentations of one product or two products, and the packshots do not settle it. Modelled as one product with two variants and held unpublished until a product sheet does."
+    },
+    {
+      "draftKey": "storyderm-shape-memory-repair",
+      "slug": "shape-memory-repair",
+      "line": "personal-care",
+      "category": "cream",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 330,
+      "names": {
+        "form": {
+          "fa": "کرم",
+          "en": "Cream",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Shape Memory Repair",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["aging", "barrier"],
+        "skinStates": ["normal", "dry"],
+        "phases": ["protect"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-SHAPE-MEMORY-REPAIR-01",
+          "sizeValue": 50,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰ میلی‌لیتر",
+            "en": "50 ml"
+          },
+          "demoPriceRials": 47500000,
+          "demoStock": 6
+        },
+        {
+          "sku": "DEMO-SHAPE-MEMORY-REPAIR-02",
+          "sizeValue": 220,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۲۲۰ میلی‌لیتر",
+            "en": "220 ml"
+          },
+          "demoPriceRials": 121000000,
+          "demoStock": 2
+        }
+      ],
+      "media": [
+        {
+          "path": "7.Personal Care/Shape Memory Repair 50ml.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "7.Personal Care/Shape Memory Repair 220ml.png",
+          "role": "gallery",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-72-capsule-mask-blue",
+      "slug": "72-capsule-mask-blue",
+      "line": "mask",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 340,
+      "names": {
+        "form": {
+          "fa": "ماسک",
+          "en": "Mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "72 Capsule Mask Blue",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["hydration"],
+        "skinStates": ["dry", "normal"],
+        "phases": ["treat"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-72-CAPSULE-MASK-BLUE-01",
+          "sizeValue": 1,
+          "sizeUnit": "unit",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱ عدد",
+            "en": "1 pcs"
+          },
+          "demoPriceRials": 18900000,
+          "demoStock": 14
+        }
+      ],
+      "media": [
+        {
+          "path": "9.Mask/1.72 Capsule Mask/72 Capsule Mask blue.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "9.Mask/1.72 Capsule Mask/72 Capsule Mask blue paush.png",
+          "role": "package",
+          "ordinal": 1
+        }
+      ],
+      "note": "Colour names the formula, so blue, wine and yellow are three products rather than one with three variants — rule 4. The 1 kg salon size is a separate professional-only product."
+    },
+    {
+      "draftKey": "storyderm-72-capsule-mask-wine",
+      "slug": "72-capsule-mask-wine",
+      "line": "mask",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 350,
+      "names": {
+        "form": {
+          "fa": "ماسک",
+          "en": "Mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "72 Capsule Mask Wine",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["aging"],
+        "skinStates": ["normal", "combination"],
+        "phases": ["treat"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-72-CAPSULE-MASK-WINE-01",
+          "sizeValue": 1,
+          "sizeUnit": "unit",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱ عدد",
+            "en": "1 pcs"
+          },
+          "demoPriceRials": 18900000,
+          "demoStock": 12
+        }
+      ],
+      "media": [
+        {
+          "path": "9.Mask/1.72 Capsule Mask/72 Capsule Mask wine.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "9.Mask/1.72 Capsule Mask/72 Capsule Mask wine paush.png",
+          "role": "package",
+          "ordinal": 1
+        }
+      ],
+      "note": "Colour names the formula, so blue, wine and yellow are three products rather than one with three variants — rule 4. The 1 kg salon size is a separate professional-only product."
+    },
+    {
+      "draftKey": "storyderm-72-capsule-mask-yellow",
+      "slug": "72-capsule-mask-yellow",
+      "line": "mask",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 360,
+      "names": {
+        "form": {
+          "fa": "ماسک",
+          "en": "Mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "72 Capsule Mask Yellow",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak"],
+        "skinStates": ["oily", "combination"],
+        "phases": ["treat"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-72-CAPSULE-MASK-YELLOW-01",
+          "sizeValue": 1,
+          "sizeUnit": "unit",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱ عدد",
+            "en": "1 pcs"
+          },
+          "demoPriceRials": 18900000,
+          "demoStock": 10
+        }
+      ],
+      "media": [
+        {
+          "path": "9.Mask/1.72 Capsule Mask/72 Capsule Mask Yellow.png",
+          "role": "primary",
+          "ordinal": 1
+        },
+        {
+          "path": "9.Mask/1.72 Capsule Mask/72 Capsule Mask yellow paush.png",
+          "role": "package",
+          "ordinal": 1
+        }
+      ],
+      "note": "Colour names the formula, so blue, wine and yellow are three products rather than one with three variants — rule 4. The 1 kg salon size is a separate professional-only product."
+    },
+    {
+      "draftKey": "storyderm-72-capsule-mask-blue-professional",
+      "slug": "72-capsule-mask-blue-professional",
+      "line": "mask",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "professional",
+      "priceVisibility": "on_request",
+      "merchandisingRank": 370,
+      "names": {
+        "form": {
+          "fa": "ماسک",
+          "en": "Mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "72 Capsule Mask Blue 1kg",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["hydration"],
+        "skinStates": ["dry", "normal"],
+        "phases": ["treat"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-72-CAPSULE-MASK-BLUE-PROFESSIONAL-01",
+          "sizeValue": 1,
+          "sizeUnit": "kit",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱ ست",
+            "en": "1 kit"
+          },
+          "demoPriceRials": null,
+          "demoStock": 3
+        }
+      ],
+      "media": [
+        {
+          "path": "9.Mask/1.72 Capsule Mask/72 capsule mask_blue 1kg.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": "The salon bulk size. Professional-only and price-on-request: isProfessionalOnly is a property of the product, not the variant, so the bulk pack is its own product rather than a variant of the retail one."
+    },
+    {
+      "draftKey": "storyderm-72-capsule-mask-wine-professional",
+      "slug": "72-capsule-mask-wine-professional",
+      "line": "mask",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "professional",
+      "priceVisibility": "on_request",
+      "merchandisingRank": 380,
+      "names": {
+        "form": {
+          "fa": "ماسک",
+          "en": "Mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "72 Capsule Mask Wine 1kg",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["aging"],
+        "skinStates": ["normal", "combination"],
+        "phases": ["treat"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-72-CAPSULE-MASK-WINE-PROFESSIONAL-01",
+          "sizeValue": 1,
+          "sizeUnit": "kit",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱ ست",
+            "en": "1 kit"
+          },
+          "demoPriceRials": null,
+          "demoStock": 3
+        }
+      ],
+      "media": [
+        {
+          "path": "9.Mask/1.72 Capsule Mask/72 capsule mask_wine 1kg.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": "The salon bulk size. Professional-only and price-on-request: isProfessionalOnly is a property of the product, not the variant, so the bulk pack is its own product rather than a variant of the retail one."
+    },
+    {
+      "draftKey": "storyderm-72-capsule-mask-yellow-professional",
+      "slug": "72-capsule-mask-yellow-professional",
+      "line": "mask",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "professional",
+      "priceVisibility": "on_request",
+      "merchandisingRank": 390,
+      "names": {
+        "form": {
+          "fa": "ماسک",
+          "en": "Mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "72 Capsule Mask Yellow 1kg",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak"],
+        "skinStates": ["oily", "combination"],
+        "phases": ["treat"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-72-CAPSULE-MASK-YELLOW-PROFESSIONAL-01",
+          "sizeValue": 1,
+          "sizeUnit": "kit",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱ ست",
+            "en": "1 kit"
+          },
+          "demoPriceRials": null,
+          "demoStock": 3
+        }
+      ],
+      "media": [
+        {
+          "path": "9.Mask/1.72 Capsule Mask/72 capsule mask_yellow 1kg.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": "The salon bulk size. Professional-only and price-on-request: isProfessionalOnly is a property of the product, not the variant, so the bulk pack is its own product rather than a variant of the retail one."
+    },
+    {
+      "draftKey": "storyderm-gelato-mask-cool",
+      "slug": "gelato-mask-cool",
+      "line": "mask",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 400,
+      "names": {
+        "form": {
+          "fa": "ماسک",
+          "en": "Mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Cool Gelato Mask",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["barrier"],
+        "skinStates": ["sensitive", "oily"],
+        "phases": ["treat"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-GELATO-MASK-COOL-01",
+          "sizeValue": 1,
+          "sizeUnit": "unit",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱ عدد",
+            "en": "1 pcs"
+          },
+          "demoPriceRials": 16400000,
+          "demoStock": 18
+        }
+      ],
+      "media": [
+        {
+          "path": "9.Mask/2.Gelato Mask/cool gelato mask.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-gelato-mask-oily",
+      "slug": "gelato-mask-oily",
+      "line": "mask",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 410,
+      "names": {
+        "form": {
+          "fa": "ماسک",
+          "en": "Mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Oily Gelato Mask",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["acne"],
+        "skinStates": ["oily", "combination"],
+        "phases": ["treat"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-GELATO-MASK-OILY-01",
+          "sizeValue": 1,
+          "sizeUnit": "unit",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱ عدد",
+            "en": "1 pcs"
+          },
+          "demoPriceRials": 16400000,
+          "demoStock": 15
+        }
+      ],
+      "media": [
+        {
+          "path": "9.Mask/2.Gelato Mask/oily gelato mask.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-gelato-mask-vitamin-c",
+      "slug": "gelato-mask-vitamin-c",
+      "line": "mask",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 420,
+      "names": {
+        "form": {
+          "fa": "ماسک",
+          "en": "Mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Vitamin C Gelato Mask",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak"],
+        "skinStates": ["normal", "combination"],
+        "phases": ["treat"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-GELATO-MASK-VITAMIN-C-01",
+          "sizeValue": 1,
+          "sizeUnit": "unit",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱ عدد",
+            "en": "1 pcs"
+          },
+          "demoPriceRials": 16400000,
+          "demoStock": 13
+        }
+      ],
+      "media": [
+        {
+          "path": "9.Mask/2.Gelato Mask/vitamic c gelato mask.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": "The filename reads 'vitamic c'. Recorded as a filename typo rather than carried into the product name."
+    },
+    {
+      "draftKey": "storyderm-egf-advanced-cell-sheet-mask",
+      "slug": "egf-advanced-cell-sheet-mask",
+      "line": "mask",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 430,
+      "names": {
+        "form": {
+          "fa": "ماسک ورقه‌ای",
+          "en": "Sheet mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "EGF Advanced Cell Mask",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["aging", "barrier"],
+        "skinStates": ["dry", "sensitive"],
+        "phases": ["treat"],
+        "source": "inference"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-EGF-ADVANCED-CELL-SHEET-MASK-01",
+          "sizeValue": 1,
+          "sizeUnit": "sheet",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱ عدد",
+            "en": "1 sheet"
+          },
+          "demoPriceRials": 7900000,
+          "demoStock": 40
+        }
+      ],
+      "media": [
+        {
+          "path": "9.Mask/3.Sheet Mask/EGF Advanced Cell Mask.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-o2-white-sheet-mask",
+      "slug": "o2-white-sheet-mask",
+      "line": "mask",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 440,
+      "names": {
+        "form": {
+          "fa": "ماسک ورقه‌ای",
+          "en": "Sheet mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "O2 White Mask",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak"],
+        "skinStates": ["oily", "combination"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-O2-WHITE-SHEET-MASK-01",
+          "sizeValue": 1,
+          "sizeUnit": "sheet",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱ عدد",
+            "en": "1 sheet"
+          },
+          "demoPriceRials": 7900000,
+          "demoStock": 45
+        }
+      ],
+      "media": [
+        {
+          "path": "9.Mask/3.Sheet Mask/O2 White Mask.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-princess-shine-sheet-mask",
+      "slug": "princess-shine-sheet-mask",
+      "line": "mask",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 450,
+      "names": {
+        "form": {
+          "fa": "ماسک ورقه‌ای",
+          "en": "Sheet mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Princess Shine Mask",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak"],
+        "skinStates": ["normal", "combination"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-PRINCESS-SHINE-SHEET-MASK-01",
+          "sizeValue": 1,
+          "sizeUnit": "sheet",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱ عدد",
+            "en": "1 sheet"
+          },
+          "demoPriceRials": 7900000,
+          "demoStock": 38
+        }
+      ],
+      "media": [
+        {
+          "path": "9.Mask/3.Sheet Mask/Princess Shine Mask.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-timemachine-calming-sheet-mask",
+      "slug": "timemachine-calming-sheet-mask",
+      "line": "mask",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 460,
+      "names": {
+        "form": {
+          "fa": "ماسک ورقه‌ای",
+          "en": "Sheet mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "TimeMachine Calming Mask",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["barrier"],
+        "skinStates": ["sensitive", "dry"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-TIMEMACHINE-CALMING-SHEET-MASK-01",
+          "sizeValue": 1,
+          "sizeUnit": "sheet",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱ عدد",
+            "en": "1 sheet"
+          },
+          "demoPriceRials": 7900000,
+          "demoStock": 42
+        }
+      ],
+      "media": [
+        {
+          "path": "9.Mask/3.Sheet Mask/Timemachine Calming Mask.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-ultra-peptide-sheet-mask",
+      "slug": "ultra-peptide-sheet-mask",
+      "line": "mask",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 470,
+      "names": {
+        "form": {
+          "fa": "ماسک ورقه‌ای",
+          "en": "Sheet mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Ultra Peptide Mask",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["aging"],
+        "skinStates": ["normal", "dry"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-ULTRA-PEPTIDE-SHEET-MASK-01",
+          "sizeValue": 1,
+          "sizeUnit": "sheet",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱ عدد",
+            "en": "1 sheet"
+          },
+          "demoPriceRials": 7900000,
+          "demoStock": 36
+        }
+      ],
+      "media": [
+        {
+          "path": "9.Mask/3.Sheet Mask/Ultra Peptide Mask.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-vitamin-c-brightening-sheet-mask",
+      "slug": "vitamin-c-brightening-sheet-mask",
+      "line": "mask",
+      "category": "mask",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 480,
+      "names": {
+        "form": {
+          "fa": "ماسک ورقه‌ای",
+          "en": "Sheet mask",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Vitamin C Brightening Mask",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["lak"],
+        "skinStates": ["normal", "oily"],
+        "phases": ["treat"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-VITAMIN-C-BRIGHTENING-SHEET-MASK-01",
+          "sizeValue": 1,
+          "sizeUnit": "sheet",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱ عدد",
+            "en": "1 sheet"
+          },
+          "demoPriceRials": 7900000,
+          "demoStock": 44
+        }
+      ],
+      "media": [
+        {
+          "path": "9.Mask/3.Sheet Mask/Vitamin C Brightening Mask.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-resens-red-aqua",
+      "slug": "resens-red-aqua",
+      "line": "anti-red",
+      "category": "toner",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 490,
+      "names": {
+        "form": {
+          "fa": "تونر",
+          "en": "Toner",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Resens Red Aqua",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["barrier", "hydration"],
+        "skinStates": ["sensitive", "dry"],
+        "phases": ["hydrate"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-RESENS-RED-AQUA-01",
+          "sizeValue": 100,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۱۰۰ میلی‌لیتر",
+            "en": "100 ml"
+          },
+          "demoPriceRials": 31600000,
+          "demoStock": 8
+        }
+      ],
+      "media": [
+        {
+          "path": "10.Anti-Red/Resens Red Aqua 100ml.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    },
+    {
+      "draftKey": "storyderm-resens-red-cream",
+      "slug": "resens-red-cream",
+      "line": "anti-red",
+      "category": "cream",
+      "disposition": "seed",
+      "audience": "home",
+      "priceVisibility": "public",
+      "merchandisingRank": 500,
+      "names": {
+        "form": {
+          "fa": "کرم",
+          "en": "Cream",
+          "source": "packshot"
+        },
+        "product": {
+          "value": "Resens Red Cream",
+          "source": "packshot"
+        }
+      },
+      "taxonomy": {
+        "concerns": ["barrier"],
+        "skinStates": ["sensitive", "dry"],
+        "phases": ["hydrate"],
+        "source": "range_name"
+      },
+      "variants": [
+        {
+          "sku": "DEMO-RESENS-RED-CREAM-01",
+          "sizeValue": 50,
+          "sizeUnit": "ml",
+          "sizeSource": "filename",
+          "labels": {
+            "fa": "۵۰ میلی‌لیتر",
+            "en": "50 ml"
+          },
+          "demoPriceRials": 44300000,
+          "demoStock": 6
+        }
+      ],
+      "media": [
+        {
+          "path": "10.Anti-Red/Resens Red Cream 50ml.png",
+          "role": "primary",
+          "ordinal": 1
+        }
+      ],
+      "note": null
+    }
+  ],
+  "unresolved": [
+    {
+      "path": "8.Protection/BB Ecocell Balm 50ml 신형.png",
+      "reason": "Korean packaging suffix 신형 ('new model') on the filename. Which generation of the product this is, and whether the previous one is still distributed, is not readable from the file."
+    },
+    {
+      "path": "8.Protection/Super Ultra Nutrition 50ml 신형.png",
+      "reason": "Same suffix, same question. Also the only two files in the Protection range, so neither can be cross-checked against a sibling."
+    },
+    {
+      "path": "9.Mask/1.72 Capsule Mask/72 capsule mask_small.png",
+      "reason": "A small pack of the 72 Capsule Mask whose colour — and therefore whose formula — is not visible in the filename and not legible in the shot."
+    }
+  ]
+}

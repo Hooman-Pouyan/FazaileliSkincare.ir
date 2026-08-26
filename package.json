@@ -13,6 +13,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",
+    "catalogue:curate": "python3 scripts/catalogue/curate-storyderm.py",
+    "media:derive": "python3 scripts/media/derive.py",
     "db:down": "bash scripts/database.sh down",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",

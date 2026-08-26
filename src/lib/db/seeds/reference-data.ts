@@ -48,6 +48,56 @@ export const REFERENCE_CONCERNS = [
 ] as const;
 
 /**
+ * Product categories — the `category` facet in `docs/24-facet-manifest.md` F-1.
+ *
+ * A category answers "what kind of thing is this", which is the axis a customer
+ * uses once they know the concern. It is deliberately the *form* of the product
+ * rather than a benefit: form is observable from a packshot, and `C-1` is that
+ * observable fields are seeded as real while inferred ones are marked.
+ *
+ * Flat, not hierarchical. `category.parentId` exists and stays null: a two-level
+ * tree earns its complexity when a level has enough products to be worth
+ * drilling into, and thirteen forms over fifty products does not.
+ *
+ * `D12` says the schema stays open for health care beyond skin care. These
+ * thirteen are the skincare forms; a health-care range adds rows here and needs
+ * no migration, which is the point.
+ *
+ * Persian and English only, for the same reason as the concerns above: Arabic
+ * catalogue vocabulary has not been reviewed, and inventing it is the mistake
+ * `F-8` recorded.
+ */
+export const REFERENCE_CATEGORIES = [
+  { slug: "cleanser", sortOrder: 10, fa: "پاک‌کننده", en: "Cleanser" },
+  { slug: "toner", sortOrder: 20, fa: "تونر", en: "Toner" },
+  { slug: "essence", sortOrder: 30, fa: "اسنس", en: "Essence" },
+  { slug: "serum", sortOrder: 40, fa: "سرم", en: "Serum" },
+  { slug: "ampoule", sortOrder: 50, fa: "آمپول", en: "Ampoule" },
+  { slug: "cream", sortOrder: 60, fa: "کرم", en: "Cream" },
+  { slug: "eye-care", sortOrder: 70, fa: "مراقبت دور چشم", en: "Eye care" },
+  { slug: "mask", sortOrder: 80, fa: "ماسک", en: "Mask" },
+  { slug: "peel", sortOrder: 90, fa: "لایه‌بردار", en: "Peel" },
+  { slug: "powder", sortOrder: 100, fa: "پودر", en: "Powder" },
+  { slug: "patch", sortOrder: 110, fa: "پچ", en: "Patch" },
+  { slug: "balm", sortOrder: 120, fa: "بالم", en: "Balm" },
+  { slug: "gel", sortOrder: 130, fa: "ژل", en: "Gel" },
+].map((entry) => ({
+  slug: entry.slug,
+  sortOrder: entry.sortOrder,
+  translations: [
+    { localeCode: "fa", name: entry.fa },
+    { localeCode: "en", name: entry.en },
+  ],
+})) as readonly {
+  readonly slug: string;
+  readonly sortOrder: number;
+  readonly translations: readonly {
+    readonly localeCode: string;
+    readonly name: string;
+  }[];
+}[];
+
+/**
  * Skin states — the `skin_type` facet in `docs/24-facet-manifest.md` F-1.
  *
  * Persian and English only, like the concerns above: Arabic catalogue

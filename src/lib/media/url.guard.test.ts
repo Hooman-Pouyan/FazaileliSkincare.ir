@@ -68,7 +68,8 @@ describe("one media addressing mechanism", () => {
 
   it("only the media module reads the origin", () => {
     const offenders = files.filter(
-      (file) => !ALLOWED_ORIGIN_READERS.has(file) && READS_ORIGIN.test(read(file)),
+      (file) =>
+        !ALLOWED_ORIGIN_READERS.has(file) && READS_ORIGIN.test(read(file)),
     );
 
     expect(

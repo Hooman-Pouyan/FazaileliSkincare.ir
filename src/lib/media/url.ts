@@ -29,8 +29,7 @@ import type { MediaRole } from "./roles";
  */
 // `.env.example` ships the key with an empty value so the variable is visible
 // and documented; an empty string means "unset", not "serve from the root".
-const CONFIGURED_ORIGIN =
-  process.env.NEXT_PUBLIC_MEDIA_ORIGIN || "/media";
+const CONFIGURED_ORIGIN = process.env.NEXT_PUBLIC_MEDIA_ORIGIN || "/media";
 
 /** Trailing slashes are a formatting choice; the joiner should not care. */
 export const MEDIA_ORIGIN = CONFIGURED_ORIGIN.replace(/\/+$/, "");
@@ -55,7 +54,9 @@ export type Derivative = keyof typeof DERIVATIVE_WIDTHS;
 const VALID_KEY = /^[a-z0-9][a-z0-9._/-]*[a-z0-9]$/;
 
 export function isObjectKey(value: string): boolean {
-  return VALID_KEY.test(value) && !value.includes("//") && !value.includes("..");
+  return (
+    VALID_KEY.test(value) && !value.includes("//") && !value.includes("..")
+  );
 }
 
 /**
