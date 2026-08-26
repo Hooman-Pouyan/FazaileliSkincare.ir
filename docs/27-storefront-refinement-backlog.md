@@ -355,12 +355,21 @@ run against the dev server with the real seeded catalogue:
 | Check                                                | Result  |
 | ---------------------------------------------------- | ------- |
 | `article` elements left after stripping every script | **24**  |
-| `ItemList` `numberOfItems`                           | **47**  |
+| `ItemList` `numberOfItems`                           | **48**  |
 | `FAQPage`                                            | present |
 | `BreadcrumbList`                                     | present |
 
 All non-zero, so this is the streaming artefact the entry predicted and **not a
-defect**. It does not become a packet and it does not move ahead of anything.
+defect**.
+
+The count is worth a footnote of its own. The first measurement read **47**, and
+48 is correct: 50 products, less the two `C-17` holds — `omso-enzyme-wash` and
+`pure-origin-cell` — which are hidden by having no active variant. The missing
+one was «Ultra Essence Clean», whose Persian translation the integration suite
+had deleted and not put back. That is `R-10`, and it means `R-10` does not
+merely make the dev server look wrong: **it silently changes what a measurement
+taken against that database says.** Any number counted after a suite run and
+before a re-seed is suspect, including one written into a decision doc. It does not become a packet and it does not move ahead of anything.
 The tiles are real markup rather than flight payload — that is what stripping
 the scripts first proves, and it is the check worth keeping, because a document
 that carries the catalogue only inside `self.__next_f` would pass a naive `grep`
