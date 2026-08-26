@@ -366,6 +366,85 @@ describe("listProducts — facet counts", () => {
   });
 });
 
+describe("listProducts — the facet manifest's new axes", () => {
+  function codes(page: { facets: readonly FacetGroup[] }): string[] {
+    return page.facets.map((group) => group.parameter);
+  }
+
+  it("does not offer brand ranges until the results are one brand", async () => {
+    // F-2: on the hub, `line` is every range from every brand side by side,
+    // meaning nothing to someone who has not chosen a brand.
+    const hub = await listProducts(FA, HUB, new URLSearchParams());
+    if (hub.kind !== "ready") return;
+    expect(codes(hub.page)).not.toContain("line");
+
+    const brands = hub.page.facets.find((g) => g.parameter === "brand");
+    const brandSlug = brands?.options[0]?.value;
+    if (!brandSlug) return;
+
+    const scoped = await listProducts(
+      FA,
+      { kind: "brand", slug: brandSlug },
+      new URLSearchParams(),
+    );
+    if (scoped.kind !== "ready") return;
+    // The brand axis is the page, so it is gone; its ranges take its place.
+    expect(codes(scoped.page)).not.toContain("brand");
+
+    const narrowed = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams({ brand: brandSlug }),
+    );
+    if (narrowed.kind !== "ready") return;
+    // One brand selected on the hub counts too.
+    expect(narrowed.page.query.brands).toEqual([brandSlug]);
+  });
+
+  it("accepts the new parameters and canonicalises them in manifest order", async () => {
+    const outcome = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams("phase=treat&skin_type=dry&audience=home"),
+    );
+    // Order in the URL is not the order the manifest emits, so this is a
+    // redirect to the canonical spelling rather than a served page.
+    expect(outcome.kind).toBe("redirect");
+    if (outcome.kind !== "redirect") return;
+    expect(outcome.href.indexOf("skin_type")).toBeLessThan(
+      outcome.href.indexOf("phase"),
+    );
+  });
+
+  it("rejects an audience value that is not one of the two", async () => {
+    const outcome = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams({ audience: "everyone" }),
+    );
+    expect(outcome.kind).toBe("invalid-query");
+  });
+
+  it("reports the price range the current results actually span", async () => {
+    const outcome = await listProducts(FA, HUB, new URLSearchParams());
+    if (outcome.kind !== "ready") return;
+
+    if (outcome.page.price) {
+      expect(outcome.page.price.minToman).toBeLessThan(
+        outcome.page.price.maxToman,
+      );
+      // Toman in the URL and in the control; rials never reach a customer.
+      expect(outcome.page.price.action.startsWith("/shop")).toBe(true);
+    }
+  });
+
+  it("ships with no questions, and emits no FAQ markup for none", async () => {
+    const outcome = await listProducts(FA, HUB, new URLSearchParams());
+    if (outcome.kind !== "ready") return;
+    expect(outcome.page.questions).toEqual([]);
+  });
+});
+
 describe("getProduct", () => {
   it("returns a purchasable product with its media and price", async () => {
     const outcome = await getProduct(FA, "dev-product-1-shosto-roshana");

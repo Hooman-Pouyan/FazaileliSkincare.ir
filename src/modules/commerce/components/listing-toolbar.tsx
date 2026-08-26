@@ -44,7 +44,7 @@ export function ListingToolbar({
             className={cn(
               "rounded-control border px-3 py-1.5 text-small transition-colors duration-[var(--duration)] ease-[var(--easing)]",
               option.isCurrent
-                ? "border-lapis font-medium text-lapis"
+                ? "border-teal font-medium text-teal"
                 : "border-[var(--hairline)] hover:bg-surface",
             )}
           >
@@ -89,7 +89,7 @@ export function Pagination({ page }: { readonly page: ProductListingPage }) {
           className={cn(
             "grid size-11 place-items-center rounded-control border text-small tabular-nums transition-colors duration-[var(--duration)] ease-[var(--easing)]",
             entry.isCurrent
-              ? "border-lapis font-bold text-lapis"
+              ? "border-teal font-bold text-teal"
               : "border-[var(--hairline)] hover:bg-surface",
           )}
         >

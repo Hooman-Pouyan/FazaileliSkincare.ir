@@ -3,6 +3,7 @@ import { renderToStaticMarkup } from "react-dom/server";
 import { NextIntlClientProvider } from "next-intl";
 import { describe, expect, it, vi } from "vitest";
 import fa from "@/messages/fa.json";
+import { emptyQuery } from "../models/catalogue-query";
 import type { ProductListingPage } from "../models/page-models";
 import { ProductListingScreen } from "./product-listing.screen";
 
@@ -41,21 +42,13 @@ const BASE: ProductListingPage = {
     { label: "فروشگاه", href: "/shop" },
     { label: "لک", href: "/shop/concern/lak" },
   ],
-  query: {
-    scope: { kind: "concern", slug: "lak" },
-    brands: [],
-    concerns: [],
-    categories: [],
-    inStockOnly: false,
-    minPriceRials: null,
-    maxPriceRials: null,
-    sort: "featured",
-    page: 1,
-  },
+  query: emptyQuery({ kind: "concern", slug: "lak" }),
   results: [],
   facets: [],
   appliedFilters: [],
   clearFiltersHref: null,
+  price: null,
+  questions: [],
   sortOptions: [
     { value: "featured", href: "/shop/concern/lak", isCurrent: true },
     {
@@ -169,5 +162,88 @@ describe("the listing tells the truth about being empty", () => {
 
   it("says how many results there are, including none", () => {
     expect(render(BASE)).toContain("محصولی پیدا نشد");
+  });
+});
+
+describe("the filter rail carries the manifest's axes", () => {
+  it("renders the price range as a GET form, not a script-driven slider", () => {
+    const html = render({
+      ...BASE,
+      price: {
+        minToman: 120_000,
+        maxToman: 980_000,
+        appliedMinToman: null,
+        appliedMaxToman: null,
+        action: "/shop/concern/lak",
+      },
+    });
+
+    // A range cannot be enumerated as links, but it can still be a form: the
+    // browser submits it, the URL carries the bounds, and the result is an
+    // addressable listing like every other filter.
+    expect(html).toContain('method="get"');
+    expect(html).toContain('action="/shop/concern/lak"');
+    expect(html).toContain('name="price_min"');
+    expect(html).toContain('name="price_max"');
+  });
+
+  it("omits the price control entirely when there is no range to bound", () => {
+    expect(render(BASE)).not.toContain('name="price_min"');
+  });
+
+  it("renders every manifest facet group it is given", () => {
+    const html = render({
+      ...BASE,
+      facets: [
+        {
+          parameter: "skin_type",
+          options: [
+            {
+              value: "dry",
+              label: "خشک",
+              count: 3,
+              isApplied: false,
+              href: "/shop/concern/lak?skin_type=dry",
+            },
+          ],
+        },
+        {
+          parameter: "line",
+          options: [
+            {
+              value: "ultra-lift",
+              label: "اولترا لیفت",
+              count: 2,
+              isApplied: false,
+              href: "/shop/concern/lak?line=ultra-lift",
+            },
+          ],
+        },
+      ],
+    });
+
+    expect(html).toContain(fa.plp.facets.skin_type);
+    expect(html).toContain(fa.plp.facets.line);
+    expect(html).toContain("خشک");
+    expect(html).toContain("اولترا لیفت");
+  });
+});
+
+describe("scope questions", () => {
+  it("renders nothing when there are none — the state it ships in", () => {
+    expect(render(BASE)).not.toContain(fa.plp.questionsTitle);
+  });
+
+  it("puts every answer in the static HTML, open panel or not", () => {
+    // An accordion, not tabs: tabs hide content from a crawler and from a
+    // scrolling reader.
+    const html = render({
+      ...BASE,
+      questions: [
+        { question: "لک چقدر طول می‌کشد؟", answer: "معمولاً چند ماه." },
+      ],
+    });
+    expect(html).toContain("لک چقدر طول می‌کشد؟");
+    expect(html).toContain("معمولاً چند ماه.");
   });
 });

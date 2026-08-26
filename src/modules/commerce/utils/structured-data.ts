@@ -1,6 +1,7 @@
 import type {
   BreadcrumbLink,
   ProductListingPage,
+  ScopeQuestion,
   ShopHubPage,
 } from "../models/page-models";
 
@@ -120,6 +121,28 @@ export function listingItemList(
       position: offset + index + 1,
       name: product.name,
       url: absolute(product.href),
+    })),
+  };
+}
+
+/**
+ * `FAQPage` for questions the page actually shows.
+ *
+ * Built from the same array the accordion renders, and null when that array is
+ * empty. Emitting FAQ markup without a visible counterpart is a structured-data
+ * violation that costs the rich result and risks a manual action — the whole
+ * point of taking the array rather than a separate content source.
+ */
+export function faqPage(questions: readonly ScopeQuestion[]): JsonLd | null {
+  if (questions.length === 0) return null;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: questions.map((entry) => ({
+      "@type": "Question",
+      name: entry.question,
+      acceptedAnswer: { "@type": "Answer", text: entry.answer },
     })),
   };
 }

@@ -9,7 +9,11 @@ import { listProducts } from "./commerce.reads";
 import { StructuredData } from "./components/structured-data";
 import type { CatalogueScope } from "./models/catalogue-query";
 import { ProductListingScreen } from "./screens/product-listing.screen";
-import { breadcrumbList, listingItemList } from "./utils/structured-data";
+import {
+  breadcrumbList,
+  faqPage,
+  listingItemList,
+} from "./utils/structured-data";
 
 /**
  * The four listing routes — concern, brand, category, search — differ only in
@@ -106,6 +110,7 @@ export async function ListingRoute({
             data={[
               breadcrumbList(outcome.page.breadcrumbs, absolute),
               listingItemList(outcome.page, absolute),
+              faqPage(outcome.page.questions),
             ]}
           />
           <ProductListingScreen page={outcome.page} />

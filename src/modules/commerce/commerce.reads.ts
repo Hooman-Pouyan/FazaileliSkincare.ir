@@ -21,9 +21,17 @@ import {
   price,
   product,
   productConcern,
+  productLine,
+  productLineTranslation,
   productMedia,
   productMediaTranslation,
+  productProtocolPhase,
+  productSkinState,
   productTranslation,
+  protocolPhase,
+  protocolPhaseTranslation,
+  skinState,
+  skinStateTranslation,
   variant,
   variantTranslation,
 } from "@/lib/db/schema";
@@ -33,6 +41,7 @@ import {
   type CatalogueScope,
   type CatalogueSort,
   catalogueHref,
+  emptyQuery,
   parseCatalogueQuery,
 } from "./models/catalogue-query";
 import type { CustomerGroup } from "./models/offer";
@@ -47,6 +56,7 @@ import {
 } from "./models/outcome";
 import type {
   FacetGroup,
+  PriceFacet,
   HubConcern,
   HubConcernSpotlight,
   MediaView,
@@ -254,6 +264,84 @@ function scopeAny(
     defined.map((clause) => sql`(${clause})`),
     sql` or `,
   );
+}
+
+/**
+ * The three axes the facet manifest added — line, skin type and routine phase.
+ *
+ * They are separate from `scopePredicate` because none of them is a route scope:
+ * `F-1` lists them as refinements only, and `PLP-10` requires the distinction to
+ * be defined rather than left to whichever component reaches for them.
+ */
+function anySlugOf(
+  values: readonly string[],
+  kind: "line" | "skin_type" | "phase",
+) {
+  if (values.length === 0) return undefined;
+
+  const clause = (slug: string) => {
+    switch (kind) {
+      case "line":
+        return exists(
+          db
+            .select({ one: sql`1` })
+            .from(productLine)
+            .where(
+              and(
+                eq(productLine.id, product.lineId),
+                eq(productLine.slug, slug),
+              ),
+            ),
+        );
+      case "skin_type":
+        return exists(
+          db
+            .select({ one: sql`1` })
+            .from(productSkinState)
+            .innerJoin(
+              skinState,
+              eq(skinState.id, productSkinState.skinStateId),
+            )
+            .where(
+              and(
+                eq(productSkinState.productId, product.id),
+                eq(skinState.slug, slug),
+              ),
+            ),
+        );
+      case "phase":
+        return exists(
+          db
+            .select({ one: sql`1` })
+            .from(productProtocolPhase)
+            .innerJoin(
+              protocolPhase,
+              eq(protocolPhase.id, productProtocolPhase.protocolPhaseId),
+            )
+            .where(
+              and(
+                eq(productProtocolPhase.productId, product.id),
+                eq(protocolPhase.slug, slug),
+              ),
+            ),
+        );
+    }
+  };
+
+  return sql.join(
+    values.map((slug) => sql`(${clause(slug)})`),
+    sql` or `,
+  );
+}
+
+/**
+ * Who the product is for. Single-select, and it never hides by default —
+ * `D-18-2` puts professional stock on the shelf deliberately, and the
+ * competitive research lists hiding eligibility under things to avoid.
+ */
+function audiencePredicate(audience: CatalogueQuery["audience"]) {
+  if (audience === null) return undefined;
+  return eq(product.isProfessionalOnly, audience === "professional");
 }
 
 function orderBy(
@@ -505,6 +593,14 @@ async function loadConcernSpotlights(
  * when it is currently applied — an applied value must always be removable, even
  * if another group has since reduced it to nothing.
  */
+/**
+ * Whether the current result set is confined to a single brand — either by the
+ * route scope or by a `?brand=` narrowed to one.
+ */
+function spansOneBrand(query: CatalogueQuery): boolean {
+  return query.scope.kind === "brand" || query.brands.length === 1;
+}
+
 async function loadFacets(
   localeCode: string,
   query: CatalogueQuery,
@@ -513,7 +609,14 @@ async function loadFacets(
   const groups: FacetGroup[] = [];
 
   for (const parameter of FACET_PARAMETERS) {
-    if (query.scope.kind === parameter) continue;
+    if (SCOPE_FACETS.has(parameter) && query.scope.kind === parameter) continue;
+
+    // F-2: brand ranges only mean something once a brand is chosen. Shown on
+    // `/shop`, `line` is a flat list of every range from every brand — thirty
+    // values where "Ultra Lift" and "Platinum Line" sit side by side meaning
+    // nothing, which is the one-product dead end the competitive research warns
+    // about.
+    if (parameter === "line" && !spansOneBrand(query)) continue;
 
     const others = Object.entries(clauses)
       .filter(([key, clause]) => key !== parameter && clause !== undefined)
@@ -538,13 +641,31 @@ async function loadFacets(
   return groups;
 }
 
-const FACET_PARAMETERS = ["brand", "concern", "category"] as const;
+/**
+ * Display order, from the facet manifest F-1: concern first because it is the
+ * axis this site competes on, then who the product is for, then brand and its
+ * ranges, then type and routine position.
+ */
+const FACET_PARAMETERS = [
+  "concern",
+  "skin_type",
+  "brand",
+  "line",
+  "category",
+  "phase",
+] as const;
 
 const LIST_PARAMETER_KEYS = {
   brand: "brands",
   concern: "concerns",
   category: "categories",
+  line: "lines",
+  skin_type: "skinTypes",
+  phase: "phases",
 } as const;
+
+/** Facet codes that are also route scopes, and so are never offered on their own page. */
+const SCOPE_FACETS = new Set(["brand", "concern", "category"]);
 
 /** One group's counts. Split out so `loadFacets` reads as the policy it is. */
 async function facetCounts(
@@ -601,6 +722,92 @@ async function facetCounts(
       .orderBy(asc(category.sortOrder), asc(category.slug));
   }
 
+  if (parameter === "line") {
+    return db
+      .select({
+        slug: productLine.slug,
+        name: productLineTranslation.name,
+        count: productCount,
+      })
+      .from(productLine)
+      .innerJoin(
+        productLineTranslation,
+        and(
+          eq(productLineTranslation.productLineId, productLine.id),
+          eq(productLineTranslation.localeCode, localeCode),
+        ),
+      )
+      .leftJoin(product, eq(product.lineId, productLine.id))
+      .where(where)
+      .groupBy(
+        productLine.id,
+        productLine.slug,
+        productLine.sortOrder,
+        productLineTranslation.name,
+      )
+      .orderBy(asc(productLine.sortOrder), asc(productLine.slug));
+  }
+
+  if (parameter === "skin_type") {
+    return db
+      .select({
+        slug: skinState.slug,
+        name: skinStateTranslation.name,
+        count: productCount,
+      })
+      .from(skinState)
+      .innerJoin(
+        skinStateTranslation,
+        and(
+          eq(skinStateTranslation.skinStateId, skinState.id),
+          eq(skinStateTranslation.localeCode, localeCode),
+        ),
+      )
+      .leftJoin(
+        productSkinState,
+        eq(productSkinState.skinStateId, skinState.id),
+      )
+      .leftJoin(product, eq(product.id, productSkinState.productId))
+      .where(where)
+      .groupBy(
+        skinState.id,
+        skinState.slug,
+        skinState.sortOrder,
+        skinStateTranslation.name,
+      )
+      .orderBy(asc(skinState.sortOrder), asc(skinState.slug));
+  }
+
+  if (parameter === "phase") {
+    return db
+      .select({
+        slug: protocolPhase.slug,
+        name: protocolPhaseTranslation.name,
+        count: productCount,
+      })
+      .from(protocolPhase)
+      .innerJoin(
+        protocolPhaseTranslation,
+        and(
+          eq(protocolPhaseTranslation.protocolPhaseId, protocolPhase.id),
+          eq(protocolPhaseTranslation.localeCode, localeCode),
+        ),
+      )
+      .leftJoin(
+        productProtocolPhase,
+        eq(productProtocolPhase.protocolPhaseId, protocolPhase.id),
+      )
+      .leftJoin(product, eq(product.id, productProtocolPhase.productId))
+      .where(where)
+      .groupBy(
+        protocolPhase.id,
+        protocolPhase.slug,
+        protocolPhase.sortOrder,
+        protocolPhaseTranslation.name,
+      )
+      .orderBy(asc(protocolPhase.sortOrder), asc(protocolPhase.slug));
+  }
+
   return db
     .select({
       slug: concern.slug,
@@ -625,6 +832,60 @@ async function facetCounts(
       concernTranslation.name,
     )
     .orderBy(asc(concern.sortOrder), asc(concern.slug));
+}
+
+/**
+ * The price range the current results actually span.
+ *
+ * Counted with the price bounds themselves removed, for the same reason facet
+ * groups are — a slider whose ends move to whatever you last selected can only
+ * narrow, and a customer cannot widen back out without clearing.
+ *
+ * Returns null when nothing in range carries an eligible price, so the control
+ * is absent rather than offering a range of zero to zero.
+ */
+async function loadPriceBounds(
+  query: CatalogueQuery,
+  clauses: Readonly<Record<string, ReturnType<typeof and> | undefined>>,
+  floor: ReturnType<typeof eligiblePriceFloor>,
+): Promise<PriceFacet | null> {
+  const others = Object.entries(clauses)
+    .filter(
+      ([key, clause]) =>
+        key !== "minPrice" && key !== "maxPrice" && clause !== undefined,
+    )
+    .map(([, clause]) => clause);
+
+  const [row] = await db
+    .select({
+      min: sql<string | null>`min(${floor})`,
+      max: sql<string | null>`max(${floor})`,
+    })
+    .from(product)
+    .where(and(...others));
+
+  if (!row?.min || !row.max) return null;
+
+  const minToman = Number(BigInt(row.min) / 10n);
+  const maxToman = Number(BigInt(row.max) / 10n);
+  if (minToman === maxToman) return null;
+
+  return {
+    minToman,
+    maxToman,
+    appliedMinToman:
+      query.minPriceRials === null ? null : Number(query.minPriceRials / 10n),
+    appliedMaxToman:
+      query.maxPriceRials === null ? null : Number(query.maxPriceRials / 10n),
+    // The form posts to the scope with every other filter preserved; the price
+    // inputs supply their own values.
+    action: catalogueHref({
+      ...query,
+      minPriceRials: null,
+      maxPriceRials: null,
+      page: 1,
+    }),
+  };
 }
 
 export async function listProducts(
@@ -659,6 +920,10 @@ export async function listProducts(
     brand: slugFilter(query.brands, "brand", localeCode),
     category: slugFilter(query.categories, "category", localeCode),
     concern: slugFilter(query.concerns, "concern", localeCode),
+    line: anySlugOf(query.lines, "line"),
+    skin_type: anySlugOf(query.skinTypes, "skin_type"),
+    phase: anySlugOf(query.phases, "phase"),
+    audience: audiencePredicate(query.audience),
     inStock: query.inStockOnly ? inStockPredicate(ANONYMOUS_GROUP) : undefined,
     minPrice:
       query.minPriceRials !== null
@@ -721,6 +986,7 @@ export async function listProducts(
   });
   const filters = appliedFilters(query);
   const facets = await loadFacets(localeCode, query, clauses);
+  const price = await loadPriceBounds(query, clauses, floor);
 
   const sortOptions: readonly SortOption[] = SORTS.map((value) => ({
     value,
@@ -758,6 +1024,10 @@ export async function listProducts(
           })
         : null,
     sortOptions,
+    price,
+    // Absent until content exists. The structure ships so the copy has
+    // somewhere to land — F-5.
+    questions: [],
     pagination,
     meta: {
       title: scopeTitle.title,
@@ -842,17 +1112,7 @@ async function resolveScopeTitle(
       shopCrumb,
       {
         label: row.name,
-        href: catalogueHref({
-          scope,
-          brands: [],
-          concerns: [],
-          categories: [],
-          inStockOnly: false,
-          minPriceRials: null,
-          maxPriceRials: null,
-          sort: "featured",
-          page: 1,
-        } as CatalogueQuery),
+        href: catalogueHref(emptyQuery(scope)),
       },
     ],
   };

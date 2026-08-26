@@ -1,12 +1,15 @@
 import { useTranslations } from "next-intl";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { Divider } from "@/components/brand/divider";
 import { Container } from "@/components/layout/container";
 import { EmptyState } from "@/components/layout/empty-state";
 import { Reveal } from "@/components/layout/reveal";
 import { Link } from "@/i18n/navigation";
 import { AppliedFilters, FacetRail } from "../components/facet-rail";
 import { ListingToolbar, Pagination } from "../components/listing-toolbar";
+import { PriceFilter } from "../components/price-filter";
 import { ProductTile } from "../components/product-tile";
+import { ScopeQuestions } from "../components/scope-questions";
 import type { ProductListingPage } from "../models/page-models";
 
 /**
@@ -47,8 +50,9 @@ export function ProductListingScreen({
       </Container>
 
       <Container className="grid items-start gap-12 pb-24 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] lg:gap-16">
-        <div className="order-2 lg:order-1">
-          <FacetRail facets={page.facets} />
+        <div className="order-2 flex flex-col gap-10 lg:order-1">
+          <FacetRail page={page} />
+          {page.price && <PriceFilter price={page.price} />}
         </div>
 
         <div className="order-1 flex flex-col gap-6 lg:order-2">
@@ -98,6 +102,13 @@ export function ProductListingScreen({
           <Pagination page={page} />
         </div>
       </Container>
+
+      {page.questions.length > 0 && (
+        <Container className="flex flex-col gap-16 pb-24">
+          <Divider />
+          <ScopeQuestions questions={page.questions} />
+        </Container>
+      )}
     </main>
   );
 }

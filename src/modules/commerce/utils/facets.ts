@@ -1,4 +1,5 @@
 import { type CatalogueQuery, catalogueHref } from "../models/catalogue-query";
+import type { FacetParameterCode } from "../models/page-models";
 
 /**
  * Links that add, remove, or clear a filter.
@@ -11,7 +12,12 @@ import { type CatalogueQuery, catalogueHref } from "../models/catalogue-query";
  * off a concern listing is navigation, which the shell owns, not filtering.
  */
 
-export type FacetParameter = "brand" | "concern" | "category" | "in_stock";
+/**
+ * Every code a toggle link can be built for: the manifest's list facets, plus
+ * the two that are not lists. `FacetParameterCode` is the manifest's own union,
+ * so a new axis added there flows here and the compiler finds the gaps.
+ */
+export type FacetParameter = FacetParameterCode | "in_stock" | "audience";
 
 export type AppliedFilter = Readonly<{
   parameter: string;
@@ -23,6 +29,9 @@ const LIST_PARAMETERS = {
   brand: "brands",
   concern: "concerns",
   category: "categories",
+  line: "lines",
+  skin_type: "skinTypes",
+  phase: "phases",
 } as const;
 
 function withoutPage(query: CatalogueQuery): CatalogueQuery {
@@ -49,6 +58,14 @@ export function facetToggleHref(
     return catalogueHref({ ...base, inStockOnly: !base.inStockOnly });
   }
 
+  if (parameter === "audience") {
+    // Single-select: choosing the value already chosen clears it, so the same
+    // link both applies and removes — F-3.
+    const next =
+      base.audience === value ? null : (value as "home" | "professional");
+    return catalogueHref({ ...base, audience: next });
+  }
+
   const key = LIST_PARAMETERS[parameter];
   return catalogueHref({
     ...base,
@@ -61,7 +78,14 @@ export function appliedFilters(
 ): readonly AppliedFilter[] {
   const filters: AppliedFilter[] = [];
 
-  for (const parameter of ["brand", "concern", "category"] as const) {
+  for (const parameter of [
+    "concern",
+    "skin_type",
+    "brand",
+    "line",
+    "category",
+    "phase",
+  ] as const) {
     for (const value of query[LIST_PARAMETERS[parameter]]) {
       filters.push({
         parameter,
@@ -69,6 +93,14 @@ export function appliedFilters(
         removeHref: facetToggleHref(query, parameter, value),
       });
     }
+  }
+
+  if (query.audience !== null) {
+    filters.push({
+      parameter: "audience",
+      value: query.audience,
+      removeHref: facetToggleHref(query, "audience", query.audience),
+    });
   }
 
   if (query.inStockOnly) {

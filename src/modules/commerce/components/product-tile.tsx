@@ -60,7 +60,7 @@ export function ProductTile({
         </Link>
 
         <h3 className="text-h3 font-medium leading-fa">
-          <Link href={product.href} className="hover:text-lapis">
+          <Link href={product.href} className="hover:text-teal">
             {product.name}
           </Link>
         </h3>

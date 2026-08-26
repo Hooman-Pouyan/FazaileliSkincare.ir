@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { Divider } from "@/components/brand/divider";
 import { Container, Section } from "@/components/layout/container";
 import { EmptyState } from "@/components/layout/empty-state";
 import { Reveal } from "@/components/layout/reveal";
@@ -113,7 +114,9 @@ export function ShopHubScreen({ page }: { readonly page: ShopHubPage }) {
       </Section>
 
       <Section tone="surface">
-        <Container>
+        <Container className="flex flex-col gap-24">
+          {/* One of the two the design system permits per page. */}
+          <Divider />
           <EditorialMosaic />
         </Container>
       </Section>
@@ -140,7 +143,8 @@ export function ShopHubScreen({ page }: { readonly page: ShopHubPage }) {
       )}
 
       <Section tone="surface">
-        <Container>
+        <Container className="flex flex-col gap-24">
+          <Divider />
           <Reveal className="flex max-w-[40em] flex-col gap-5">
             <h2 className="text-h2 font-bold text-balance">
               {t("closing.title")}

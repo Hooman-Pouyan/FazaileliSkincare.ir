@@ -2,6 +2,7 @@ import { XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+import { facetToggleHref } from "../utils/facets";
 import type { FacetGroup, ProductListingPage } from "../models/page-models";
 
 /**
@@ -20,18 +21,19 @@ import type { FacetGroup, ProductListingPage } from "../models/page-models";
  * No JavaScript is involved. This works with scripting disabled.
  */
 export function FacetRail({
-  facets,
+  page,
   className,
 }: {
-  readonly facets: readonly FacetGroup[];
+  readonly page: ProductListingPage;
   readonly className?: string;
 }) {
   const t = useTranslations("plp");
-
-  if (facets.length === 0) return null;
+  const facets = page.facets;
 
   return (
     <div className={cn("flex flex-col gap-10", className)}>
+      <AudienceFilter page={page} />
+
       {facets.map((group) => (
         <section key={group.parameter} className="flex flex-col gap-4">
           <h2 className="text-small font-medium tracking-[0.08em] text-gold-text">
@@ -45,8 +47,10 @@ export function FacetRail({
                   aria-current={option.isApplied ? "true" : undefined}
                   className={cn(
                     "flex items-baseline justify-between gap-3 border-b border-[var(--hairline-soft)] py-2.5",
-                    "transition-colors duration-[var(--duration)] ease-[var(--easing)] hover:text-lapis",
-                    option.isApplied && "font-bold text-lapis",
+                    "transition-colors duration-[var(--duration)] ease-[var(--easing)] hover:text-teal",
+                    // Teal is the Shop room's accent, and it passes contrast on
+                    // cool white where gold and firouzeh do not.
+                    option.isApplied && "font-bold text-teal",
                   )}
                 >
                   <span className="flex items-baseline gap-2">
@@ -54,7 +58,7 @@ export function FacetRail({
                       aria-hidden
                       className={cn(
                         "inline-block size-2 shrink-0 translate-y-px border border-[var(--hairline)]",
-                        option.isApplied && "border-lapis bg-lapis",
+                        option.isApplied && "border-teal bg-teal",
                       )}
                     />
                     {option.label}
@@ -69,6 +73,56 @@ export function FacetRail({
         </section>
       ))}
     </div>
+  );
+}
+
+/**
+ * Who the product is for. Single-select with two named values rather than a
+ * "professional only" toggle — a checkbox answers one question and leaves the
+ * other unaskable, and "show me only what I can buy" is the more common need on
+ * a site that shows professional stock it will not sell. See F-3.
+ *
+ * It narrows on request and never hides by default: `D-18-2` puts that stock on
+ * the shelf deliberately, and the competitive research lists hiding eligibility
+ * under things to avoid.
+ */
+function AudienceFilter({ page }: { readonly page: ProductListingPage }) {
+  const t = useTranslations("plp");
+  const values = ["home", "professional"] as const;
+
+  return (
+    <section className="flex flex-col gap-4">
+      <h2 className="text-small font-medium tracking-[0.08em] text-gold-text">
+        {t("audience.label")}
+      </h2>
+      <ul className="flex flex-col">
+        {values.map((value) => {
+          const isApplied = page.query.audience === value;
+          return (
+            <li key={value}>
+              <Link
+                href={facetToggleHref(page.query, "audience", value)}
+                aria-current={isApplied ? "true" : undefined}
+                className={cn(
+                  "flex items-baseline gap-2 border-b border-[var(--hairline-soft)] py-2.5",
+                  "transition-colors duration-[var(--duration)] ease-[var(--easing)] hover:text-teal",
+                  isApplied && "font-bold text-teal",
+                )}
+              >
+                <span
+                  aria-hidden
+                  className={cn(
+                    "inline-block size-2 shrink-0 translate-y-px rounded-full border border-[var(--hairline)]",
+                    isApplied && "border-teal bg-teal",
+                  )}
+                />
+                {t(`audience.${value}`)}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
   );
 }
 

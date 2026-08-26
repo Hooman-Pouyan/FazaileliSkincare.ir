@@ -76,7 +76,7 @@ function SpotlightSlide({ product }: { readonly product: ProductTileModel }) {
           {product.brandName}
         </Link>
         <h3 className="text-h2 font-bold text-balance">
-          <Link href={product.href} className="hover:text-lapis">
+          <Link href={product.href} className="hover:text-teal">
             {product.name}
           </Link>
         </h3>

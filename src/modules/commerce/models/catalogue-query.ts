@@ -40,11 +40,28 @@ export type CatalogueScope =
   | Readonly<{ kind: "category"; slug: string }>
   | Readonly<{ kind: "search"; query: string }>;
 
+/**
+ * Who a product is for. `product.isProfessionalOnly` owns it.
+ *
+ * Single-select with two named values rather than a "professional only" toggle:
+ * a checkbox answers one question and leaves the other unaskable, and on a site
+ * that deliberately shows professional stock it will not sell (D-18-2), "show
+ * me only what I can buy" is the more common need. See F-3.
+ */
+export type CatalogueAudience = "home" | "professional";
+
 export type CatalogueQuery = Readonly<{
   scope: CatalogueScope;
   brands: readonly string[];
   concerns: readonly string[];
   categories: readonly string[];
+  /** Brand ranges — Storyderm's Ultra Lift, Forlle'd's Platinum. See F-2. */
+  lines: readonly string[];
+  /** Dry, oily, sensitive, and the rest. `productSkinState`. */
+  skinTypes: readonly string[];
+  /** Where a product sits in a routine — cleanse, treat, protect. */
+  phases: readonly string[];
+  audience: CatalogueAudience | null;
   inStockOnly: boolean;
   minPriceRials: Rials | null;
   maxPriceRials: Rials | null;
@@ -75,6 +92,10 @@ const KNOWN_PARAMETERS = new Set([
   "brand",
   "concern",
   "category",
+  "line",
+  "skin_type",
+  "phase",
+  "audience",
   "in_stock",
   "price_min",
   "price_max",
@@ -86,9 +107,13 @@ const KNOWN_PARAMETERS = new Set([
 /** Fixed emission order. Two URLs differing only in parameter order are two URLs. */
 const PARAMETER_ORDER = [
   "q",
-  "brand",
   "concern",
+  "skin_type",
+  "brand",
+  "line",
   "category",
+  "phase",
+  "audience",
   "in_stock",
   "price_min",
   "price_max",
@@ -122,6 +147,32 @@ function rialsToToman(rials: Rials): string {
   return (rials / 10n).toString();
 }
 
+/**
+ * A query with nothing applied — the bare scope.
+ *
+ * Exists because building one by hand needs a cast, and a cast is a promise the
+ * compiler stops checking: adding `lines`, `skinTypes`, `phases` and `audience`
+ * to the type silently left a hand-built literal three fields short until the
+ * cast was removed. One constructor means the next axis cannot do that.
+ */
+export function emptyQuery(scope: CatalogueScope): CatalogueQuery {
+  return {
+    scope,
+    brands: [],
+    concerns: [],
+    categories: [],
+    lines: [],
+    skinTypes: [],
+    phases: [],
+    audience: null,
+    inStockOnly: false,
+    minPriceRials: null,
+    maxPriceRials: null,
+    sort: DEFAULT_SORT,
+    page: DEFAULT_PAGE,
+  };
+}
+
 export function parseCatalogueQuery(
   scope: CatalogueScope,
   search: URLSearchParams,
@@ -148,14 +199,30 @@ export function parseCatalogueQuery(
   const brands = uniqueSorted(search.getAll("brand"));
   const concerns = uniqueSorted(search.getAll("concern"));
   const categories = uniqueSorted(search.getAll("category"));
+  const lines = uniqueSorted(search.getAll("line"));
+  const skinTypes = uniqueSorted(search.getAll("skin_type"));
+  const phases = uniqueSorted(search.getAll("phase"));
   for (const [key, cleaned] of [
     ["brand", brands],
     ["concern", concerns],
     ["category", categories],
+    ["line", lines],
+    ["skin_type", skinTypes],
+    ["phase", phases],
   ] as const) {
     const raw = search.getAll(key);
     if (raw.length !== cleaned.length || raw.some((v, i) => v !== cleaned[i])) {
       canonical = false;
+    }
+  }
+
+  const audienceRaw = search.get("audience");
+  let audience: CatalogueAudience | null = null;
+  if (audienceRaw !== null) {
+    if (audienceRaw === "home" || audienceRaw === "professional") {
+      audience = audienceRaw;
+    } else {
+      issues.push({ parameter: "audience", code: "unrecognised" });
     }
   }
 
@@ -218,6 +285,10 @@ export function parseCatalogueQuery(
     brands,
     concerns,
     categories,
+    lines,
+    skinTypes,
+    phases,
+    audience,
     inStockOnly,
     minPriceRials: bounds.price_min,
     maxPriceRials: bounds.price_max,
@@ -269,6 +340,18 @@ export function catalogueHref(query: CatalogueQuery): string {
         break;
       case "category":
         for (const slug of query.categories) values.push(["category", slug]);
+        break;
+      case "line":
+        for (const slug of query.lines) values.push(["line", slug]);
+        break;
+      case "skin_type":
+        for (const slug of query.skinTypes) values.push(["skin_type", slug]);
+        break;
+      case "phase":
+        for (const slug of query.phases) values.push(["phase", slug]);
+        break;
+      case "audience":
+        if (query.audience !== null) values.push(["audience", query.audience]);
         break;
       case "in_stock":
         if (query.inStockOnly) values.push(["in_stock", "1"]);

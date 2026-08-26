@@ -48,8 +48,22 @@ export type FacetOption = Readonly<{
   href: string;
 }>;
 
+/**
+ * The facet codes the manifest accepts — `docs/24-facet-manifest.md` F-1.
+ *
+ * A union rather than a string, so a component cannot invent a group and a new
+ * axis cannot be added without editing the manifest's row alongside it.
+ */
+export type FacetParameterCode =
+  | "concern"
+  | "skin_type"
+  | "brand"
+  | "line"
+  | "category"
+  | "phase";
+
 export type FacetGroup = Readonly<{
-  parameter: "brand" | "concern" | "category";
+  parameter: FacetParameterCode;
   options: readonly FacetOption[];
 }>;
 
@@ -83,6 +97,24 @@ export type PageMeta = Readonly<{
   robots: "index,follow" | "noindex,follow";
 }>;
 
+/**
+ * The price axis. Numeric, so it has no options — the rail needs the range the
+ * current results actually span, or the control offers bounds that return
+ * nothing.
+ */
+export type PriceFacet = Readonly<{
+  /** Toman, because that is what the URL and the customer use. */
+  minToman: number;
+  maxToman: number;
+  appliedMinToman: number | null;
+  appliedMaxToman: number | null;
+  /** Where the form submits. The rail builds no URL of its own. */
+  action: string;
+}>;
+
+/** A question this scope answers, in her voice. See F-5. */
+export type ScopeQuestion = Readonly<{ question: string; answer: string }>;
+
 export type ProductListingPage = Readonly<{
   scope: ScopeHeader;
   breadcrumbs: readonly BreadcrumbLink[];
@@ -96,6 +128,14 @@ export type ProductListingPage = Readonly<{
   }>[];
   clearFiltersHref: string | null;
   sortOptions: readonly SortOption[];
+  /** Absent when the results carry no eligible price to bound. */
+  price: PriceFacet | null;
+  /**
+   * Absent until content exists. `FAQPage` markup is emitted only for questions
+   * actually on the page — markup without a visible counterpart is a penalty,
+   * not a shortcut.
+   */
+  questions: readonly ScopeQuestion[];
   pagination: Readonly<{
     page: number;
     pageCount: number;

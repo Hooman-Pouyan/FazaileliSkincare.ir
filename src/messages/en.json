@@ -180,7 +180,11 @@
     "facets": {
       "brand": "Brand",
       "concern": "Concern",
-      "category": "Product type"
+      "category": "Product type",
+      "skin_type": "Skin type",
+      "line": "Range",
+      "phase": "Where it sits in a routine",
+      "price": "Price"
     },
     "sort": {
       "featured": "Our pick",
@@ -194,6 +198,14 @@
       "searchTitle": "We could not find that",
       "searchBody": "It may be spelled differently, or we may not stock it yet. You could start from your skin concern instead.",
       "action": "Back to the shop"
-    }
+    },
+    "audience": {
+      "label": "Who it is for",
+      "home": "Home use",
+      "professional": "For professionals"
+    },
+    "applyPrice": "Apply price",
+    "questionsTitle": "Questions we are asked a lot",
+    "currencyShort": "toman"
   }
 }
