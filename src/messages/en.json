@@ -68,7 +68,108 @@
     "title": "My account",
     "signedInAs": "Signed in as",
     "signOut": "Sign out",
-    "signIn": "Sign in"
+    "signIn": "Sign in",
+    "dashboard": {
+      "greeting": "Hello{name}",
+      "profileLink": "My details",
+      "addressesLink": "Addresses",
+      "ordersLink": "Orders"
+    },
+    "profile": {
+      "title": "My details",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "locale": "Preferred language",
+      "save": "Save",
+      "saving": "Saving…",
+      "saved": "Saved",
+      "phoneLabel": "Mobile number",
+      "phoneVerified": "Verified",
+      "phoneLocked": "Changing your number needs re-verification, which isn't available here yet."
+    },
+    "addresses": {
+      "title": "Addresses",
+      "empty": "You haven't saved an address yet.",
+      "add": "Add an address",
+      "edit": "Edit",
+      "remove": "Remove",
+      "setDefault": "Make default",
+      "isDefault": "Default",
+      "recipientName": "Recipient name",
+      "recipientPhone": "Recipient mobile",
+      "province": "Province",
+      "city": "City",
+      "postalCode": "Postal code",
+      "line": "Address",
+      "chooseProvince": "Choose a province",
+      "chooseCity": "Choose a city",
+      "makeDefault": "Make this my default address",
+      "save": "Save address",
+      "cancel": "Cancel",
+      "postalHint": "Ten digits, no dash",
+      "recipientHint": "The recipient may not be you; the courier calls this number.",
+      "cityIncomplete": "Only each province's capital is listed for now."
+    },
+    "orders": {
+      "title": "Orders",
+      "empty": "You haven't placed an order yet.",
+      "emptyAction": "See products",
+      "number": "Order number",
+      "placedAt": "Date",
+      "items": "{count, plural, one {# item} other {# items}}",
+      "total": "Total",
+      "view": "View invoice",
+      "notPlaced": "Not placed"
+    },
+    "order": {
+      "title": "Invoice {number}",
+      "back": "Back to orders",
+      "product": "Product",
+      "sku": "SKU",
+      "quantity": "Qty",
+      "unitPrice": "Unit price",
+      "lineTotal": "Line total",
+      "subtotal": "Subtotal",
+      "shipping": "Shipping",
+      "discount": "Discount",
+      "total": "Total",
+      "shippingTo": "Shipping to",
+      "payments": "Payments",
+      "noPayments": "No payment recorded yet.",
+      "trackingNumber": "Tracking number",
+      "notFound": "We couldn't find this order."
+    },
+    "status": {
+      "draft": "Draft",
+      "awaiting_payment": "Awaiting payment",
+      "awaiting_transfer": "Awaiting transfer",
+      "payment_review": "Payment under review",
+      "paid": "Paid",
+      "fulfilled": "Shipped",
+      "completed": "Completed",
+      "cancelled": "Cancelled",
+      "refunded": "Refunded"
+    },
+    "paymentStatus": {
+      "pending": "Pending",
+      "submitted": "Submitted",
+      "funds_received": "Funds received",
+      "settlement_review": "Under review",
+      "settled": "Settled",
+      "failed": "Failed",
+      "refunded": "Refunded"
+    },
+    "paymentMethod": {
+      "gateway": "Payment gateway",
+      "bank_transfer": "Bank transfer",
+      "cash_on_pickup": "Pay on collection"
+    },
+    "error": {
+      "invalid": "Those details aren't valid.",
+      "not-yours": "Please try again.",
+      "not-signed-in": "You need to sign in for that.",
+      "unknown-location": "That city isn't in that province."
+    }
   },
   "states": {
     "loading": "Loading…",

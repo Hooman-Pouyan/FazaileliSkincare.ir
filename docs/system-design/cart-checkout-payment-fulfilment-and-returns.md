@@ -1,10 +1,34 @@
 # Cart, checkout, payment, fulfilment, and returns - phased implementation plan
 
-**Status:** Review-ready; no runtime implementation is authorized by this document  
-**Updated:** 2026-08-24  
-**Scope:** Cart continuation through order completion, including shipping, bank transfer, gateway payment, fulfilment, cancellation, returns, refunds, customer status, and staff operations  
-**Depends on:** [`storefront.md`](storefront.md), [`storefront/pdp.md`](storefront/pdp.md), [`database-foundation.md`](database-foundation.md), [`authentication-and-account-security.md`](authentication-and-account-security.md), [`../02-adr-002-infrastructure.md`](../02-adr-002-infrastructure.md), and [`../03-domain-model.md`](../03-domain-model.md)  
-**Review input:** [`../16-review-storefront-and-database.md`](../16-review-storefront-and-database.md)
+**Status:** **Approved by the maintainer on 2026-08-26.** Runtime implementation is authorized, within the bounds below  
+**Updated:** 2026-08-26
+
+> **What the approval covers, and what it does not.**
+>
+> It authorises building `COM1` onward: the cart (done, packets 9/10), the
+> account surface, checkout, order placement, invoices and the bank-transfer
+> path. `COM-D1`…`COM-D11` are the governing decisions and are not reopened by
+> this note.
+>
+> It does **not** authorise inventing the facts the plan leaves to the
+> maintainer. Three of them gate parts of the journey rather than the whole:
+>
+> | Still his                                                 | What it blocks                                   |
+> | --------------------------------------------------------- | ------------------------------------------------ |
+> | Bank account details for transfers                        | The transfer instructions a customer is shown    |
+> | Shipping rates — pickup, Mashhad courier, nationwide post | The shipping step's quote                        |
+> | Terms, privacy and returns pages                          | Placing a real order in front of a real customer |
+>
+> Where one of those is missing the surface is built and **fails closed** —
+> absent rather than filled with a plausible number — exactly as `PDP-09` does
+> for the enquiry link that has no WhatsApp number behind it.
+>
+> ZarinPal remains out of scope. `COM-D9` isolates it behind an interface and
+> `COM-D1` makes bank transfer the launch method, so the gateway paperwork gates
+> one adapter, not the journey.
+> **Scope:** Cart continuation through order completion, including shipping, bank transfer, gateway payment, fulfilment, cancellation, returns, refunds, customer status, and staff operations  
+> **Depends on:** [`storefront.md`](storefront.md), [`storefront/pdp.md`](storefront/pdp.md), [`database-foundation.md`](database-foundation.md), [`authentication-and-account-security.md`](authentication-and-account-security.md), [`../02-adr-002-infrastructure.md`](../02-adr-002-infrastructure.md), and [`../03-domain-model.md`](../03-domain-model.md)  
+> **Review input:** [`../16-review-storefront-and-database.md`](../16-review-storefront-and-database.md)
 
 ## 1. Goal and stopping boundary
 

@@ -15,7 +15,8 @@ import {
   type VerifyValues,
 } from "../models/auth.schemas";
 import type { AuthCopy } from "../screens/auth-screen";
-import { pendingPhoneStorageKey } from "./login-form";
+import { pendingPhoneStorageKey, pendingReturnStorageKey } from "./login-form";
+import { safeReturnTo } from "../models/return-to";
 
 export function VerifyForm({
   copy,
@@ -42,6 +43,7 @@ export function VerifyForm({
 
   const returnToLogin = () => {
     sessionStorage.removeItem(pendingPhoneStorageKey);
+    sessionStorage.removeItem(pendingReturnStorageKey);
     router.push("/login");
   };
 
@@ -76,7 +78,17 @@ export function VerifyForm({
       */
       await mergeGuestCartIntoAccount().catch(() => undefined);
 
-      router.replace("/");
+      /*
+        Back to where they were going — `Phase D`. Re-validated here rather than
+        trusted from storage: the value came from a query string originally, and
+        an open redirect is not worth trusting one check with.
+      */
+      const returnTo = safeReturnTo(
+        sessionStorage.getItem(pendingReturnStorageKey),
+      );
+      sessionStorage.removeItem(pendingReturnStorageKey);
+
+      router.replace(returnTo);
       router.refresh();
     } catch {
       setRequestError(true);

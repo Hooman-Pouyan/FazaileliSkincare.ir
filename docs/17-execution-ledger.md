@@ -91,15 +91,18 @@ research deferrals expire the moment it is shown to a customer.
 
 ### Packets 11 and 12 — closed 2026-08-26
 
-| #   | Packet                              | Satisfies                  | Evidence                                                                                                                                                                      |
-| --- | ----------------------------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 11  | Density — `D-1`…`D-5`               | `R-3`, `R-2`, `R-4`, `R-7` | One `data-density` scope redefining Tailwind's `--spacing` base; media capped at 22rem. PDP gallery 915px → 352px, Landing untouched. Browser pass at 390/768/1440 in Persian |
-| 12  | `COM0` remainder — the eight tables | `COM0` §3.2                | Migration `0008`, migrated from zero, seeded twice; 14/14 new FKs indexed by query; 14 constraints probed live                                                                |
+| #   | Packet                              | Satisfies                  | Evidence                                                                                                                                                                                              |
+| --- | ----------------------------------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 11  | Density — `D-1`…`D-5`               | `R-3`, `R-2`, `R-4`, `R-7` | One `data-density` scope redefining Tailwind's `--spacing` base; media capped at 22rem. PDP gallery 915px → 352px, Landing untouched. Browser pass at 390/768/1440 in Persian                         |
+| 12  | `COM0` remainder — the eight tables | `COM0` §3.2                | Migration `0008`, migrated from zero, seeded twice; 14/14 new FKs indexed by query; 14 constraints probed live                                                                                        |
+| 13  | Account and identity                | `Phase D`                  | `/account` dashboard: profile, address book, orders, invoice. Owner-scoped reads, forms that work with JavaScript off, `?next=` guarded against open redirect. Sign-up confirmed to record a `person` |
 
-**Phase D and E remain gated** on the maintainer's approval of
+**Phase D is built. Phase E is unblocked** by the maintainer's approval on 2026-08-26 of
 [`system-design/cart-checkout-payment-fulfilment-and-returns.md`](system-design/cart-checkout-payment-fulfilment-and-returns.md),
-which states that no runtime implementation is authorised by it. The eight
-tables exist; nothing reads them.
+which now authorises runtime implementation. What remains outstanding for Phase
+E is not permission but facts: bank account details, shipping rates, and the
+terms/privacy/returns pages. Where one is missing the surface is built and
+fails closed rather than filled with a plausible number.
 
 ### Known bounds — packet 4
 
@@ -269,6 +272,8 @@ Nothing below is a defect. Each is a decision, a fact or a permission only you c
 | Packet 8 — the product page — 2026-08-26                       | 8.4   | The authenticity section renders empty rather than promising an IRC code               | content           |
 | Packet 8 — the product page — 2026-08-26                       | 8.5   | 137 `product_pair` rows are invented, and marked so                                    | product           |
 | Packet 8 — the product page — 2026-08-26                       | 8.6   | `resolveEnquiryHref` now fails closed, which changes what `5.3` looks like             | product           |
+| Packet 13 — account and identity — 2026-08-26                  | 13.9  | No map on the address form, recorded rather than silently skipped                      | product           |
+| Packet 13 — account and identity — 2026-08-26                  | 13.11 | `AUTH2`'s verification checkpoint is still parked                                      | process           |
 | Packet 12 — `COM0` remainder — 2026-08-26                      | 12.4  | The city list is one row per province and says so in the data                          | data              |
 | Packet 12 — `COM0` remainder — 2026-08-26                      | 12.5  | No `shipping_rate` rows are seeded, deliberately                                       | content           |
 | Packet 12 — `COM0` remainder — 2026-08-26                      | 12.9  | Nothing reads any of this yet                                                          | process           |
@@ -333,6 +338,7 @@ Nothing below is a defect. Each is a decision, a fact or a permission only you c
 | Packet 7 — PLP and search                                      | 7.8   | The facet rail sits below the results on mobile, not behind a drawer                                                                  | UI              |
 | Packet 7 — PLP and search                                      | 7.10  | `getShopHub` and `listProducts` now run several queries each                                                                          | performance     |
 | Packet 8 — the product page — 2026-08-26                       | 8.3   | `object-contain`, not the design system's `cover`                                                                                     | UI              |
+| Packet 13 — account and identity — 2026-08-26                  | 13.8  | The orders list is empty and will stay empty until Phase E                                                                            | verification    |
 | Packets 9 and 10 — the cart and its reservations — 2026-08-26  | 9.6   | A merge that conflicts has no interface                                                                                               | product / UX    |
 | Packet 6, second pass — scroll storytelling — 2026-08-26       | 6b.5  | Testimonials are Persian-only on purpose                                                                                              | content         |
 | Packet 6, second pass — scroll storytelling — 2026-08-26       | 6b.7  | The Landing's editorial photography is static paths, not object keys                                                                  | structure       |
@@ -365,7 +371,7 @@ Nothing below is a defect. Each is a decision, a fact or a permission only you c
 | Landing direction pass — 2026-08-25, ahead of packet 6         | L.12  | The Japanese concepts are carried by a growth spine, not a values row                                                                 | UI              |
 | Landing direction pass — 2026-08-25, ahead of packet 6         | L.14  | Source batches are completed with fictional development values                                                                        | data            |
 
-**Totals:** 49 waiting on the maintainer, 51 open.
+**Totals:** 51 waiting on the maintainer, 52 open.
 
 <!-- END:open-items -->
 

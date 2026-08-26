@@ -1,76 +1,90 @@
 import type { Metadata } from "next";
-import { headers } from "next/headers";
 import { getTranslations, setRequestLocale } from "next-intl/server";
-import { getSession } from "@/lib/auth/auth";
-import { formatIranianPhone } from "@/lib/auth/phone";
+import { Container } from "@/components/layout/container";
 import { Link } from "@/i18n/navigation";
-import { RouteState } from "@/components/layout/route-state";
-import { readAccountPhone } from "@/modules/account/models/session-view";
+import type { Locale } from "@/i18n/routing";
 import { SignOutButton } from "@/modules/account/components/sign-out-button";
+import { AddressBook } from "@/modules/account/components/address-book";
+import { OrderList } from "@/modules/account/components/order-list";
+import { ProfileForm } from "@/modules/account/components/profile-form";
+import { SignInRequired } from "@/modules/account/components/sign-in-required";
+import {
+  getLocationOptions,
+  getProfile,
+  listAddresses,
+  listOrders,
+} from "@/modules/account/account.reads";
+import { resolveViewer } from "@/modules/account/account.ownership";
 
 /**
- * Where phone-OTP sign-in lands. Deliberately almost empty.
+ * The account dashboard — `Phase D`.
  *
- * This is not `AUTH5`: there is no session list, no phone change and no account
- * closure, because each of those is a security surface with its own tests and
- * its own failure modes. What it does is make the session visible — before this,
- * signing in succeeded and showed the customer nothing, which reads as failure.
+ * Profile, address book and recent orders on one page. Everything here is a
+ * read or a profile write; no money moves, which is what makes this buildable
+ * ahead of checkout.
  *
- * The session is read on the server. Nothing about it crosses to the browser
- * beyond the formatted phone number.
+ * `noindex`: this is per-person state behind a session, there is nothing here
+ * for a crawler, and indexing it would put someone's address in a search
+ * result. `follow` stays, so the links out still pass through.
  */
-
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("account");
-  return { title: t("title"), robots: { index: false, follow: false } };
+  return { title: t("title"), robots: { index: false, follow: true } };
 }
 
 export default async function AccountPage({
   params,
 }: {
-  readonly params: Promise<{ locale: string }>;
+  readonly params: Promise<{ locale: Locale }>;
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations("account");
 
-  const session = await getSession(await headers());
-  const phone = session ? readAccountPhone(session.user) : null;
+  const viewer = await resolveViewer();
+  if (!viewer) return <SignInRequired next="/account" />;
 
-  if (!phone) {
-    return (
-      <RouteState
-        title={t("title")}
-        body={t("signIn")}
-        action={
-          <Link
-            href="/login"
-            className="border-b border-solid border-[color:var(--gold)] pb-1 text-[length:var(--text-body)]"
-          >
-            {t("signIn")}
-          </Link>
-        }
-      />
-    );
-  }
+  // One round of parallel reads rather than four sequential ones.
+  const [profile, addresses, locations, orders] = await Promise.all([
+    getProfile(viewer),
+    listAddresses(viewer),
+    getLocationOptions(),
+    listOrders(viewer, locale),
+  ]);
+
+  if (!profile) return <SignInRequired next="/account" />;
 
   return (
-    <section className="mx-auto grid w-full max-w-[38rem] gap-8 px-6 py-16 lg:py-24">
-      <h1 className="m-0 text-[length:var(--text-h2)] font-black leading-[1.35] text-[color:var(--ink)]">
-        {t("title")}
-      </h1>
+    <main>
+      <Container className="flex max-w-[54rem] flex-col gap-12 pt-14 pb-[var(--space-9)]">
+        <header className="flex flex-wrap items-baseline justify-between gap-4">
+          <h1 className="m-0 text-h2 font-bold">{t("title")}</h1>
+          <SignOutButton label={t("signOut")} />
+        </header>
 
-      <p className="m-0 grid gap-2 text-[length:var(--text-body)] text-[color:var(--stone-text)]">
-        <span>{t("signedInAs")}</span>
-        <span
-          dir="ltr"
-          className="text-start text-[length:var(--text-h3)] text-[color:var(--ink)] [font-variant-numeric:tabular-nums]"
-        >
-          {formatIranianPhone(phone)}
-        </span>
-      </p>
+        <ProfileForm profile={profile} />
 
-      <SignOutButton label={t("signOut")} />
-    </section>
+        <AddressBook
+          addresses={addresses}
+          provinces={locations.provinces}
+          cities={locations.cities}
+        />
+
+        <section className="flex flex-col gap-6">
+          <div className="flex flex-wrap items-baseline justify-between gap-4">
+            <h2 className="m-0 text-h3 font-bold">{t("orders.title")}</h2>
+            {orders.length > 0 && (
+              <Link
+                href="/account/orders"
+                className="inline-flex min-h-11 items-center text-small text-firouzeh-text"
+              >
+                {t("dashboard.ordersLink")}
+              </Link>
+            )}
+          </div>
+          <OrderList orders={orders.slice(0, 5)} />
+        </section>
+      </Container>
+    </main>
   );
 }

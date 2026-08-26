@@ -41,6 +41,10 @@ const ALLOWED_RAW_NAVIGATION = new Set([
   // `notFound` only. Every outcome that is not `ready` is a 404 here: there is
   // no fallback chain, so the route never redirects and never needs a pathname.
   "src/app/[locale]/(storefront)/shop/p/[slug]/page.tsx",
+  // `notFound` only. An order that is not yours is not-found rather than
+  // forbidden — saying "exists, but not yours" confirms the order number is
+  // real, which is what an enumeration attack needs.
+  "src/app/[locale]/(account)/account/orders/[id]/page.tsx",
 ]);
 
 describe("one locale-prefixing mechanism", () => {

@@ -1,4 +1,5 @@
 import { sql } from "drizzle-orm";
+import { iranCity, iranProvince } from "./geo";
 import {
   bigint,
   boolean,
@@ -97,8 +98,25 @@ export const address = pgTable(
       .references(() => person.id, { onDelete: "cascade" }),
     recipientName: text().notNull(),
     recipientPhone: text().notNull(),
-    province: text().notNull(),
-    city: text().notNull(),
+    /*
+      Canonical codes, not free text — the reason `iran_province` and
+      `iran_city` exist (`COM0` §3.2).
+
+      `shipping_rate` prices by location, and a rate keyed on a string somebody
+      typed is a rate that silently stops matching the day someone writes
+      «مشهد » with a trailing space. The label a customer reads is resolved from
+      the reference table at render time; the *order* keeps its own frozen label
+      in `addressSnapshot`, because an order must not change when a city is
+      renamed.
+
+      Changed while `address` was still empty, which is the only cheap moment.
+    */
+    provinceCode: text()
+      .notNull()
+      .references(() => iranProvince.code, { onDelete: "restrict" }),
+    cityCode: text()
+      .notNull()
+      .references(() => iranCity.code, { onDelete: "restrict" }),
     postalCode: text().notNull(),
     line: text().notNull(),
     isDefault: boolean().notNull().default(false),
@@ -107,6 +125,8 @@ export const address = pgTable(
   },
   (table) => [
     index("address_person_idx").on(table.personId),
+    index("address_province_idx").on(table.provinceCode),
+    index("address_city_idx").on(table.cityCode),
     uniqueIndex("address_person_default_unique")
       .on(table.personId)
       .where(sql`${table.isDefault}`),

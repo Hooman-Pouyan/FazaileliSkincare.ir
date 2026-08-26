@@ -64,6 +64,20 @@
       "when": 1787781210294,
       "tag": "0008_com0_geo_shipping_returns",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1787783739412,
+      "tag": "0009_address_drop_free_text_location",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1787783774332,
+      "tag": "0010_address_canonical_location",
+      "breakpoints": true
     }
   ]
 }

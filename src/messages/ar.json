@@ -68,7 +68,108 @@
     "title": "حسابي",
     "signedInAs": "تم تسجيل الدخول بالرقم",
     "signOut": "تسجيل الخروج",
-    "signIn": "تسجيل الدخول"
+    "signIn": "تسجيل الدخول",
+    "dashboard": {
+      "greeting": "مرحباً{name}",
+      "profileLink": "بياناتي",
+      "addressesLink": "العناوين",
+      "ordersLink": "الطلبات"
+    },
+    "profile": {
+      "title": "بياناتي",
+      "firstName": "الاسم",
+      "lastName": "اسم العائلة",
+      "locale": "اللغة المفضلة",
+      "save": "حفظ",
+      "saving": "جارٍ الحفظ…",
+      "saved": "تم الحفظ",
+      "phoneLabel": "رقم الجوال",
+      "phoneVerified": "مُوثّق",
+      "phoneLocked": "تغيير الرقم يحتاج توثيقاً جديداً، وهو غير متاح هنا بعد."
+    },
+    "addresses": {
+      "title": "العناوين",
+      "empty": "لم تحفظي أي عنوان بعد.",
+      "add": "إضافة عنوان",
+      "edit": "تعديل",
+      "remove": "حذف",
+      "setDefault": "اجعليه الافتراضي",
+      "isDefault": "افتراضي",
+      "recipientName": "اسم المستلم",
+      "recipientPhone": "جوال المستلم",
+      "province": "المحافظة",
+      "city": "المدينة",
+      "postalCode": "الرمز البريدي",
+      "line": "العنوان",
+      "chooseProvince": "اختاري المحافظة",
+      "chooseCity": "اختاري المدينة",
+      "makeDefault": "اجعلي هذا عنواني الافتراضي",
+      "save": "حفظ العنوان",
+      "cancel": "إلغاء",
+      "postalHint": "عشرة أرقام بدون شرطة",
+      "recipientHint": "قد لا تكونين أنت المستلمة؛ يتصل المندوب بهذا الرقم.",
+      "cityIncomplete": "المدرج حالياً مركز كل محافظة فقط."
+    },
+    "orders": {
+      "title": "الطلبات",
+      "empty": "لم تقومي بأي طلب بعد.",
+      "emptyAction": "عرض المنتجات",
+      "number": "رقم الطلب",
+      "placedAt": "التاريخ",
+      "items": "{count, plural, one {# منتج} other {# منتجات}}",
+      "total": "المبلغ",
+      "view": "عرض الفاتورة",
+      "notPlaced": "غير مُسجَّل"
+    },
+    "order": {
+      "title": "فاتورة {number}",
+      "back": "العودة إلى الطلبات",
+      "product": "المنتج",
+      "sku": "الرمز",
+      "quantity": "الكمية",
+      "unitPrice": "سعر الوحدة",
+      "lineTotal": "المجموع",
+      "subtotal": "مجموع المنتجات",
+      "shipping": "الشحن",
+      "discount": "الخصم",
+      "total": "المبلغ الكلي",
+      "shippingTo": "الشحن إلى",
+      "payments": "المدفوعات",
+      "noPayments": "لم يُسجَّل أي دفع بعد.",
+      "trackingNumber": "رقم التتبع",
+      "notFound": "لم نعثر على هذا الطلب."
+    },
+    "status": {
+      "draft": "مسودة",
+      "awaiting_payment": "بانتظار الدفع",
+      "awaiting_transfer": "بانتظار الحوالة",
+      "payment_review": "الدفع قيد المراجعة",
+      "paid": "مدفوع",
+      "fulfilled": "تم الشحن",
+      "completed": "مكتمل",
+      "cancelled": "ملغى",
+      "refunded": "مسترد"
+    },
+    "paymentStatus": {
+      "pending": "قيد الانتظار",
+      "submitted": "مُرسل",
+      "funds_received": "تم استلام المبلغ",
+      "settlement_review": "قيد المراجعة",
+      "settled": "تمت التسوية",
+      "failed": "فشل",
+      "refunded": "مسترد"
+    },
+    "paymentMethod": {
+      "gateway": "بوابة الدفع",
+      "bank_transfer": "حوالة بنكية",
+      "cash_on_pickup": "الدفع عند الاستلام"
+    },
+    "error": {
+      "invalid": "البيانات غير صحيحة.",
+      "not-yours": "حاولي مرة أخرى.",
+      "not-signed-in": "عليك تسجيل الدخول لذلك.",
+      "unknown-location": "المدينة لا تنتمي لتلك المحافظة."
+    }
   },
   "states": {
     "loading": "جارٍ التحميل…",

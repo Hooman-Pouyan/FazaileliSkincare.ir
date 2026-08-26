@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth/auth-client";
+import { safeReturnTo } from "../models/return-to";
 import {
   loginSchema,
   type LoginValues,
@@ -16,6 +17,17 @@ import {
 import type { AuthCopy } from "../screens/auth-screen";
 
 export const pendingPhoneStorageKey = "fazaieli.auth.pending-phone";
+
+/**
+ * Where to go once the code is verified — `Phase D`.
+ *
+ * Carried in `sessionStorage` beside the phone rather than through the URL,
+ * because `/verify` is reached by a client navigation and a query string there
+ * would survive in history after the code was used. It is validated on the way
+ * in *and* on the way out: `safeReturnTo` is cheap, and an open redirect is not
+ * a bug worth trusting one check with.
+ */
+export const pendingReturnStorageKey = "fazaieli.auth.pending-return";
 
 export function LoginForm({
   copy,
@@ -43,6 +55,10 @@ export function LoginForm({
       });
       if (result.error) throw new Error("AUTH_REQUEST_FAILED");
       sessionStorage.setItem(pendingPhoneStorageKey, phone);
+      sessionStorage.setItem(
+        pendingReturnStorageKey,
+        safeReturnTo(new URLSearchParams(window.location.search).get("next")),
+      );
       router.push("/verify");
     } catch {
       setRequestError(true);

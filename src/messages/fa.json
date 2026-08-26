@@ -68,7 +68,108 @@
     "title": "حساب من",
     "signedInAs": "وارد شده با شمارهٔ",
     "signOut": "خروج از حساب",
-    "signIn": "ورود"
+    "signIn": "ورود",
+    "dashboard": {
+      "greeting": "سلام{name}",
+      "profileLink": "مشخصات من",
+      "addressesLink": "نشانی‌ها",
+      "ordersLink": "سفارش‌ها"
+    },
+    "profile": {
+      "title": "مشخصات من",
+      "firstName": "نام",
+      "lastName": "نام خانوادگی",
+      "locale": "زبان دلخواه",
+      "save": "ذخیره",
+      "saving": "در حال ذخیره…",
+      "saved": "ذخیره شد",
+      "phoneLabel": "شمارهٔ موبایل",
+      "phoneVerified": "تأیید شده",
+      "phoneLocked": "برای تغییر شماره باید دوباره تأیید شود؛ فعلاً از این‌جا ممکن نیست."
+    },
+    "addresses": {
+      "title": "نشانی‌ها",
+      "empty": "هنوز نشانی‌ای ثبت نکرده‌اید.",
+      "add": "افزودن نشانی",
+      "edit": "ویرایش",
+      "remove": "حذف",
+      "setDefault": "پیش‌فرض کن",
+      "isDefault": "پیش‌فرض",
+      "recipientName": "نام گیرنده",
+      "recipientPhone": "موبایل گیرنده",
+      "province": "استان",
+      "city": "شهر",
+      "postalCode": "کد پستی",
+      "line": "نشانی",
+      "chooseProvince": "استان را انتخاب کنید",
+      "chooseCity": "شهر را انتخاب کنید",
+      "makeDefault": "این نشانی پیش‌فرض باشد",
+      "save": "ذخیرهٔ نشانی",
+      "cancel": "انصراف",
+      "postalHint": "ده رقم، بدون خط تیره",
+      "recipientHint": "گیرنده ممکن است خودتان نباشید؛ پیک با این شماره تماس می‌گیرد.",
+      "cityIncomplete": "فعلاً فقط مرکز هر استان در فهرست است."
+    },
+    "orders": {
+      "title": "سفارش‌ها",
+      "empty": "هنوز سفارشی ثبت نکرده‌اید.",
+      "emptyAction": "دیدن محصولات",
+      "number": "شمارهٔ سفارش",
+      "placedAt": "تاریخ",
+      "items": "{count, plural, one {# کالا} other {# کالا}}",
+      "total": "مبلغ",
+      "view": "دیدن فاکتور",
+      "notPlaced": "ثبت‌نشده"
+    },
+    "order": {
+      "title": "فاکتور {number}",
+      "back": "بازگشت به سفارش‌ها",
+      "product": "محصول",
+      "sku": "کد",
+      "quantity": "تعداد",
+      "unitPrice": "قیمت واحد",
+      "lineTotal": "جمع",
+      "subtotal": "جمع کالاها",
+      "shipping": "هزینهٔ ارسال",
+      "discount": "تخفیف",
+      "total": "مبلغ کل",
+      "shippingTo": "ارسال به",
+      "payments": "پرداخت‌ها",
+      "noPayments": "هنوز پرداختی ثبت نشده است.",
+      "trackingNumber": "شمارهٔ پیگیری",
+      "notFound": "این سفارش پیدا نشد."
+    },
+    "status": {
+      "draft": "پیش‌نویس",
+      "awaiting_payment": "در انتظار پرداخت",
+      "awaiting_transfer": "در انتظار واریز",
+      "payment_review": "در حال بررسی پرداخت",
+      "paid": "پرداخت شده",
+      "fulfilled": "ارسال شده",
+      "completed": "تکمیل شده",
+      "cancelled": "لغو شده",
+      "refunded": "بازگشت وجه"
+    },
+    "paymentStatus": {
+      "pending": "در انتظار",
+      "submitted": "ثبت شده",
+      "funds_received": "وجه دریافت شد",
+      "settlement_review": "در حال بررسی",
+      "settled": "تسویه شده",
+      "failed": "ناموفق",
+      "refunded": "بازگشت وجه"
+    },
+    "paymentMethod": {
+      "gateway": "درگاه پرداخت",
+      "bank_transfer": "کارت به کارت",
+      "cash_on_pickup": "پرداخت هنگام تحویل"
+    },
+    "error": {
+      "invalid": "اطلاعات واردشده درست نیست.",
+      "not-yours": "دوباره تلاش کنید.",
+      "not-signed-in": "برای این کار باید وارد شوید.",
+      "unknown-location": "استان و شهر با هم نمی‌خوانند."
+    }
   },
   "states": {
     "loading": "در حال بارگذاری…",
