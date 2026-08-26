@@ -42,7 +42,7 @@ export type SeedContentItem = Readonly<{
 
 export type SeedContentBlock = Readonly<{
   key: string;
-  kind: "faq" | "editorial" | "gallery" | "campaign";
+  kind: "faq" | "editorial" | "gallery" | "campaign" | "testimonial";
   surface:
     | "shop.hub"
     | "shop.listing"
@@ -272,6 +272,124 @@ export const CONTENT_BLOCKS: readonly SeedContentBlock[] = [
         mediaAlt: { fa: "آمپول Princess Shine", en: "Princess Shine Ampoule" },
       },
     ],
+  },
+
+  /*
+    ── The Landing ────────────────────────────────────────────────────────────
+
+    Three beats, and deliberately not five. Beat 1 (the portrait) and beat 3
+    (the three doors) are the page's skeleton and its primary navigation; making
+    them depend on a draft content row would let a missing row take the site's
+    front door with it. They stay in the message files, where the rail and the
+    footer already keep their labels.
+
+    What is here is what `L-10` says may be **absent**: the claim, the proof and
+    the closing invitation. Absent means the beat, its heading, its ornament and
+    its vertical rhythm all go, and the beats around it close the gap.
+  */
+  {
+    key: "landing.claim",
+    kind: "editorial",
+    surface: "landing",
+    sortOrder: 20,
+    heading: { fa: "چرا اینجا", en: "Why here" },
+    body: {
+      fa: "مراقبت از پوست کاری است که هر مرحله‌اش شمرده است — از انتخاب محصول تا اجرای درمان. آنچه در فروشگاه می‌بینید همان چیزی است که در مطب هم استفاده می‌شود.",
+      en: "Skincare is work where every step is counted — from choosing a product to carrying out a treatment. What you see in the shop is what is actually used in the practice.",
+    },
+    /*
+      Two credentials, and only two. `L-2` wants years of practice and students
+      trained beside them; neither number exists in any document in this
+      repository, and both are claims about her business. They are not invented
+      here — the beat simply renders what is verifiable until they are supplied.
+    */
+    items: [
+      {
+        key: "forlled",
+        title: {
+          fa: "نمایندهٔ رسمی Forlle'd ژاپن",
+          en: "Official representative of Forlle'd, Japan",
+        },
+      },
+      {
+        key: "instructor",
+        title: {
+          fa: "مدرس دارای گواهی سازمان فنی و حرفه‌ای",
+          en: "Certified instructor, Technical and Vocational Training Organization",
+        },
+      },
+    ],
+  },
+
+  /*
+    The proof rail. Every quote below is invented and says so in its own
+    attribution — «نمونه» / "sample" — because `CONTENT-03` requires a preview
+    set that cannot be mistaken for a customer's words.
+
+    The forty-two real transcriptions are deliberately NOT imported. Consent is
+    `unknown` on every one of them, and storing a person's words about their own
+    skin with no consent and no purpose is worse than a thin rail. That departs
+    from `CONTENT-02`, which asked for them as unpublished drafts; the reason is
+    in the packet 6 review log, and it makes the guarantee stronger rather than
+    weaker — no path can publish a real testimonial because no real testimonial
+    is stored.
+  */
+  {
+    key: "landing.proof.testimonials",
+    kind: "testimonial",
+    surface: "landing",
+    sortOrder: 40,
+    heading: { fa: "از زبان مراجعان", en: "In their words" },
+    items: [
+      {
+        key: "sample-1",
+        title: { fa: "سمیرا ن. — نمونه", en: "Samira N. — sample" },
+        body: {
+          fa: "بعد از چند ماه امتحان کردن محصول‌های مختلف، اولین بار بود که کسی پرسید پوستم به چه چیزی نیاز دارد، نه اینکه چه چیزی بفروشد.",
+          en: "After months of trying different products, it was the first time anyone asked what my skin needed rather than what they could sell.",
+        },
+      },
+      {
+        key: "sample-2",
+        title: { fa: "مرضیه ک. — نمونه", en: "Marziyeh K. — sample" },
+        body: {
+          fa: "روتینم از پنج محصول به سه تا رسید و نتیجه‌اش بهتر شد. توضیح دادند چرا، که از خودش مهم‌تر بود.",
+          en: "My routine went from five products to three and worked better. They explained why, which mattered more than the change itself.",
+        },
+      },
+      {
+        key: "sample-3",
+        title: { fa: "نگار الف. — نمونه", en: "Negar A. — sample" },
+        body: {
+          fa: "پوستم حساس است و همیشه از جلسه‌های درمانی می‌ترسیدم. هر مرحله را پیش از شروع گفتند و هیچ‌چیز غافلگیرکننده نبود.",
+          en: "My skin is sensitive and treatments always worried me. Every step was explained before it started and nothing was a surprise.",
+        },
+      },
+      {
+        key: "sample-4",
+        title: { fa: "الهام ر. — نمونه", en: "Elham R. — sample" },
+        body: {
+          fa: "دوره را که تمام کردم توانستم کار خودم را شروع کنم. آموزش عملی بود، نه فقط جزوه.",
+          en: "I could start working for myself once the course finished. The teaching was hands-on rather than notes.",
+        },
+      },
+    ],
+  },
+
+  {
+    key: "landing.invitation",
+    kind: "editorial",
+    surface: "landing",
+    sortOrder: 60,
+    heading: { fa: "از یک گفت‌وگو شروع کنید", en: "Start with a conversation" },
+    body: {
+      fa: "پیش از خرید هر محصولی، بیایید ببینیم پوستتان واقعاً به چه چیزی نیاز دارد. یک جلسهٔ کوتاه، و یک روتین که بتوانید ادامه‌اش بدهید.",
+      en: "Before buying anything, let us see what your skin actually needs. One short session, and a routine you can keep.",
+    },
+    cta: {
+      label: { fa: "رزرو وقت مشاوره", en: "Book a consultation" },
+      href: "/booking",
+    },
   },
 
   concernFaq("lak", 100, { fa: "درباره‌ی لک", en: "About pigmentation" }, [

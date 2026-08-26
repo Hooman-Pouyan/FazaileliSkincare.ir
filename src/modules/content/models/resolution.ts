@@ -25,7 +25,13 @@ export type ContentScope = Readonly<{
   slug: string;
 }> | null;
 
-export type ContentBlockKind = "faq" | "editorial" | "gallery" | "campaign";
+export type ContentBlockKind =
+  | "faq"
+  | "editorial"
+  | "gallery"
+  | "campaign"
+  /** Preview quotes only — a consented testimonial is a domain entity. */
+  | "testimonial";
 export type ContentReviewState = "draft" | "reviewed" | "approved";
 
 export type PlacementInput = Readonly<{

@@ -133,6 +133,16 @@ export const contentBlockKindEnum = pgEnum("content_block_kind", [
   "editorial",
   "gallery",
   "campaign",
+  /**
+   * A quote with an attribution. Added for the Landing's proof beat.
+   *
+   * It carries **preview** quotes only — clearly fictional ones, so the rail
+   * can be judged full (`CONTENT-03`). A real testimonial is not editorial
+   * copy: it is a person's words about their own skin, with a consent state, a
+   * source and a right to withdraw. That is a domain entity and it gets its own
+   * table when there is consent to model. See the packet 6 review log.
+   */
+  "testimonial",
 ]);
 export const contentSurfaceEnum = pgEnum("content_surface", [
   "shop.hub",

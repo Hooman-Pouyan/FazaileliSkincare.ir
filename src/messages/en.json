@@ -32,7 +32,19 @@
       "book": "Facials and specialist treatments. See real availability and book on the spot.",
       "academy": "Professional courses and workshops, in Mashhad and online."
     },
-    "quote": "\"When your skin's health is at stake, quality means no step is ever rushed.\""
+    "quote": "\"When your skin's health is at stake, quality means no step is ever rushed.\"",
+    "testimonials": {
+      "label": "What clients say",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "comparison": {
+      "heading": "Before and after",
+      "before": "Before",
+      "after": "After"
+    },
+    "portraitAlt": "Mahdieh Fazaieli in the practice",
+    "doorsHeading": "Three rooms"
   },
   "common": {
     "currency": "Toman",

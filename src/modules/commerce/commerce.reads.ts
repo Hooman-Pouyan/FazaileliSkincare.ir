@@ -1112,6 +1112,14 @@ async function loadScopeContent(
   const bands: ContentBand[] = [];
 
   for (const block of blocks) {
+    /*
+      A listing has no testimonial beat. The type system caught this the moment
+      the kind was added for the Landing, which is the argument for the band
+      union being narrower than the spine's: a surface should not silently
+      render a block kind it was never designed for.
+    */
+    if (block.kind === "testimonial") continue;
+
     if (block.kind === "faq") {
       for (const item of block.items) {
         // An answer is not optional. A question with no answer is worse than no

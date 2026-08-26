@@ -1,0 +1,1 @@
+ALTER TYPE "public"."content_block_kind" ADD VALUE 'testimonial';
