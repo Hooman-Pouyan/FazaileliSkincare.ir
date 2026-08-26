@@ -138,6 +138,21 @@
       "professionalMark": "Professional",
       "variantRequired": "Choose a size on the product page",
       "unavailable": "Not available at the moment"
+    },
+    "heroImageAlt": "The Forlle'd Hyalogy range on stone",
+    "heroFacts": {
+      "official": {
+        "title": "Official Forlle'd Japan representative",
+        "body": "Every product arrives through the official route; we will check any package with you."
+      },
+      "shipping": {
+        "title": "Shipped from Mashhad across Iran",
+        "body": "Protective packaging, and we follow the order until it reaches you."
+      },
+      "advice": {
+        "title": "Ask before you buy",
+        "body": "Tell us what your skin is doing and we will point you in the right direction, whether or not you buy."
+      }
     }
   }
 }

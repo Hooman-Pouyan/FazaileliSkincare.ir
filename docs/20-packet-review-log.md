@@ -89,6 +89,18 @@ carried gap has become a real problem.
 
 ---
 
+## Shop hero and asset pass — 2026-08-26
+
+| #   | What                                                                                                                                                                                                                                                                                                                                                                                                                         | Kind      | Status        |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ------------- |
+| A.1 | **The hero is now a shop hero, not a second landing hero.** Its subject is the shelf: Forlle'd's cut-out product photography on our own lapis field, on a gold hairline standing in for the stone slab, with the blossom behind it — plus a three-fact strip answering genuine / delivery / ask-first before the fold. Worth judging on screen against the Landing's hero, since the two must not read as the same page.     | UI        | **needs you** |
+| A.2 | **The Forlle'd hero photograph is marked `Permission not verified`** in the asset catalog. It renders anyway, because a retailer showing a manufacturer's product photograph is ordinary and Forlle'd representation is the one confirmed relationship — the same reasoning that keeps logos held under L-14, applied to a lower-risk case. One sentence from the distributor closes it.                                     | legal     | **needs you** |
+| A.3 | **I was wrong about the asset provenance and corrected it.** My first `public/images/README.md` said the origin of these files was unknown. `designs/asset-library/2026-08-26/catalog.json` records creator, source and licence for all 22: the editorial and botanical sets are Pexels, Unsplash or CC0 and are cleared for commercial use. Only the four Forlle'd-sourced images are unverified. The README now says that. | process   | resolved      |
+| A.4 | **Six cleared Japanese photographs are sitting unused** — the airy sakura branch, Ryōan-ji's raked garden, the Nara tea still life, the stone path, the bamboo silhouette. They are on-brand and licensed. They are unused only because no slot has been designed for them; that is Landing work, not hub work.                                                                                                              | UI        | open          |
+| A.5 | **`public/images` is 173MB**, most of it the Storyderm product library. It is in git. Before the first deploy, decide whether supplier photography belongs in the repository or in object storage — `docs/14` already plans storage keys for exactly this.                                                                                                                                                                   | technical | open          |
+
+---
+
 ## Hub composition and voice pass — 2026-08-25
 
 Raised by the hub reading as flat and the copy as scripted. Decisions in
