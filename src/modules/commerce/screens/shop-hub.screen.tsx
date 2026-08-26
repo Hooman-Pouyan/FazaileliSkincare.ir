@@ -2,38 +2,38 @@ import { useTranslations } from "next-intl";
 import { Container, Section } from "@/components/layout/container";
 import { EmptyState } from "@/components/layout/empty-state";
 import { Reveal } from "@/components/layout/reveal";
-import { ScrollRail } from "@/components/layout/scroll-rail";
 import { Link } from "@/i18n/navigation";
 import { Button } from "@/components/ui/button";
 import {
   AuthenticityBand,
   BrandList,
   CategoryLinks,
+  ConcernSpotlights,
   ConcernTiles,
+  EditorialMosaic,
   SectionHeading,
 } from "../components/hub-sections";
 import { HubHero } from "../components/hub-hero";
-import { ProductTile } from "../components/product-tile";
+import { ProductSpotlight } from "../components/product-spotlight";
 import type { ShopHubPage } from "../models/page-models";
 
 /**
- * The Shop's front door. Concern first, brand second, type third — the order in
- * `docs/04-information-architecture.md` §1, and the gap the competitive research
- * found: the dominant Iranian vendor has no concern axis at all.
+ * The Shop's front door. Concern first, brand second, type third.
  *
  * This is the Shop hub and only the Shop hub. Brand storytelling, the academy,
- * booking and testimonials belong to the Landing, per decision L-1. The one
- * exception is the authenticity band, which is not storytelling: counterfeit
- * anxiety is a *purchase* objection, and answering it belongs where the buying
+ * booking and testimonials belong to the Landing, per decision L-1. The
+ * authenticity band is the one exception, and it is not storytelling:
+ * counterfeit anxiety is a *purchase* objection, so it belongs where the buying
  * happens.
  *
  * Every section renders from the page model or does not render at all. There is
  * no placeholder section and no "coming soon" — an axis with nothing behind it
  * is a dead end dressed as a choice.
  *
- * Rhythm: ground → ground → lapis → surface → ground → ground. The dark band
- * lands in the middle, which is the alternation `docs/09-brand-brief.md` asks
- * for and the only field where gold and champagne pass contrast.
+ * Band rhythm: ink → ground → surface → ground → lapis → surface → ground →
+ * ground → surface. The two dark fields land at the top and the middle, which is
+ * the alternation `09-brand-brief.md` describes and the only ground where gold
+ * and champagne pass contrast.
  */
 export function ShopHubScreen({ page }: { readonly page: ShopHubPage }) {
   const t = useTranslations("shop");
@@ -86,29 +86,22 @@ export function ShopHubScreen({ page }: { readonly page: ShopHubPage }) {
         <Section tone="surface">
           <Container>
             <SectionHeading
-              title={t("featured.title")}
-              lede={t("featured.lede")}
+              title={t("spotlight.title")}
+              lede={t("spotlight.lede")}
             />
-            <ScrollRail
-              label={t("featured.railLabel")}
-              previousLabel={t("rail.previous")}
-              nextLabel={t("rail.next")}
-              itemClassName="[&>li]:w-[68vw] sm:[&>li]:w-[42vw] lg:[&>li]:w-[23rem]"
-            >
-              {page.featured.map((product, index) => (
-                <Reveal
-                  as="li"
-                  key={product.slug}
-                  delay={Math.min(index, 3) * 60}
-                >
-                  <ProductTile
-                    product={product}
-                    enquiryHref={t("enquiryHref")}
-                    priority={index < 2}
-                  />
-                </Reveal>
-              ))}
-            </ScrollRail>
+            <ProductSpotlight products={page.featured} />
+          </Container>
+        </Section>
+      )}
+
+      {page.concernSpotlights.length > 0 && (
+        <Section>
+          <Container>
+            <SectionHeading
+              title={t("spotlights.title")}
+              lede={t("spotlights.lede")}
+            />
+            <ConcernSpotlights spotlights={page.concernSpotlights} />
           </Container>
         </Section>
       )}
@@ -116,6 +109,12 @@ export function ShopHubScreen({ page }: { readonly page: ShopHubPage }) {
       <Section tone="lapis">
         <Container>
           <AuthenticityBand />
+        </Container>
+      </Section>
+
+      <Section tone="surface">
+        <Container>
+          <EditorialMosaic />
         </Container>
       </Section>
 

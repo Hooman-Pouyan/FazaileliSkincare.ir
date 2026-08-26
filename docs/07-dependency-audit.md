@@ -27,36 +27,38 @@
 
 Current state-management classifications:
 
-| Dependency | Status | First owner/trigger |
-|---|---|---|
-| `zustand` | Required-not-installed | Foundation: request-safe Commerce/shell interaction store and PLP draft-filter coordination |
-| `@tanstack/react-query` | Approved-gated | First accepted browser-refetched server read, most likely Cart drawer synchronization or approved autocomplete |
+| Dependency              | Status                 | First owner/trigger                                                                                            |
+| ----------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `zustand`               | Required-not-installed | Foundation: request-safe Commerce/shell interaction store and PLP draft-filter coordination                    |
+| `@tanstack/react-query` | Approved-gated         | First accepted browser-refetched server read, most likely Cart drawer synchronization or approved autocomplete |
 
-| Package | Latest stable | Note |
-|---|---|---|
-| `next` | **16.3.2** | Node 20.9+, Turbopack default |
-| `react` / `react-dom` | **19.2.8** | |
-| `typescript` | **6.0.3** | Compatibility pin: `typescript-eslint` 8.67 declares `<6.1.0` |
-| `eslint` | **9.39.5** | Compatibility pin: Next 16.3's installed ESLint plugins reject 10.x |
-| `pnpm` | **11.23.0** | Your package manager |
-| `tailwindcss` | **4.3.3** | CSS-first config |
-| `drizzle-orm` | **0.45.2** | Still 0.x — pin exactly |
-| `drizzle-kit` | **0.31.10** | |
-| `drizzle-zod` | **0.8.3** | |
-| `postgres` | **3.4.9** | postgres.js driver |
-| `next-intl` | **4.13.7** | |
-| `better-auth` | **1.7.1** | Stable 1.x |
-| `zod` | **4.4.3** | ⚠️ Zod **4** — see below |
-| `react-hook-form` | **7.86.0** | |
-| `@hookform/resolvers` | **5.9.1** | |
-| `zustand` | **5.0.15** | Required architecture dependency; not yet installed in the current scaffold |
-| `@tanstack/react-query` | **5.102.3** | Approved secondary dependency; install only with the first accepted browser-refetched server-state consumer |
-| `radix-ui` | **1.6.7** | Unified Radix primitives package used by the scaffold |
-| `tw-animate-css` | **1.4.0** | Tailwind v4 animation utilities imported by `globals.css` |
-| `react-day-picker` | **10.0.1** | ⚠️ major 10 |
-| `shadcn` (CLI) | **4.19.0** | |
-| `sonner` 2.0.8 · `cmdk` 1.1.1 · `input-otp` 1.5.0 · `embla-carousel-react` 8.6.0 · `lucide-react` 1.33.0 · `libphonenumber-js` 1.13.11 · `class-variance-authority` 0.7.1 · `tailwind-merge` 3.6.0 | | |
-| `vitest` 4.1.11 · `@playwright/test` 1.62.1 | | |
+| Package                                                                                                                                                                                            | Latest stable | Note                                                                                                                                                                                                                                                                                                                                                   |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `next`                                                                                                                                                                                             | **16.3.2**    | Node 20.9+, Turbopack default                                                                                                                                                                                                                                                                                                                          |
+| `react` / `react-dom`                                                                                                                                                                              | **19.2.8**    |                                                                                                                                                                                                                                                                                                                                                        |
+| `typescript`                                                                                                                                                                                       | **6.0.3**     | Compatibility pin: `typescript-eslint` 8.67 declares `<6.1.0`                                                                                                                                                                                                                                                                                          |
+| `eslint`                                                                                                                                                                                           | **9.39.5**    | Compatibility pin: Next 16.3's installed ESLint plugins reject 10.x                                                                                                                                                                                                                                                                                    |
+| `pnpm`                                                                                                                                                                                             | **11.23.0**   | Your package manager                                                                                                                                                                                                                                                                                                                                   |
+| `tailwindcss`                                                                                                                                                                                      | **4.3.3**     | CSS-first config                                                                                                                                                                                                                                                                                                                                       |
+| `drizzle-orm`                                                                                                                                                                                      | **0.45.2**    | Still 0.x — pin exactly                                                                                                                                                                                                                                                                                                                                |
+| `drizzle-kit`                                                                                                                                                                                      | **0.31.10**   |                                                                                                                                                                                                                                                                                                                                                        |
+| `drizzle-zod`                                                                                                                                                                                      | **0.8.3**     |                                                                                                                                                                                                                                                                                                                                                        |
+| `postgres`                                                                                                                                                                                         | **3.4.9**     | postgres.js driver                                                                                                                                                                                                                                                                                                                                     |
+| `next-intl`                                                                                                                                                                                        | **4.13.7**    |                                                                                                                                                                                                                                                                                                                                                        |
+| `better-auth`                                                                                                                                                                                      | **1.7.1**     | Stable 1.x                                                                                                                                                                                                                                                                                                                                             |
+| `zod`                                                                                                                                                                                              | **4.4.3**     | ⚠️ Zod **4** — see below                                                                                                                                                                                                                                                                                                                               |
+| `react-hook-form`                                                                                                                                                                                  | **7.86.0**    |                                                                                                                                                                                                                                                                                                                                                        |
+| `@hookform/resolvers`                                                                                                                                                                              | **5.9.1**     |                                                                                                                                                                                                                                                                                                                                                        |
+| `zustand`                                                                                                                                                                                          | **5.0.15**    | Required architecture dependency; not yet installed in the current scaffold                                                                                                                                                                                                                                                                            |
+| `@tanstack/react-query`                                                                                                                                                                            | **5.102.3**   | Approved secondary dependency; install only with the first accepted browser-refetched server-state consumer                                                                                                                                                                                                                                            |
+| `radix-ui`                                                                                                                                                                                         | **1.6.7**     | Unified Radix primitives package used by the scaffold                                                                                                                                                                                                                                                                                                  |
+| `tw-animate-css`                                                                                                                                                                                   | **1.4.0**     | Tailwind v4 animation utilities imported by `globals.css`                                                                                                                                                                                                                                                                                              |
+| `swiper`                                                                                                                                                                                           | **14.1.0**    | Installed 2026-08-26. The storefront's **only** carousel — decision M-3. Modules are imported individually (`Navigation`, `Pagination`, `Keyboard`, `A11y`); `Autoplay` is deliberately never imported, so it cannot be enabled by passing a prop. Slides server-render, and `no-js-scroll` in `globals.css` makes the wrapper scroll before hydration |
+| `animejs`                                                                                                                                                                                          | **4.5.0**     | Installed 2026-08-26. Choreography only — entrance sequences and SVG stroke drawing — behind `src/lib/motion/choreography.ts`. v4 is modular ESM, so only `animate`, `stagger`, `svg` and `utils` are pulled in. CSS transitions keep state changes; see decision M-4 for the boundary                                                                 |
+| `react-day-picker`                                                                                                                                                                                 | **10.0.1**    | ⚠️ major 10                                                                                                                                                                                                                                                                                                                                            |
+| `shadcn` (CLI)                                                                                                                                                                                     | **4.19.0**    |                                                                                                                                                                                                                                                                                                                                                        |
+| `sonner` 2.0.8 · `cmdk` 1.1.1 · `input-otp` 1.5.0 · `embla-carousel-react` 8.6.0 · `lucide-react` 1.33.0 · `libphonenumber-js` 1.13.11 · `class-variance-authority` 0.7.1 · `tailwind-merge` 3.6.0 |               |                                                                                                                                                                                                                                                                                                                                                        |
+| `vitest` 4.1.11 · `@playwright/test` 1.62.1                                                                                                                                                        |               |                                                                                                                                                                                                                                                                                                                                                        |
 
 ---
 
@@ -73,22 +75,22 @@ versions with no prerelease suffix: []
 
 **Replacement — and it is better anyway:**
 
-| Job | Tool |
-|---|---|
-| **Formatting** a date in Persian | `Intl.DateTimeFormat('fa-IR-u-ca-persian', …)` — **built into Node and every browser.** Zero dependencies, correct Persian digits and month names, maintained by the platform. |
-| **Calendar arithmetic** — Jalali ↔ Gregorian, month lengths, leap years | **`jalaali-js` 2.0.1** — stable, tiny, single-purpose, widely used. |
+| Job                                                                      | Tool                                                                                                                                                                           |
+| ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Formatting** a date in Persian                                         | `Intl.DateTimeFormat('fa-IR-u-ca-persian', …)` — **built into Node and every browser.** Zero dependencies, correct Persian digits and month names, maintained by the platform. |
+| **Calendar arithmetic** — Jalali ↔ Gregorian, month lengths, leap years | **`jalaali-js` 2.0.1** — stable, tiny, single-purpose, widely used.                                                                                                            |
 
 Both stay behind the one `JalaliDate` utility module that the domain model already requires, so nothing else in the codebase touches calendar conversion.
 
 ### 2. ⚠️ Zod **4**, not 3 — the API I would have written by default is deprecated
 
-| Zod 3 (what I'd have written) | Zod 4 (correct) |
-|---|---|
-| `z.string().email()` | **`z.email()`** — string formats are now top-level; the old form is deprecated |
-| `{ message: "…" }`, `invalid_type_error`, `required_error` | **`{ error: "…" }`** — one unified parameter |
-| `errorMap` | **`error`** — renamed, accepts a plain string |
-| `z.record(valueSchema)` | **`z.record(keySchema, valueSchema)`** — two arguments now required |
-| `.default()` parses the default | **`.default()` short-circuits**; `.prefault()` is the old behaviour |
+| Zod 3 (what I'd have written)                              | Zod 4 (correct)                                                                |
+| ---------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| `z.string().email()`                                       | **`z.email()`** — string formats are now top-level; the old form is deprecated |
+| `{ message: "…" }`, `invalid_type_error`, `required_error` | **`{ error: "…" }`** — one unified parameter                                   |
+| `errorMap`                                                 | **`error`** — renamed, accepts a plain string                                  |
+| `z.record(valueSchema)`                                    | **`z.record(keySchema, valueSchema)`** — two arguments now required            |
+| `.default()` parses the default                            | **`.default()` short-circuits**; `.prefault()` is the old behaviour            |
 
 Also: defaults inside optional fields now apply by default. Since **every server action opens with a Zod parse** (AGENTS.md rule 3), getting this wrong would have been wrong in about a hundred places.
 
@@ -106,13 +108,13 @@ The registry's newest releases are not a compatible set for this scaffold. `type
 
 Zustand and TanStack Query are complementary, not alternatives and not replacements for Next.js Server Components.
 
-| Concern | Decision |
-|---|---|
-| Shared client interaction state | **Zustand required.** Module-scoped stores own draft filters, drawer/command state, selected variants, gallery selection, and other coordinated UI interactions. |
-| Applied search/filter/sort/page state | **URL-owned.** It must remain shareable, canonical, and restorable through browser history. Zustand may hold an explicit draft before Apply. |
-| Initial PHP/PLP/PDP/catalogue state | **Server-owned.** Page-shaped reads and Server Components remain the primary path. |
-| Form buffers | **React Hook Form-owned.** Do not duplicate form values into Zustand without an approved cross-step draft requirement. |
-| Browser-refetched server state | **TanStack Query approved with a first-consumer gate.** Expected candidates are cart drawer synchronization, approved autocomplete, live booking availability, and account/order status refresh. |
+| Concern                               | Decision                                                                                                                                                                                         |
+| ------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Shared client interaction state       | **Zustand required.** Module-scoped stores own draft filters, drawer/command state, selected variants, gallery selection, and other coordinated UI interactions.                                 |
+| Applied search/filter/sort/page state | **URL-owned.** It must remain shareable, canonical, and restorable through browser history. Zustand may hold an explicit draft before Apply.                                                     |
+| Initial PHP/PLP/PDP/catalogue state   | **Server-owned.** Page-shaped reads and Server Components remain the primary path.                                                                                                               |
+| Form buffers                          | **React Hook Form-owned.** Do not duplicate form values into Zustand without an approved cross-step draft requirement.                                                                           |
+| Browser-refetched server state        | **TanStack Query approved with a first-consumer gate.** Expected candidates are cart drawer synchronization, approved autocomplete, live booking availability, and account/order status refresh. |
 
 Zustand 5's Next.js guidance requires request-safe scoped stores and keeps React Server Components outside the store. Persistence is default-off because browser storage can create hydration, privacy, and stale-contract problems. TanStack Query requires an explicit QueryClient/hydration/cache boundary; adding that boundary is justified only when browser refetching or cache synchronization is an accepted requirement.
 
@@ -122,19 +124,21 @@ The complete ownership, hydration, URL reconciliation, selector, Query key, retr
 
 ```ts
 phoneNumber({
-  sendOTP: ({ phoneNumber, code }, ctx) => { /* Kavenegar / SMS.ir */ },
+  sendOTP: ({ phoneNumber, code }, ctx) => {
+    /* Kavenegar / SMS.ir */
+  },
   signUpOnVerification: {
     getTempEmail: (phone) => placeholderEmailFromPhone(phone),
-    getTempName:  () => "کاربر",
+    getTempName: () => "کاربر",
   },
-})
+});
 // client: authClient.phoneNumber.sendOtp({ phoneNumber })
 //         authClient.phoneNumber.verify({ phoneNumber, code })
 ```
 
 Defaults: 6-digit code, 300s expiry, 3 attempts, session created on verification. This project overrides expiry to 120 seconds, creates a non-PII HMAC-derived address under `.invalid`, and schedules the send through Next.js `after()` with a bounded provider call. The docs advise **not awaiting `sendOTP`** in the response path — it prevents SMS-provider latency leaking into response timing.
 
-That aligns with our own OTP invariants (single use, short TTL, rate-limited by phone *and* IP), and it does not replace them: Better Auth's 3-attempt limit protects one code; it does not stop someone burning your SMS budget by requesting a hundred codes.
+That aligns with our own OTP invariants (single use, short TTL, rate-limited by phone _and_ IP), and it does not replace them: Better Auth's 3-attempt limit protects one code; it does not stop someone burning your SMS budget by requesting a hundred codes.
 
 Customer password sign-up remains disabled. The same pinned package supplies separately provisioned staff email/password plus mandatory TOTP; the complete adapter, session, rate-limit, proxy, and account-lifecycle contract is [`system-design/authentication-and-account-security.md`](system-design/authentication-and-account-security.md).
 
@@ -171,10 +175,10 @@ A range nobody honours is worse than a wider range that is enforced.
 
 ### What the range means
 
-| Bound | Reason |
-|---|---|
+| Bound     | Reason                                                                                                                                                                           |
+| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `>=22.11` | The 22 LTS line, which `liara.json` deploys (`nodeVersion: "22"`). `.11` rather than `.0` because the earlier 22 patches predate the `require(esm)` behaviour Next 16 relies on. |
-| `<25` | Node 25 is not tested and is not an LTS line. Raising this is a decision, not a default. |
+| `<25`     | Node 25 is not tested and is not an LTS line. Raising this is a decision, not a default.                                                                                         |
 
 ### What did **not** change, and why that matters
 

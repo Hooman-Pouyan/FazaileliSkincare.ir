@@ -15,6 +15,7 @@ const en = (pathname: string) =>
 function hub(overrides: Partial<ShopHubPage> = {}): ShopHubPage {
   return {
     concerns: [],
+    concernSpotlights: [],
     brands: [],
     categories: [],
     featured: [],

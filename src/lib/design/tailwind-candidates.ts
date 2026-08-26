@@ -31,6 +31,29 @@ const CLASS_BUILDERS = new Set(["cn", "clsx", "cva", "twMerge", "twJoin"]);
 const SOURCE_EXTENSIONS = /\.tsx?$/;
 const TEST_FILE = /\.test\.tsx?$/;
 
+/**
+ * Class names the project defines in its own stylesheets.
+ *
+ * Not every class is a Tailwind utility. `globals.css` declares a few — the
+ * carousel's pre-hydration scroll fallback, its pagination bullets — because
+ * they style a third-party component's internals, which utilities cannot reach.
+ * Those are legitimate, so the gate reads the stylesheet rather than keeping a
+ * hand-maintained allow-list that would drift.
+ */
+export function projectStylesheetClasses(projectRoot: string): Set<string> {
+  const found = new Set<string>();
+  for (const sheet of ["src/app/globals.css", "designs/tokens.css"]) {
+    const path = resolve(projectRoot, sheet);
+    if (!existsSync(path)) continue;
+    const css = readFileSync(path, "utf8");
+    for (const match of css.matchAll(/\.(-?[A-Za-z_][\w-]*)/g)) {
+      const name = match[1];
+      if (name) found.add(name);
+    }
+  }
+  return found;
+}
+
 export function listSourceFiles(root: string): string[] {
   const files: string[] = [];
   const walk = (directory: string): void => {

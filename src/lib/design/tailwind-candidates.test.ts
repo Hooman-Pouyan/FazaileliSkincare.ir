@@ -6,6 +6,7 @@ import {
   extractClassTokens,
   listSourceFiles,
   loadProjectDesignSystem,
+  projectStylesheetClasses,
 } from "./tailwind-candidates";
 
 /**
@@ -26,8 +27,11 @@ describe("every class name in src/ compiles", () => {
     const projectRoot = resolve(__dirname, "../../..");
     const design = await loadProjectDesignSystem(projectRoot);
 
+    const authored = projectStylesheetClasses(projectRoot);
     const isValid = (token: string): boolean =>
-      MARKER_CLASSES.has(token) || design.candidatesToCss([token])[0] !== null;
+      MARKER_CLASSES.has(token) ||
+      authored.has(token) ||
+      design.candidatesToCss([token])[0] !== null;
 
     const dead = new Map<string, string[]>();
     for (const file of listSourceFiles(resolve(projectRoot, "src"))) {
@@ -65,6 +69,16 @@ describe("every class name in src/ compiles", () => {
     expect(compiles("inset-inline-start-3")).toBe(false);
     expect(compiles("inset-block-start-0")).toBe(false);
     expect(compiles("border-inline-end")).toBe(false);
+  });
+
+  it("accepts a class the project's own stylesheet declares", async () => {
+    // `no-js-scroll` styles Swiper's internals, which a utility cannot reach.
+    // Reading the stylesheet keeps this honest without a hand-kept allow-list.
+    const projectRoot = resolve(__dirname, "../../..");
+    const authored = projectStylesheetClasses(projectRoot);
+    expect(authored.has("no-js-scroll")).toBe(true);
+    expect(authored.has("carousel-dot")).toBe(true);
+    expect(authored.has("not-a-class-anyone-wrote")).toBe(false);
   });
 
   it("resolves this project's own theme tokens, not just stock Tailwind", async () => {

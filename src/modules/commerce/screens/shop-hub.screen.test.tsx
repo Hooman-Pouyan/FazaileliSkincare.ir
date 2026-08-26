@@ -58,6 +58,7 @@ function render(page: ShopHubPage): string {
 
 const EMPTY: ShopHubPage = {
   concerns: [],
+  concernSpotlights: [],
   brands: [],
   categories: [],
   featured: [],
@@ -76,10 +77,10 @@ function tile(
 ): ProductTile {
   return {
     slug: "serum",
-    href: "/fa/shop/p/serum",
+    href: "/shop/p/serum",
     name: "سرم هیالورونیک",
     brandName: "فورله‌د",
-    brandHref: "/fa/shop/brand/forlled",
+    brandHref: "/shop/brand/forlled",
     promise: null,
     image: null,
     offer,
@@ -109,7 +110,7 @@ describe("shop hub — sections appear only when they have something behind them
     expect(hasSection(html, fa.shop.concerns.title)).toBe(false);
     expect(hasSection(html, fa.shop.brands.title)).toBe(false);
     expect(hasSection(html, fa.shop.categories.title)).toBe(false);
-    expect(hasSection(html, fa.shop.featured.title)).toBe(false);
+    expect(hasSection(html, fa.shop.spotlight.title)).toBe(false);
   });
 
   it("renders a section as soon as it has one entry, and leaves the others out", () => {
@@ -120,7 +121,7 @@ describe("shop hub — sections appear only when they have something behind them
           slug: "melasma",
           name: "لک",
           description: "لک‌های ناشی از آفتاب و بارداری",
-          href: "/fa/shop/concern/melasma",
+          href: "/shop/concern/melasma",
           productCount: 3,
         },
       ],
@@ -128,7 +129,7 @@ describe("shop hub — sections appear only when they have something behind them
 
     expect(hasSection(html, fa.shop.concerns.title)).toBe(true);
     expect(html).toContain("لک");
-    expect(html).toContain("/fa/shop/concern/melasma");
+    expect(html).toContain("/shop/concern/melasma");
     expect(hasSection(html, fa.shop.brands.title)).toBe(false);
     expect(hasSection(html, fa.shop.categories.title)).toBe(false);
     expect(html).not.toContain(fa.shop.empty.title);
@@ -149,8 +150,8 @@ describe("shop hub — sections appear only when they have something behind them
         ),
       ],
     });
-    expect(html).toContain('href="/fa/shop/p/serum"');
-    expect(html).toContain('href="/fa/shop/brand/forlled"');
+    expect(html).toContain('href="/shop/p/serum"');
+    expect(html).toContain('href="/shop/brand/forlled"');
   });
 });
 
@@ -174,6 +175,30 @@ describe("shop hub — the page reads correctly before any script runs", () => {
     expect(stocked).toContain("日本製");
 
     expect(render(EMPTY)).not.toContain(fa.shop.authenticity.title);
+  });
+
+  it("server-renders the carousel's slides, so Swiper is progressive rather than required", () => {
+    // Given: adopting a carousel library is where a page usually loses its
+    // content to hydration. Swiper React emits its wrapper and every slide on
+    // the server, and `no-js-scroll` in globals.css makes that wrapper scroll
+    // before Swiper initialises — so the markup below is a usable row, not a
+    // stack of overlapping items waiting for a script.
+    const html = render({
+      ...EMPTY,
+      featured: [
+        tile(
+          { kind: "purchasable", variantId: "v1", amountRials: 4_800_000n, onHand: 5 },
+          PRICE,
+        ),
+      ],
+    });
+
+    expect(html).toContain("swiper-wrapper");
+    expect(html).toContain("swiper-slide");
+    expect(html).toContain("no-js-scroll");
+    // The product itself, not just the scaffolding.
+    expect(html).toContain("سرم هیالورونیک");
+    expect(html).toContain("۴۸۰٬۰۰۰");
   });
 
   it("renders rail items as a real list, not as slides a script must build", () => {

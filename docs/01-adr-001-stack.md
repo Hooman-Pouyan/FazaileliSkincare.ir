@@ -17,7 +17,7 @@
 
 It went Next.js → TanStack Start → Next.js, and that deserves an honest accounting rather than a quiet edit.
 
-Draft 2 reversed to TanStack Start on **exactly one load-bearing premise**: that fazaieli would reuse `@coordeck/shared` — a 226-component kit, a form factory, and a working i18n pipeline. That reuse was the entire argument. Everything else in that ADR (thinner ecosystem, no RSC, less prior art) was written as a *cost* to be absorbed in exchange for it.
+Draft 2 reversed to TanStack Start on **exactly one load-bearing premise**: that fazaieli would reuse `@coordeck/shared` — a 226-component kit, a form factory, and a working i18n pipeline. That reuse was the entire argument. Everything else in that ADR (thinner ecosystem, no RSC, less prior art) was written as a _cost_ to be absorbed in exchange for it.
 
 You have now removed the premise. Coordeck is a different company, a different product, a different universe — separate repos, separate everything, and explicitly not a design source. **With the reuse gone, the cost has nothing left to buy, so the original decision stands.**
 
@@ -29,12 +29,12 @@ Liara publishes a **dedicated `nextjs` platform** with its own documentation tre
 
 TanStack Start has no such platform anywhere in Iran. It would deploy as "a Node app": you own the build command, the output path, the start script, and every future breakage. That is workable — Nitro emits a plain `node .output/server/index.mjs` — but consider the actual failure mode. It is 11pm, a deploy is failing, you are one person, and the difference between the two worlds is:
 
-| | Next.js on Liara | TanStack Start on Liara |
-|---|---|---|
-| Platform | Named, documented, supported | Generic Node; you own the config |
-| Docs in Persian | Yes, framework-specific | None |
-| Support desk familiarity | High | You are explaining your framework to them |
-| Prior art from Iranian devs | Substantial | Effectively zero |
+|                             | Next.js on Liara             | TanStack Start on Liara                   |
+| --------------------------- | ---------------------------- | ----------------------------------------- |
+| Platform                    | Named, documented, supported | Generic Node; you own the config          |
+| Docs in Persian             | Yes, framework-specific      | None                                      |
+| Support desk familiarity    | High                         | You are explaining your framework to them |
+| Prior art from Iranian devs | Substantial                  | Effectively zero                          |
 
 Your instinct was right, and it's the better argument of the two. On AWS, where coordeck lives, this consideration doesn't exist — which is precisely why the same team can correctly make opposite choices for two projects.
 
@@ -59,14 +59,14 @@ Coordeck was read **once, as a case study.** What came back is listed below as i
 
 Six things from that codebase are good practice and worth re-implementing from scratch, in Next.js idiom, with fazaieli's own content:
 
-| Idea | Why it's worth stealing | How it lands here |
-|---|---|---|
-| ~~A component gallery route~~ | **Deferred at your request.** Noted here so the option stays visible: the RTL audit still has to happen, it just happens page-by-page as screens are built rather than in a dedicated harness. Revisit if RTL bugs start reaching production. | Deferred |
-| **A uniform module contract** | Every feature folder has the same shape, no exceptions, written down. For a solo maintainer this is what stops a codebase drifting into mud by month six. | `src/modules/{catalog,cart,booking,academy,account}/` each with `screens/ components/ models/ utils/ store.ts`. Same rule, same "no exceptions". |
-| **Conventions written into the repo** (`AGENTS.md`, `DECISIONS.md`) | Your co-developer is a language model. Written conventions are the highest-leverage file in the repo — they make every future session start correct instead of guessing. | Day one, before the first feature. |
-| **"No speculative fallback chains, no compatibility guards"** | A rule from their decisions doc, and a good one: use the canonical source, document a contract gap instead of synthesising data from unrelated state. | Adopted verbatim as a house rule. |
-| **Co-located, per-module i18n message files with a sync script** | Message catalogues live next to the feature that uses them, and tooling derives the paths from the filesystem rather than a hand-edited list. | Same shape with `next-intl` (or Paraglide, which also runs on Next.js): `src/modules/<m>/i18n/<locale>.json`. |
-| **One form abstraction, not per-form hand-rolling** | They built a form factory over react-hook-form + Zod. Checkout, intake and enrolment forms will otherwise each be written slightly differently. | A much smaller version — one `<Field>` set and one Zod-per-form convention. Don't build their factory; build the discipline. |
+| Idea                                                                | Why it's worth stealing                                                                                                                                                                                                                       | How it lands here                                                                                                                                |
+| ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| ~~A component gallery route~~                                       | **Deferred at your request.** Noted here so the option stays visible: the RTL audit still has to happen, it just happens page-by-page as screens are built rather than in a dedicated harness. Revisit if RTL bugs start reaching production. | Deferred                                                                                                                                         |
+| **A uniform module contract**                                       | Every feature folder has the same shape, no exceptions, written down. For a solo maintainer this is what stops a codebase drifting into mud by month six.                                                                                     | `src/modules/{catalog,cart,booking,academy,account}/` each with `screens/ components/ models/ utils/ store.ts`. Same rule, same "no exceptions". |
+| **Conventions written into the repo** (`AGENTS.md`, `DECISIONS.md`) | Your co-developer is a language model. Written conventions are the highest-leverage file in the repo — they make every future session start correct instead of guessing.                                                                      | Day one, before the first feature.                                                                                                               |
+| **"No speculative fallback chains, no compatibility guards"**       | A rule from their decisions doc, and a good one: use the canonical source, document a contract gap instead of synthesising data from unrelated state.                                                                                         | Adopted verbatim as a house rule.                                                                                                                |
+| **Co-located, per-module i18n message files with a sync script**    | Message catalogues live next to the feature that uses them, and tooling derives the paths from the filesystem rather than a hand-edited list.                                                                                                 | Same shape with `next-intl` (or Paraglide, which also runs on Next.js): `src/modules/<m>/i18n/<locale>.json`.                                    |
+| **One form abstraction, not per-form hand-rolling**                 | They built a form factory over react-hook-form + Zod. Checkout, intake and enrolment forms will otherwise each be written slightly differently.                                                                                               | A much smaller version — one `<Field>` set and one Zod-per-form convention. Don't build their factory; build the discipline.                     |
 
 ### And what was deliberately left behind
 
@@ -75,7 +75,7 @@ Six things from that codebase are good practice and worth re-implementing from s
 - That rejection applies to persisted authentication/server truth, not to Zustand itself. Zustand is required for request-safe module-scoped interaction state under the ownership contract in `docs/architecture/data-and-state-ownership.md`.
 - **The `radix-nova` / zinc dashboard theme** — replaced entirely by the sampled brand palette.
 - **A `nitro-nightly` pin** — never under a payment flow.
-- **`@import url(fonts.googleapis.com)` in the stylesheet** — this was the most useful *finding* in the whole audit, and it is a lesson rather than an inheritance: from Iranian infrastructure that request hangs or fails and takes the stylesheet with it. **Every font ships from `/public/fonts`.** (Coordeck sits on AWS, so it isn't bitten by this — but it would be the moment anyone loads it from Iran.)
+- **`@import url(fonts.googleapis.com)` in the stylesheet** — this was the most useful _finding_ in the whole audit, and it is a lesson rather than an inheritance: from Iranian infrastructure that request hangs or fails and takes the stylesheet with it. **Every font ships from `/public/fonts`.** (Coordeck sits on AWS, so it isn't bitten by this — but it would be the moment anyone loads it from Iran.)
 
 ---
 
@@ -83,12 +83,12 @@ Six things from that codebase are good practice and worth re-implementing from s
 
 Not a version bump for its own sake — four of these land directly on problems we already have:
 
-| Feature | Why it matters here |
-|---|---|
-| **`next/root-params`** (16.3) | `import { lang } from 'next/root-params'` reads a root-level `[lang]` segment from **any** Server Component, with no prop-drilling. This exists for exactly our situation: a bilingual site where dozens of nested components and utilities need the current locale. On 15 you thread it through props. |
-| **Turbopack as the default bundler** | 2–5× faster production builds, and 16.3 added build-time disk caching (up to 5.5× on repeat builds). Build speed is not vanity when your CI may be fighting a blocked package registry — every rebuild is a risk window. |
-| **`updateTag()`** in Server Actions | Read-your-writes semantics: you edit a product price in `/admin` and see it immediately, rather than staring at a stale cached page wondering if the save worked. `revalidateTag()` now takes a `cacheLife` profile as a second argument. |
-| **Versioned docs for AI agents** | `next dev` writes and maintains a version-matched `AGENTS.md` block pointing at the docs bundled in your own `node_modules`. Given that your `AGENTS.md` convention is a deliberate choice (below), the framework now maintains part of that file for you — and stops the assistant inventing APIs from an older major. |
+| Feature                              | Why it matters here                                                                                                                                                                                                                                                                                                     |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **`next/root-params`** (16.3)        | `import { lang } from 'next/root-params'` reads a root-level `[lang]` segment from **any** Server Component, with no prop-drilling. This exists for exactly our situation: a bilingual site where dozens of nested components and utilities need the current locale. On 15 you thread it through props.                 |
+| **Turbopack as the default bundler** | 2–5× faster production builds, and 16.3 added build-time disk caching (up to 5.5× on repeat builds). Build speed is not vanity when your CI may be fighting a blocked package registry — every rebuild is a risk window.                                                                                                |
+| **`updateTag()`** in Server Actions  | Read-your-writes semantics: you edit a product price in `/admin` and see it immediately, rather than staring at a stale cached page wondering if the save worked. `revalidateTag()` now takes a `cacheLife` profile as a second argument.                                                                               |
+| **Versioned docs for AI agents**     | `next dev` writes and maintains a version-matched `AGENTS.md` block pointing at the docs bundled in your own `node_modules`. Given that your `AGENTS.md` convention is a deliberate choice (below), the framework now maintains part of that file for you — and stops the assistant inventing APIs from an older major. |
 
 **Migration facts to know going in**, since these bite people who learned Next on 14/15:
 
@@ -111,21 +111,21 @@ One experimental flag worth watching for your market specifically: **`experiment
 
 You framed this as "shadcn is more robust and comprehensive, but our brand is feminine and might benefit from something minimal and elegant." I think that framing has the two libraries the wrong way round, and the reason matters more than the answer.
 
-**Ant Design *is* a look.** It was built by Alibaba for enterprise consoles and data-dense B2B applications, and its entire vocabulary — the blue primary, the 2px radii, the dense tables, the form-first layouts, `Cascader` and `Transfer` and `Descriptions` — is the visual language of an admin panel. You can retheme it through its token system, and it will still be recognisable as Ant at a glance. Choosing it for a skincare brand is walking straight into the "organizational dashboard" trap you explicitly said you wanted to avoid.
+**Ant Design _is_ a look.** It was built by Alibaba for enterprise consoles and data-dense B2B applications, and its entire vocabulary — the blue primary, the 2px radii, the dense tables, the form-first layouts, `Cascader` and `Transfer` and `Descriptions` — is the visual language of an admin panel. You can retheme it through its token system, and it will still be recognisable as Ant at a glance. Choosing it for a skincare brand is walking straight into the "organizational dashboard" trap you explicitly said you wanted to avoid.
 
 **shadcn is not a look at all.** It is Radix/Base UI behaviour plus Tailwind classes, **copied into your repository as code you own**. Its default neutral appearance is a starting point, not an identity — nobody ships shadcn's defaults. The minimal, smooth, delicate result you want does not come from a library that has an opinion; it comes from owning the CSS, and that is precisely what shadcn gives you.
 
 On "comprehensive": Ant ships more components, but most of the surplus is enterprise data widgets a storefront will never render. What this site actually needs — button, input, select, dialog, drawer, calendar, combobox, carousel, accordion, tabs, OTP input, phone input — shadcn covers completely.
 
-| | shadcn/ui | Ant Design |
-|---|---|---|
-| What you get | Source code in your repo | An npm dependency with a design opinion |
-| Restyling to a bespoke brand | The point of it | Fighting the token system, still recognisable |
-| Component count | Enough, and all relevant | More, mostly enterprise widgets |
-| RTL | Radix `DirectionProvider` + Tailwind logical properties | `ConfigProvider direction="rtl"` — arguably more battle-tested |
-| Persian typography | Set a font token | Override a global font stack |
-| Bundle | Only what you import | Heavier |
-| **Cost** | **You own maintenance — updates are manual** | Upgrades come from npm |
+|                              | shadcn/ui                                               | Ant Design                                                     |
+| ---------------------------- | ------------------------------------------------------- | -------------------------------------------------------------- |
+| What you get                 | Source code in your repo                                | An npm dependency with a design opinion                        |
+| Restyling to a bespoke brand | The point of it                                         | Fighting the token system, still recognisable                  |
+| Component count              | Enough, and all relevant                                | More, mostly enterprise widgets                                |
+| RTL                          | Radix `DirectionProvider` + Tailwind logical properties | `ConfigProvider direction="rtl"` — arguably more battle-tested |
+| Persian typography           | Set a font token                                        | Override a global font stack                                   |
+| Bundle                       | Only what you import                                    | Heavier                                                        |
+| **Cost**                     | **You own maintenance — updates are manual**            | Upgrades come from npm                                         |
 
 Ant's one genuine advantage is more mature RTL. That is real, and it is outweighed by everything else — Tailwind's logical properties handle RTL cleanly, and you would be overriding Ant's styling so aggressively that its maintenance advantage evaporates too.
 
@@ -147,29 +147,29 @@ EXCLUDE USING gist (practitioner_id WITH =, time_range WITH &&)
 
 That constraint is what actually prevents two customers booking the same bed in the same second. Drizzle lets you write and read it. Prisma is an acceptable substitute if you prefer a generated client. TypeORM is not on the table.
 
-**On Neon / Supabase / PlanetScale:** these are Postgres *hosts*, not ORM alternatives — Drizzle talks to all of them. They're out for a different reason: US-owned, no region near Iran, every query crossing to Frankfurt. Fatal for a checkout. Your Postgres lives in Iran, beside your app.
+**On Neon / Supabase / PlanetScale:** these are Postgres _hosts_, not ORM alternatives — Drizzle talks to all of them. They're out for a different reason: US-owned, no region near Iran, every query crossing to Frankfurt. Fatal for a checkout. Your Postgres lives in Iran, beside your app.
 
 ---
 
 ## The full stack
 
-| Concern | Choice | Note |
-|---|---|---|
-| Framework | **Next.js 16.3 App Router**, `output: "standalone"` | Turbopack is the default bundler; Node 20.9+ and TypeScript 5.1+ required |
-| Data | **Drizzle + drizzle-kit + PostgreSQL 16** | Managed Postgres on the same provider |
-| Auth | **Better Auth**, customer phone/OTP, staff password+TOTP, **httpOnly server-owned sessions** | Customers use SMS; provisioned staff use a separate privileged path |
-| i18n | **next-intl**, locale-prefixed routes, `fa` base | Per-module message files, and **`next/root-params`** so `lang` is readable in any Server Component without prop-drilling |
-| RTL | CSS logical properties throughout + a `dir`-aware component pass | Grep for `left`/`right` as a pre-commit check |
-| UI | **shadcn/ui installed fresh** — `rsc: true`, fazaieli's own tokens | Not Ant Design — see the decision below |
-| Dates | UTC `timestamptz` stored; Persian formatting via `Intl.DateTimeFormat`, arithmetic via `jalaali-js` | One canonical Jalali utility; Iranian holidays get their own table |
-| Money | **Integer rials**, Toman at the view layer only | Never floats, never mixed units |
-| Forms | react-hook-form + **Zod schemas shared client/server** | Server always re-validates |
-| Client interaction state | **Zustand 5**, request-safe module-scoped stores | Draft filters, drawers, command state and selections only; never server commerce truth or errors |
-| Browser-refetched server state | **TanStack Query 5**, gated to its first concrete consumer | Cart synchronization/autocomplete/live availability when approved; PHP/PLP/PDP remain Server Component reads |
-| Payments | ZarinPal behind a `PaymentGateway` interface | See ADR-002 |
-| SMS | Kavenegar / SMS.ir behind one `Notifier` | Foreign providers won't serve you |
-| Errors | Self-hosted GlitchTip | Sentry SaaS may be unreachable from Iran |
-| Testing | Vitest for domain logic; Playwright for checkout, booking, enrolment | Cover where a bug costs money |
+| Concern                        | Choice                                                                                              | Note                                                                                                                     |
+| ------------------------------ | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Framework                      | **Next.js 16.3 App Router**, `output: "standalone"`                                                 | Turbopack is the default bundler; Node 20.9+ and TypeScript 5.1+ required                                                |
+| Data                           | **Drizzle + drizzle-kit + PostgreSQL 16**                                                           | Managed Postgres on the same provider                                                                                    |
+| Auth                           | **Better Auth**, customer phone/OTP, staff password+TOTP, **httpOnly server-owned sessions**        | Customers use SMS; provisioned staff use a separate privileged path                                                      |
+| i18n                           | **next-intl**, locale-prefixed routes, `fa` base                                                    | Per-module message files, and **`next/root-params`** so `lang` is readable in any Server Component without prop-drilling |
+| RTL                            | CSS logical properties throughout + a `dir`-aware component pass                                    | Grep for `left`/`right` as a pre-commit check                                                                            |
+| UI                             | **shadcn/ui installed fresh** — `rsc: true`, fazaieli's own tokens                                  | Not Ant Design — see the decision below                                                                                  |
+| Dates                          | UTC `timestamptz` stored; Persian formatting via `Intl.DateTimeFormat`, arithmetic via `jalaali-js` | One canonical Jalali utility; Iranian holidays get their own table                                                       |
+| Money                          | **Integer rials**, Toman at the view layer only                                                     | Never floats, never mixed units                                                                                          |
+| Forms                          | react-hook-form + **Zod schemas shared client/server**                                              | Server always re-validates                                                                                               |
+| Client interaction state       | **Zustand 5**, request-safe module-scoped stores                                                    | Draft filters, drawers, command state and selections only; never server commerce truth or errors                         |
+| Browser-refetched server state | **TanStack Query 5**, gated to its first concrete consumer                                          | Cart synchronization/autocomplete/live availability when approved; PHP/PLP/PDP remain Server Component reads             |
+| Payments                       | ZarinPal behind a `PaymentGateway` interface                                                        | See ADR-002                                                                                                              |
+| SMS                            | Kavenegar / SMS.ir behind one `Notifier`                                                            | Foreign providers won't serve you                                                                                        |
+| Errors                         | Self-hosted GlitchTip                                                                               | Sentry SaaS may be unreachable from Iran                                                                                 |
+| Testing                        | Vitest for domain logic; Playwright for checkout, booking, enrolment                                | Cover where a bug costs money                                                                                            |
 
 ---
 
@@ -180,3 +180,24 @@ That constraint is what actually prevents two customers booking the same bed in 
 **Accepted costs:** the component kit is built from scratch — real work, mitigated by shadcn plus the `/design` gallery route. Server Actions make it easy to trust client input by accident, so the house rule is absolute: **every server action opens with a Zod parse and an authorisation check.** Next's image optimiser is CPU-hungry on a small instance; push media to object storage and a CDN early.
 
 **Explicitly deferred:** job queue, search engine, caching layer beyond Next's own. Postgres covers all three at your volume.
+
+---
+
+## Addendum — 2026-08-26 · Carousel and animation
+
+Two dependencies joined the stack, both at the maintainer's request, both
+bounded by decisions in [`23-motion-and-interaction-decisions.md`](23-motion-and-interaction-decisions.md).
+
+| Package     | Role                                                                                                        | Boundary                                                                                                      |
+| ----------- | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| `swiper` 14 | The storefront's **only** carousel, behind `src/components/layout/carousel.tsx`                             | M-3. `Autoplay` is never imported; slides server-render; an un-initialised carousel is still a scrollable row |
+| `animejs` 4 | **Choreography only** — entrance sequences and SVG stroke drawing — behind `src/lib/motion/choreography.ts` | M-4. CSS transitions keep every state change. One element between two states never goes near it               |
+
+Both replaced hand-rolled code rather than adding a layer beside it: the
+scroll-snap rail is deleted, and `Reveal`'s per-caller delay convention is gone.
+That is the condition on which a dependency is worth its bytes here — it has to
+_remove_ a mechanism, not join one.
+
+Neither is allowed to hide content. The rule they are both measured against is
+`M-1`: the content is in the server-rendered HTML, the page is correct with
+JavaScript disabled, and nothing is hidden by default and shown by script.

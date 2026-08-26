@@ -1,80 +1,72 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { revealSequence } from "@/lib/motion/choreography";
 import { cn } from "@/lib/utils";
 
 /**
- * Fade and an 8–16px rise, once, when a block enters the viewport.
+ * A block, or a group of blocks, entering once when it reaches the viewport.
  *
- * This is the whole motion vocabulary — `10-design-playbook.md` Step 5 and
- * decision L-3. One duration, one easing, both from the token layer; no
- * parallax, no loop, nothing that keeps running after the reveal.
+ * The choreography lives in `@/lib/motion/choreography`; this component owns
+ * only *when* it runs. `stagger` means a group can enter in sequence without
+ * every caller inventing its own delays — which is the reason anime.js is here
+ * and CSS is not.
  *
- * **It cannot hide content.** The element renders visible and the class that
- * hides it is only ever added by the effect, so a crawler, a reader with
- * JavaScript disabled, and the server-rendered HTML all get the finished page.
- * A reveal implemented the other way round — hidden by default, shown by
- * script — is the standard way a scroll animation quietly costs a site its
- * indexed content, and it is worth being explicit that this is not that.
+ * **It cannot hide content.** The hidden state is set by the animation, in the
+ * browser, one frame before it animates out of it. The server-rendered HTML —
+ * what a crawler and a reader with JavaScript disabled receive — is the
+ * finished page. A reveal built the other way round is the standard way a
+ * scroll animation quietly costs a site its indexed content.
  *
- * `prefers-reduced-motion` collapses `--duration` to 1ms in `tokens.css`, so the
- * transition completes instantly rather than being special-cased here.
+ * `prefers-reduced-motion` skips the whole thing rather than shortening it.
  */
 export function Reveal({
   children,
-  delay = 0,
   className,
   as: Tag = "div",
+  /** Animate the direct children in sequence rather than the block as a whole. */
+  stagger: staggerChildren = false,
+  step,
 }: {
   readonly children: React.ReactNode;
-  /** Milliseconds. Used to stagger siblings; keep it under ~200ms. */
-  readonly delay?: number;
   readonly className?: string;
-  readonly as?: "div" | "section" | "li" | "article";
+  readonly as?: "div" | "section" | "li" | "article" | "ul";
+  readonly stagger?: boolean;
+  readonly step?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [state, setState] = useState<"static" | "hidden" | "shown">("static");
 
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
 
-    // Already on screen at mount: leave it alone rather than hiding it to
-    // animate it in, which would flash the first fold on every load.
-    const box = node.getBoundingClientRect();
-    if (box.top < window.innerHeight * 0.9) {
-      setState("shown");
-      return;
-    }
+    // Already on screen at mount: leave it alone. Hiding the first fold in
+    // order to animate it in is a flash on every page load.
+    if (node.getBoundingClientRect().top < window.innerHeight * 0.9) return;
 
-    setState("hidden");
+    let cleanup = () => {};
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (!entry?.isIntersecting) return;
-        setState("shown");
         observer.disconnect();
+        const targets = staggerChildren
+          ? Array.from(node.children)
+          : [node as Element];
+        cleanup = revealSequence(targets, step ? { step } : {});
       },
       { rootMargin: "0px 0px -10% 0px" },
     );
     observer.observe(node);
-    return () => observer.disconnect();
-  }, []);
 
-  // One element type at a time; `Tag` is a union of intrinsic tags that all
-  // accept the same props, and casting the component rather than the ref keeps
-  // the ref honestly typed.
+    return () => {
+      observer.disconnect();
+      cleanup();
+    };
+  }, [staggerChildren, step]);
+
   const Element = Tag as "div";
-
   return (
-    <Element
-      ref={ref}
-      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
-      className={cn(
-        "transition-[opacity,transform] duration-[var(--duration)] ease-[var(--easing)] motion-reduce:transition-none",
-        state === "hidden" && "translate-y-3 opacity-0",
-        className,
-      )}
-    >
+    <Element ref={ref} className={cn(className)}>
       {children}
     </Element>
   );

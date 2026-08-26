@@ -116,3 +116,41 @@
     height: 0;
   }
 }
+
+/*
+  Carousel — Swiper, bound to the token layer.
+
+  `no-js-scroll` gives the wrapper real scrolling before Swiper initialises, so
+  the row is usable in the server-rendered HTML rather than being a stack of
+  overlapping slides. Swiper sets `transform` on the wrapper once it takes over,
+  at which point the overflow rule is inert.
+
+  The dots are ours rather than Swiper's defaults: hairline marks, not blue
+  pills, and the active one is a gold rule rather than a filled circle.
+*/
+.no-js-scroll .swiper-wrapper {
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.no-js-scroll .swiper-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-dot {
+  display: block;
+  inline-size: 20px;
+  block-size: 2px;
+  background: var(--hairline);
+  cursor: pointer;
+  transition: background var(--duration) var(--easing);
+}
+.carousel-dot-active {
+  background: var(--gold);
+}
+
+/* Swiper's own focus ring is replaced by the project's. */
+.swiper:focus-visible,
+.swiper-slide:focus-visible {
+  outline: 2px solid var(--firouzeh-text);
+  outline-offset: 2px;
+}

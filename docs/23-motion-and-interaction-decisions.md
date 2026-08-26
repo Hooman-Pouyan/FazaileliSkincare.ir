@@ -54,50 +54,71 @@ contrast.
 
 ---
 
-## M-3 · Carousels are native scroll-snap, not a carousel library
+## M-3 · Swiper is the storefront's only carousel
 
-**Decision.** `ScrollRail` is CSS scroll-snap plus a pointer-drag handler and
-two arrow buttons. No carousel dependency.
+**Decision.** `swiper@14` behind one component, `src/components/layout/carousel.tsx`.
+The hand-rolled scroll-snap rail it replaced is deleted.
 
-**Why, and this is not a workaround.** The rail's contents are a real `<ul>` of
-`<li>`s in document order before any script runs, which satisfies M-1 lines 1
-and 2 for free. The platform already provides momentum, touch, trackpad,
-keyboard and RTL scrolling. What a carousel library would add here is the arrows
-and the scroll position — the small part — while putting the list behind
-hydration and adding bundle weight for an audience on slow mobile.
+**Why one and not both.** The rail was fine and Swiper is better; keeping both
+would have left two answers to "how does a row of things scroll", which is the
+drift `AGENTS.md` exists to prevent and how a codebase ends up with a different
+rail on every screen. Swiper wins because it brings keyboard, focus management,
+a11y announcements, pagination and breakpoint-aware `slidesPerView` that the
+rail would have grown one patch at a time.
 
-**What was considered.** Embla (what shadcn's `carousel` wraps) is the right
-choice _if_ one is ever needed: ~5KB, no autoplay by default, accessible, and
-inside the shadcn family this repo already committed to. The trigger to adopt it
-is a requirement the platform genuinely cannot serve — a looping rail, coupled
-rails, or programmatic slide state. Dots and arrows are not that.
+**How it is bounded, so M-1 still holds:**
 
-**Note on this environment.** The npm registry is unreachable from both of this
-session's environments, so `shadcn add carousel` could not have been run today
-regardless. That did not decide this — the reasoning above stands on its own —
-but it is recorded so the decision is not later mistaken for a constraint.
+| Concern                  | How                                                                                                                                                                                                                                   |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Content before hydration | Swiper React server-renders `swiper-wrapper` and every `swiper-slide`. A test asserts the slides, the product name and its price are all in the static markup                                                                         |
+| Usable before hydration  | `.no-js-scroll .swiper-wrapper` in `globals.css` gives the wrapper real `overflow-x`, so an un-initialised carousel is a scrollable row rather than overlapping slides. Swiper's transform takes over on init and the rule goes inert |
+| Autoplay                 | The `Autoplay` module is **never imported**. It is not a prop anyone can pass; it is absent from the bundle                                                                                                                           |
+| Weight                   | Modules are imported one by one — `Navigation`, `Pagination`, `Keyboard`, `A11y` — not the bundle                                                                                                                                     |
+| RTL                      | Read from the resolved locale inside the component, with a remount key on direction, so no caller can get it wrong                                                                                                                    |
+| Styling                  | Bullets and focus rings are redefined against the token layer in `globals.css`; Swiper's blue defaults do not ship                                                                                                                    |
+
+**Re-review trigger.** A surface that needs a rail with none of Swiper's
+features — a plain overflow row — in which case plain CSS is right _there_ and
+this decision does not force a library onto it.
 
 ---
 
-## M-4 · Animation libraries: what is refused, and what would change it
+## M-4 · anime.js owns choreography; CSS keeps state
 
-One motion mechanism: CSS transitions on `--duration`/`--easing`, triggered
-once by an `IntersectionObserver`. `AGENTS.md` requires one mechanism per
-concern, and a page with CSS transitions _and_ a tween engine _and_ a scroll
-library has three, each with its own idea of what reduced-motion means.
+**Decision.** `animejs@4` behind `src/lib/motion/choreography.ts`. The boundary,
+which is the whole point of adopting it deliberately:
 
-| Asked about                           | Decision           | Reasoning                                                                                                                                                                                                                  |
-| ------------------------------------- | ------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **GSAP**                              | Refused for now    | ~70KB before plugins for what a 40-line component does. Genuinely better at timelines and morphing — neither of which this site needs. Revisit if a sequenced, multi-element narrative is designed that CSS cannot express |
-| **anime.js**                          | Refused            | ~17KB, same argument, less upside than GSAP                                                                                                                                                                                |
-| **AOS**                               | Refused            | It is reveal-on-scroll, which `Reveal` already is in ~60 lines that we control. Adding it would mean two reveal systems                                                                                                    |
-| **Three.js / WebGL**                  | Deferred, per L-12 | ~600KB before assets. If it happens it is a lazy-loaded brand-story route with an SVG fallback, never the storefront path                                                                                                  |
-| **Swiper / Glide**                    | Refused            | Superseded by M-3                                                                                                                                                                                                          |
-| **Motion (`motion` / framer-motion)** | Open               | The one with a real case: shared-element and layout transitions between PLP and PDP, which CSS cannot do. Not needed until those exist. If adopted, it is client-boundary only                                             |
+| Kind of motion                                                                       | Mechanism                                                                                 |
+| ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| Hover, focus, open/closed, active — one element between two states                   | **CSS transitions** on `--duration`/`--easing`. Declarative, no script, already tokenised |
+| A group entering in sequence; an SVG stroke drawing itself; anything with a timeline | **anime.js**, through a helper in `choreography.ts`                                       |
 
-**This is not a closed door.** Any of these becomes right the moment there is an
-interaction CSS cannot express. The rule is that the requirement comes first and
-the library second — proposed, agreed, documented, then built, per `AGENTS.md`.
+If a new animation is one element moving between two states, it does not go in
+`choreography.ts`. That sentence is the rule; everything else here follows from
+it.
+
+**What it actually bought.** `stagger` means a group can enter in sequence
+without every caller inventing its own delays — the previous `Reveal` took a
+`delay` prop and each caller computed `Math.min(index, 3) * 60`, which is a
+convention that survives exactly as long as everyone remembers it.
+`svg.createDrawable` measures every path in a group and handles the dash
+bookkeeping, which by hand is `getTotalLength` plus two custom properties per
+path — that is what makes the blossom able to draw itself.
+
+**What it must never become.** A second way to do hover. A scroll-linked
+timeline that runs continuously. A reason to hide content in markup. v4 is
+modular ESM, so `animate`, `stagger`, `svg` and `utils` are what ship; importing
+the default bundle would undo the reason it was affordable.
+
+**Reduced motion is a skip, not a shortening.** Every helper returns early under
+`prefers-reduced-motion` and leaves the finished state alone. A stagger of 1ms
+steps is still a stagger.
+
+**Still refused, and why the trigger matters.** GSAP, AOS and Swiper's own
+effect modules stay out: each would be a third mechanism for something the two
+above already cover. Three.js stays deferred per L-12. The library that is
+_added_ is added because a requirement named it — that order is the rule, not
+the specific answer.
 
 ---
 

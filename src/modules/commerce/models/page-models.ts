@@ -135,8 +135,20 @@ export type HubCategory = Readonly<{
   productCount: number;
 }>;
 
+/**
+ * A concern with the products chosen for it — the shortest path this site has
+ * from a worry to a purchase, and the axis the competitive research found
+ * missing from every Iranian competitor.
+ */
+export type HubConcernSpotlight = Readonly<{
+  concern: HubConcern;
+  products: readonly ProductTile[];
+}>;
+
 export type ShopHubPage = Readonly<{
   concerns: readonly HubConcern[];
+  /** A bounded subset of `concerns`, each with a few of its products. */
+  concernSpotlights: readonly HubConcernSpotlight[];
   brands: readonly HubBrand[];
   categories: readonly HubCategory[];
   featured: readonly ProductTile[];

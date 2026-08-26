@@ -100,11 +100,6 @@
       "lede": "Rather than working through dozens of brands, pick the concern. Each path leads to products chosen for that one problem.",
       "railLabel": "Skin concerns"
     },
-    "featured": {
-      "title": "What we recommend most",
-      "lede": "Mahdieh Fazaieli's picks from what we use in the clinic ourselves.",
-      "railLabel": "Recommended products"
-    },
     "authenticity": {
       "eyebrow": "Authenticity",
       "title": "Genuine Forlle'd, straight from Japan",
@@ -153,6 +148,22 @@
         "title": "Ask before you buy",
         "body": "Tell us what your skin is doing and we will point you in the right direction, whether or not you buy."
       }
+    },
+    "spotlight": {
+      "title": "A few we recommend most",
+      "lede": "Mahdieh Fazaieli's picks from what we use in the clinic every day.",
+      "railLabel": "Selected products",
+      "action": "See the product"
+    },
+    "spotlights": {
+      "title": "Where to start, for each concern",
+      "lede": "If you are not sure which product is yours, start here — for each concern, the few we usually suggest first.",
+      "eyebrow": "Concern",
+      "action": "All {concern} products"
+    },
+    "mosaic": {
+      "title": "The calm of the corridor, not the noise of the marketplace",
+      "body": "Our work is unhurried. Skin is not fixed in a night, and it is not fixed by advertising; it is fixed by a simple routine you actually keep to. What we sell here is what we use in the clinic — nothing more."
     }
   }
 }

@@ -89,6 +89,20 @@ carried gap has become a real problem.
 
 ---
 
+## Hub blocks and the motion stack — 2026-08-26
+
+| #   | What                                                                                                                                                                                                                                                                                                          | Kind         | Status        |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | ------------- |
+| C.1 | **B1, B3 and B10 are built.** The paginated product spotlight, the concern→product bridge, and the asymmetric photo mosaic. The mosaic is the first use of the cleared Pexels/Unsplash photography. Worth judging together: the hub is now nine bands, and the question is whether that is rich or long.      | UI           | **needs you** |
+| C.2 | **Swiper replaced the hand-rolled rail rather than joining it.** Both worked; two would have been drift. `Autoplay` is never imported so it cannot be enabled by a prop, and a test asserts the slides, the product name and its price are all in the server-rendered HTML.                                   | technical    | resolved      |
+| C.3 | **anime.js is bounded to choreography.** CSS keeps every state change; anime gets sequences and SVG drawing. The boundary is one sentence in M-4 and it is the thing to hold — the failure mode is anime quietly becoming a second way to do hover.                                                           | technical    | open          |
+| C.4 | **`getShopHub` now runs three extra queries**, one per spotlit concern, capped at three concerns and three products. Readable beats clever at this size, and the cap is what makes the cost visible if it ever grows. Re-check when the real catalogue is bigger than ten products.                           | performance  | open          |
+| C.5 | **The class-compilation gate flagged `no-js-scroll`**, a class `globals.css` declares to style Swiper's internals. The gate now reads the project's own stylesheets rather than keeping a hand-maintained allow-list that would drift.                                                                        | process      | resolved      |
+| C.6 | **The mosaic photography shows other brands' products** — the plaster shot is a French jar with visible text. It reads as texture at that size, but it is not our stock and should not sit next to a buy action. It is placed in an editorial band on purpose; if it ever reads as merchandising, replace it. | UI / content | open          |
+| C.7 | **Nine bands is a judgement, not a measurement.** Hero, concerns, spotlight, concern bridges, authenticity, mosaic, brands, categories, closing. If it feels long, the mosaic and the categories are the two that cut cleanest.                                                                               | UI           | **needs you** |
+
+---
+
 ## Shop hero and asset pass — 2026-08-26
 
 | #   | What                                                                                                                                                                                                                                                                                                                                                                                                                         | Kind      | Status        |

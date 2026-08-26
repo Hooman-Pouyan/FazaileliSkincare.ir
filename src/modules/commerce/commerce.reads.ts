@@ -47,6 +47,8 @@ import {
   redirect,
 } from "./models/outcome";
 import type {
+  HubConcern,
+  HubConcernSpotlight,
   MediaView,
   PriceView,
   ProductDetailPage,
@@ -86,6 +88,17 @@ const ANONYMOUS_GROUP: CustomerGroup = "public";
 
 /** Bounded on purpose: the hub is an entry point, not a listing. */
 const HUB_FEATURED_LIMIT = 8;
+
+/**
+ * How many concerns get a spotlight row, and how many products each shows.
+ *
+ * Bounded on purpose. Every spotlight is one more query, and a hub that
+ * spotlights all five concerns has stopped being a hub and become a listing
+ * page with headings. Three rows of three is the most a reader will actually
+ * look at before scrolling.
+ */
+const HUB_SPOTLIGHT_CONCERNS = 3;
+const HUB_SPOTLIGHT_PRODUCTS = 3;
 
 function priceView(
   amountRials: bigint | null,
@@ -392,6 +405,81 @@ async function loadTiles(
           : priceView(floor, localeCode),
     };
   });
+}
+
+/**
+ * The products behind each spotlit concern.
+ *
+ * One query per concern rather than one query with a window function: the set
+ * is capped at three, the rows are tiny, and a readable query that runs three
+ * times beats a clever one nobody can change. If this ever grows past a handful
+ * of concerns it wants rewriting, and the cap above is what makes that visible.
+ *
+ * Products are ordered by merchandising rank, the same order the featured rail
+ * uses, so a product that the institute pushes is pushed consistently.
+ */
+async function loadConcernSpotlights(
+  localeCode: string,
+  spotlitConcerns: readonly HubConcern[],
+  visible: ReturnType<typeof and>,
+): Promise<readonly HubConcernSpotlight[]> {
+  const spotlights: HubConcernSpotlight[] = [];
+
+  for (const entry of spotlitConcerns) {
+    const rows = await db
+      .select({
+        id: product.id,
+        slug: product.slug,
+        name: productTranslation.name,
+        promise: productTranslation.promise,
+        isProfessionalOnly: product.isProfessionalOnly,
+        priceVisibility: product.priceVisibility,
+        brandSlug: brand.slug,
+        brandName: brandTranslation.name,
+      })
+      .from(product)
+      .innerJoin(
+        productTranslation,
+        and(
+          eq(productTranslation.productId, product.id),
+          eq(productTranslation.localeCode, localeCode),
+        ),
+      )
+      .innerJoin(brand, eq(brand.id, product.brandId))
+      .leftJoin(
+        brandTranslation,
+        and(
+          eq(brandTranslation.brandId, brand.id),
+          eq(brandTranslation.localeCode, localeCode),
+        ),
+      )
+      .innerJoin(productConcern, eq(productConcern.productId, product.id))
+      .innerJoin(
+        concern,
+        and(
+          eq(concern.id, productConcern.concernId),
+          eq(concern.slug, entry.slug),
+        ),
+      )
+      .where(visible)
+      .orderBy(asc(product.merchandisingRank), asc(product.id))
+      .limit(HUB_SPOTLIGHT_PRODUCTS);
+
+    const products = await loadTiles(
+      localeCode,
+      rows.map((row) => ({
+        ...row,
+        brandName: row.brandName ?? row.brandSlug,
+      })),
+      ANONYMOUS_GROUP,
+    );
+
+    // A concern whose products all fell out of the visibility predicate gets no
+    // row at all, rather than a heading over an empty shelf.
+    if (products.length > 0) spotlights.push({ concern: entry, products });
+  }
+
+  return spotlights;
 }
 
 export async function listProducts(
@@ -729,16 +817,25 @@ export async function getShopHub(
   const hubHref = "/shop";
   const t = await getTranslations({ locale: localeCode, namespace: "shop" });
 
+  const hubConcerns = concerns
+    .filter((row) => row.productCount > 0)
+    .map((row) => ({
+      slug: row.slug,
+      name: row.name,
+      description: row.description,
+      href: `${hubHref}/concern/${row.slug}`,
+      productCount: Number(row.productCount),
+    }));
+
+  const concernSpotlights = await loadConcernSpotlights(
+    localeCode,
+    hubConcerns.slice(0, HUB_SPOTLIGHT_CONCERNS),
+    visible,
+  );
+
   return ready({
-    concerns: concerns
-      .filter((row) => row.productCount > 0)
-      .map((row) => ({
-        slug: row.slug,
-        name: row.name,
-        description: row.description,
-        href: `${hubHref}/concern/${row.slug}`,
-        productCount: Number(row.productCount),
-      })),
+    concerns: hubConcerns,
+    concernSpotlights,
     brands: brands
       .filter((row) => row.productCount > 0)
       .map((row) => ({
