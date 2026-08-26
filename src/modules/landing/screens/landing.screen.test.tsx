@@ -42,6 +42,9 @@ function render(page: LandingPage): string {
 
 /** The state it ships in: every content-backed beat empty. */
 const EMPTY: LandingPage = {
+  method: null,
+  forlled: null,
+  academy: null,
   claim: null,
   testimonials: [],
   comparisons: [],
@@ -49,6 +52,27 @@ const EMPTY: LandingPage = {
 };
 
 const FULL: LandingPage = {
+  method: {
+    heading: "کار چطور پیش می‌رود",
+    body: null,
+    cta: null,
+    entries: [
+      { key: "prepare", title: "اول، نگاه کردن", body: "با دیدن پوست." },
+      { key: "treat", title: "بعد، کار کردن", body: null },
+    ],
+  },
+  forlled: {
+    heading: "از ژاپن، با صبر",
+    body: "بهتر شدن با قدم‌های کوچک.",
+    cta: { label: "دیدن محصولات", href: "/shop" },
+    entries: [],
+  },
+  academy: {
+    heading: "چه چیزی آموزش می‌دهد",
+    body: null,
+    cta: { label: "دیدن همهٔ دوره‌ها", href: "/academy" },
+    entries: [{ key: "foundational", title: "دورهٔ مقدماتی", body: null }],
+  },
   claim: {
     heading: "چرا اینجا",
     body: "هر مرحله شمرده است.",
@@ -96,6 +120,8 @@ describe("absence is the state it ships in", () => {
   it("renders no heading for a beat that has no content", () => {
     expect(html).not.toContain(fa.landing.testimonials.label);
     expect(html).not.toContain(fa.landing.comparison.heading);
+    expect(html).not.toContain(fa.landing.methodHeading);
+    expect(html).not.toContain(fa.landing.academyHeading);
   });
 
   it("leaves no empty frame behind, and no ornament either", () => {
@@ -140,8 +166,11 @@ describe("the beats, when they have something behind them", () => {
     // failed for a reason that had nothing to do with the order.
     const order = [
       fa.landing.headline,
+      "اول، نگاه کردن",
       "چرا اینجا",
+      "از ژاپن، با صبر",
       fa.landing.doors.academy,
+      "دورهٔ مقدماتی",
       "سمیرا ن. — نمونه",
       "از یک گفت‌وگو شروع کنید",
     ].map((needle) => html.indexOf(needle));

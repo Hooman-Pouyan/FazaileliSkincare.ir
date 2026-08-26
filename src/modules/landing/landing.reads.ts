@@ -1,5 +1,6 @@
 import { resolveBlocks } from "@/modules/content/content.reads";
 import type {
+  LandingBand,
   LandingClaim,
   LandingComparison,
   LandingInvitation,
@@ -28,6 +29,7 @@ export async function getLanding(localeCode: string): Promise<LandingPage> {
 
   let claim: LandingClaim | null = null;
   let invitation: LandingInvitation | null = null;
+  const bands = new Map<string, LandingBand>();
   const testimonials: LandingQuote[] = [];
   const comparisons: LandingComparison[] = [];
 
@@ -58,6 +60,30 @@ export async function getLanding(localeCode: string): Promise<LandingPage> {
       continue;
     }
 
+    /*
+      The beats `E-2` added are all the same shape — a heading, some entries,
+      optionally somewhere to go — so they share one mapping rather than three
+      near-identical ones. Which beat a band is comes from its key, and the
+      screen asks for it by name.
+    */
+    if (
+      block.key === "landing.method" ||
+      block.key === "landing.forlled" ||
+      block.key === "landing.academy"
+    ) {
+      bands.set(block.key, {
+        heading: block.heading,
+        body: block.body,
+        cta: block.cta,
+        entries: block.items.map((item) => ({
+          key: item.key,
+          title: item.title,
+          body: item.body,
+        })),
+      });
+      continue;
+    }
+
     if (block.key === "landing.claim") {
       claim = {
         heading: block.heading,
@@ -79,5 +105,13 @@ export async function getLanding(localeCode: string): Promise<LandingPage> {
     }
   }
 
-  return { claim, testimonials, comparisons, invitation };
+  return {
+    method: bands.get("landing.method") ?? null,
+    claim,
+    forlled: bands.get("landing.forlled") ?? null,
+    academy: bands.get("landing.academy") ?? null,
+    testimonials,
+    comparisons,
+    invitation,
+  };
 }

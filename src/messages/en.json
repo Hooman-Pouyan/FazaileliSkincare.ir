@@ -23,14 +23,14 @@
   },
   "landing": {
     "headline": "No step is ever rushed",
-    "lede": "From choosing the formulation to performing the treatment precisely. A specialist skincare academy, led by Mahdieh Fazaieli.",
+    "lede": "Every skin has its own story. Here we listen first, then decide what it needs — and, more usefully, what it does not.",
     "primaryCta": "Book a consultation",
     "secondaryCta": "See products",
     "portraitPlaceholder": "Portrait of Mahdieh Fazaieli",
     "doors": {
-      "shop": "Professional skincare from Forlle'd, Storyderm and Thalgo — chosen for your skin's concern.",
-      "book": "Facials and specialist treatments. See real availability and book on the spot.",
-      "academy": "Professional courses and workshops, in Mashhad and online."
+      "shop": "The same products used on skin in the practice. Start from your concern, not from a brand name.",
+      "book": "Facials and skin treatments. See the open times and take one there and then.",
+      "academy": "Courses and workshops in Mashhad — for someone who wants to learn this properly."
     },
     "quote": "\"When your skin's health is at stake, quality means no step is ever rushed.\"",
     "testimonials": {
@@ -44,7 +44,10 @@
       "after": "After"
     },
     "portraitAlt": "Mahdieh Fazaieli in the practice",
-    "doorsHeading": "Three rooms"
+    "doorsHeading": "Three rooms",
+    "methodHeading": "How the work goes",
+    "academyHeading": "What she teaches",
+    "academyCta": "See every course"
   },
   "common": {
     "currency": "Toman",

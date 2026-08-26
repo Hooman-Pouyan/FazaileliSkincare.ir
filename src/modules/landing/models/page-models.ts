@@ -32,6 +32,21 @@ export type LandingComparison = Readonly<{
   after: Readonly<{ url: string; alt: string | null }> | null;
 }>;
 
+/** A titled paragraph inside a beat — a method moment, a course. */
+export type LandingEntry = Readonly<{
+  key: string;
+  title: string;
+  body: string | null;
+}>;
+
+/** A beat that is a heading, some entries and optionally somewhere to go. */
+export type LandingBand = Readonly<{
+  heading: string | null;
+  body: string | null;
+  cta: Readonly<{ label: string; href: string }> | null;
+  entries: readonly LandingEntry[];
+}>;
+
 export type LandingInvitation = Readonly<{
   heading: string | null;
   body: string | null;
@@ -39,7 +54,13 @@ export type LandingInvitation = Readonly<{
 }>;
 
 export type LandingPage = Readonly<{
+  /** Beat 1b — three moments of the work itself. */
+  method: LandingBand | null;
   claim: LandingClaim | null;
+  /** Beat 2b — the Forlle'd passage, the one beat about the brand. */
+  forlled: LandingBand | null;
+  /** Beat 3b — what she teaches. */
+  academy: LandingBand | null;
   testimonials: readonly LandingQuote[];
   comparisons: readonly LandingComparison[];
   invitation: LandingInvitation | null;

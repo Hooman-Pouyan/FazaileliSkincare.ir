@@ -312,8 +312,8 @@ export const CONTENT_BLOCKS: readonly SeedContentBlock[] = [
     sortOrder: 20,
     heading: { fa: "چرا اینجا", en: "Why here" },
     body: {
-      fa: "مراقبت از پوست کاری است که هر مرحله‌اش شمرده است — از انتخاب محصول تا اجرای درمان. آنچه در فروشگاه می‌بینید همان چیزی است که در مطب هم استفاده می‌شود.",
-      en: "Skincare is work where every step is counted — from choosing a product to carrying out a treatment. What you see in the shop is what is actually used in the practice.",
+      fa: "کار روی پوست عجله برنمی‌دارد. هر جلسه از یک گفت‌وگو شروع می‌شود، محصول بعد از تشخیص انتخاب می‌شود، و هیچ مرحله‌ای برای زودتر تمام شدن حذف نمی‌شود. آنچه در فروشگاه می‌بینید دقیقاً همان چیزی است که اینجا روی پوست استفاده می‌شود.",
+      en: "Skin work does not take shortcuts. Every session starts with a conversation, the product is chosen after the assessment, and no step is dropped to finish sooner. What you see in the shop is exactly what is used on skin here.",
     },
     /*
       Two credentials, and only two. `L-2` wants years of practice and students
@@ -366,6 +366,150 @@ export const CONTENT_BLOCKS: readonly SeedContentBlock[] = [
     itemsFrom: "testimonials",
   },
 
+  /*
+    Beat 1b — the method. Three moments of the work itself, added by `E-2`.
+
+    The images are art direction rather than content, so the component owns
+    them and the spine owns the words: `s02-ryoanji-raked-garden` for
+    preparation, `s03-nara-tea-ritual` for care, `p04-cream-on-silk` for the
+    material. All three are cleared for commercial use — `public/images/README.md`
+    says so and also says they were unused only because no slot had been
+    designed for them. `E-4` designs the slots.
+  */
+  {
+    key: "landing.method",
+    kind: "gallery",
+    surface: "landing",
+    sortOrder: 15,
+    heading: { fa: "کار چطور پیش می‌رود", en: "How the work goes" },
+    items: [
+      {
+        key: "prepare",
+        title: { fa: "اول، نگاه کردن", en: "First, looking" },
+        body: {
+          fa: "هر جلسه با دیدن پوست شروع می‌شود، نه با باز کردن محصول. اینکه امروز چه چیزی لازم نیست، به اندازهٔ چیزی که لازم است اهمیت دارد.",
+          en: "Every session starts by looking at the skin, not by opening a product. What is not needed today matters as much as what is.",
+        },
+      },
+      {
+        key: "treat",
+        title: { fa: "بعد، کار کردن", en: "Then, working" },
+        body: {
+          fa: "مرحله‌ها به ترتیب انجام می‌شوند و هیچ‌کدام برای زودتر تمام شدن کوتاه نمی‌آید. اگر قرار است پوست بعد از جلسه واکنشی نشان بدهد، از قبل گفته می‌شود.",
+          en: "The steps run in order and none is cut short to finish sooner. If the skin is going to react afterwards, you are told before it does.",
+        },
+      },
+      {
+        key: "aftercare",
+        title: { fa: "و بعدش، خانه", en: "And afterwards, home" },
+        body: {
+          fa: "بیشترِ نتیجه بیرون از مطب ساخته می‌شود. روتین خانگی کوتاه بسته می‌شود تا واقعاً انجام شود.",
+          en: "Most of the result is made outside the practice. The home routine is kept short so that it actually happens.",
+        },
+      },
+    ],
+  },
+
+  /*
+    Beat 2b — the Forlle'd passage. The one place the brand's Japanese
+    reference is allowed to be the subject rather than the decoration, and it
+    sits on the one relationship `content/brands/` records as **confirmed**.
+
+    改善 — kaizen — is used here in its plain sense: improvement by small steps
+    that do not stop. `L-9` bounds the Japanese register to exactly this: a
+    concept may appear where a verifiable fact carries it, and the fact here is
+    the representation itself.
+  */
+  {
+    key: "landing.forlled",
+    kind: "editorial",
+    surface: "landing",
+    sortOrder: 30,
+    heading: { fa: "از ژاپن، با صبر", en: "From Japan, patiently" },
+    body: {
+      fa: "فورله‌د در ژاپن ساخته می‌شود، جایی که «改善» — بهتر شدن با قدم‌های کوچکی که متوقف نمی‌شوند — یک شعار نیست، روش کار است. همان چیزی که روی پوست هم جواب می‌دهد: نتیجه از یک جلسهٔ معجزه‌آسا نمی‌آید، از تکرار درست می‌آید. نمایندگی رسمی این برند در مشهد اینجاست.",
+      en: "Forlle'd is made in Japan, where 改善 — getting better by small steps that do not stop — is a way of working rather than a slogan. It is also what actually works on skin: the result does not come from one miraculous session, it comes from correct repetition. This is the brand's official representation in Mashhad.",
+    },
+    cta: {
+      label: { fa: "دیدن محصولات فورله‌د", en: "See the Forlle'd products" },
+      // `/shop`, not `/shop/brand/forlled`: Forlle'd has no catalogue rows
+      // yet, and a beat that ends in a 404 is worse than one that ends in the
+      // shop.
+      href: "/shop",
+    },
+  },
+
+  /*
+    Beat 3b — what she teaches, added by `E-2`.
+
+    Ten real offerings, transcribed from her own Instagram highlights in
+    `content/academy/`. Titles only: `L-4` holds prices, dates and capacity as
+    unconfirmed, and a course listing that invents a price is worse than one
+    that does not mention money. The rail says what exists and the Academy room
+    says the rest, when it has the rest to say.
+  */
+  {
+    key: "landing.academy",
+    kind: "gallery",
+    surface: "landing",
+    sortOrder: 50,
+    heading: { fa: "چه چیزی آموزش می‌دهد", en: "What she teaches" },
+    cta: {
+      label: { fa: "دیدن همهٔ دوره‌ها", en: "See every course" },
+      href: "/academy",
+    },
+    items: [
+      {
+        key: "foundational-skincare",
+        title: { fa: "دورهٔ مقدماتی", en: "Foundational course" },
+        body: { fa: "نه روز، از پایه" },
+      },
+      {
+        key: "advanced-skincare",
+        title: { fa: "دورهٔ پیشرفته", en: "Advanced course" },
+        body: { fa: "پانزده روز، برای ادامه دادن" },
+      },
+      {
+        key: "time-machine-workshop",
+        title: { fa: "کارگاه تایم‌ماشین", en: "TimeMachine workshop" },
+        body: { fa: "پروتکل کامل، روی مدل" },
+      },
+      {
+        key: "o2-princess-shine-workshop",
+        title: {
+          fa: "کارگاه ترکیبی O₂ و پرنسس شاین",
+          en: "O₂ and Princess Shine workshop",
+        },
+        body: { fa: "دو پروتکل، کنار هم" },
+      },
+      {
+        key: "stem-cells-workshop",
+        title: { fa: "کارگاه سلول‌های بنیادی", en: "Stem cell workshop" },
+      },
+      {
+        key: "forlled-japan-workshop",
+        title: { fa: "کارگاه فورله‌د ژاپن", en: "Forlle'd Japan workshop" },
+        body: { fa: "با نمایندگی رسمی" },
+      },
+      {
+        key: "mccosmetics-workshop",
+        title: { fa: "کارگاه MCCosmetics", en: "MCCosmetics workshop" },
+      },
+      {
+        key: "dermaplaning-workshop",
+        title: { fa: "کارگاه درماپلنینگ", en: "Dermaplaning workshop" },
+      },
+      {
+        key: "absorbable-filler-workshop",
+        title: { fa: "کارگاه فیلر جذبی", en: "Absorbable filler workshop" },
+      },
+      {
+        key: "biorepeel-workshop",
+        title: { fa: "کارگاه بایورپیل", en: "BioRePeel workshop" },
+      },
+    ],
+  },
+
   {
     key: "landing.invitation",
     kind: "editorial",
@@ -373,8 +517,8 @@ export const CONTENT_BLOCKS: readonly SeedContentBlock[] = [
     sortOrder: 60,
     heading: { fa: "از یک گفت‌وگو شروع کنید", en: "Start with a conversation" },
     body: {
-      fa: "پیش از خرید هر محصولی، بیایید ببینیم پوستتان واقعاً به چه چیزی نیاز دارد. یک جلسهٔ کوتاه، و یک روتین که بتوانید ادامه‌اش بدهید.",
-      en: "Before buying anything, let us see what your skin actually needs. One short session, and a routine you can keep.",
+      fa: "قبل از اینکه چیزی بخرید، بیایید ببینیم پوستتان واقعاً به چه چیزی نیاز دارد. یک جلسهٔ کوتاه، و روتینی که بشود واقعاً ادامه‌اش داد — نه فهرستی که هفتهٔ دوم رهایش کنید.",
+      en: "Before you buy anything, let us see what your skin actually needs. One short session, and a routine you can keep — not a list you abandon in week two.",
     },
     cta: {
       label: { fa: "رزرو وقت مشاوره", en: "Book a consultation" },

@@ -3,10 +3,13 @@ import { useTranslations } from "next-intl";
 import { Divider } from "@/components/brand/divider";
 import { GrowthSpine } from "@/components/brand/growth-spine";
 import { Container } from "@/components/layout/container";
+import { Parallax } from "@/components/layout/parallax";
 import { Reveal } from "@/components/layout/reveal";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 import { ComparisonPair } from "../components/comparison-pair";
+import { MethodBand } from "../components/method-band";
+import { OfferingRail } from "../components/offering-rail";
 import { TestimonialRail } from "../components/testimonial-rail";
 import type { LandingPage } from "../models/page-models";
 
@@ -43,7 +46,22 @@ export function LandingScreen({ page }: { readonly page: LandingPage }) {
   return (
     <main>
       {/* ── Beat 1 · the portrait, held ─────────────────────────────────── */}
-      <section className="relative flex min-h-[86svh] items-stretch">
+      <section className="relative flex min-h-[86svh] items-stretch overflow-hidden">
+        {/*
+          The first depth layer — `E-1`. A bamboo silhouette at low opacity,
+          drifting a fifth of the scrolled distance. Decorative, aria-hidden,
+          and inside a section that already reserved its height, so losing it
+          to reduced motion or a stalled script costs the page nothing.
+        */}
+        <Parallax depth={0.22} className="hidden lg:block">
+          <Image
+            src="/images/editorial/s08-bamboo-leaf-silhouette.webp"
+            alt=""
+            fill
+            sizes="100vw"
+            className="object-cover opacity-[0.06]"
+          />
+        </Parallax>
         <GrowthSpine stage="bare" />
         <div className="flex flex-1 flex-col justify-center gap-7 px-8 md:px-20">
           <Reveal className="flex flex-col gap-7">
@@ -80,6 +98,13 @@ export function LandingScreen({ page }: { readonly page: LandingPage }) {
           />
         </div>
       </section>
+
+      {/* ── Beat 1b · the method ────────────────────────────────────────── */}
+      {page.method && (
+        <Container className="py-24">
+          <MethodBand band={page.method} />
+        </Container>
+      )}
 
       {/* ── Beat 2 · the claim ──────────────────────────────────────────── */}
       {page.claim && (
@@ -120,6 +145,41 @@ export function LandingScreen({ page }: { readonly page: LandingPage }) {
         </section>
       )}
 
+      {/* ── Beat 2b · the Forlle'd passage ──────────────────────────────── */}
+      {page.forlled && (
+        <section className="relative overflow-hidden bg-teal py-28 text-sand">
+          <Parallax depth={0.14} className="hidden lg:block">
+            <Image
+              src="/images/editorial/s01-sakura-airy-branch.webp"
+              alt=""
+              fill
+              sizes="100vw"
+              className="object-cover opacity-20"
+            />
+          </Parallax>
+          <Container className="relative">
+            <Reveal className="flex max-w-[38em] flex-col gap-6">
+              {page.forlled.heading && (
+                <h2 className="text-h2 font-bold">{page.forlled.heading}</h2>
+              )}
+              {page.forlled.body && (
+                <p className="text-lede leading-fa font-light">
+                  {page.forlled.body}
+                </p>
+              )}
+              {page.forlled.cta && (
+                <Link
+                  href={page.forlled.cta.href}
+                  className="mt-2 self-start border-b border-champagne pb-1 text-small font-medium transition-colors duration-[var(--duration)] ease-[var(--easing)] hover:border-gold-light hover:text-gold-light"
+                >
+                  {page.forlled.cta.label}
+                </Link>
+              )}
+            </Reveal>
+          </Container>
+        </section>
+      )}
+
       {/* ── Beat 3 · three doors ────────────────────────────────────────── */}
       <section className="relative border-t border-[var(--hairline)]">
         <GrowthSpine stage="fork" />
@@ -131,10 +191,15 @@ export function LandingScreen({ page }: { readonly page: LandingPage }) {
                 href={door.href}
                 className="group flex flex-col border-b border-[var(--hairline-soft)] md:border-b-0 md:[&:not(:last-child)]:border-e md:[&:not(:last-child)]:border-[var(--hairline-soft)]"
               >
-                <div
-                  className="flex h-64 items-center justify-center bg-mist"
-                  aria-hidden
-                />
+                <div className="relative h-64 overflow-hidden bg-mist">
+                  <Image
+                    src="/images/editorial/s09-tokyo-stepping-stones.webp"
+                    alt=""
+                    fill
+                    sizes="(min-width: 768px) 33vw, 100vw"
+                    className="object-cover opacity-70 transition-transform duration-[var(--duration)] ease-[var(--easing)] group-hover:scale-[1.04]"
+                  />
+                </div>
                 <div className="flex flex-col gap-3 px-9 pt-7 pb-11">
                   <span className={`h-px w-8 ${door.accent}`} aria-hidden />
                   <h3 className="text-h3 font-bold">{nav(door.key)}</h3>
@@ -147,6 +212,18 @@ export function LandingScreen({ page }: { readonly page: LandingPage }) {
           ))}
         </Reveal>
       </section>
+
+      {/* ── Beat 3b · what she teaches ──────────────────────────────────── */}
+      {page.academy && (
+        <Container className="py-24">
+          <OfferingRail
+            band={page.academy}
+            label={t("academyHeading")}
+            previousLabel={t("testimonials.previous")}
+            nextLabel={t("testimonials.next")}
+          />
+        </Container>
+      )}
 
       {/* ── Beat 4 · proof ──────────────────────────────────────────────── */}
       {(page.testimonials.length > 0 || page.comparisons.length > 0) && (
