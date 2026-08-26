@@ -233,8 +233,9 @@ Nothing below is a defect. Each is a decision, a fact or a permission only you c
 | Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.7  | Concern, skin-state and phase placement is the one inference in the manifest           | product           |
 | Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.8  | Every FAQ answer is written by me, in her voice, and cannot publish                    | content           |
 | Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.9  | Image rights are still `unknown` on all ninety packshots                               | legal             |
-| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.15 | Half proven against a real database                                                    | verification      |
+| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.15 | Proven against a real database, and it found three defects                             | verification      |
 | Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.18 | Retired files are stuck inside `.git/_agent-quarantine/`                               | process           |
+| Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.21 | The `brand` facet offers one value that matches every result                           | product           |
 | Packet 7B — catalogue truth and the content spine — 2026-08-26 | 7B.16 | Uncommitted work appeared in `src/app` and `src/components/layout` during this session | process           |
 | Hub blocks and the motion stack — 2026-08-26                   | C.1   | B1, B3 and B10 are built                                                               | UI                |
 | Hub blocks and the motion stack — 2026-08-26                   | C.7   | Nine bands is a judgement, not a measurement                                           | UI                |
@@ -296,7 +297,7 @@ Nothing below is a defect. Each is a decision, a fact or a permission only you c
 | Landing direction pass — 2026-08-25, ahead of packet 6         | L.12  | The Japanese concepts are carried by a growth spine, not a values row                                                                 | UI              |
 | Landing direction pass — 2026-08-25, ahead of packet 6         | L.14  | Source batches are completed with fictional development values                                                                        | data            |
 
-**Totals:** 36 waiting on the maintainer, 37 open.
+**Totals:** 37 waiting on the maintainer, 37 open.
 
 <!-- END:open-items -->
 

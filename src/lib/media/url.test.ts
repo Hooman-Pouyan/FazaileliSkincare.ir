@@ -8,6 +8,7 @@ import {
   isObjectKey,
   mediaSlot,
   mediaUrl,
+  mediaUrlOrNull,
   originalKey,
 } from "./url";
 
@@ -102,5 +103,23 @@ describe("key builders", () => {
       "card",
     );
     expect(first).not.toBe(second);
+  });
+});
+
+describe("mediaUrlOrNull", () => {
+  it("resolves a usable key", () => {
+    expect(mediaUrlOrNull("catalog/storyderm/x/y/primary-640.webp")).toBe(
+      `${MEDIA_ORIGIN}/catalog/storyderm/x/y/primary-640.webp`,
+    );
+  });
+
+  it("returns null rather than throwing on a stored value that is not a key", () => {
+    // A malformed key in the seed is a programming error and should be loud.
+    // A malformed key in a *row* is a broken image, and the storefront's answer
+    // to that is already settled: degrade, never make stock unbuyable (LOW-8).
+    expect(mediaUrlOrNull(null)).toBeNull();
+    expect(mediaUrlOrNull("")).toBeNull();
+    expect(mediaUrlOrNull("/images/dev/legacy-path.svg")).toBeNull();
+    expect(mediaUrlOrNull("https://cdn.example.com/x.webp")).toBeNull();
   });
 });

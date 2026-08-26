@@ -230,3 +230,56 @@ describe("hrefs", () => {
     }
   });
 });
+
+describe("parameter order is part of the canonical URL", () => {
+  const HUB = { kind: "hub" } as const;
+
+  function parse(search: string) {
+    return parseCatalogueQuery(HUB, new URLSearchParams(search));
+  }
+
+  it("redirects a URL whose parameters are in the wrong order", () => {
+    // PARAMETER_ORDER's own comment says two URLs differing only in parameter
+    // order are two URLs. That was applied when emitting a URL and not when
+    // accepting one, so both spellings served a page.
+    const outcome = parse("phase=treat&skin_type=dry&audience=home");
+    expect(outcome.kind).toBe("redirect");
+    if (outcome.kind !== "redirect") return;
+    expect(outcome.href.indexOf("skin_type")).toBeLessThan(
+      outcome.href.indexOf("phase"),
+    );
+  });
+
+  it("serves the canonical spelling of the same query", () => {
+    expect(parse("skin_type=dry&phase=treat&audience=home").kind).toBe(
+      "canonical",
+    );
+  });
+
+  it("never redirects twice — the target is canonical by construction", () => {
+    const first = parse("page=3&sort=newest&concern=lak");
+    expect(first.kind).toBe("redirect");
+    if (first.kind !== "redirect") return;
+
+    const search = first.href.slice(first.href.indexOf("?") + 1);
+    const second = parse(search);
+    expect(second.kind).toBe("canonical");
+  });
+
+  it("still redirects for every reason it did before", () => {
+    expect(parse("page=1").kind).toBe("redirect");
+    expect(parse("brand=zed&brand=alef").kind).toBe("redirect");
+    expect(parse("utm_source=instagram").kind).toBe("redirect");
+  });
+
+  it("does not redirect a search term containing a space", () => {
+    // The comparison is on decoded pairs, not on encoded strings: one encoder
+    // writes a space as `%20` and the other as `+`, and comparing the strings
+    // would redirect this query forever.
+    const outcome = parseCatalogueQuery(
+      { kind: "search", query: "" },
+      new URLSearchParams({ q: "کرم شب" }),
+    );
+    expect(outcome.kind).toBe("canonical");
+  });
+});

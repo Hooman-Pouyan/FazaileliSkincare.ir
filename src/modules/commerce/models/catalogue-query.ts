@@ -296,7 +296,31 @@ export function parseCatalogueQuery(
     page,
   };
 
-  return canonical
+  /*
+    The single test for canonicality, replacing the flags collected above.
+
+    `PARAMETER_ORDER` says it in its own comment — *"two URLs differing only in
+    parameter order are two URLs"* — but that order was only ever applied when
+    *emitting* a URL, never when accepting one. So `?phase=treat&skin_type=dry`
+    and `?skin_type=dry&phase=treat` both served a page, which is the duplicate
+    the fixed order exists to prevent.
+
+    Comparing the incoming pairs against the pairs this query would emit
+    subsumes every earlier rule — unknown parameters, unsorted repeats,
+    untrimmed search terms, `page=1` — and it is idempotent by construction: the
+    redirect target's own pairs are, by definition, its canonical ones, so a
+    second pass never redirects again.
+  */
+  const expected = canonicalPairs(query);
+  const received = [...search.entries()];
+  const sameShape =
+    received.length === expected.length &&
+    received.every(
+      ([key, value], index) =>
+        key === expected[index]?.[0] && value === expected[index]?.[1],
+    );
+
+  return canonical && sameShape
     ? { kind: "canonical", query }
     : { kind: "redirect", query, href: catalogueHref(query) };
 }
@@ -327,7 +351,16 @@ function scopePath(scope: CatalogueScope): string {
  * used to add one too, which is how a already-prefixed href reached `Link` and
  * came back doubled — decision R-1.
  */
-export function catalogueHref(query: CatalogueQuery): string {
+/**
+ * The parameters a query canonically carries, in emission order.
+ *
+ * Shared by `catalogueHref`, which renders them, and `parseCatalogueQuery`,
+ * which compares an incoming URL against them. Comparing *pairs* rather than
+ * the encoded strings keeps the two encoders out of it: `catalogueHref` uses
+ * `encodeURIComponent` and `URLSearchParams` writes a space as `+`, so a
+ * string comparison would redirect a search for two words forever.
+ */
+function canonicalPairs(query: CatalogueQuery): [string, string][] {
   const values: [string, string][] = [];
 
   for (const key of PARAMETER_ORDER) {
@@ -381,6 +414,11 @@ export function catalogueHref(query: CatalogueQuery): string {
     }
   }
 
+  return values;
+}
+
+export function catalogueHref(query: CatalogueQuery): string {
+  const values = canonicalPairs(query);
   const path = scopePath(query.scope);
   if (values.length === 0) return path;
 

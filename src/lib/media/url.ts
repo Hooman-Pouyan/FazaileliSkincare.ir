@@ -79,6 +79,23 @@ export function mediaUrl(objectKey: string): string {
 }
 
 /**
+ * The same, for a value that came out of a database column.
+ *
+ * `mediaUrl` throws, deliberately: a malformed key written by the seed is a
+ * programming error and a loud failure beats a silent 404. A *stored* key is a
+ * different risk — a row written before a convention changed, or a column
+ * someone edited by hand — and the storefront's answer to a broken image is
+ * already settled. `publicationBlockers` requires a photograph before a product
+ * may be published and the runtime predicate deliberately does not, so that
+ * losing an image degrades the page instead of making stock unbuyable (LOW-8).
+ * Returning null here is that same rule, one layer down.
+ */
+export function mediaUrlOrNull(objectKey: string | null): string | null {
+  if (objectKey === null || !isObjectKey(objectKey)) return null;
+  return mediaUrl(objectKey);
+}
+
+/**
  * One media row's slot within its product: `primary`, `gallery-2`, `package-1`.
  *
  * The slot rather than the row's UUID keeps a bucket listing readable and

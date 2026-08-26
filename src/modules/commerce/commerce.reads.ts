@@ -35,6 +35,7 @@ import {
   variant,
   variantTranslation,
 } from "@/lib/db/schema";
+import { mediaUrlOrNull } from "@/lib/media/url";
 import { formatToman } from "@/lib/money";
 import {
   type CatalogueQuery,
@@ -480,11 +481,19 @@ async function loadTiles(
     const floor =
       eligible.length > 0 ? eligible.reduce((a, b) => (a < b ? a : b)) : null;
 
+    /*
+      The column holds an object KEY, not a URL — `C-7`, `C-8`. Passing it
+      through unchanged is what put `catalog/storyderm/…/primary-640.webp` into
+      a `src` attribute, which is a path relative to whatever page happened to
+      be rendering. Review item 3.5 recorded the verbatim usage as carried; it
+      stopped being safe the day keys stopped being paths.
+    */
     const media = mediaByProduct.get(row.id);
+    const source = mediaUrlOrNull(media?.key ?? null);
     const image: MediaView | null =
-      media?.key != null
+      media && source
         ? {
-            src: media.key,
+            src: source,
             alt: media.alt ?? row.name,
             width: media.width,
             height: media.height,
@@ -1594,16 +1603,21 @@ export async function getProduct(
       name: entry.name,
       href: `/shop/concern/${entry.slug}`,
     })),
-    media: mediaRows
-      .filter(
-        (entry): entry is typeof entry & { key: string } => entry.key !== null,
-      )
-      .map((entry) => ({
-        src: entry.key,
-        alt: entry.alt ?? row.name ?? row.slug,
-        width: entry.width,
-        height: entry.height,
-      })),
+    // Same rule as the tile: the column is a key, `mediaUrl` is the only thing
+    // that turns one into an address. A row whose key is unusable drops out
+    // rather than throwing — losing an image must not make stock unbuyable.
+    media: mediaRows.flatMap((entry) => {
+      const source = mediaUrlOrNull(entry.key);
+      if (!source) return [];
+      return [
+        {
+          src: source,
+          alt: entry.alt ?? row.name ?? row.slug,
+          width: entry.width,
+          height: entry.height,
+        },
+      ];
+    }),
     variants: variants.map((entry) => {
       const price = entry.prices.find(
         (item) => item.customerGroup === ANONYMOUS_GROUP,

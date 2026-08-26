@@ -211,6 +211,45 @@ is meant to be browsable. Until then it lists products without facets.
 
 ---
 
+## F-9 · A group that cannot narrow — **proposed, not adopted**
+
+**The observation.** With the real catalogue seeded, `/shop/all` offers a
+`brand` group containing one value, `Storyderm`, whose count equals the total.
+Selecting it changes nothing. It is a control that cannot do anything, taking
+rail space above controls that can.
+
+`F-8` already states the principle in the other direction — _"a facet where
+everything matches teaches nothing"_ — and the zero-count policy already drops
+values that match **nothing**. This is that policy's mirror, and its absence is
+why the integration suite's own assertion failed rather than passing quietly.
+
+**The proposal.** Drop a facet option whose count equals the number of results
+in the current scope. A group left with no options is already dropped by the
+existing `if (options.length > 0)`, so the single-brand group disappears on its
+own and returns the moment a second brand is seeded.
+
+**Why it is not built yet.** Two reasons, and both are yours to weigh:
+
+1. **It is not obviously right on a narrow scope.** On `/shop/concern/acne`
+   with five products, `skin_type=oily` may match all five. Dropping it is
+   consistent — it cannot narrow — but a shopper who expects to see "oily"
+   there and does not may read the rail as broken rather than as tidy. The
+   alternative is to apply the rule only where a group would otherwise have a
+   single option.
+2. **The case that triggered it is temporary.** One brand is seeded because one
+   brand has usable imagery. Forlle'd and Thalgo resolve this without any code
+   changing, which is an argument for waiting and an argument that the rule is
+   worth having anyway — a rail should not depend on how many brands happen to
+   exist.
+
+**Recommendation.** Adopt the narrow version: drop an option that matches every
+result **only when it is the group's only option**. It removes the control that
+provably does nothing and leaves every judgement call alone.
+
+**Needs the maintainer.** Which version, or neither.
+
+---
+
 ## F-6 · Adding a facet later
 
 One row in F-1, one field or relation that already exists, one migration if it
