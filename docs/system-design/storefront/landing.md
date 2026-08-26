@@ -11,7 +11,7 @@
 
 ## 1. Why this plan exists
 
-`shell-and-product-hub.md` §4 establishes what the Landing *is* — a route role, a
+`shell-and-product-hub.md` §4 establishes what the Landing _is_ — a route role, a
 reading order, navigation continuity and responsive rules. It does not say what
 the page is made of, because at the time it was written the brand storytelling
 had not been decided and the three source-content batches did not exist.
@@ -27,7 +27,7 @@ Both now do. This plan covers the four things §4 leaves open:
    as structure before its content exists.
 
 Nothing here overrides `LAND-01`–`LAND-04`. Where this plan is more specific, it
-is specific *inside* them.
+is specific _inside_ them.
 
 ---
 
@@ -52,13 +52,13 @@ The five beats are carried by **one continuous blossom branch** rendered as a
 single logical ornament that advances state as the reader descends. It is the
 page's through-line, not decoration applied per section.
 
-| Beat | Branch state | The fact it sits beside |
-|---|---|---|
-| 1 · portrait | bare branch, entering from the inline-start margin | — |
-| 2 · the claim | first buds | Japan, Forlle'd, exclusive representation, 日本製 |
-| 3 · three doors | branch divides into three | the three rooms |
-| 4 · proof | open blossom | results, students, testimonials |
-| 5 · invitation | full bloom, then a single petal at rest | the closing action |
+| Beat            | Branch state                                       | The fact it sits beside                           |
+| --------------- | -------------------------------------------------- | ------------------------------------------------- |
+| 1 · portrait    | bare branch, entering from the inline-start margin | —                                                 |
+| 2 · the claim   | first buds                                         | Japan, Forlle'd, exclusive representation, 日本製 |
+| 3 · three doors | branch divides into three                          | the three rooms                                   |
+| 4 · proof       | open blossom                                       | results, students, testimonials                   |
+| 5 · invitation  | full bloom, then a single petal at rest            | the closing action                                |
 
 **The rule that keeps this from becoming decoration.** Every stage is adjacent to
 a claim that is independently true. A concept — authenticity, freshness, youth,
@@ -73,13 +73,13 @@ that still reads correctly, and a test asserts that.
 
 One set of small original SVG pieces, authored in-repo, composed by the spine:
 
-| Piece | Role |
-|---|---|
+| Piece                         | Role                        |
+| ----------------------------- | --------------------------- |
 | `branch-segment` (3 variants) | the spine's continuous line |
-| `bud` | beat 2 |
-| `blossom-open` | beats 4–5 |
-| `petal` | the resting mark at beat 5 |
-| `slash` | section-rhythm mark |
+| `bud`                         | beat 2                      |
+| `blossom-open`                | beats 4–5                   |
+| `petal`                       | the resting mark at beat 5  |
+| `slash`                       | section-rhythm mark         |
 
 **Constraints.** Contour hairlines, no fill, no gradient, no shadow, no frame.
 `--champagne` or `--gold` stroke with the blossom centre in `--gold-light`, and
@@ -192,33 +192,40 @@ that note exists, and an unknown status means the mark does not render.
 ## 5. Phased task list
 
 ### LANDING0 — Content tables, importers and the fictional completion
+
 Add the `testimonial`, academy-offering and brand-candidate tables with their
 migrations. Write importers per `CONTENT-02`–`CONTENT-04`. Generate the fictional
 testimonial set. Integration tests prove idempotency, prove production refusal,
 and prove no path publishes a real testimonial.
 
 ### LANDING1 — The ornament set
+
 Author the six SVG pieces per `LAND-06` as token-bound components. Contrast and
 placement rules enforced by test where mechanically checkable.
 
 ### LANDING2 — The motion primitive and the spine
+
 One reveal-once primitive per `LAND-07`, plus the spine's state machine per
 `LAND-05`. Reduced-motion and no-JS paths verified. Sticky band pinning built as
 the parallax substitute.
 
 ### LANDING3 — Beats 1–3
+
 Portrait, the claim from verifiable credentials only, three photographic doors
 carrying room accents. No card grid, no shadows.
 
 ### LANDING4 — Beats 4–5
+
 The testimonial rail per `LAND-08`, the before/after structure per `LAND-09`, and
 the single closing invitation. Absence verified per `LAND-10` before presence is.
 
 ### LANDING5 — SEO
+
 Metadata, canonical, `hreflang` and JSON-LD per `LAND-11`, with the omission
 tests.
 
 ### LANDING6 — Verification and review log
+
 Typecheck, eslint, unit and integration suites with no skipped files, then a
 dev-server pass at 390/768/1440 in Persian RTL, with JavaScript disabled, and
 with `prefers-reduced-motion` forced. Write the packet 6 review-log section.
@@ -257,13 +264,13 @@ packet 6 review-log section is written.
 
 ## 8. Open and deferred
 
-| Item | State | Comes back when |
-|---|---|---|
-| Six-petal reveal motion (`L-5`) | proposed | the maintainer answers |
-| 3D / WebGL brand story (`L-12`) | deferred off the storefront path | a dedicated brand-story route exists and can lazy-load it |
-| Real testimonials publishing (`L-4`) | blocked on consent | consent is collected per person |
-| Academy prices and dates (`L-4`) | blocked on owner confirmation | prices and certificate issuers are confirmed |
-| Brand logos (`CONTENT-04`) | blocked on rights | a per-brand rights note exists |
-| Real before/after (`LAND-09`, `L-15`) | blocked on consent and advertising rules | both close |
-| The two claim figures (`L-2`) | blocked on the owner | supplied |
-| `LocalBusiness` contact facts (`L-7`) | blocked on the owner, same as review item 4.2 | supplied |
+| Item                                  | State                                         | Comes back when                                           |
+| ------------------------------------- | --------------------------------------------- | --------------------------------------------------------- |
+| Six-petal reveal motion (`L-5`)       | proposed                                      | the maintainer answers                                    |
+| 3D / WebGL brand story (`L-12`)       | deferred off the storefront path              | a dedicated brand-story route exists and can lazy-load it |
+| Real testimonials publishing (`L-4`)  | blocked on consent                            | consent is collected per person                           |
+| Academy prices and dates (`L-4`)      | blocked on owner confirmation                 | prices and certificate issuers are confirmed              |
+| Brand logos (`CONTENT-04`)            | blocked on rights                             | a per-brand rights note exists                            |
+| Real before/after (`LAND-09`, `L-15`) | blocked on consent and advertising rules      | both close                                                |
+| The two claim figures (`L-2`)         | blocked on the owner                          | supplied                                                  |
+| `LocalBusiness` contact facts (`L-7`) | blocked on the owner, same as review item 4.2 | supplied                                                  |

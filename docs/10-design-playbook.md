@@ -1,6 +1,6 @@
 # Design playbook — shadcn/ui + Tailwind v4 + the Fazaieli design system
 
-**Read `09-brand-brief.md` first** for *why*. This document is *how*.
+**Read `09-brand-brief.md` first** for _why_. This document is _how_.
 
 ---
 
@@ -29,7 +29,7 @@ Tailwind v4 is CSS-first; there is no `tailwind.config.js` theme to edit.
 ```css
 /* src/app/globals.css */
 @import "tailwindcss";
-@import "../../designs/tokens.css";   /* defines :root vars AND the @theme block */
+@import "../../designs/tokens.css"; /* defines :root vars AND the @theme block */
 ```
 
 `tokens.css` already exposes every token as a Tailwind utility through `@theme inline` — `bg-ground`, `text-ink`, `border-gold`, `text-firouzeh-text`. Use the utilities; don't re-declare colours in component files.
@@ -50,7 +50,9 @@ export const vazirmatn = localFont({
   display: "swap",
 });
 export const bodoni = localFont({
-  src: [{ path: "../../public/fonts/BodoniModa[opsz,wght].woff2", style: "normal" }],
+  src: [
+    { path: "../../public/fonts/BodoniModa[opsz,wght].woff2", style: "normal" },
+  ],
   variable: "--font-display",
   display: "swap",
 });
@@ -72,7 +74,11 @@ pnpm dlx shadcn@latest init
   "style": "new-york",
   "rsc": true,
   "tsx": true,
-  "tailwind": { "css": "src/app/globals.css", "baseColor": "neutral", "cssVariables": true },
+  "tailwind": {
+    "css": "src/app/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true
+  },
   "iconLibrary": "lucide",
   "aliases": {
     "components": "@/components",
@@ -96,7 +102,7 @@ shadcn components reference `--background`, `--foreground`, `--primary`, `--ring
     --foreground: var(--ink);
     --card: var(--surface);
     --card-foreground: var(--ink);
-    --primary: var(--ink);            /* CTAs are ink-on-sand, not a bright fill */
+    --primary: var(--ink); /* CTAs are ink-on-sand, not a bright fill */
     --primary-foreground: var(--sand);
     --secondary: var(--surface);
     --secondary-foreground: var(--ink);
@@ -107,13 +113,13 @@ shadcn components reference `--background`, `--foreground`, `--primary`, `--ring
     --destructive: var(--danger);
     --border: var(--hairline-soft);
     --input: var(--hairline-soft);
-    --ring: var(--firouzeh-text);     /* focus ring, text-safe on light */
+    --ring: var(--firouzeh-text); /* focus ring, text-safe on light */
     --radius: var(--radius-control);
   }
 }
 ```
 
-> **Note `--primary: var(--ink)`.** A brand's primary button does not have to be its brand colour. Lapis and firouzeh are *fields*, not fills behind text. The primary action is deep ink with sand type — quiet, expensive, and it passes contrast without argument.
+> **Note `--primary: var(--ink)`.** A brand's primary button does not have to be its brand colour. Lapis and firouzeh are _fields_, not fills behind text. The primary action is deep ink with sand type — quiet, expensive, and it passes contrast without argument.
 
 ### Dark mode — a split decision
 
@@ -128,30 +134,32 @@ shadcn components reference `--background`, `--foreground`, `--primary`, `--ring
 
 Install only what a screen actually needs. Expected inventory is ~25 components, not 60.
 
-| Component | Our rules |
-|---|---|
-| `button` | Primary = `--ink` bg / `--sand` text, **`--radius-control` (2px), never rounded-full**. Ghost = text with a `--gold` underline on hover. Min height 44px. |
-| `input`, `textarea`, `select` | 1px `--hairline-soft` border, 2px radius, `--ground` fill. **Visible `<label>` above — never placeholder-as-label.** Focus: 2px `--firouzeh-text` ring, offset 2. |
-| `card` | ⚠️ **Do not use for products.** shadcn's `card` is a bordered, shadowed box; a product tile here is a borderless image with type beneath. `card` is for `/admin` only. |
-| `dialog`, `sheet` | `--radius-surface` (20px), `--surface` fill, **no shadow** — a 1px `--hairline` edge and a scrim instead. The cart is a `sheet`. |
-| `command` | The ⌘K palette. Groups by room: فروشگاه / رزرو / آکادمی. |
-| `calendar` | Booking. **`react-day-picker` is on v10** — shadcn's generated component historically targeted v9; check it the day you add it. Jalali rendering comes from our own `JalaliDate` module, not from the library. |
-| `input-otp` | Phone login. 6 digits. |
-| `accordion` | PDP progressive disclosure — ترکیبات / روش استفاده / برای چه پوستی / اصالت. Never tabs; tabs hide content from crawlers and from a scrolling reader. |
-| `badge` | Used sparingly: «موجود»، «حرفه‌ای»، «ظرفیت محدود». **No discount badges on product tiles.** |
-| `sonner` | Toasts. Persian, bottom-start. |
-| `skeleton` | Reserve space to keep CLS below 0.1. |
-| `table` | `/admin` only. |
+| Component                     | Our rules                                                                                                                                                                                                      |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `button`                      | Primary = `--ink` bg / `--sand` text, **`--radius-control` (2px), never rounded-full**. Ghost = text with a `--gold` underline on hover. Min height 44px.                                                      |
+| `input`, `textarea`, `select` | 1px `--hairline-soft` border, 2px radius, `--ground` fill. **Visible `<label>` above — never placeholder-as-label.** Focus: 2px `--firouzeh-text` ring, offset 2.                                              |
+| `card`                        | ⚠️ **Do not use for products.** shadcn's `card` is a bordered, shadowed box; a product tile here is a borderless image with type beneath. `card` is for `/admin` only.                                         |
+| `dialog`, `sheet`             | `--radius-surface` (20px), `--surface` fill, **no shadow** — a 1px `--hairline` edge and a scrim instead. The cart is a `sheet`.                                                                               |
+| `command`                     | The ⌘K palette. Groups by room: فروشگاه / رزرو / آکادمی.                                                                                                                                                       |
+| `calendar`                    | Booking. **`react-day-picker` is on v10** — shadcn's generated component historically targeted v9; check it the day you add it. Jalali rendering comes from our own `JalaliDate` module, not from the library. |
+| `input-otp`                   | Phone login. 6 digits.                                                                                                                                                                                         |
+| `accordion`                   | PDP progressive disclosure — ترکیبات / روش استفاده / برای چه پوستی / اصالت. Never tabs; tabs hide content from crawlers and from a scrolling reader.                                                           |
+| `badge`                       | Used sparingly: «موجود»، «حرفه‌ای»، «ظرفیت محدود». **No discount badges on product tiles.**                                                                                                                    |
+| `sonner`                      | Toasts. Persian, bottom-start.                                                                                                                                                                                 |
+| `skeleton`                    | Reserve space to keep CLS below 0.1.                                                                                                                                                                           |
+| `table`                       | `/admin` only.                                                                                                                                                                                                 |
 
 **Extend with `cva`, never with inline conditionals.**
 
 ```tsx
 // ✅
 const buttonVariants = cva("...", {
-  variants: { variant: { room: "border-b border-gold bg-transparent text-ink" } },
+  variants: {
+    variant: { room: "border-b border-gold bg-transparent text-ink" },
+  },
 });
 // ❌
-<Button className={isActive ? "bg-teal" : "bg-transparent"} />
+<Button className={isActive ? "bg-teal" : "bg-transparent"} />;
 ```
 
 **Icons: Lucide, stroke 1.4–1.6, 16/20/24 grid.** Never emoji. Rail destinations use recognizable Lucide symbols; the brand medallion remains custom.
@@ -173,14 +181,14 @@ Persian is the primary locale. Every one of these is a review-blocking rule:
 
 ### Persian typography
 
-| | |
-|---|---|
-| Body line-height | **1.8** — Persian needs more than Latin's 1.5 |
-| Digits | Persian `۱۲۳` in `fa`, Latin in `en`. One formatter, used everywhere. |
-| Thousands separator | `٬` (U+066C), not `,` |
-| Currency | Store integer **rials**; display **تومان** (÷10). Never mix units. |
-| Dates | Store UTC `timestamptz`; render **Jalali** via `Intl.DateTimeFormat('fa-IR-u-ca-persian')` + `jalaali-js` for arithmetic |
-| Latin inside Persian | Brand names (`Forlle'd`, `Hyalogy`) keep Latin glyphs and the display face — set them in a `.lat` span |
+|                      |                                                                                                                          |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Body line-height     | **1.8** — Persian needs more than Latin's 1.5                                                                            |
+| Digits               | Persian `۱۲۳` in `fa`, Latin in `en`. One formatter, used everywhere.                                                    |
+| Thousands separator  | `٬` (U+066C), not `,`                                                                                                    |
+| Currency             | Store integer **rials**; display **تومان** (÷10). Never mix units.                                                       |
+| Dates                | Store UTC `timestamptz`; render **Jalali** via `Intl.DateTimeFormat('fa-IR-u-ca-persian')` + `jalaali-js` for arithmetic |
+| Latin inside Persian | Brand names (`Forlle'd`, `Hyalogy`) keep Latin glyphs and the display face — set them in a `.lat` span                   |
 
 ---
 
@@ -193,7 +201,7 @@ Persian is the primary locale. Every one of these is a review-blocking rule:
 
 Fades and 8–16px rises on scroll entry. **No parallax, no bounce, no autoplay carousels, no countdown timers.** `prefers-reduced-motion` collapses `--duration` to 1ms — already wired in `tokens.css`.
 
-> Corroboration worth noting: the design-system search independently returned "subtle hover 200–250ms, scroll reveal with an 8–16px offset, avoid harsh animations" for this product category. Our 480ms is slower on purpose — the brand is unhurried — but the *shape* matches.
+> Corroboration worth noting: the design-system search independently returned "subtle hover 200–250ms, scroll reveal with an 8–16px offset, avoid harsh animations" for this product category. Our 480ms is slower on purpose — the brand is unhurried — but the _shape_ matches.
 
 ---
 

@@ -130,7 +130,7 @@ Each visual group may use one approved app-origin symbolic background image or i
 
 ## 4. Landing page requirements
 
-> **Extended by [`landing.md`](landing.md).** `LAND-01`-`LAND-04` below define the Landing's route role, reading order, navigation continuity and responsive rules, and they still bind. What the page is *made of* - the storytelling spine, the ornament and motion vocabulary, the proof surfaces, and how unapproved source content reaches a development database - is `LAND-05`-`LAND-11` and `CONTENT-01`-`CONTENT-04` in that plan, under the decisions in [`../../21-landing-composition-decisions.md`](../../21-landing-composition-decisions.md).
+> **Extended by [`landing.md`](landing.md).** `LAND-01`-`LAND-04` below define the Landing's route role, reading order, navigation continuity and responsive rules, and they still bind. What the page is _made of_ - the storytelling spine, the ornament and motion vocabulary, the proof surfaces, and how unapproved source content reaches a development database - is `LAND-05`-`LAND-11` and `CONTENT-01`-`CONTENT-04` in that plan, under the decisions in [`../../21-landing-composition-decisions.md`](../../21-landing-composition-decisions.md).
 
 ### LAND-01 - Route role and content source
 

@@ -38,11 +38,11 @@ committed template.
 Every consumer reads them in the same order — `.env.local`, then `.env`, and an
 explicit environment variable beats both:
 
-| Consumer | Reads |
-|---|---|
-| Next.js (`pnpm dev`, `pnpm build`) | natively |
-| `drizzle.config.ts` (`db:migrate`, `db:studio`) | explicit dotenv load |
-| `src/lib/db/seed.ts` (`db:seed`) | explicit dotenv load |
+| Consumer                                                 | Reads                         |
+| -------------------------------------------------------- | ----------------------------- |
+| Next.js (`pnpm dev`, `pnpm build`)                       | natively                      |
+| `drizzle.config.ts` (`db:migrate`, `db:studio`)          | explicit dotenv load          |
+| `src/lib/db/seed.ts` (`db:seed`)                         | explicit dotenv load          |
 | `scripts/database.sh` (`db:up`, `db:reset`, `db:verify`) | `FAZAIELI_DATABASE_PORT` only |
 
 Plain `import "dotenv/config"` reads `.env` alone, which is why the two TypeScript
@@ -60,10 +60,10 @@ schema suites.
 
 ## Seed profiles
 
-| Command | Contents |
-|---|---|
-| `pnpm db:seed reference` | Locales and concerns. Real reference data, safe in any environment. |
-| `pnpm db:seed dev` | The reference profile plus a fictional catalogue — three brands, three categories, ten products covering every offer and publication state, with placeholder imagery from `public/images/dev/`. |
+| Command                  | Contents                                                                                                                                                                                        |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm db:seed reference` | Locales and concerns. Real reference data, safe in any environment.                                                                                                                             |
+| `pnpm db:seed dev`       | The reference profile plus a fictional catalogue — three brands, three categories, ten products covering every offer and publication state, with placeholder imagery from `public/images/dev/`. |
 
 Everything in the `dev` profile is invented. It describes no real product, and
 `14-storyderm-draft-catalog-pipeline.md` still governs real catalogue data: no
@@ -187,13 +187,13 @@ removed both.
 
 ## What is deliberately faked locally
 
-| Concern | Local | Production |
-|---|---|---|
-| SMS OTP | console reveal | Kavenegar / SMS.ir |
-| Postgres | `compose.yaml` container | Iran-hosted managed instance |
-| Object storage | not yet exercised | S3-compatible |
-| Payment | bank transfer only, no gateway | bank transfer, then ZarinPal |
-| Client IP | request socket, no proxy | trusted proxy header chain |
+| Concern        | Local                          | Production                   |
+| -------------- | ------------------------------ | ---------------------------- |
+| SMS OTP        | console reveal                 | Kavenegar / SMS.ir           |
+| Postgres       | `compose.yaml` container       | Iran-hosted managed instance |
+| Object storage | not yet exercised              | S3-compatible                |
+| Payment        | bank transfer only, no gateway | bank transfer, then ZarinPal |
+| Client IP      | request socket, no proxy       | trusted proxy header chain   |
 
 Every one of these sits behind a named interface chosen at the composition root.
 Adding a real provider is a configuration change plus one adapter, never a change
@@ -201,12 +201,12 @@ to a route, action, or screen.
 
 ## Test suites
 
-| Command | Needs PostgreSQL | Contents |
-|---|---|---|
-| `pnpm test:unit` | no | 14 files — money, jalali, phone, rate-limit keys, notifier, request boundary, runtime config, schema contract, search normalization, reference seed shape, i18n routing, rail, auth schemas, next config |
-| `pnpm test:integration` | yes | the three `*.integration.test.ts` files — Better Auth runtime, the PostgreSQL rate-limit store, and the Better Auth schema mapping |
-| `pnpm test` | yes | both |
-| `pnpm test:e2e` | yes, plus a running server | Playwright |
+| Command                 | Needs PostgreSQL           | Contents                                                                                                                                                                                                 |
+| ----------------------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm test:unit`        | no                         | 14 files — money, jalali, phone, rate-limit keys, notifier, request boundary, runtime config, schema contract, search normalization, reference seed shape, i18n routing, rail, auth schemas, next config |
+| `pnpm test:integration` | yes                        | the three `*.integration.test.ts` files — Better Auth runtime, the PostgreSQL rate-limit store, and the Better Auth schema mapping                                                                       |
+| `pnpm test`             | yes                        | both                                                                                                                                                                                                     |
+| `pnpm test:e2e`         | yes, plus a running server | Playwright                                                                                                                                                                                               |
 
 The split exists so most changes can be verified without provisioning a
 database, and so a schema or policy regression is caught by a suite that runs in

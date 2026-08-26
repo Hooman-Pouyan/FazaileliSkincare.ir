@@ -29,28 +29,28 @@ academy beat and the booking beat compose **`/[locale]`**. `/[locale]/shop`
 stays concern-first product discovery and gains no academy, booking or
 biography section.
 
-**Why.** `04-information-architecture.md` §0 defines the Landing as *"a
+**Why.** `04-information-architecture.md` §0 defines the Landing as _"a
 scroll-composed introduction to Mahdieh Fazaieli, not a homepage with a product
-grid"* with a fixed beat order — portrait → the claim → three doors → proof →
+grid"_ with a fixed beat order — portrait → the claim → three doors → proof →
 one closing invitation. §1 defines Shop as concern first, brand second, type
-third. `09-brand-brief.md` closes with the constraint that decides it: *"Neither
-should ever feel like they wandered into the other's shop."* A `/shop` that
+third. `09-brand-brief.md` closes with the constraint that decides it: _"Neither
+should ever feel like they wandered into the other's shop."_ A `/shop` that
 opens with biography and workshop cards flattens the rail-and-rooms IA that
 `SHELL-00` exists to protect, and it pushes the concern tiles — the one thing a
 woman arriving from Instagram with melasma needs in ten seconds — below the fold.
 
 **What each surface gets:**
 
-| Idea as described | Surface that owns it |
-|---|---|
-| Brand storytelling, Ms Fazaieli's history and background | Landing beat 2, long form on `/about` |
-| Testimonials / feedback rail | Landing beat 4 (proof), gated by L-4 |
-| Before-and-after, student work | Landing beat 4, long form on `/results` |
-| Booking section | Landing beat 3 as one door + one line; the flow is `/book` |
-| Academy, courses, workshops, webinars grids | `/academy` hub. Landing gets **one** beat: the next dated Mashhad workshop |
-| Banners | Landing beat 5 (closing invitation) only — see L-6 |
-| Carousels, grids, card sections *for shop* | `/shop` hub: concern tiles, brand row, curated routines, merchandised product rails |
-| Blossom motif | Both, as a section ornament — see L-5 |
+| Idea as described                                        | Surface that owns it                                                                |
+| -------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| Brand storytelling, Ms Fazaieli's history and background | Landing beat 2, long form on `/about`                                               |
+| Testimonials / feedback rail                             | Landing beat 4 (proof), gated by L-4                                                |
+| Before-and-after, student work                           | Landing beat 4, long form on `/results`                                             |
+| Booking section                                          | Landing beat 3 as one door + one line; the flow is `/book`                          |
+| Academy, courses, workshops, webinars grids              | `/academy` hub. Landing gets **one** beat: the next dated Mashhad workshop          |
+| Banners                                                  | Landing beat 5 (closing invitation) only — see L-6                                  |
+| Carousels, grids, card sections _for shop_               | `/shop` hub: concern tiles, brand row, curated routines, merchandised product rails |
+| Blossom motif                                            | Both, as a section ornament — see L-5                                               |
 
 **Gap carried.** `/about`, `/results` and `/academy` do not exist yet. Until they
 do, the Landing's beats terminate at the rooms that do exist and the deeper links
@@ -95,12 +95,12 @@ entry, each element revealing **once**. `prefers-reduced-motion` collapses
 
 **Refused, with substitutes:**
 
-| Asked for | Why refused | What is built instead |
-|---|---|---|
-| Parallax transition sections | `10-design-playbook.md` Step 5: *"No parallax, no bounce, no autoplay carousels, no countdown timers."* Differential-scroll transforms also fight the CLS budget the same file sets at < 0.1 | **Sticky band pinning** — `position: sticky` on a lapis or teal band while the content beside it scrolls past, then release. Reads as depth, moves nothing at a second speed, costs no scroll-linked layout work |
-| Infinite fade-in / fade-out moving rails | Same clause. `content/testimonials/README.md` adds: *"Do not put multiple continuously moving quote rails behind the page: the comments are meaningful content, not decorative texture"* | **A manually controlled RTL rail** — CSS scroll-snap, arrows and swipe, entry fade only. Reader-paced |
-| Autoplay carousels anywhere | Same clause | Scroll-snap rails, and grids where the content is not sequential |
-| Falling blossom leaves as a continuous ambient loop | A permanently animating layer is unbounded battery and main-thread cost on the mobile-first Iranian audience `09-brand-brief.md` describes, and it is the Instagram-template register the same document says the site takes its cue away from | See L-5 |
+| Asked for                                           | Why refused                                                                                                                                                                                                                                   | What is built instead                                                                                                                                                                                            |
+| --------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Parallax transition sections                        | `10-design-playbook.md` Step 5: _"No parallax, no bounce, no autoplay carousels, no countdown timers."_ Differential-scroll transforms also fight the CLS budget the same file sets at < 0.1                                                  | **Sticky band pinning** — `position: sticky` on a lapis or teal band while the content beside it scrolls past, then release. Reads as depth, moves nothing at a second speed, costs no scroll-linked layout work |
+| Infinite fade-in / fade-out moving rails            | Same clause. `content/testimonials/README.md` adds: _"Do not put multiple continuously moving quote rails behind the page: the comments are meaningful content, not decorative texture"_                                                      | **A manually controlled RTL rail** — CSS scroll-snap, arrows and swipe, entry fade only. Reader-paced                                                                                                            |
+| Autoplay carousels anywhere                         | Same clause                                                                                                                                                                                                                                   | Scroll-snap rails, and grids where the content is not sequential                                                                                                                                                 |
+| Falling blossom leaves as a continuous ambient loop | A permanently animating layer is unbounded battery and main-thread cost on the mobile-first Iranian audience `09-brand-brief.md` describes, and it is the Instagram-template register the same document says the site takes its cue away from | See L-5                                                                                                                                                                                                          |
 
 **Scroll-spy.** Accepted in its passive form only: a section observer that drives
 the reveal-once transitions and, on desktop, marks position in the rail. Not a
@@ -129,11 +129,11 @@ the same four steps before it renders:
 
 **What is actually blocked today:**
 
-| Batch | Records | What the README requires before publication |
-|---|---|---|
-| `content/testimonials/` | 42 (14 + 28) | `publicationConsent` is `unknown` on every record. *"none may render publicly in that state"* · *"never publish directly from this JSON file"* |
-| `content/brands/` | 13 | Relationship type, country, canonical spelling and approved display names per brand. `imageRightsStatus` is `unknown` — **no logo may be published**. Official-representative status is confirmed for Forlle'd only |
-| `content/academy/` | 10 (2 courses, 8 workshops) | Price interpretation (۱۸م / ۳۹م / ۶م تومان) is `needs_owner_confirmation`; certificate issuers unconfirmed; dates, capacity, venue and instructors absent |
+| Batch                   | Records                     | What the README requires before publication                                                                                                                                                                         |
+| ----------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `content/testimonials/` | 42 (14 + 28)                | `publicationConsent` is `unknown` on every record. _"none may render publicly in that state"_ · _"never publish directly from this JSON file"_                                                                      |
+| `content/brands/`       | 13                          | Relationship type, country, canonical spelling and approved display names per brand. `imageRightsStatus` is `unknown` — **no logo may be published**. Official-representative status is confirmed for Forlle'd only |
+| `content/academy/`      | 10 (2 courses, 8 workshops) | Price interpretation (۱۸م / ۳۹م / ۶م تومان) is `needs_owner_confirmation`; certificate issuers unconfirmed; dates, capacity, venue and instructors absent                                                           |
 
 **Why this is stated once, here.** Three separate READMEs each say the same thing
 about their own batch, and the Landing is the first surface that would touch all
@@ -144,7 +144,7 @@ recoverable by editing a file afterwards.
 
 **Consequence to accept now.** On the day the Landing is built, beat 4's
 testimonial rail has **zero** items and the academy beat has **zero** dated
-workshops. Both must degrade to *absent* — not to an empty frame, not to
+workshops. Both must degrade to _absent_ — not to an empty frame, not to
 placeholder quotes, not to "coming soon". The components are still worth
 building; they are what makes collecting consent and confirming prices worth
 doing. But the page has to be correct with them missing, and that is a design
@@ -207,15 +207,15 @@ import the motif without it.
 
 **Decided — the colour, and the rule it establishes.** The reference's pink is
 not imported. `09-brand-brief.md` rejects a generic pink-and-lavender beauty
-palette, and importing Forlle'd's pink as *our* accent would do exactly what that
+palette, and importing Forlle'd's pink as _our_ accent would do exactly what that
 rejection exists to prevent. On our surfaces the branch is `--champagne` or
 `--gold` with the blossom centre in `--gold-light`, and it appears **only on the
 lapis and teal bands** — `tokens.css` line 6 states gold, firouzeh, champagne and
 sand fail contrast on `--ground`, so a blossom on cool white would be either
 invisible or a rule violation.
 
-> **The general rule this sets:** *our palette governs our surfaces; a partner
-> brand's own marks are quoted, not restyled.* Where Forlle'd's own artwork is
+> **The general rule this sets:** _our palette governs our surfaces; a partner
+> brand's own marks are quoted, not restyled._ Where Forlle'd's own artwork is
 > reproduced as itself — a brand page, a co-branded workshop card — it keeps its
 > own colours, inside a bounded region, credited. It never becomes a site accent.
 > This applies to Storyderm and Thalgo identically. Note that no brand logo may
@@ -252,10 +252,10 @@ that is design work, not implementation work.
 invitation. It carries no promotional strip, no discount ribbon, no seasonal
 campaign bar, and no countdown.
 
-**Why.** `09-brand-brief.md`: *"No permanent discount furniture — no countdown
+**Why.** `09-brand-brief.md`: _"No permanent discount furniture — no countdown
 timers, no `-۳۰٪` on every tile, no «فروش ویژه» as a nav item. On medical-grade
 product, visible permanent discounting tells patients the price was never real,
-and by extension that the recommendation isn't either."*
+and by extension that the recommendation isn't either."_
 
 **Re-review trigger.** A real, dated campaign with a real end date. A campaign is
 a page, not permanent furniture on the Landing.
@@ -290,8 +290,8 @@ waiting on for the footer.
 row second, curated routines third, and merchandised product rails beneath.
 
 **Constraints inherited, not restated per component.** `09-brand-brief.md`:
-*"No card grid. A product tile is a borderless image with type beneath it."* and
-*"No shadows."* Any rail is scroll-snap and reader-paced under L-3. Any product
+_"No card grid. A product tile is a borderless image with type beneath it."_ and
+_"No shadows."_ Any rail is scroll-snap and reader-paced under L-3. Any product
 appearing in any rail passes `isPubliclyVisible` and renders its true offer state
 under D-18-2 — a professional-only product may appear and may not acquire a
 purchase control.
@@ -313,7 +313,7 @@ through generic japonisme.
   house rule under a different name: `09-brand-brief.md` asks for whitespace,
   hairlines and tone shifts, and the Forlle'd reference is 85% empty. It changes
   nothing; it explains why the existing rule is right.
-- **改善 (kaizen)** — admitted as *method*, in the Academy's own voice: a
+- **改善 (kaizen)** — admitted as _method_, in the Academy's own voice: a
   curriculum built in ordered steps, protocols that are revised rather than
   replaced, a practitioner who improves continuously. It belongs in copy on
   `/academy` and `/about`. It is **not** a UI pattern, a section label, or a word
@@ -487,40 +487,40 @@ direction.
 
 Recorded so the maintainer's list can be checked off rather than re-read.
 
-| Asked for | Outcome |
-|---|---|
-| Shop carousels, grids, card sections | **Yes**, on `/shop` — L-8. Borderless tiles, scroll-snap rails, no shadows |
-| Academy / courses / workshops / webinars layouts | **Yes**, on `/academy`. Landing gets one beat — L-1, L-2 |
-| Banners | **One**, the closing invitation — L-6 |
-| Testimonials with a polished modern look | **Component yes, content blocked** — L-4 |
-| Infinite fade in/out moving rails | **No.** Reader-paced RTL scroll-snap rail instead — L-3 |
-| Booking sections | **Yes**, as one door plus one line — L-1, L-2 |
-| Parallax transition sections | **No.** Sticky band pinning instead — L-3 |
-| Forlle'd Japanese blossom tree elements | **Yes, in form** — L-5. Palette held, motion proposed |
-| Falling blossom leaves | **No as a loop.** A bounded six-petal reveal-once is proposed — L-5 |
-| Scroll-spy animation | **Yes**, passive reveal-once only. No sticky section nav, no scroll hijack — L-3 |
-| Brand and Ms Fazaieli storytelling | **Yes**, Landing beat 2, long form on `/about` — L-2. Two facts still needed |
-| Japanese cultural elements, kaizen | **Bounded** — L-9. Carried by the growth spine, not a values row — L-12 |
-| Blossom assets as several small SVGs | **Yes, drawn in-repo** rather than sourced or traced — L-11 |
-| 3D / Three.js brand animation | **Deferred off the storefront path**; a lazy-loaded brand-story route later — L-12 |
-| Use the Instagram batches as dev data | **Yes, through the seed path**, completed fictionally and marked — L-13 |
-| Brand logos | **Yes, against a recorded right per brand** — L-14 |
-| Before/after section | **Structure now, content gated** on consent and advertising rules — L-15 |
+| Asked for                                        | Outcome                                                                            |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------- |
+| Shop carousels, grids, card sections             | **Yes**, on `/shop` — L-8. Borderless tiles, scroll-snap rails, no shadows         |
+| Academy / courses / workshops / webinars layouts | **Yes**, on `/academy`. Landing gets one beat — L-1, L-2                           |
+| Banners                                          | **One**, the closing invitation — L-6                                              |
+| Testimonials with a polished modern look         | **Component yes, content blocked** — L-4                                           |
+| Infinite fade in/out moving rails                | **No.** Reader-paced RTL scroll-snap rail instead — L-3                            |
+| Booking sections                                 | **Yes**, as one door plus one line — L-1, L-2                                      |
+| Parallax transition sections                     | **No.** Sticky band pinning instead — L-3                                          |
+| Forlle'd Japanese blossom tree elements          | **Yes, in form** — L-5. Palette held, motion proposed                              |
+| Falling blossom leaves                           | **No as a loop.** A bounded six-petal reveal-once is proposed — L-5                |
+| Scroll-spy animation                             | **Yes**, passive reveal-once only. No sticky section nav, no scroll hijack — L-3   |
+| Brand and Ms Fazaieli storytelling               | **Yes**, Landing beat 2, long form on `/about` — L-2. Two facts still needed       |
+| Japanese cultural elements, kaizen               | **Bounded** — L-9. Carried by the growth spine, not a values row — L-12            |
+| Blossom assets as several small SVGs             | **Yes, drawn in-repo** rather than sourced or traced — L-11                        |
+| 3D / Three.js brand animation                    | **Deferred off the storefront path**; a lazy-loaded brand-story route later — L-12 |
+| Use the Instagram batches as dev data            | **Yes, through the seed path**, completed fictionally and marked — L-13            |
+| Brand logos                                      | **Yes, against a recorded right per brand** — L-14                                 |
+| Before/after section                             | **Structure now, content gated** on consent and advertising rules — L-15           |
 
 ---
 
 ## Where these bind
 
-| Decision | Binds |
-|---|---|
-| L-1, L-2 | Packet 6 composition, and every future proposal to add a Landing section |
-| L-3 | Every animated element on any storefront surface |
-| L-4 | The `testimonial`, academy and brand tables, their importers, beat 4 and the academy beat |
-| L-5 | The ornament vocabulary on every surface; the partner-brand colour rule; the motion allowance is held |
-| L-11, L-12 | Packet 6's ornament set and motion; any future 3D proposal |
-| L-13 | Every source-batch table, importer and fixture |
-| L-14 | The Shop hub's brand row and every brand surface |
-| L-15 | The before/after component and its content gate |
-| L-6 | Landing and any future campaign work |
-| L-7 | Landing metadata and JSON-LD |
-| L-8 | Packet 5 |
+| Decision   | Binds                                                                                                 |
+| ---------- | ----------------------------------------------------------------------------------------------------- |
+| L-1, L-2   | Packet 6 composition, and every future proposal to add a Landing section                              |
+| L-3        | Every animated element on any storefront surface                                                      |
+| L-4        | The `testimonial`, academy and brand tables, their importers, beat 4 and the academy beat             |
+| L-5        | The ornament vocabulary on every surface; the partner-brand colour rule; the motion allowance is held |
+| L-11, L-12 | Packet 6's ornament set and motion; any future 3D proposal                                            |
+| L-13       | Every source-batch table, importer and fixture                                                        |
+| L-14       | The Shop hub's brand row and every brand surface                                                      |
+| L-15       | The before/after component and its content gate                                                       |
+| L-6        | Landing and any future campaign work                                                                  |
+| L-7        | Landing metadata and JSON-LD                                                                          |
+| L-8        | Packet 5                                                                                              |

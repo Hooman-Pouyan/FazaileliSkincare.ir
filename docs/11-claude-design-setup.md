@@ -8,16 +8,16 @@
 
 This trips everyone up, and it is why you couldn't find our canvas in your Claude Design account.
 
-| | **The canvas preview** (what we've been using) | **Claude Design** (claude.ai/design) |
-|---|---|---|
-| What it is | An early preview of Claude Design's canvas editor, **packaged inside a published Artifact** | The real product, with accounts and projects |
-| Where it lives | `claude.ai/code/artifact/…` | `claude.ai/design` |
-| Connected to your Design account? | **No.** None at all. | Yes |
-| Source of truth | `designs/storefront-canvas/*.dc.html` in this repo | A **design-system project** in your account |
-| How it updates | I re-seed from the repo files and republish | `DesignSync` pushes files into the project |
-| Import / export between them | **Not available while the preview is on** | — |
+|                                   | **The canvas preview** (what we've been using)                                              | **Claude Design** (claude.ai/design)         |
+| --------------------------------- | ------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| What it is                        | An early preview of Claude Design's canvas editor, **packaged inside a published Artifact** | The real product, with accounts and projects |
+| Where it lives                    | `claude.ai/code/artifact/…`                                                                 | `claude.ai/design`                           |
+| Connected to your Design account? | **No.** None at all.                                                                        | Yes                                          |
+| Source of truth                   | `designs/storefront-canvas/*.dc.html` in this repo                                          | A **design-system project** in your account  |
+| How it updates                    | I re-seed from the repo files and republish                                                 | `DesignSync` pushes files into the project   |
+| Import / export between them      | **Not available while the preview is on**                                                   | —                                            |
 
-So the mockups you've seen are repo-backed and perfectly real — they are just not *in* Claude Design. Nothing was lost; they were never there.
+So the mockups you've seen are repo-backed and perfectly real — they are just not _in_ Claude Design. Nothing was lost; they were never there.
 
 ---
 
@@ -45,7 +45,7 @@ Also worth knowing: the companion **`/design-sync` skill is not installed on you
 
 ## The three ways forward, in order of preference
 
-### Option A — "Send to Claude Code Web" *(recommended)*
+### Option A — "Send to Claude Code Web" _(recommended)_
 
 1. Open **claude.ai/design** and create a project. **Its type must be `Design System`** — that type is fixed at creation and a regular project can never be converted into one.
    Suggested name: **Fazaieli Design System**.
@@ -64,12 +64,12 @@ Honestly: **nothing is blocked.** The design system already lives in the repo as
 
 ## Skills to add to your account
 
-| Skill | Why | Status |
-|---|---|---|
-| **`design-sync`** | The companion to the `DesignSync` tool — drives the incremental push properly | ❌ **Not installed — add this one** |
-| `ui-ux-pro-max` | Design-system search, 119 UX guidelines, stack rules, pre-delivery checklist | ✅ Installed (thank you — it's already in use, see `10-design-playbook.md`) |
-| `context7-mcp` / `find-docs` | Current API docs instead of stale training data | ✅ Installed, ⚠️ **but `context7.com` is blocked by this session's egress allowlist.** Allowlist it and it starts working. |
-| `design` plugin (`design-critique`, `design-system`, `accessibility-review`, `design-handoff`, `ux-copy`) | Review passes on finished screens | ✅ Installed |
+| Skill                                                                                                     | Why                                                                           | Status                                                                                                                     |
+| --------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| **`design-sync`**                                                                                         | The companion to the `DesignSync` tool — drives the incremental push properly | ❌ **Not installed — add this one**                                                                                        |
+| `ui-ux-pro-max`                                                                                           | Design-system search, 119 UX guidelines, stack rules, pre-delivery checklist  | ✅ Installed (thank you — it's already in use, see `10-design-playbook.md`)                                                |
+| `context7-mcp` / `find-docs`                                                                              | Current API docs instead of stale training data                               | ✅ Installed, ⚠️ **but `context7.com` is blocked by this session's egress allowlist.** Allowlist it and it starts working. |
+| `design` plugin (`design-critique`, `design-system`, `accessibility-review`, `design-handoff`, `ux-copy`) | Review passes on finished screens                                             | ✅ Installed                                                                                                               |
 
 ---
 
@@ -126,16 +126,16 @@ If a colour changes in the Claude Design UI, that change is not real until it is
 
 ## Code references for whoever picks this up
 
-| What | Where |
-|---|---|
-| Tokens, source of truth | `designs/tokens.json` |
-| Generated CSS + Tailwind `@theme` | `designs/tokens.css` |
-| Palette rationale, measured contrast | `designs/design-language/index.html`, `docs/04-information-architecture.md` |
-| Brand, voice, audience, what to avoid | `docs/09-brand-brief.md` |
-| shadcn setup, component rules, RTL, checklist | `docs/10-design-playbook.md` |
-| Draft artboards | `designs/storefront-canvas/*.dc.html` + `canvas.json` |
-| Competitor evidence behind the decisions | `docs/08-competitive-research.md` |
-| House conventions | `AGENTS.md` |
+| What                                          | Where                                                                       |
+| --------------------------------------------- | --------------------------------------------------------------------------- |
+| Tokens, source of truth                       | `designs/tokens.json`                                                       |
+| Generated CSS + Tailwind `@theme`             | `designs/tokens.css`                                                        |
+| Palette rationale, measured contrast          | `designs/design-language/index.html`, `docs/04-information-architecture.md` |
+| Brand, voice, audience, what to avoid         | `docs/09-brand-brief.md`                                                    |
+| shadcn setup, component rules, RTL, checklist | `docs/10-design-playbook.md`                                                |
+| Draft artboards                               | `designs/storefront-canvas/*.dc.html` + `canvas.json`                       |
+| Competitor evidence behind the decisions      | `docs/08-competitive-research.md`                                           |
+| House conventions                             | `AGENTS.md`                                                                 |
 
 ---
 

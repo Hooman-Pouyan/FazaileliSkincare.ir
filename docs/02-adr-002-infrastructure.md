@@ -13,7 +13,7 @@ You said: Iran-hosted, Iranian gateway. That single answer eliminates most of th
 
 1. **Foreign clouds are out — practically and legally.** Vercel, Netlify, AWS, Azure, GCP and Cloudflare's paid tiers restrict or block Iranian accounts and traffic under US sanctions. Building on them means your account can vanish without notice and your customers may not be able to reach the site. This is not a risk to manage; it's a door that's closed.
 2. **A rial payment gateway effectively requires Iranian hosting.** PSPs and the eNamad process expect an Iranian-hosted site on an Iranian IP. A `.ir` domain on a foreign host is the wrong shape for the paperwork.
-3. **Your build machine may not be able to reach npm, Docker Hub or GitHub.** Iranian IPs are intermittently blocked by package registries. This breaks CI *silently and at the worst moment*. It needs a designed answer, not a workaround discovered under pressure.
+3. **Your build machine may not be able to reach npm, Docker Hub or GitHub.** Iranian IPs are intermittently blocked by package registries. This breaks CI _silently and at the worst moment_. It needs a designed answer, not a workaround discovered under pressure.
 
 ---
 
@@ -23,16 +23,16 @@ You named Liara, and it's the right instinct. For your situation it's the closes
 
 ### The options, honestly compared
 
-| Option | What it is | Fit for you |
-|---|---|---|
-| **Liara** | Iranian PaaS. CLI push, managed PostgreSQL, S3-compatible object storage, DNS, free SSL, persistent disks. Rial billing, hourly. | Best developer experience of the Iranian options — closest thing to "Vercel, but legal and local." |
-| **ParsPack PaaS** | Iranian PaaS from an older, larger hosting company. Deploy from Docker, code upload or webhook CI. Managed PostgreSQL/Redis/Mongo/Elastic, MinIO object storage, scheduled + on-demand backups with rollback. **Datacenters in Iran *and* Germany.** Hourly pay-as-you-go. | Equally strong. Edges ahead on vendor durability and on the Germany region if you ever want an English-market front. |
-| **Darkube (Hamravesh)** | Kubernetes-native Iranian PaaS. | Capable, but more Kubernetes than a solo maintainer needs. Consider only if you end up wanting k8s primitives. |
-| **ArvanCloud** | The largest Iranian cloud: VMs, Kubernetes, object storage, national CDN, **VOD platform**, container registry. | **The exit ramp, and the answer for media.** More knobs than you need for the app itself — but its CDN and VOD are the natural home for product imagery and course video no matter who hosts the app. |
-| **Plain Iranian VPS** (IranServer, etc.) | A Linux box. | Cheapest per GB, most work. You'd own Postgres backups, TLS renewal, patching, log rotation. Wrong place for a solo operator's hours when a payment flow is running. |
-| **Vercel / Netlify** | — | Not viable. Sanctions. |
-| **Neon / Supabase / PlanetScale** | Managed Postgres/MySQL | Not viable — US-owned, no region near Iran. Even if reachable, every query crossing to Frankfurt is fatal for a checkout. |
-| **Hetzner / foreign VPS** | Cheap, capable | Slow from Iran, complicates eNamad and the gateway, and Iranian PSP callbacks to foreign IPs are unreliable. |
+| Option                                   | What it is                                                                                                                                                                                                                                                                 | Fit for you                                                                                                                                                                                           |
+| ---------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Liara**                                | Iranian PaaS. CLI push, managed PostgreSQL, S3-compatible object storage, DNS, free SSL, persistent disks. Rial billing, hourly.                                                                                                                                           | Best developer experience of the Iranian options — closest thing to "Vercel, but legal and local."                                                                                                    |
+| **ParsPack PaaS**                        | Iranian PaaS from an older, larger hosting company. Deploy from Docker, code upload or webhook CI. Managed PostgreSQL/Redis/Mongo/Elastic, MinIO object storage, scheduled + on-demand backups with rollback. **Datacenters in Iran _and_ Germany.** Hourly pay-as-you-go. | Equally strong. Edges ahead on vendor durability and on the Germany region if you ever want an English-market front.                                                                                  |
+| **Darkube (Hamravesh)**                  | Kubernetes-native Iranian PaaS.                                                                                                                                                                                                                                            | Capable, but more Kubernetes than a solo maintainer needs. Consider only if you end up wanting k8s primitives.                                                                                        |
+| **ArvanCloud**                           | The largest Iranian cloud: VMs, Kubernetes, object storage, national CDN, **VOD platform**, container registry.                                                                                                                                                            | **The exit ramp, and the answer for media.** More knobs than you need for the app itself — but its CDN and VOD are the natural home for product imagery and course video no matter who hosts the app. |
+| **Plain Iranian VPS** (IranServer, etc.) | A Linux box.                                                                                                                                                                                                                                                               | Cheapest per GB, most work. You'd own Postgres backups, TLS renewal, patching, log rotation. Wrong place for a solo operator's hours when a payment flow is running.                                  |
+| **Vercel / Netlify**                     | —                                                                                                                                                                                                                                                                          | Not viable. Sanctions.                                                                                                                                                                                |
+| **Neon / Supabase / PlanetScale**        | Managed Postgres/MySQL                                                                                                                                                                                                                                                     | Not viable — US-owned, no region near Iran. Even if reachable, every query crossing to Frankfurt is fatal for a checkout.                                                                             |
+| **Hetzner / foreign VPS**                | Cheap, capable                                                                                                                                                                                                                                                             | Slow from Iran, complicates eNamad and the gateway, and Iranian PSP callbacks to foreign IPs are unreliable.                                                                                          |
 
 ### The decision: race them, don't reason about them
 
@@ -40,7 +40,7 @@ Liara and ParsPack are both correct answers and I can't separate them from a des
 
 > Deploy a hello-world to both. Both bill hourly, so it costs pennies. Compare deploy friction, log quality, managed-Postgres setup, and TTFB from Tehran. Commit to the winner with evidence.
 
-That test is real precisely *because* nothing in the stack is platform-specific. Portability is the actual decision here; the vendor name is a detail you can settle in an afternoon.
+That test is real precisely _because_ nothing in the stack is platform-specific. Portability is the actual decision here; the vendor name is a detail you can settle in an afternoon.
 
 ### Recommended shape
 
@@ -114,14 +114,14 @@ The failure mode: `npm ci` on an Iranian runner times out against `registry.npmj
 
 ## Decision — Operational floor (day one, not later)
 
-| | |
-|---|---|
-| **Backups** | Managed daily snapshot **plus** a nightly `pg_dump` pulled to storage you control, in a different provider. Test a restore once before launch. A backup you've never restored is a rumour. |
-| **TLS** | Managed Let's Encrypt via the platform; verify auto-renewal actually fires. |
-| **Secrets** | Platform env vars only. Never in the repo. Rotate the gateway merchant ID if it's ever pasted anywhere. |
-| **Logs/errors** | Self-hosted GlitchTip (Sentry-compatible) or the platform's log stream. Foreign SaaS error trackers will block you. |
-| **Analytics** | Self-hosted Umami or Plausible. Google Analytics is both blocked and a poor fit. |
-| **Health** | One `/api/health` endpoint that touches the DB, watched by an Iranian uptime service. |
+|                 |                                                                                                                                                                                            |
+| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Backups**     | Managed daily snapshot **plus** a nightly `pg_dump` pulled to storage you control, in a different provider. Test a restore once before launch. A backup you've never restored is a rumour. |
+| **TLS**         | Managed Let's Encrypt via the platform; verify auto-renewal actually fires.                                                                                                                |
+| **Secrets**     | Platform env vars only. Never in the repo. Rotate the gateway merchant ID if it's ever pasted anywhere.                                                                                    |
+| **Logs/errors** | Self-hosted GlitchTip (Sentry-compatible) or the platform's log stream. Foreign SaaS error trackers will block you.                                                                        |
+| **Analytics**   | Self-hosted Umami or Plausible. Google Analytics is both blocked and a poor fit.                                                                                                           |
+| **Health**      | One `/api/health` endpoint that touches the DB, watched by an Iranian uptime service.                                                                                                      |
 
 ---
 

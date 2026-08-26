@@ -34,28 +34,28 @@ The database contract is ready for schema review. The application is not yet a d
 
 ## 2. Environment topology
 
-| Environment | PostgreSQL target | Purpose | Status |
-|---|---|---|---|
-| Local | PostgreSQL 16 | development, migration, seed, and concurrency testing | Verified against PostgreSQL 16.9; reproducible provisioning still needs a checked-in Compose or equivalent runbook |
-| CI | Disposable PostgreSQL 16 | migrate from zero, seed twice, invariant and concurrency tests | Pending |
-| Preview | Neon branch or disposable PostgreSQL | optional development and pull-request previews only | Pending and optional |
-| Staging | Iranian managed PostgreSQL 16 | deployment rehearsal, payment sandbox, restore verification | Pending |
-| Production | Managed PostgreSQL 16 beside the app in Iran, preferably Liara if the app is on Liara | customer data and commerce | Pending provider acceptance, credentials, backup policy, and restore drill |
+| Environment | PostgreSQL target                                                                     | Purpose                                                        | Status                                                                                                             |
+| ----------- | ------------------------------------------------------------------------------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| Local       | PostgreSQL 16                                                                         | development, migration, seed, and concurrency testing          | Verified against PostgreSQL 16.9; reproducible provisioning still needs a checked-in Compose or equivalent runbook |
+| CI          | Disposable PostgreSQL 16                                                              | migrate from zero, seed twice, invariant and concurrency tests | Pending                                                                                                            |
+| Preview     | Neon branch or disposable PostgreSQL                                                  | optional development and pull-request previews only            | Pending and optional                                                                                               |
+| Staging     | Iranian managed PostgreSQL 16                                                         | deployment rehearsal, payment sandbox, restore verification    | Pending                                                                                                            |
+| Production  | Managed PostgreSQL 16 beside the app in Iran, preferably Liara if the app is on Liara | customer data and commerce                                     | Pending provider acceptance, credentials, backup policy, and restore drill                                         |
 
 Each environment uses a separate database. Production does not share a database with staging, preview, or development. The current design uses one database and one application schema; code modules remain the domain boundary until independent ownership or security requirements justify a physical split.
 
 ## 3. Schema ownership
 
-| Area | Tables | Source |
-|---|---|---|
-| Identity and auth | `locale`, `person`, `person_role`, `address`, `auth_account`, `auth_session`, `auth_verification`, `auth_rate_limit` | `src/lib/db/schema/identity.ts` |
-| Catalogue reference | `brand`, `brand_translation`, `product_line`, `product_line_translation`, `category`, `category_translation`, `concern`, `concern_translation`, `skin_state`, `skin_state_translation`, `protocol`, `protocol_translation`, `protocol_phase`, `protocol_phase_translation` | `src/lib/db/schema/catalog-reference.ts` |
-| Product catalogue | `product`, `product_translation`, `product_media`, `product_media_translation`, `variant`, `variant_translation`, `product_concern`, `product_skin_state`, `product_protocol_phase` | `src/lib/db/schema/catalog.ts` |
-| Pricing and inventory | `price`, `price_adjustment_batch`, `price_history`, `inventory`, `inventory_movement` | `src/lib/db/schema/pricing-inventory.ts` |
-| Cart and reservations | `cart`, `cart_item`, `inventory_reservation` | `src/lib/db/schema/cart.ts`, `reservation.ts` |
-| Orders | `customer_order`, `order_line` | `src/lib/db/schema/order.ts` |
-| Payments and fulfilment | `payment`, `bank_transfer_claim`, `payment_event`, `payment_settlement`, `shipment` | `src/lib/db/schema/payment.ts` |
-| Operations | `audit_log`, `notification_outbox` | `src/lib/db/schema/audit.ts` |
+| Area                    | Tables                                                                                                                                                                                                                                                                     | Source                                        |
+| ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- |
+| Identity and auth       | `locale`, `person`, `person_role`, `address`, `auth_account`, `auth_session`, `auth_verification`, `auth_rate_limit`                                                                                                                                                       | `src/lib/db/schema/identity.ts`               |
+| Catalogue reference     | `brand`, `brand_translation`, `product_line`, `product_line_translation`, `category`, `category_translation`, `concern`, `concern_translation`, `skin_state`, `skin_state_translation`, `protocol`, `protocol_translation`, `protocol_phase`, `protocol_phase_translation` | `src/lib/db/schema/catalog-reference.ts`      |
+| Product catalogue       | `product`, `product_translation`, `product_media`, `product_media_translation`, `variant`, `variant_translation`, `product_concern`, `product_skin_state`, `product_protocol_phase`                                                                                        | `src/lib/db/schema/catalog.ts`                |
+| Pricing and inventory   | `price`, `price_adjustment_batch`, `price_history`, `inventory`, `inventory_movement`                                                                                                                                                                                      | `src/lib/db/schema/pricing-inventory.ts`      |
+| Cart and reservations   | `cart`, `cart_item`, `inventory_reservation`                                                                                                                                                                                                                               | `src/lib/db/schema/cart.ts`, `reservation.ts` |
+| Orders                  | `customer_order`, `order_line`                                                                                                                                                                                                                                             | `src/lib/db/schema/order.ts`                  |
+| Payments and fulfilment | `payment`, `bank_transfer_claim`, `payment_event`, `payment_settlement`, `shipment`                                                                                                                                                                                        | `src/lib/db/schema/payment.ts`                |
+| Operations              | `audit_log`, `notification_outbox`                                                                                                                                                                                                                                         | `src/lib/db/schema/audit.ts`                  |
 
 ## 4. Logical ERD
 
@@ -168,16 +168,16 @@ Persian search input is normalized at the write and query boundaries. DB3 adds t
 
 ## 8. API and service status
 
-| Capability | Intended boundary | Status |
-|---|---|---|
-| Database health | `GET /api/health`, real `SELECT 1` with timeout | Pending |
-| Authentication | Better Auth server integration plus Iranian SMS adapter; customer phone OTP, staff password+TOTP | Pending runtime compatibility spike; see dedicated auth plan |
-| Catalogue reads | server-only Commerce read module called by Server Components | Pending |
-| PLP filters/search | Zod-parsed URL parameters into one canonical query pipeline | Pending decision-map #5 and implementation |
-| Cart mutations | Server Actions: Zod parse, ownership/auth check, transactional service | Pending |
-| Checkout | Server Action with server-computed totals and checkout idempotency | Pending |
-| Gateway callbacks | Route Handler with provider verification and idempotent settlement | Pending |
-| Bank-transfer review | staff-only Server Action with audit event | Pending |
+| Capability           | Intended boundary                                                                                | Status                                                       |
+| -------------------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------ |
+| Database health      | `GET /api/health`, real `SELECT 1` with timeout                                                  | Pending                                                      |
+| Authentication       | Better Auth server integration plus Iranian SMS adapter; customer phone OTP, staff password+TOTP | Pending runtime compatibility spike; see dedicated auth plan |
+| Catalogue reads      | server-only Commerce read module called by Server Components                                     | Pending                                                      |
+| PLP filters/search   | Zod-parsed URL parameters into one canonical query pipeline                                      | Pending decision-map #5 and implementation                   |
+| Cart mutations       | Server Actions: Zod parse, ownership/auth check, transactional service                           | Pending                                                      |
+| Checkout             | Server Action with server-computed totals and checkout idempotency                               | Pending                                                      |
+| Gateway callbacks    | Route Handler with provider verification and idempotent settlement                               | Pending                                                      |
+| Bank-transfer review | staff-only Server Action with audit event                                                        | Pending                                                      |
 
 ## 9. Migration and seed workflow
 
@@ -214,31 +214,31 @@ The disposable verification database was removed after the checks.
 
 The read-only review in [`../16-review-storefront-and-database.md`](../16-review-storefront-and-database.md) is accepted as planning input. No correction below is represented as implemented until its migration and live PostgreSQL tests land.
 
-| Correction | Delivery phase |
-|---|---|
-| Required immutable `customer_order.contact_phone`; replace person-dependent contact check | COM0, before account closure or settlement |
-| Composite settlement FK `(payment_id, order_id) -> payment(id, order_id)` | COM0, before settlement |
-| `pg_trgm` GIN and expanded Arabic/Persian normalization | DB3, before production PLP search |
-| Nullable reservation cart-item link with `SET NULL` plus historical `source_cart_id` | COM0, before Cart removal |
-| Payment/shipment status-timestamp checks | COM0 |
-| Order-line uniqueness, E.164 phone check, payment-event enum | AUTH0/COM0 |
-| Remove decorative `price.effective_at`; scheduled prices remain unsupported | COM0 |
-| Purchasability read predicate requires exact-locale translation, active variant, public/customer-group price, and approved media | DB3 read model and staff publication gate |
-| Notification outbox table remains; a general worker is deferred | Commerce transaction writes insert rows, delivery phase separately approved |
+| Correction                                                                                                                       | Delivery phase                                                              |
+| -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| Required immutable `customer_order.contact_phone`; replace person-dependent contact check                                        | COM0, before account closure or settlement                                  |
+| Composite settlement FK `(payment_id, order_id) -> payment(id, order_id)`                                                        | COM0, before settlement                                                     |
+| `pg_trgm` GIN and expanded Arabic/Persian normalization                                                                          | DB3, before production PLP search                                           |
+| Nullable reservation cart-item link with `SET NULL` plus historical `source_cart_id`                                             | COM0, before Cart removal                                                   |
+| Payment/shipment status-timestamp checks                                                                                         | COM0                                                                        |
+| Order-line uniqueness, E.164 phone check, payment-event enum                                                                     | AUTH0/COM0                                                                  |
+| Remove decorative `price.effective_at`; scheduled prices remain unsupported                                                      | COM0                                                                        |
+| Purchasability read predicate requires exact-locale translation, active variant, public/customer-group price, and approved media | DB3 read model and staff publication gate                                   |
+| Notification outbox table remains; a general worker is deferred                                                                  | Commerce transaction writes insert rows, delivery phase separately approved |
 
 ## 12. Phased continuation plan
 
-| Phase | Deliverable | Exit gate | Status |
-|---|---|---|---|
-| DB0 | Canonical schema, migration 0000, snapshot, seed, Persian normalization | Fresh PostgreSQL migration and repeatable seed pass | Complete. Migration `0001` adds the Better Auth contract (`AUTH0`); `0002` lands review corrections C1 and C2 |
-| DB1 | Reproducible local/CI PostgreSQL 16 | New checkout can provision, migrate, seed twice, assert exactly one primary locale, and run invariant tests | Complete — `compose.yaml`, `scripts/database.sh`, `db:up`/`db:reset`/`db:verify`; port configured in `.env` |
-| DB2 | Better Auth runtime spike and identity mapping, parallel with DB3 | Customer phone OTP and staff password+TOTP create compatible users/sessions; limits, roles, and logout verified | Customer half complete (`AUTH0`–`AUTH2`): phone OTP, PostgreSQL sessions and rate limits, logout. Staff password+TOTP deferred with `AUTH4`. Still blocks DB5, not public reads |
-| DB3 | Catalogue read models, Arabic/Persian normalization correction, `pg_trgm` GIN, and query fixtures | Persian hub/list/detail reads use PostgreSQL with stable pagination, exact-locale/purchasability policy, and measured infix search | **Next.** Unblocked: research gates 4–6 closed by recorded deferral, and DB2's customer half removes the identity dependency |
-| DB4 | `/fa/shop`, PLP/search, and PDP vertical slice | Routes render from PostgreSQL with JavaScript disabled; empty/error states tested | Queued behind DB3; research gates closed by deferral, so no longer blocked |
-| DB5 | COM0 corrections plus Cart and reservation services | Concurrent requests cannot oversell; removal works; retries/merge are idempotent; expiry predicate is observable | Pending; requires DB2 |
-| DB6 | Checkout, settlement, fulfilment, return, and refund services | Duplicate callbacks/refunds apply once; stock, money, order, movement, audit, and outbox commit atomically | Pending |
-| DB7 | Liara staging/production operations and `/api/health` | Health, TLS, latency, backups, restore drill, migration role, slow-query visibility, and alerts pass | Pending credentials/provider setup |
-| DB8 | Booking and academy migrations | Added only after the commerce vertical slice and operational gates pass | Deferred |
+| Phase | Deliverable                                                                                       | Exit gate                                                                                                                          | Status                                                                                                                                                                          |
+| ----- | ------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| DB0   | Canonical schema, migration 0000, snapshot, seed, Persian normalization                           | Fresh PostgreSQL migration and repeatable seed pass                                                                                | Complete. Migration `0001` adds the Better Auth contract (`AUTH0`); `0002` lands review corrections C1 and C2                                                                   |
+| DB1   | Reproducible local/CI PostgreSQL 16                                                               | New checkout can provision, migrate, seed twice, assert exactly one primary locale, and run invariant tests                        | Complete — `compose.yaml`, `scripts/database.sh`, `db:up`/`db:reset`/`db:verify`; port configured in `.env`                                                                     |
+| DB2   | Better Auth runtime spike and identity mapping, parallel with DB3                                 | Customer phone OTP and staff password+TOTP create compatible users/sessions; limits, roles, and logout verified                    | Customer half complete (`AUTH0`–`AUTH2`): phone OTP, PostgreSQL sessions and rate limits, logout. Staff password+TOTP deferred with `AUTH4`. Still blocks DB5, not public reads |
+| DB3   | Catalogue read models, Arabic/Persian normalization correction, `pg_trgm` GIN, and query fixtures | Persian hub/list/detail reads use PostgreSQL with stable pagination, exact-locale/purchasability policy, and measured infix search | **Next.** Unblocked: research gates 4–6 closed by recorded deferral, and DB2's customer half removes the identity dependency                                                    |
+| DB4   | `/fa/shop`, PLP/search, and PDP vertical slice                                                    | Routes render from PostgreSQL with JavaScript disabled; empty/error states tested                                                  | Queued behind DB3; research gates closed by deferral, so no longer blocked                                                                                                      |
+| DB5   | COM0 corrections plus Cart and reservation services                                               | Concurrent requests cannot oversell; removal works; retries/merge are idempotent; expiry predicate is observable                   | Pending; requires DB2                                                                                                                                                           |
+| DB6   | Checkout, settlement, fulfilment, return, and refund services                                     | Duplicate callbacks/refunds apply once; stock, money, order, movement, audit, and outbox commit atomically                         | Pending                                                                                                                                                                         |
+| DB7   | Liara staging/production operations and `/api/health`                                             | Health, TLS, latency, backups, restore drill, migration role, slow-query visibility, and alerts pass                               | Pending credentials/provider setup                                                                                                                                              |
+| DB8   | Booking and academy migrations                                                                    | Added only after the commerce vertical slice and operational gates pass                                                            | Deferred                                                                                                                                                                        |
 
 ## 13. Review checklist
 

@@ -68,10 +68,10 @@ plans a `Bitmap Index Scan on product_translation_search_trgm_idx` with
 **Whether the planner chooses it depends on selectivity and table size**, as it
 should. Measured on 100,000 `product_translation` rows:
 
-| Query | Plan | Time | Buffers |
-|---|---|---|---|
-| Selective term, 1 row of 100,000 | **Bitmap Index Scan** on the trigram index | 2.1 ms | 181 |
-| Broad term, 11,816 rows of 100,000 | Seq Scan | 16.3 ms | 1,345 |
+| Query                              | Plan                                       | Time    | Buffers |
+| ---------------------------------- | ------------------------------------------ | ------- | ------- |
+| Selective term, 1 row of 100,000   | **Bitmap Index Scan** on the trigram index | 2.1 ms  | 181     |
+| Broad term, 11,816 rows of 100,000 | Seq Scan                                   | 16.3 ms | 1,345   |
 
 For the selective query the same seq scan would cost 16 ms and 1,345 buffers, so
 the index is an order of magnitude better and the planner takes it. For the broad

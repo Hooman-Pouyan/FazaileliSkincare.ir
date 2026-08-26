@@ -21,13 +21,13 @@ or most standard ecommerce UI. Those gaps are filled, not blocked on.
 
 ### Order of authority
 
-| Rank | Source | Standing |
-|---|---|---|
-| 1 | `designs/tokens.json` → `designs/tokens.css`, and the four `design-system/foundations/*.html` cards (colour, type, space/radius, motion) | **Settled and measured.** Never drift. Colour, type scale, the 1.8 line-height rule, the ten-step space scale, two radii, one duration and one easing are not open. |
-| 2 | `Fazaieli Storefront (offline).html` | The most recent full composition. Treated as the current intent for the landing surface and for anything it does show. |
-| 3 | `designs/storefront-canvas/*.dc.html` — Main, Shop, Product, Checkout, Mobile | Structural reference for intent and section order. **Not authoritative** — see the discrepancy below. |
-| 4 | `04-information-architecture.md`, `09-brand-brief.md`, `10-design-playbook.md` | The stated rules: hairlines not shadows, no card grid, asymmetric splits, 96px minimum between sections, gold as a hairline and never a fill behind text, and the standing test that a screen resembling an admin dashboard has gone wrong. |
-| 5 | shadcn/ui primitives, restyled through the tokens | The vocabulary for everything above that has no design. |
+| Rank | Source                                                                                                                                   | Standing                                                                                                                                                                                                                                    |
+| ---- | ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | `designs/tokens.json` → `designs/tokens.css`, and the four `design-system/foundations/*.html` cards (colour, type, space/radius, motion) | **Settled and measured.** Never drift. Colour, type scale, the 1.8 line-height rule, the ten-step space scale, two radii, one duration and one easing are not open.                                                                         |
+| 2    | `Fazaieli Storefront (offline).html`                                                                                                     | The most recent full composition. Treated as the current intent for the landing surface and for anything it does show.                                                                                                                      |
+| 3    | `designs/storefront-canvas/*.dc.html` — Main, Shop, Product, Checkout, Mobile                                                            | Structural reference for intent and section order. **Not authoritative** — see the discrepancy below.                                                                                                                                       |
+| 4    | `04-information-architecture.md`, `09-brand-brief.md`, `10-design-playbook.md`                                                           | The stated rules: hairlines not shadows, no card grid, asymmetric splits, 96px minimum between sections, gold as a hairline and never a fill behind text, and the standing test that a screen resembling an admin dashboard has gone wrong. |
+| 5    | shadcn/ui primitives, restyled through the tokens                                                                                        | The vocabulary for everything above that has no design.                                                                                                                                                                                     |
 
 ### Discrepancy on the record
 
@@ -74,7 +74,7 @@ price row exists at all. Both are asserted by the development seed — products 
 and 5 in `seeds/dev-data.ts`.
 
 **Still open, and the owner's to answer:** whether Iranian rules or a brand
-agreement restrict advertising professional product *pricing* to the public. The
+agreement restrict advertising professional product _pricing_ to the public. The
 implementation shows no price to an anonymous visitor either way, since no
 public price row exists for these products, so nothing changes if the answer
 arrives later.
@@ -95,15 +95,15 @@ cheap, decisive advantage, and it is only cheap if it is done from the start.
 
 ### The rules every route implements
 
-| Concern | Rule |
-|---|---|
-| Rendering | Every catalogue route is server-rendered and must produce its complete result set with JavaScript disabled. This is a test, not an aspiration. |
-| Canonical | A scope page — `/fa/shop`, `/fa/shop/concern/[slug]`, `/fa/shop/brand/[slug]`, `/fa/shop/c/[category]`, `/fa/shop/p/[slug]` — is self-canonical. Applying a filter or a sort canonicals back to the clean scope URL. Pagination is self-canonical, because page 2 holds products page 1 does not and hiding them wastes crawl budget. |
-| Indexing | Scope and paginated pages are indexable. Filter and sort permutations are `noindex, follow` — they are crawl-budget dilution, not content. Search result pages are `noindex, follow`, which is the standard treatment for user-generated queries. |
-| Metadata | Every page owns a Persian title and description from canonical data, never a template with a slug interpolated into it. Open Graph and Twitter cards on product and scope pages. `hreflang` across `fa`, `en` and `ar` for pages that genuinely exist in each — a locale without catalogue content emits no alternate. |
-| JSON-LD | `Organization` and `WebSite` on the landing page. `BreadcrumbList` on every scope and product page. `ItemList` on listing pages. `Product` with `Offer` on product pages — and **only** where the offer is real: an `on_request` or professional-only product emits no `price`, and nothing emits an `aggregateRating` until real reviews exist. Fabricated structured data is a manual-action risk, not a growth tactic. |
-| Robots and sitemap | A generated `sitemap.xml` covering published scope and product pages per locale, and a `robots.txt` that does not block what the canonical policy already handles. |
-| Semantics | One `h1` per page, heading order that reflects structure, descriptive `alt` from `product_media_translation`, and Persian text as real text — never baked into an image. |
+| Concern            | Rule                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Rendering          | Every catalogue route is server-rendered and must produce its complete result set with JavaScript disabled. This is a test, not an aspiration.                                                                                                                                                                                                                                                                            |
+| Canonical          | A scope page — `/fa/shop`, `/fa/shop/concern/[slug]`, `/fa/shop/brand/[slug]`, `/fa/shop/c/[category]`, `/fa/shop/p/[slug]` — is self-canonical. Applying a filter or a sort canonicals back to the clean scope URL. Pagination is self-canonical, because page 2 holds products page 1 does not and hiding them wastes crawl budget.                                                                                     |
+| Indexing           | Scope and paginated pages are indexable. Filter and sort permutations are `noindex, follow` — they are crawl-budget dilution, not content. Search result pages are `noindex, follow`, which is the standard treatment for user-generated queries.                                                                                                                                                                         |
+| Metadata           | Every page owns a Persian title and description from canonical data, never a template with a slug interpolated into it. Open Graph and Twitter cards on product and scope pages. `hreflang` across `fa`, `en` and `ar` for pages that genuinely exist in each — a locale without catalogue content emits no alternate.                                                                                                    |
+| JSON-LD            | `Organization` and `WebSite` on the landing page. `BreadcrumbList` on every scope and product page. `ItemList` on listing pages. `Product` with `Offer` on product pages — and **only** where the offer is real: an `on_request` or professional-only product emits no `price`, and nothing emits an `aggregateRating` until real reviews exist. Fabricated structured data is a manual-action risk, not a growth tactic. |
+| Robots and sitemap | A generated `sitemap.xml` covering published scope and product pages per locale, and a `robots.txt` that does not block what the canonical policy already handles.                                                                                                                                                                                                                                                        |
+| Semantics          | One `h1` per page, heading order that reflects structure, descriptive `alt` from `product_media_translation`, and Persian text as real text — never baked into an image.                                                                                                                                                                                                                                                  |
 
 ### Scope note — the blog
 

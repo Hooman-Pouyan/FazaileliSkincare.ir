@@ -8,13 +8,13 @@
 
 Five draft artboards. That is all — and it is roughly 8% of the pages below.
 
-| Mocked | Which page it is |
-|---|---|
-| `Main.dc.html` | Landing |
-| `Shop.dc.html` | **A merged PHP + PLP** — the concern hub and the product grid on one page |
-| `Product.dc.html` | PDP |
-| `Checkout.dc.html` | Checkout, payment step only (bank transfer) |
-| `Mobile.dc.html` | Landing at 390px |
+| Mocked             | Which page it is                                                          |
+| ------------------ | ------------------------------------------------------------------------- |
+| `Main.dc.html`     | Landing                                                                   |
+| `Shop.dc.html`     | **A merged PHP + PLP** — the concern hub and the product grid on one page |
+| `Product.dc.html`  | PDP                                                                       |
+| `Checkout.dc.html` | Checkout, payment step only (bank transfer)                               |
+| `Mobile.dc.html`   | Landing at 390px                                                          |
 
 Not yet drawn: cart, the address and shipping steps, every account page, all of Booking, all of Academy, the whole admin, and every legal page.
 
@@ -24,13 +24,13 @@ Not yet drawn: cart, the address and shipping steps, every account page, all of 
 
 Your taxonomy is right, but I merged PHP and PLP in the mock and **that was the wrong call.** Separating them:
 
-| Page | Route | Why it exists separately |
-|---|---|---|
-| **PHP** — shop hub | `/shop` | Editorial: concerns, brands, curated routines, new arrivals. The room's front door. |
-| **PLP** — listing | `/shop/concern/[slug]` · `/shop/brand/[slug]` · `/shop/c/[category]` | One real URL per concern, brand and category |
-| **PDP** — detail | `/shop/p/[slug]` | |
+| Page               | Route                                                                | Why it exists separately                                                            |
+| ------------------ | -------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| **PHP** — shop hub | `/shop`                                                              | Editorial: concerns, brands, curated routines, new arrivals. The room's front door. |
+| **PLP** — listing  | `/shop/concern/[slug]` · `/shop/brand/[slug]` · `/shop/c/[category]` | One real URL per concern, brand and category                                        |
+| **PDP** — detail   | `/shop/p/[slug]`                                                     |                                                                                     |
 
-**The reason is Persian SEO, and it's decisive.** Someone searching «سرم ویتامین سی» or «کرم ضدلک» must land on a page that is *about* that thing — with its own URL, title, description and structured data. A single page that filters client-side has one URL and can rank for one query. With ~5 concerns × 3 brands × 8 categories you are giving up dozens of entry points to keep one clever interaction.
+**The reason is Persian SEO, and it's decisive.** Someone searching «سرم ویتامین سی» or «کرم ضدلک» must land on a page that is _about_ that thing — with its own URL, title, description and structured data. A single page that filters client-side has one URL and can rank for one query. With ~5 concerns × 3 brands × 8 categories you are giving up dozens of entry points to keep one clever interaction.
 
 The concern selector stays on the hub — it just navigates instead of filtering in place.
 
@@ -56,20 +56,20 @@ Later: `/faq` · `/journal` مقالات (Persian SEO, Phase 5)
 
 Your list, corrected in one place:
 
-| Page | Route | Phase |
-|---|---|---|
-| Overview — next appointment, latest order, course progress | `/account` | 2 |
-| Orders and their status | `/account/orders` · `/account/orders/[n]` | 2 |
-| Payments, invoices, **instalments** | `/account/payments` | 2 |
-| Personal information | `/account/profile` | 2 |
-| Addresses | `/account/addresses` | 2 |
-| Discounts and customer club | `/account/discounts` | 5 |
-| Appointments | `/account/appointments` | 3 |
-| Skin profile ⚠️ health data | `/account/skin-profile` | 3 |
-| My courses | `/account/courses` | 4 |
-| Security — phone number, active sessions | `/account/security` | 2 |
+| Page                                                       | Route                                     | Phase |
+| ---------------------------------------------------------- | ----------------------------------------- | ----- |
+| Overview — next appointment, latest order, course progress | `/account`                                | 2     |
+| Orders and their status                                    | `/account/orders` · `/account/orders/[n]` | 2     |
+| Payments, invoices, **instalments**                        | `/account/payments`                       | 2     |
+| Personal information                                       | `/account/profile`                        | 2     |
+| Addresses                                                  | `/account/addresses`                      | 2     |
+| Discounts and customer club                                | `/account/discounts`                      | 5     |
+| Appointments                                               | `/account/appointments`                   | 3     |
+| Skin profile ⚠️ health data                                | `/account/skin-profile`                   | 3     |
+| My courses                                                 | `/account/courses`                        | 4     |
+| Security — phone number, active sessions                   | `/account/security`                       | 2     |
 
-> **There is no "change password" page, because there is no password.** Authentication is phone + OTP (D6), which Iranian users expect. What replaces it is *change phone number* and *sign out other devices* — and changing the phone number is a sensitive operation that needs OTP on both the old and new number.
+> **There is no "change password" page, because there is no password.** Authentication is phone + OTP (D6), which Iranian users expect. What replaces it is _change phone number_ and _sign out other devices_ — and changing the phone number is a sensitive operation that needs OTP on both the old and new number.
 
 ### Booking — Phase 3
 
@@ -103,7 +103,7 @@ Enrolled students get a different surface entirely — no marketing on it: `/lea
 
 **No. One Next.js application, one repository, one database, one deploy.**
 
-The instinct behind the question is right — the storefront and a dashboard should not *look* the same. But that is a **layout** problem, not an **application** problem, and Next.js route groups solve it directly:
+The instinct behind the question is right — the storefront and a dashboard should not _look_ the same. But that is a **layout** problem, not an **application** problem, and Next.js route groups solve it directly:
 
 ```
 src/app/[locale]/
@@ -118,6 +118,6 @@ Three completely different visual worlds. One auth system, one schema, one deplo
 
 And the account area is **read-mostly views over the same data the storefront already loads**. There is no boundary there worth defending.
 
-> **On the admin looking like a dashboard:** it should. It *is* one. The rule from AGENTS.md — "if a screen starts looking like an admin dashboard, it has gone wrong" — is about the **storefront**. `/admin` is exempt, and trying to make an order queue feel editorial would make it worse at its job.
+> **On the admin looking like a dashboard:** it should. It _is_ one. The rule from AGENTS.md — "if a screen starts looking like an admin dashboard, it has gone wrong" — is about the **storefront**. `/admin` is exempt, and trying to make an order queue feel editorial would make it worse at its job.
 
 **When splitting would become right:** a separate team owning admin, a different deploy cadence, or a different security posture — none of which is true now. And because the domain modules are already separated with no cross-imports, extracting later is a real option rather than a rewrite. That optionality is the reason to keep the boundaries clean, not a reason to split today.

@@ -128,15 +128,15 @@ The source manifest retains unmapped files; the database only receives a media r
 
 The repository now has a **verified schema foundation, but not a database-backed shop**.
 
-| Implemented now | Still missing before integration |
-|---|---|
-| PostgreSQL Drizzle client and canonical 48-table schema | Reproducible local/CI PostgreSQL provisioner and hosted staging/production instances |
-| Reviewed migration `0000`, journal, and snapshot committed under `drizzle/` | Deployment migration role, automated backup policy, and restore drill |
-| Successful empty-database migration on PostgreSQL 16.9 with UTF-8 | Continuous migration/invariant checks in CI |
-| Product review, media provenance/rights, variants, prices, inventory movements, and reservation rows | Curated Storyderm manifest, verified product truth, image derivatives, and object storage |
-| Deterministic `reference` seed for `fa`/`en`/`ar` and reviewed concerns | Guarded `storyderm-draft` and `commerce-demo` seed profiles |
-| Persian/Arabic search normalization and catalogue filter relationships | Catalogue hub/list/detail queries, measured search plans, and live facet counts |
-| Cart, order, payment, claim, event, settlement, audit, and outbox persistence primitives | Transaction services, concurrency/failure tests, Server Actions, callbacks, and authorization |
+| Implemented now                                                                                      | Still missing before integration                                                              |
+| ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| PostgreSQL Drizzle client and canonical 48-table schema                                              | Reproducible local/CI PostgreSQL provisioner and hosted staging/production instances          |
+| Reviewed migration `0000`, journal, and snapshot committed under `drizzle/`                          | Deployment migration role, automated backup policy, and restore drill                         |
+| Successful empty-database migration on PostgreSQL 16.9 with UTF-8                                    | Continuous migration/invariant checks in CI                                                   |
+| Product review, media provenance/rights, variants, prices, inventory movements, and reservation rows | Curated Storyderm manifest, verified product truth, image derivatives, and object storage     |
+| Deterministic `reference` seed for `fa`/`en`/`ar` and reviewed concerns                              | Guarded `storyderm-draft` and `commerce-demo` seed profiles                                   |
+| Persian/Arabic search normalization and catalogue filter relationships                               | Catalogue hub/list/detail queries, measured search plans, and live facet counts               |
+| Cart, order, payment, claim, event, settlement, audit, and outbox persistence primitives             | Transaction services, concurrency/failure tests, Server Actions, callbacks, and authorization |
 
 There are still no catalogue Server Actions or API route handlers. The existing commerce components accept view models; they are not proof of a database-backed shop. See [`system-design/database-foundation.md`](system-design/database-foundation.md) for the ERD, implemented invariants, API status, and phased continuation plan.
 

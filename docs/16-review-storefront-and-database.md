@@ -33,7 +33,7 @@ ALTER TABLE customer_order ALTER COLUMN contact_phone SET NOT NULL;
 ALTER TABLE customer_order DROP CONSTRAINT customer_order_contact_check;
 ```
 
-An order is a financial record; it should carry its own contact and survive the customer row. This also fixes guest→account linking later. *(Task: fold into `DB6`, or a small `DB0.1` fix migration.)*
+An order is a financial record; it should carry its own contact and survive the customer row. This also fixes guest→account linking later. _(Task: fold into `DB6`, or a small `DB0.1` fix migration.)_
 
 ### 🔴 HIGH-2 — A settlement can be attached to the wrong order
 
@@ -49,7 +49,7 @@ ALTER TABLE payment_settlement ADD CONSTRAINT payment_settlement_payment_order_f
   FOREIGN KEY (payment_id, order_id) REFERENCES payment (id, order_id) ON DELETE RESTRICT;
 ```
 
-This is the exact class of invariant the rest of this schema enforces well; it is a gap, not a philosophy difference. *(Task: `DB6` prerequisite.)*
+This is the exact class of invariant the rest of this schema enforces well; it is a gap, not a philosophy difference. _(Task: `DB6` prerequisite.)_
 
 ### 🟠 MEDIUM-3 — The search index cannot serve the search query
 
@@ -71,11 +71,11 @@ Keep the existing B-tree — it still serves exact-locale lookups. Do this at **
 
 `src/lib/db/normalize-catalog-search.ts` folds `ي/ى→ی`, `ك→ک`, both digit sets, tatweel, diacritics and ZWNJ. That is the right list — and it is missing the two most common remaining cases:
 
-| Typed | Should fold to | Handled? |
-|---|---|---|
-| `أ إ آ ٱ` | `ا` | ❌ |
-| `ة` | `ه` | ❌ |
-| `ؤ ئ` | `و` / `ی` | ❌ |
+| Typed     | Should fold to | Handled? |
+| --------- | -------------- | -------- |
+| `أ إ آ ٱ` | `ا`            | ❌       |
+| `ة`       | `ه`            | ❌       |
+| `ؤ ئ`     | `و` / `ی`      | ❌       |
 
 `NFKC` does not fold these — they are distinct letters, not presentation forms. Products with Arabic-influenced spelling will silently fail to match. One line each:
 
@@ -98,7 +98,7 @@ ALTER TABLE inventory_reservation ALTER COLUMN source_cart_item_id DROP NOT NULL
 ALTER TABLE inventory_reservation ADD COLUMN source_cart_id uuid REFERENCES cart(id);
 ```
 
-`variant_id` and `quantity` already live on the reservation, so releasing the cart item loses nothing that matters. The partial unique on active reservations still holds. *(Task: `DB5`.)*
+`variant_id` and `quantity` already live on the reservation, so releasing the cart item loses nothing that matters. The partial unique on active reservations still holds. _(Task: `DB5`.)_
 
 ### 🟡 LOW-6 — Status/timestamp checks are applied inconsistently
 
@@ -129,14 +129,14 @@ Same shape for `refunded_at` and for shipment. Cheap, and it matches the standar
 
 ## 2 · Code ↔ document drift
 
-| # | Document says | Code / reality | Disposition |
-|---|---|---|---|
-| D-a | `06-site-map.md:72` — "there is no password" | `12-implementation-plan.md:104`, `database-foundation.md:174,218` — "phone OTP **plus** email/password"; `auth_account.password` exists | **Contradiction. Resolve in favour of passwordless for customers** (§4) |
-| D-b | `00-decision-map.md:38` D13 — "**no mega-menu**" | `storefront.md:323,344` introduces a deferred Shop Relay mega-menu | Amend D13 to a scoped exception, or rename Relay so it is not a mega-menu. Do not leave both standing |
-| D-c | `plp.md:94` — "full-text/trigram behavior accepted" | No `pg_trgm`, GIN or tsvector in migration `0000` | MEDIUM-3 — plan it at DB3, or soften the doc to "index strategy pending `EXPLAIN` evidence" |
-| D-d | `database-foundation.md:127` — "reserved stock derived from active, **unexpired** reservations" | Index predicate is `status='active'` only; expiry is time-based and cannot be indexed | Not a defect — but the read predicate **must** include `expires_at > now()`, and the sweeper is cleanup, not correctness. State that explicitly |
-| D-e | Repo rule "no background job queue until it hurts" | `notification_outbox` has `locked_at`/`locked_by`/`attempts`/`available_at` — a worker-shaped table | Table is justified (SMS costs money; duplicates are worse). The **worker** is the deferred part. Say so, or the next reader will build one |
-| D-f | Storefront plan stops before checkout | `12-implementation-plan.md` Phase 2 still describes checkout, ZarinPal and `/admin/transfers` | Add a pointer from Phase 2 to the storefront stopping boundary so the newer, narrower scope wins |
+| #   | Document says                                                                                   | Code / reality                                                                                                                          | Disposition                                                                                                                                     |
+| --- | ----------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| D-a | `06-site-map.md:72` — "there is no password"                                                    | `12-implementation-plan.md:104`, `database-foundation.md:174,218` — "phone OTP **plus** email/password"; `auth_account.password` exists | **Contradiction. Resolve in favour of passwordless for customers** (§4)                                                                         |
+| D-b | `00-decision-map.md:38` D13 — "**no mega-menu**"                                                | `storefront.md:323,344` introduces a deferred Shop Relay mega-menu                                                                      | Amend D13 to a scoped exception, or rename Relay so it is not a mega-menu. Do not leave both standing                                           |
+| D-c | `plp.md:94` — "full-text/trigram behavior accepted"                                             | No `pg_trgm`, GIN or tsvector in migration `0000`                                                                                       | MEDIUM-3 — plan it at DB3, or soften the doc to "index strategy pending `EXPLAIN` evidence"                                                     |
+| D-d | `database-foundation.md:127` — "reserved stock derived from active, **unexpired** reservations" | Index predicate is `status='active'` only; expiry is time-based and cannot be indexed                                                   | Not a defect — but the read predicate **must** include `expires_at > now()`, and the sweeper is cleanup, not correctness. State that explicitly |
+| D-e | Repo rule "no background job queue until it hurts"                                              | `notification_outbox` has `locked_at`/`locked_by`/`attempts`/`available_at` — a worker-shaped table                                     | Table is justified (SMS costs money; duplicates are worse). The **worker** is the deferred part. Say so, or the next reader will build one      |
+| D-f | Storefront plan stops before checkout                                                           | `12-implementation-plan.md` Phase 2 still describes checkout, ZarinPal and `/admin/transfers`                                           | Add a pointer from Phase 2 to the storefront stopping boundary so the newer, narrower scope wins                                                |
 
 ---
 
@@ -144,18 +144,18 @@ Same shape for `refunded_at` and for shipment. Cheap, and it matches the standar
 
 **48 tables is defensible.** I looked for tables to cut and found few worth cutting:
 
-| Table | Verdict |
-|---|---|
-| `price_history`, `price_adjustment_batch` | **Keep.** Rial pricing on imported stock moves monthly; "why is this more than last month" is a real customer conversation. Retro-fitting history after live orders is expensive |
-| `inventory_movement` | **Keep.** The append-only ledger is what makes stock arguments resolvable |
-| `notification_outbox` | **Keep the table, defer the worker.** Duplicate SMS costs money |
-| `audit_log` | **Keep.** Payments are attached |
+| Table                                      | Verdict                                                                                                                                                                                                                                  |
+| ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `price_history`, `price_adjustment_batch`  | **Keep.** Rial pricing on imported stock moves monthly; "why is this more than last month" is a real customer conversation. Retro-fitting history after live orders is expensive                                                         |
+| `inventory_movement`                       | **Keep.** The append-only ledger is what makes stock arguments resolvable                                                                                                                                                                |
+| `notification_outbox`                      | **Keep the table, defer the worker.** Duplicate SMS costs money                                                                                                                                                                          |
+| `audit_log`                                | **Keep.** Payments are attached                                                                                                                                                                                                          |
 | `protocol_phase`, `product_protocol_phase` | **Keep, but they are the one speculative pair.** They exist for the protocol-as-IA strategy, which is well-evidenced but not yet a product decision. Cost is two tables and a join — cheap. Add nothing more until the protocol is named |
-| `skin_state`, `product_skin_state` | **Keep.** `پس از درمان` is the one facet only a business with treatment rooms can offer |
+| `skin_state`, `product_skin_state`         | **Keep.** `پس از درمان` is the one facet only a business with treatment rooms can offer                                                                                                                                                  |
 
 **The genuinely over-abstract item is not a table — it is `price.effective_at`** (LOW-7): a scheduling affordance the unique constraint makes unusable.
 
-**On the storefront plan:** 3,050 lines across nine documents is a lot of planning for one shop. It is *not* a speculative framework — the ownership boundaries are concrete and the three Commerce reads are page-shaped rather than a generic query layer, which is exactly right. But it is close to the ceiling of what can stay true while the code moves. **Recommendation:** freeze the storefront bundle at its current size. New planning goes into task tickets, not new documents.
+**On the storefront plan:** 3,050 lines across nine documents is a lot of planning for one shop. It is _not_ a speculative framework — the ownership boundaries are concrete and the three Commerce reads are page-shaped rather than a generic query layer, which is exactly right. But it is close to the ceiling of what can stay true while the code moves. **Recommendation:** freeze the storefront bundle at its current size. New planning goes into task tickets, not new documents.
 
 **The three reads are correctly deep.** `getShopHub`/`listProducts`/`getProduct` return page models, not row sets, and nothing pushes ORM shapes into components. Protect the count: autocomplete and Relay must attach to `listProducts` with an argument, or take an explicit fourth read through `RELAY0` — not silently.
 
@@ -169,14 +169,15 @@ Auth0 and every managed alternative are out for the same reason Vercel and Neon 
 
 Custom auth is smaller than people think **for OTP alone** — issue, verify, rate-limit, session rotate. It stops being small the moment you add password hashing, reset tokens, and email verification. So the decision hinges entirely on whether email/password exists in v1.
 
-**It should not, and `06-site-map.md` already got this right.** Dropping it resolves the drift *and* removes the schema's biggest friction:
+**It should not, and `06-site-map.md` already got this right.** Dropping it resolves the drift _and_ removes the schema's biggest friction:
 
 - `person.email NOT NULL` exists to satisfy Better Auth's own `getTempEmail` for phone-first signup. `email_is_placeholder` plus the check that a placeholder can never be verified is a **thoughtful** accommodation, not a mistake — credit where due.
 - But it leaves two live risks: placeholder emails must stay unique under `lower(email)`, so a re-signup on a recycled phone number can collide; and the transition when a customer later adds a real email needs an explicit, tested path.
 - Passwordless customers make both risks small and rare instead of routine.
 
 **Concretely:**
-1. Customers: `phoneNumber` plugin, 6-digit OTP, short TTL, rate-limited by **phone *and* IP** — Better Auth's 3-attempt limit protects one code, not your SMS budget.
+
+1. Customers: `phoneNumber` plugin, 6-digit OTP, short TTL, rate-limited by **phone _and_ IP** — Better Auth's 3-attempt limit protects one code, not your SMS budget.
 2. Staff: a separate `/admin` entry with email+password and TOTP. Password earns its place where step-up matters.
 3. `auth_session.token` is stored in plaintext with a unique index — Better Auth's default. Note it: a database read becomes session takeover. Hashing it diverges from the adapter, so treat it as a **backup-encryption and access-control** requirement rather than a schema change.
 4. Delete `auth_account.password` from the customer path only after the staff path lands; it costs nothing to leave the column.
@@ -213,26 +214,26 @@ Stated plainly, because a review that only lists problems misrepresents this wor
 
 ## 7 · Residual questions for the maintainer
 
-1. **Is `payment.amount_rials` the order total, or the total plus the bank-transfer matching remainder?** Nothing ties `payment.amount` to `order.total`, which is *correct* if the remainder lives there — but undocumented. Someone will "fix" it with a constraint and break statement matching. Also decide whether `bank_transfer_claim.expected_amount_rials` must equal `payment.amount_rials` (it should, and the service should derive it).
+1. **Is `payment.amount_rials` the order total, or the total plus the bank-transfer matching remainder?** Nothing ties `payment.amount` to `order.total`, which is _correct_ if the remainder lives there — but undocumented. Someone will "fix" it with a constraint and break statement matching. Also decide whether `bank_transfer_claim.expected_amount_rials` must equal `payment.amount_rials` (it should, and the service should derive it).
 2. **D13 vs Shop Relay** — amend the decision, or rename the feature. Both cannot stand.
 3. **Is account deletion a real product requirement?** If yes, HIGH-1 is blocking. If it is anonymisation instead, the FK should be `RESTRICT` and the flow should scrub PII in place.
-4. **Should zero primary locales ever be valid?** The unique index guarantees *at most* one. Operationally there should always be exactly one — worth a seed assertion.
+4. **Should zero primary locales ever be valid?** The unique index guarantees _at most_ one. Operationally there should always be exactly one — worth a seed assertion.
 5. **Protocol phases** — is the protocol strategy accepted? Two tables are already waiting for it.
 
 ---
 
 ## Correction list
 
-| ID | Correction | Blocks |
-|---|---|---|
-| C1 | `customer_order.contact_phone` snapshot; drop `contact_check` (HIGH-1) | account deletion, `DB6` |
-| C2 | Composite FK `payment_settlement (payment_id, order_id) → payment (id, order_id)` (HIGH-2) | `DB6` |
-| C3 | `pg_trgm` + GIN on `normalized_search_text`, with `EXPLAIN` evidence (MEDIUM-3) | `DB3`/`DB4` search |
-| C4 | Add `أإآٱ→ا`, `ة→ه` folding; document the ZWNJ consequence (MEDIUM-4) | `DB3` |
-| C5 | `source_cart_item_id` nullable + `SET NULL`, add `source_cart_id` (MEDIUM-5) | `DB5` |
-| C6 | Status↔timestamp checks on `payment` and `shipment` (LOW-6) | `DB6` |
-| C7 | Doc edits: auth to passwordless (D-a), D13/Relay (D-b), read-predicate publication rule (LOW-8), outbox-worker deferral (D-e), Phase 2 → storefront boundary pointer (D-f) | none — do now |
-| C8 | Phase order: DB2 parallel to DB3; `/api/health` → DB7 | `DB1` scope |
+| ID  | Correction                                                                                                                                                                 | Blocks                  |
+| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| C1  | `customer_order.contact_phone` snapshot; drop `contact_check` (HIGH-1)                                                                                                     | account deletion, `DB6` |
+| C2  | Composite FK `payment_settlement (payment_id, order_id) → payment (id, order_id)` (HIGH-2)                                                                                 | `DB6`                   |
+| C3  | `pg_trgm` + GIN on `normalized_search_text`, with `EXPLAIN` evidence (MEDIUM-3)                                                                                            | `DB3`/`DB4` search      |
+| C4  | Add `أإآٱ→ا`, `ة→ه` folding; document the ZWNJ consequence (MEDIUM-4)                                                                                                      | `DB3`                   |
+| C5  | `source_cart_item_id` nullable + `SET NULL`, add `source_cart_id` (MEDIUM-5)                                                                                               | `DB5`                   |
+| C6  | Status↔timestamp checks on `payment` and `shipment` (LOW-6)                                                                                                               | `DB6`                   |
+| C7  | Doc edits: auth to passwordless (D-a), D13/Relay (D-b), read-predicate publication rule (LOW-8), outbox-worker deferral (D-e), Phase 2 → storefront boundary pointer (D-f) | none — do now           |
+| C8  | Phase order: DB2 parallel to DB3; `/api/health` → DB7                                                                                                                      | `DB1` scope             |
 
 C1, C2 and C7 are worth doing before any DB3 code. C3–C6 land inside the phases that need them.
 
@@ -243,22 +244,22 @@ C1, C2 and C7 are worth doing before any DB3 code. C3–C6 land inside the phase
 **Added:** 2026-08-24  
 **Meaning:** This section records how the review was incorporated into review-ready plans. It does not change the reviewer's original findings and does not claim the schema/runtime corrections are implemented.
 
-| Review item | Accepted disposition | Source of truth / delivery |
-|---|---|---|
-| HIGH-1 / C1 | Accept contact snapshot and make the financial record independent of live identity. Customer self-service closure anonymizes identity in place; the corrected FK/check also keeps controlled physical deletion coherent. | [`system-design/authentication-and-account-security.md`](system-design/authentication-and-account-security.md) AUTH-D10/AUTH0 and [`system-design/cart-checkout-payment-fulfilment-and-returns.md`](system-design/cart-checkout-payment-fulfilment-and-returns.md) COM0 |
-| HIGH-2 / C2 | Accept composite payment/order relation at the database boundary. | Transaction plan COM0, before `settleOrder` |
-| MEDIUM-3 / C3 | Accept `pg_trgm` GIN for normalized infix/typo search, followed by measured `EXPLAIN` evidence. | [`system-design/database-foundation.md`](system-design/database-foundation.md) DB3 |
-| MEDIUM-4 / C4 | Accept the additional Arabic forms and document the remaining no-separator/ZWNJ distinction. | Database plan DB3 |
-| MEDIUM-5 / C5 | Accept nullable cart-item provenance, `ON DELETE SET NULL`, and historical cart reference. | Transaction plan COM0/COM1 |
-| LOW-6 / C6 | Accept payment/shipment status-timestamp checks. | Transaction plan COM0 |
-| LOW-7 | Accept order-line uniqueness, E.164 phone check, and payment-event enum. Drop decorative `price.effective_at`; scheduled pricing remains deferred. Simplify the redundant publication index predicate. | AUTH0/COM0 |
-| LOW-8 | Keep this out of a cross-table DB constraint. Enforce exact-locale translation, active variant, eligible price, approved media, and publication in the DB3 read predicate and staff publication gate. **Amended 2026-08-25:** approved primary media is enforced at the publication gate only, not in the runtime read predicate — see the note below. | `modules/commerce/models/publication.ts` |
-| D-a / auth recommendation | Accept phone OTP only for customers in v1. Staff use separately provisioned email/password plus mandatory TOTP. | Dedicated auth plan; decision map, ADR, domain model, master plan aligned |
-| D-b / Relay | Resolve D13 as “no cross-room/marketplace mega-menu”; a Shop-only Relay remains post-core and separately gated. | `00-decision-map.md` D13 and storefront Relay gate |
-| D-d / expiry | Make `expires_at > now()` an explicit availability predicate; cleanup is not correctness. | Database and transaction plans |
-| D-e / outbox | Keep the outbox table. Transactional inserts are in scope; the general delivery worker remains deferred. | Database and transaction plans |
-| D-f / scope | Keep storefront core ending at Cart; checkout and later routes now point to their separate plan. | Master and storefront plans |
-| C8 / phase order | Run DB2 beside DB3, block Cart on auth rather than public catalogue, and move health to DB7 deployment operations. | Database plan phases |
+| Review item               | Accepted disposition                                                                                                                                                                                                                                                                                                                                   | Source of truth / delivery                                                                                                                                                                                                                                              |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| HIGH-1 / C1               | Accept contact snapshot and make the financial record independent of live identity. Customer self-service closure anonymizes identity in place; the corrected FK/check also keeps controlled physical deletion coherent.                                                                                                                               | [`system-design/authentication-and-account-security.md`](system-design/authentication-and-account-security.md) AUTH-D10/AUTH0 and [`system-design/cart-checkout-payment-fulfilment-and-returns.md`](system-design/cart-checkout-payment-fulfilment-and-returns.md) COM0 |
+| HIGH-2 / C2               | Accept composite payment/order relation at the database boundary.                                                                                                                                                                                                                                                                                      | Transaction plan COM0, before `settleOrder`                                                                                                                                                                                                                             |
+| MEDIUM-3 / C3             | Accept `pg_trgm` GIN for normalized infix/typo search, followed by measured `EXPLAIN` evidence.                                                                                                                                                                                                                                                        | [`system-design/database-foundation.md`](system-design/database-foundation.md) DB3                                                                                                                                                                                      |
+| MEDIUM-4 / C4             | Accept the additional Arabic forms and document the remaining no-separator/ZWNJ distinction.                                                                                                                                                                                                                                                           | Database plan DB3                                                                                                                                                                                                                                                       |
+| MEDIUM-5 / C5             | Accept nullable cart-item provenance, `ON DELETE SET NULL`, and historical cart reference.                                                                                                                                                                                                                                                             | Transaction plan COM0/COM1                                                                                                                                                                                                                                              |
+| LOW-6 / C6                | Accept payment/shipment status-timestamp checks.                                                                                                                                                                                                                                                                                                       | Transaction plan COM0                                                                                                                                                                                                                                                   |
+| LOW-7                     | Accept order-line uniqueness, E.164 phone check, and payment-event enum. Drop decorative `price.effective_at`; scheduled pricing remains deferred. Simplify the redundant publication index predicate.                                                                                                                                                 | AUTH0/COM0                                                                                                                                                                                                                                                              |
+| LOW-8                     | Keep this out of a cross-table DB constraint. Enforce exact-locale translation, active variant, eligible price, approved media, and publication in the DB3 read predicate and staff publication gate. **Amended 2026-08-25:** approved primary media is enforced at the publication gate only, not in the runtime read predicate — see the note below. | `modules/commerce/models/publication.ts`                                                                                                                                                                                                                                |
+| D-a / auth recommendation | Accept phone OTP only for customers in v1. Staff use separately provisioned email/password plus mandatory TOTP.                                                                                                                                                                                                                                        | Dedicated auth plan; decision map, ADR, domain model, master plan aligned                                                                                                                                                                                               |
+| D-b / Relay               | Resolve D13 as “no cross-room/marketplace mega-menu”; a Shop-only Relay remains post-core and separately gated.                                                                                                                                                                                                                                        | `00-decision-map.md` D13 and storefront Relay gate                                                                                                                                                                                                                      |
+| D-d / expiry              | Make `expires_at > now()` an explicit availability predicate; cleanup is not correctness.                                                                                                                                                                                                                                                              | Database and transaction plans                                                                                                                                                                                                                                          |
+| D-e / outbox              | Keep the outbox table. Transactional inserts are in scope; the general delivery worker remains deferred.                                                                                                                                                                                                                                               | Database and transaction plans                                                                                                                                                                                                                                          |
+| D-f / scope               | Keep storefront core ending at Cart; checkout and later routes now point to their separate plan.                                                                                                                                                                                                                                                       | Master and storefront plans                                                                                                                                                                                                                                             |
+| C8 / phase order          | Run DB2 beside DB3, block Cart on auth rather than public catalogue, and move health to DB7 deployment operations.                                                                                                                                                                                                                                     | Database plan phases                                                                                                                                                                                                                                                    |
 
 Residual question decisions for this planning pass:
 
@@ -272,16 +273,16 @@ provider integration, and UI remain unimplemented pending maintainer review.
 
 ### Correction implementation log
 
-| ID | State | Evidence |
-|---|---|---|
-| C1 | **Implemented** — `customer_order.contact_phone` landed in migration `0001` (AUTH0); `customer_order_contact_check` dropped in migration `0002` | `drizzle/0002_c1_c2_review_corrections.sql`; `schema.test.ts` "lets an order outlive its customer instead of blocking the delete" |
-| C2 | **Implemented** — composite `payment_settlement (payment_id, order_id) -> payment (id, order_id)`, backed by a unique index on `payment (id, order_id)`; both independent foreign keys dropped | `drizzle/0002_c1_c2_review_corrections.sql`; `schema.test.ts` "reaches an order only through the payment being settled" |
-| C3 | Open — belongs to DB3 | — |
-| C4 | Open — belongs to DB3 | — |
-| C5 | Open — belongs to DB5 | — |
-| C6 | Open — belongs to DB6 | — |
-| C7 | Implemented — documentation edits | this bundle |
-| C8 | Implemented — phase order recorded | `system-design/database-foundation.md` |
+| ID  | State                                                                                                                                                                                          | Evidence                                                                                                                          |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| C1  | **Implemented** — `customer_order.contact_phone` landed in migration `0001` (AUTH0); `customer_order_contact_check` dropped in migration `0002`                                                | `drizzle/0002_c1_c2_review_corrections.sql`; `schema.test.ts` "lets an order outlive its customer instead of blocking the delete" |
+| C2  | **Implemented** — composite `payment_settlement (payment_id, order_id) -> payment (id, order_id)`, backed by a unique index on `payment (id, order_id)`; both independent foreign keys dropped | `drizzle/0002_c1_c2_review_corrections.sql`; `schema.test.ts` "reaches an order only through the payment being settled"           |
+| C3  | Open — belongs to DB3                                                                                                                                                                          | —                                                                                                                                 |
+| C4  | Open — belongs to DB3                                                                                                                                                                          | —                                                                                                                                 |
+| C5  | Open — belongs to DB5                                                                                                                                                                          | —                                                                                                                                 |
+| C6  | Open — belongs to DB6                                                                                                                                                                          | —                                                                                                                                 |
+| C7  | Implemented — documentation edits                                                                                                                                                              | this bundle                                                                                                                       |
+| C8  | Implemented — phase order recorded                                                                                                                                                             | `system-design/database-foundation.md`                                                                                            |
 
 Migration `0002` was hand-ordered after generation: `drizzle-kit` emitted the
 composite foreign key before the unique index it depends on, which PostgreSQL

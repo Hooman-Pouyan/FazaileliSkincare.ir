@@ -5,7 +5,7 @@
 
 > **The premise.** Code is not what will delay this launch. Approvals are. Every week you spend on paperwork now is a week the site isn't sitting finished and unable to take money. Start step 1 this week.
 >
-> **And the good news:** because we're building **direct bank transfer as a first-class payment method** (see ADR-002), you can launch and take real orders *before* any of this completes. The paperwork upgrades you from a working shop to a smoother one — it is no longer a hard gate. That changes this from a blocker into a background task.
+> **And the good news:** because we're building **direct bank transfer as a first-class payment method** (see ADR-002), you can launch and take real orders _before_ any of this completes. The paperwork upgrades you from a working shop to a smoother one — it is no longer a hard gate. That changes this from a blocker into a background task.
 
 ---
 
@@ -25,7 +25,7 @@
   ⑤ Tax / سامانه مودیان      →  once you're issuing invoices
 ```
 
-**The interlock at step ④ is the part people get stuck on.** Some ZarinPal tiers ask for eNamad; eNamad's own checklist mentions an active payment gateway. The practical resolution is that ZarinPal's entry-level gateway can generally be opened first and upgraded later — but **do not take my word for the current rule.** Open a ZarinPal support ticket in week one and ask them plainly: *"I have a registered company and no eNamad yet. What is the fastest path to an active gateway, and what do you need from me?"* Their answer, this month, beats any guide including this one.
+**The interlock at step ④ is the part people get stuck on.** Some ZarinPal tiers ask for eNamad; eNamad's own checklist mentions an active payment gateway. The practical resolution is that ZarinPal's entry-level gateway can generally be opened first and upgraded later — but **do not take my word for the current rule.** Open a ZarinPal support ticket in week one and ask them plainly: _"I have a registered company and no eNamad yet. What is the fastest path to an active gateway, and what do you need from me?"_ Their answer, this month, beats any guide including this one.
 
 ---
 
@@ -50,7 +50,7 @@ For a **شخصیت حقوقی** (registered company) you will be asked for, repe
 
 Online businesses in Iran are generally expected to hold a **مجوز کسب‌وکار** obtained through the national permits portal (درگاه ملی مجوزهای کشور). Whether your specific activity — retail of cosmetic products plus a training institute — requires one, and which صنف it falls under, is worth **one phone call to your accountant or a اتحادیه کسب‌وکارهای مجازی** rather than guessing.
 
-Ask them exactly: *"For an institute that sells imported cosmetic products online and runs training workshops, which permit category applies, and do I need it before eNamad?"*
+Ask them exactly: _"For an institute that sells imported cosmetic products online and runs training workshops, which permit category applies, and do I need it before eNamad?"_
 
 If it applies, it has the longest lead time of anything on this page. Start it first.
 
@@ -125,7 +125,7 @@ Iran's Taxpayer System requires many businesses to issue **electronic invoices**
 
 **You have a registered company, so you should assume this applies until your accountant tells you otherwise.** The question to ask them, specifically:
 
-> *"For our company, are we currently obliged to issue صورتحساب الکترونیکی through سامانه مودیان? If so, from what date, and do we need a معتمد مالیاتی or can we submit directly?"*
+> _"For our company, are we currently obliged to issue صورتحساب الکترونیکی through سامانه مودیان? If so, from what date, and do we need a معتمد مالیاتی or can we submit directly?"_
 
 **Why the answer matters before the first order rather than after:** if it applies, invoice numbering, the شناسه یکتا on each invoice, and the customer data captured at checkout all have to be right from order number one. Retrofitting compliant invoicing onto a live order table is genuinely painful. Getting a "no, not yet" is also a perfectly good outcome — it just needs to be a known answer rather than an assumption.
 
@@ -141,14 +141,14 @@ Iran's Taxpayer System requires many businesses to issue **electronic invoices**
 
 ## The one-page version
 
-| When | Do this | Blocked by |
-|---|---|---|
-| **This week** | Gather the company file · ask the accountant the two questions (permit category, tax obligation) · open the company bank account if it doesn't exist | Nothing |
-| **This week** | Register at ZarinPal, open the support ticket | Company file |
-| **Weeks 1–3** | Business licence, if it applies | Accountant's answer |
-| **When the landing page ships** | Apply for eNamad | Live site + required pages |
-| **Before the first order** | Confirm the tax answer; company account ready for transfers | Accountant |
-| **Month 3–4** | Bank PSP, IRC codes, extra eNamad stars | Everything above |
+| When                            | Do this                                                                                                                                              | Blocked by                 |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------- |
+| **This week**                   | Gather the company file · ask the accountant the two questions (permit category, tax obligation) · open the company bank account if it doesn't exist | Nothing                    |
+| **This week**                   | Register at ZarinPal, open the support ticket                                                                                                        | Company file               |
+| **Weeks 1–3**                   | Business licence, if it applies                                                                                                                      | Accountant's answer        |
+| **When the landing page ships** | Apply for eNamad                                                                                                                                     | Live site + required pages |
+| **Before the first order**      | Confirm the tax answer; company account ready for transfers                                                                                          | Accountant                 |
+| **Month 3–4**                   | Bank PSP, IRC codes, extra eNamad stars                                                                                                              | Everything above           |
 
 **The two phone calls that unblock the most: your accountant, and ZarinPal support.** Both can happen tomorrow, and between them they resolve most of what's genuinely uncertain on this page.
 
