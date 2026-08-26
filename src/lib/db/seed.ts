@@ -3,6 +3,7 @@ import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 import { z } from "zod";
 import * as schema from "./schema";
+import { seedContent } from "./seeds/content";
 import { seedDevCatalogue } from "./seeds/dev";
 import { seedReference } from "./seeds/reference";
 import { seedCommerceDemo, seedStorydermCatalogue } from "./seeds/storyderm";
@@ -47,6 +48,10 @@ async function main(): Promise<void> {
                     unpublished, with no variant, price or stock.
         demo        the invented commercial half — `DEMO-` variants, rial
                     prices and stock — layered onto `storyderm`.
+
+      Both `storyderm` and `demo` also seed the editorial content spine: FAQ
+      sets, the listing intro, a dated campaign and a gallery. All draft, all
+      unpublishable, all visible only through the draft preview.
         dev         the older fictional catalogue. Retired by C-6 once the
                     Storyderm integration suite is green; see docs/26.
 
@@ -63,6 +68,11 @@ async function main(): Promise<void> {
     }
     if (input.profile === "demo") {
       await seedCommerceDemo(database);
+    }
+    // Content last: a block that targets a brand or a concern checks that slug
+    // against the taxonomy, so the catalogue it refers to has to exist first.
+    if (input.profile === "storyderm" || input.profile === "demo") {
+      await seedContent(database);
     }
   } finally {
     await client.end({ timeout: 5 });

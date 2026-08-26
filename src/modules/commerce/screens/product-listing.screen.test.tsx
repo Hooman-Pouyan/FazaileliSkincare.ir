@@ -45,6 +45,7 @@ const BASE: ProductListingPage = {
   query: emptyQuery({ kind: "concern", slug: "lak" }),
   results: [],
   facets: [],
+  bands: [],
   appliedFilters: [],
   clearFiltersHref: null,
   price: null,
@@ -245,5 +246,88 @@ describe("scope questions", () => {
     });
     expect(html).toContain("لک چقدر طول می‌کشد؟");
     expect(html).toContain("معمولاً چند ماه.");
+  });
+});
+
+describe("editorial bands", () => {
+  const intro = {
+    key: "shop.listing.intro",
+    kind: "editorial",
+    heading: "خرید بر اساس دغدغه",
+    body: "از دغدغه شروع کنید.",
+    cta: null,
+    items: [],
+  } as const;
+
+  const campaign = {
+    key: "shop.listing.campaign.consultation",
+    kind: "campaign",
+    heading: "مطمئن نیستید؟",
+    body: "یک جلسه رزرو کنید.",
+    cta: { label: "رزرو مشاوره", href: "/booking" },
+    items: [],
+  } as const;
+
+  const gallery = {
+    key: "shop.listing.gallery.storyderm",
+    kind: "gallery",
+    heading: "از نزدیک",
+    body: null,
+    cta: null,
+    items: [
+      {
+        key: "clinic-a-cream",
+        title: "Clinic-A",
+        body: "برای پوست چرب",
+        media: {
+          url: "/media/catalog/storyderm/clinic-a/clinic-a-cream/primary-640.webp",
+          alt: "کرم Clinic-A",
+        },
+      },
+    ],
+  } as const;
+
+  it("renders nothing when there are none — absence is the designed state", () => {
+    const html = render(BASE);
+    expect(html).not.toContain("خرید بر اساس دغدغه");
+    expect(html).not.toContain(fa.plp.gallery.label);
+  });
+
+  it("puts an intro and a campaign above the results", () => {
+    const html = render({ ...BASE, bands: [campaign, intro] });
+    expect(html).toContain("خرید بر اساس دغدغه");
+    expect(html).toContain("یک جلسه رزرو کنید.");
+    // The CTA is a locale-aware Link, so a Persian reader gets an unprefixed
+    // path — R-2. It must never render as a bare foreign href.
+    expect(html).toContain('href="/booking"');
+    // Both sit before the h1, which is what makes them frame the results
+    // rather than interrupt them. Anchored to the tag, not to the title text:
+    // the scope title also appears in the breadcrumb trail above.
+    expect(html.indexOf("خرید بر اساس دغدغه")).toBeLessThan(
+      html.indexOf("<h1"),
+    );
+  });
+
+  it("puts a gallery caption in the static HTML, before hydration", () => {
+    const html = render({ ...BASE, bands: [gallery] });
+    expect(html).toContain("از نزدیک");
+    expect(html).toContain("Clinic-A");
+    expect(html).toContain("برای پوست چرب");
+  });
+
+  it("spends the Divider once, not twice, when a page has both", () => {
+    // DS-4 caps the ornament at twice a page; two in a row read as furniture.
+    // Counted against a page carrying one, because next/image writes the glyph
+    // path into both `src` and `srcset` — an absolute count would assert the
+    // image tag's shape rather than the number of dividers.
+    const questions = [{ question: "پرسش", answer: "پاسخ" }];
+    const occurrences = (html: string) =>
+      html.split("brand-glyph-128.png").length - 1;
+
+    const one = occurrences(render({ ...BASE, questions }));
+    const both = occurrences(render({ ...BASE, bands: [gallery], questions }));
+
+    expect(one).toBeGreaterThan(0);
+    expect(both).toBe(one);
   });
 });

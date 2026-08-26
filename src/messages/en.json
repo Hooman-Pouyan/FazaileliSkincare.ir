@@ -212,6 +212,11 @@
     "allProducts": {
       "title": "All products",
       "introduction": "Everything we stock, on one page. If you are not after something specific, start from the filters — skin type, brand, or where it sits in a routine."
+    },
+    "gallery": {
+      "label": "A closer look at the products",
+      "previous": "Previous",
+      "next": "Next"
     }
   }
 }

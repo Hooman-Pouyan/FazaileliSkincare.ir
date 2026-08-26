@@ -1,5 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { EditorialBand } from "@/components/content/editorial-band";
+import { GalleryBand } from "@/components/content/gallery-band";
 import { Divider } from "@/components/brand/divider";
 import { Container } from "@/components/layout/container";
 import { EmptyState } from "@/components/layout/empty-state";
@@ -32,10 +34,30 @@ export function ProductListingScreen({
   const t = useTranslations("plp");
   const isSearch = page.scope.kind === "search";
 
+  // Placement is by kind, not by author: a campaign and an intro belong above
+  // the results where they frame them, a gallery below where it does not push
+  // the grid down the page.
+  const leadBands = page.bands.filter((band) => band.kind !== "gallery");
+  const galleries = page.bands.filter((band) => band.kind === "gallery");
+
   return (
     <main className="ms-14">
       <Container className="pt-14">
         <Breadcrumbs items={page.breadcrumbs} />
+
+        {leadBands.length > 0 && (
+          <div className="flex flex-col gap-6 pt-6">
+            {leadBands.map((band) => (
+              <EditorialBand
+                key={band.key}
+                heading={band.heading}
+                body={band.body}
+                cta={band.cta}
+                tone={band.kind === "campaign" ? "accented" : "plain"}
+              />
+            ))}
+          </div>
+        )}
 
         <Reveal className="flex flex-col gap-4 pt-6 pb-10">
           <h1 className="max-w-[20ch] text-h1 font-black leading-[1.28] text-balance">
@@ -103,9 +125,30 @@ export function ProductListingScreen({
         </div>
       </Container>
 
-      {page.questions.length > 0 && (
+      {galleries.length > 0 && (
         <Container className="flex flex-col gap-16 pb-24">
           <Divider />
+          {galleries.map((band) => (
+            <GalleryBand
+              key={band.key}
+              heading={band.heading}
+              entries={band.items}
+              label={t("gallery.label")}
+              previousLabel={t("gallery.previous")}
+              nextLabel={t("gallery.next")}
+            />
+          ))}
+        </Container>
+      )}
+
+      {page.questions.length > 0 && (
+        <Container className="flex flex-col gap-16 pb-24">
+          {/*
+            One Divider on this page at most, and the gallery above already
+            spent it when there is one — `DS-4` caps the ornament at twice per
+            page and two in a row would be furniture rather than punctuation.
+          */}
+          {galleries.length === 0 && <Divider />}
           <ScopeQuestions questions={page.questions} />
         </Container>
       )}

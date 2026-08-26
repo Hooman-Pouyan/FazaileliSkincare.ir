@@ -45,6 +45,8 @@ import {
   parseCatalogueQuery,
 } from "./models/catalogue-query";
 import { type DraftPreview, resolveDraftPreview } from "@/lib/preview";
+import { resolveBlocks } from "@/modules/content/content.reads";
+import type { ContentScope } from "@/modules/content/models/resolution";
 import type { CustomerGroup } from "./models/offer";
 import { resolveOfferState } from "./models/offer";
 import {
@@ -56,6 +58,7 @@ import {
   redirect,
 } from "./models/outcome";
 import type {
+  ContentBand,
   FacetGroup,
   PriceFacet,
   HubConcern,
@@ -65,6 +68,7 @@ import type {
   ProductDetailPage,
   ProductListingPage,
   ProductTile,
+  ScopeQuestion,
   ShopHubPage,
   SortOption,
 } from "./models/page-models";
@@ -1002,6 +1006,8 @@ export async function listProducts(
   const facets = await loadFacets(localeCode, query, clauses);
   const price = await loadPriceBounds(query, clauses, floor);
 
+  const { questions, bands } = await loadScopeContent(localeCode, query.scope);
+
   const sortOptions: readonly SortOption[] = SORTS.map((value) => ({
     value,
     href: catalogueHref({ ...query, sort: value, page: 1 }),
@@ -1039,9 +1045,8 @@ export async function listProducts(
         : null,
     sortOptions,
     price,
-    // Absent until content exists. The structure ships so the copy has
-    // somewhere to land — F-5.
-    questions: [],
+    questions,
+    bands,
     pagination,
     meta: {
       title: scopeTitle.title,
@@ -1059,6 +1064,71 @@ export async function listProducts(
       robots: isFilteredOrSorted ? "noindex,follow" : "index,follow",
     },
   });
+}
+
+/**
+ * The listing's editorial content, from the content spine.
+ *
+ * One read, split by kind. The FAQ block becomes `questions`, which is the same
+ * array the accordion renders and the same array `faqPage` emits from — so
+ * structured data cannot claim a question the page does not show (`C-15`).
+ * Everything else becomes a band.
+ *
+ * `hub` and `search` resolve unscoped: the whole catalogue and a query string
+ * are not taxonomy rows, so they get the generic set. A concern, brand or
+ * category asks for its own and falls back to the generic one when it has none
+ * — `C-12`.
+ */
+async function loadScopeContent(
+  localeCode: string,
+  scope: CatalogueScope,
+): Promise<{
+  questions: readonly ScopeQuestion[];
+  bands: readonly ContentBand[];
+}> {
+  const contentScope: ContentScope =
+    scope.kind === "concern" ||
+    scope.kind === "brand" ||
+    scope.kind === "category"
+      ? { kind: scope.kind, slug: scope.slug }
+      : null;
+
+  const blocks = await resolveBlocks({
+    surface: "shop.listing",
+    scope: contentScope,
+    localeCode,
+  });
+
+  const questions: ScopeQuestion[] = [];
+  const bands: ContentBand[] = [];
+
+  for (const block of blocks) {
+    if (block.kind === "faq") {
+      for (const item of block.items) {
+        // An answer is not optional. A question with no answer is worse than no
+        // question — on the page and in the markup.
+        if (!item.body) continue;
+        questions.push({ question: item.title, answer: item.body });
+      }
+      continue;
+    }
+
+    bands.push({
+      key: block.key,
+      kind: block.kind,
+      heading: block.heading,
+      body: block.body,
+      cta: block.cta,
+      items: block.items.map((item) => ({
+        key: item.key,
+        title: item.title,
+        body: item.body,
+        media: item.media,
+      })),
+    });
+  }
+
+  return { questions, bands };
 }
 
 type ScopeTitle =

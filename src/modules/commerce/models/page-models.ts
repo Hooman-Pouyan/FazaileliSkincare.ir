@@ -115,6 +115,30 @@ export type PriceFacet = Readonly<{
 /** A question this scope answers, in her voice. See F-5. */
 export type ScopeQuestion = Readonly<{ question: string; answer: string }>;
 
+/**
+ * Editorial content a listing carries beside its results.
+ *
+ * Read from the content spine and mapped here, so commerce owns the shape its
+ * own screens consume rather than importing another module's types
+ * (`AGENTS.md`). `kind` decides placement, not styling: `campaign` and
+ * `editorial` sit above the grid, `gallery` below it.
+ */
+export type ContentBandItem = Readonly<{
+  key: string;
+  title: string;
+  body: string | null;
+  media: Readonly<{ url: string; alt: string | null }> | null;
+}>;
+
+export type ContentBand = Readonly<{
+  key: string;
+  kind: "editorial" | "gallery" | "campaign";
+  heading: string | null;
+  body: string | null;
+  cta: Readonly<{ label: string; href: string }> | null;
+  items: readonly ContentBandItem[];
+}>;
+
 export type ProductListingPage = Readonly<{
   scope: ScopeHeader;
   breadcrumbs: readonly BreadcrumbLink[];
@@ -136,6 +160,12 @@ export type ProductListingPage = Readonly<{
    * not a shortcut.
    */
   questions: readonly ScopeQuestion[];
+  /**
+   * Editorial bands, in the order the content spine returned them. Empty is a
+   * designed state: a listing with nothing to say says nothing, rather than
+   * rendering an empty frame — `L-10`.
+   */
+  bands: readonly ContentBand[];
   pagination: Readonly<{
     page: number;
     pageCount: number;
