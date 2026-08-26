@@ -387,3 +387,19 @@ Core compositions are limited to `StorefrontShell`, `MobileBottomNav`, `Storefro
 - Persian RTL, keyboard, reduced-motion, and responsive evidence passes.
 - Metadata and structured data are accepted and source-backed.
 - No cross-room marketplace mega-menu, product-card box/shadow, raw color, or physical-direction CSS was introduced. The deferred Shop Relay remains absent unless separately accepted after core release.
+
+---
+
+## Next iteration — not scheduled
+
+The hub still renders four hardcoded editorial image paths and oversized cards,
+both of which predate there being anything real to show. Since packet 7B there
+is: fifty products with derivatives, and a content spine whose `shop.hub`
+surface exists and has nothing seeded against it.
+
+`R-5` in [`../../27-storefront-refinement-backlog.md`](../../27-storefront-refinement-backlog.md)
+records what that pass involves — seed `shop.hub` blocks, read them through
+`resolveBlocks` per `CONTENT-01`, use real product imagery on the concern
+panels, and compact per `R-3`. **Not scheduled.** The constraint that matters
+most when it is: the blocks are tuned from the existing component library, never
+hand-rolled into the page.

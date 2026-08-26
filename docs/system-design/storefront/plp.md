@@ -327,3 +327,19 @@ New compositions: applied-filter list/chips if #5 requires them, result-count tr
 - Persian RTL and keyboard journeys pass at required viewports.
 - Query count is bounded and representative plans are reviewed.
 - Quick view remains absent unless separately accepted with its own requirements and tests.
+
+---
+
+## Next iteration — not scheduled
+
+The PLP was seen running against the real catalogue on 2026-08-26 and eight
+refinements came out of it: infinite scroll layered over the paginated URLs,
+scroll position held across a filter, a compact density closer to Ant Design,
+a less-cropped and more branded product tile, the price filter's Apply button,
+a sticky rail, and a composed top-of-page.
+
+They are recorded with their conflicts and a recommended shape in
+[`../../27-storefront-refinement-backlog.md`](../../27-storefront-refinement-backlog.md)
+(`R-1`–`R-8`). **None is implemented, and none should be until Landing, PDP,
+cart and checkout land.** `R-3` — density — goes first among them, because it
+changes the tokens the other visual entries render against.

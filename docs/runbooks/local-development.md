@@ -226,3 +226,23 @@ Runnable in any checkout: `typecheck`, `lint`, `format`, and `test:unit`.
 
 Requires your machine: `test:integration`, every `db:*` command, `pnpm dev`,
 `pnpm build`, and Playwright.
+
+---
+
+## After running the integration suite, re-seed
+
+`pnpm test:integration` deletes rows on purpose: it needs a product with no
+Persian copy and a product with no imagery, and neither is something the
+manifest can express, because they are failures rather than curation decisions.
+It does not put them back, so the development database keeps the damage and the
+dev server shows it — «پودر Ultra Lift» renders an image placeholder and
+«Ultra Essence Clean» disappears from the Persian listing.
+
+```bash
+pnpm db:reset && pnpm db:seed demo
+```
+
+Recorded as `R-10` in
+[`../27-storefront-refinement-backlog.md`](../27-storefront-refinement-backlog.md);
+the fix is for the suite to re-seed itself, and until it does this is the
+workaround.

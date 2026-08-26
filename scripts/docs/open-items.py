@@ -38,7 +38,15 @@ WAITING = {"open": "open", "**needs you**": "needs you"}
 
 
 def cells(line):
-    return [cell.strip() for cell in line.strip().strip("|").split("|")]
+    """Split a markdown table row, respecting `\\|` inside a cell.
+
+    A naive split on "|" turns one row carrying a shell pipe — say a `curl …
+    | grep …` command — into five cells, and the row is then silently dropped
+    for having the wrong shape. The item stays out of the register and nobody
+    notices, which is the exact failure this register exists to prevent.
+    """
+    body = line.strip().strip("|")
+    return [cell.replace("\\|", "|").strip() for cell in re.split(r"(?<!\\)\|", body)]
 
 
 def headline(text):
