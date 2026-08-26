@@ -66,7 +66,8 @@
   --space-6: 32px; --space-7: 48px; --space-8: 64px; --space-9: 96px; --space-10: 128px;
 
   /* D-5 — editorial surfaces are uncapped; compact ones are not. */
-  --media-max-h: none;
+  --media-tile-max-w: none;
+  --media-hero-max-w: none;
 
   /* radius — two values, nothing between */
   --radius-control: 2px;
@@ -121,19 +122,22 @@
   --space-10: 64px; /* was 128 */
 
   /*
-    D-5 — a ratio is not a size.
+    D-5 — cap the WIDTH, keep the 4:5.
 
-    Four components render media at `aspect-[4/5]`, which at three columns on a
-    1200px canvas is 380x475, and at the spotlight's split is 570x712. The
-    design system's own compact study uses 4:5 too, but on a 900px canvas: the
-    ratio was inherited without the width it assumed.
+    The first attempt capped height while width still filled the column, which
+    made every packshot panoramic — smaller, and the wrong shape. The maintainer
+    said so: the sizes were right, the proportion was not. Capping width instead
+    keeps the vertical 4:5 the design system draws and still shrinks the box,
+    because height follows the ratio.
 
-    Capped rather than re-ratioed because a cap is width-independent — a ratio
-    tuned at 1440 is wrong at 1920 — and because `object-contain` means a
-    shorter box just gives the packshot more air, which is the treatment R-4
-    asked for.
+    Two caps, because a tile and a hero are different jobs: a grid tile shares a
+    row with three others, a product hero owns 60% of a page. One value could
+    only be right for one of them.
+
+    Uncapped on editorial surfaces, so the Landing is untouched.
   */
-  --media-max-h: 22rem;
+  --media-tile-max-w: 18rem; /* 288px -> 360px tall at 4:5 */
+  --media-hero-max-w: 24rem; /* 384px -> 480px tall at 4:5 */
 }
 
 @media (max-width: 767px) {

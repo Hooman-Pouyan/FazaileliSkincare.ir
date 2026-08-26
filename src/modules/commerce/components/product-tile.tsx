@@ -38,7 +38,7 @@ export function ProductTile({
 
   return (
     <article className={cn("group flex flex-col gap-4", className)}>
-      <div className="relative aspect-[4/5] max-h-[var(--media-max-h)] w-full overflow-hidden bg-sand">
+      <div className="relative aspect-[4/5] mx-auto max-w-[var(--media-tile-max-w)] w-full overflow-hidden bg-sand">
         {/*
           `relative` because `<Image fill>` positions against its *immediate*
           parent, and this link sits between the image and the aspect box. It

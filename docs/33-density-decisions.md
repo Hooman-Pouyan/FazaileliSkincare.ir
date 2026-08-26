@@ -130,7 +130,7 @@ which is the exit-gate condition and the thing most worth protecting.
 
 ---
 
-## D-5 · Media boxes are capped, because a ratio is not a size
+## D-5 · Media boxes are capped by **width**, so the 4:5 survives
 
 **Added 2026-08-26, after the maintainer saw `D-2` running.** His words: the hub
 and PDP media are _"still way too big … their height is way too much and are
@@ -151,36 +151,46 @@ The design system's `density-3-compact-48` study uses 4:5 as well — but on a
 inherited without the canvas it assumed.** On a 1200px content width the same
 ratio produces something half again as tall as the study ever showed.
 
-**Decision.** Cap the height rather than change the ratio, through one token
-under the same density scope:
+**First attempt, and why it was wrong.** Capping `max-height` while the box
+still filled its column made every packshot panoramic — a 732×352 letterbox
+where the design draws a portrait. The maintainer's verdict was exact: the
+sizes were now right, the **shape** was not; he wanted the 4:5 back.
+
+He is right, and the mistake is instructive. `aspect-ratio` with a height cap
+does not shrink a box, it _reshapes_ it — width still comes from the column, so
+the ratio silently stops being 4:5. Capping **width** shrinks it while the ratio
+computes the height, which is the only one of the two that preserves the design.
+
+**Decision.** Two width caps under the density scope, and the ratio untouched:
 
 ```css
 :root {
-  --media-max-h: none;
+  --media-tile-max-w: none;
+  --media-hero-max-w: none;
 }
 [data-density="compact"] {
-  --media-max-h: 22rem;
-} /* 352px */
+  --media-tile-max-w: 18rem;
+  --media-hero-max-w: 24rem;
+}
 ```
 
-Capping rather than re-ratioing, for three reasons:
+Two, because a tile and a hero are different jobs — a grid tile shares a row
+with three others, a product hero owns 60% of a page, and one value could only
+ever be right for one of them. The box is `mx-auto`, so it centres once it stops
+filling its column.
 
-- **It is width-independent.** A ratio that looks right at 1440 is wrong at
-  1920 and wrong again at 1280. A cap is the same everywhere, which is what
-  "not proportionate relative to the page" was actually describing.
-- **`object-contain` makes it free.** The packshots already letterbox on a
-  neutral field (`R-4`, `8.3`), so a shorter, wider box simply gives the bottle
-  more air around it — which is the treatment the maintainer asked for on the
-  tile: _"it should sit smaller and centred."_
-- **One number, one place.** Four components carry `aspect-[4/5]`; changing the
-  ratio means four decisions that drift. A cap is one token they all read.
+Measured at 1440 after the change:
 
-Editorial surfaces get `none`, so the Landing is untouched — the same boundary
-`D-4` draws.
+| Surface     | Rendered      | Ratio |
+| ----------- | ------------- | ----- |
+| PLP tile    | **288 × 360** | 0.800 |
+| PDP gallery | **384 × 480** | 0.800 |
 
-**Needs the maintainer.** 22rem is a judgement, not a measurement. It is the
-first value that makes the three surfaces above look proportionate at 1440 while
-leaving a packshot legible at 390; if it is still too large, this is one token.
+Editorial surfaces stay `none`, so the Landing is untouched.
+
+**Needs the maintainer.** 18rem and 24rem are judgements, not measurements —
+the first pair that reads as proportionate at 1440 while leaving a packshot
+legible at 390. Two tokens if either is wrong.
 
 ---
 

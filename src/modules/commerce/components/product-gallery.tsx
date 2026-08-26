@@ -39,7 +39,7 @@ export function ProductGallery({
 
   return (
     <div className={cn("flex flex-col gap-3", className)}>
-      <div className="relative aspect-[4/5] max-h-[var(--media-max-h)] w-full overflow-hidden bg-sand">
+      <div className="relative aspect-[4/5] mx-auto max-w-[var(--media-hero-max-w)] w-full overflow-hidden bg-sand">
         {current ? (
           <Image
             src={current.src}

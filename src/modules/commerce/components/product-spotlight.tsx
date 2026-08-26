@@ -51,7 +51,7 @@ function SpotlightSlide({ product }: { readonly product: ProductTileModel }) {
 
   return (
     <article className="grid items-center gap-8 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1fr)] lg:gap-0">
-      <div className="relative aspect-[4/5] max-h-[var(--media-max-h)] w-full bg-ground">
+      <div className="relative aspect-[4/5] mx-auto max-w-[var(--media-hero-max-w)] w-full bg-ground">
         {product.image ? (
           <Image
             src={product.image.src}
