@@ -1,0 +1,694 @@
+{
+  "$comment": "Hand-curated from the transcription passes. Consent is the maintainer's confirmation of 2026-08-26, recorded per record. Held records are an advertising-rules question, not a consent question — see E-3.",
+  "consentSource": "owner_confirmation_2026-08-26",
+  "reconciliation": {
+    "transcribed": 43,
+    "published": 33,
+    "held": 10
+  },
+  "records": [
+    {
+      "id": "testimonial-fa-001",
+      "batchId": "instagram-first-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "خواستم بگم حال پوستم خیلی خوب شده؛ تمیز و انگار آب رفته زیر پوستم.",
+      "transcriptionFa": "خانم فضائلی عزیزم سلام. روز برفیتون بخیر و شادی. خواستم بهتون اطلاع بدم خیییییلی حال پوستم خوب شده تمیییییززز و انگاری آب رفته زیر پوستم. 🥰✨ کلیییی مرسی ازتون ❤️❤️❤️",
+      "safetyFlags": ["outcome_claim"],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-002",
+      "batchId": "instagram-first-pass-2026-08-24",
+      "role": "student",
+      "roleLabel": {
+        "fa": "هنرجو",
+        "en": "Student"
+      },
+      "displayQuoteFa": "فوق‌العاده عالی و پربار بود. سپاس از لطف و محبتتان.",
+      "transcriptionFa": "سلام و عرض ادب و احترام خانم فضائلی عزیز. سپاس از شما و سرکار خانم بوروک. فوق‌العاده عالی و پربار بود. سپاس از لطف و محبت‌تون 💕💕❤️❤️❤️😘😘😘😍😍😍",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-003",
+      "batchId": "instagram-first-pass-2026-08-24",
+      "role": "student",
+      "roleLabel": {
+        "fa": "هنرجو",
+        "en": "Student"
+      },
+      "displayQuoteFa": "ورکشاپ امروز فوق‌العاده پربار بود. ممنونم بابت زحمات و وقتی که در اختیارمان گذاشتید.",
+      "transcriptionFa": "سلام و خسته نباشید 🌸🙏 خدمت تمامی همکاران و اساتید محترم سرکارخانم فضائلی و سرکار خانم بوروک عزیز ❤️ خیلی خیلی ممنونم بابت زحمات و تایمی که امروز در اختیارمون قرار دادید تا از حضور ارزشمندتون فیض ببریم 💖🙏 ورکشاپ امروز فوق‌العاده پربار و تکنیکال بود و بشدت برای من مباحث جذاب واقع شد ✨ باعث افتخاره حضور داشتن در کنار اساتید ارزشمند و باتجربه‌ای همچون شما 🥺💕 متشکرم از تدریس و پذیرایی گرانبهاتون 🥰🙏 شاد و مانا باشید عزیزان دل ❤️🌹",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-004",
+      "batchId": "instagram-first-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "تایم‌ماشین که برایم انجام دادید آن‌قدر روی پوستم جواب داده که همکارانم می‌پرسیدند چه کار کرده‌ام.",
+      "transcriptionFa": "همین الان گرفتم از نزدیک پوستم رو ببینید. سلام خانم فضائلی عزیزم خوب هستین. تایم ماشین که برام انجام دادین به قدری روی پوستم جواب داده که تمام همکارام و اطرافیانم براشون سوال پیش اومده بود چه کار کردم و من براشون توضیح دادم و شمارو معرفی کردم. خیلی راضی‌ام، خیلی خیلی عالی بود. کاش زودتر انجام می‌دادم. تمام منافذ پوستم جمع شده و پوستم خیلی روشن شده. پیام دادم تشکر ویژه کنم از شماااا. انشاالله خدا بهتون سلامتی و به کسب و کارتون برکت بده. دوستون دارم ❤️😘 چندین مرتبه فیشیال انجام دادم با اینکه راضی بودم اما تایم ماشین یه چیز دیگه بود 🫶",
+      "safetyFlags": ["named_treatment", "outcome_claim"],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-005",
+      "batchId": "instagram-first-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "دیروز پرنسس انجام دادم؛ امروز پوستم یک درجه روشن‌تر و نرم‌تر شده.",
+      "transcriptionFa": "من دیروز پرنسس انجام دادم امروز پوستم یک درجه روشن‌تر شده و پوستم نرم‌تر واقعا ممنون از خانم فضائلی عزیز",
+      "safetyFlags": ["named_treatment", "outcome_claim"],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-006",
+      "batchId": "instagram-first-pass-2026-08-24",
+      "role": null,
+      "roleLabel": null,
+      "displayQuoteFa": null,
+      "transcriptionFa": "سلام. چند ماه پیش پیشونیم بر اثر ضربه یه فرو رفتگی کوچیک پیدا کرده بود که خیلی ناراحتم می‌کرد. هفته پیش پرنسس شاین رو واسم انجام دادید. باورم نمیشه بعد از انجامش، اون فرو رفتگی تا حد زیادی از بین رفته 😍 پوستم خیلی لطیف‌تر و روشن‌تر شده. ممنونم از خانم فضائلی عزیز که این‌قدری با دقت و عشق کار می‌کنید ❤️🙏",
+      "safetyFlags": [
+        "medical_appearance_claim",
+        "named_treatment",
+        "outcome_claim"
+      ],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "hold",
+      "holdReason": "describes a medical or structural change to the skin"
+    },
+    {
+      "id": "testimonial-fa-007",
+      "batchId": "instagram-first-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "دفعهٔ اول بود این خدمات را می‌گرفتم و با تمام دفعات قبل فرق داشت. تفاوت پیش و پس از کار را کاملاً حس کردم.",
+      "transcriptionFa": "خانم فضائلی نازنینم دفعه اول بود این خدمات رو می‌گرفتم. این بار با تمام دفعات قبل برام فرق داشت، بهتره بگم تفاوت قبل و بعد خدمات رو کاملا احساس کردم. عالی بود. ممنون و سپاس از شما که انقدر دلسوزانه و متعهدانه و با عشق کار می‌کنید 😘😘😘😘",
+      "safetyFlags": ["outcome_claim"],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-008",
+      "batchId": "instagram-first-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "من که وسواسی هستم، این چند سال خیالم راحت است. شما کوه تجربه و دانش هستید.",
+      "transcriptionFa": "دقیقا 👏💗 شما بهترینین حتی منه وسواس ک به عنوان کلاینت پیشتون میام این چندسال اینقدر خیالم راحته با دنیا هم نمی‌خام عوضتون کنم اینقدر دوستون دارم 🥺 من ک همیشه هم گفتم شما کوه تجربه و دانش و آگاهی هستین و این بهترین سرمایه است که شما دارید 👏 آفرین ب اونایی ک پیش شما دوره می‌بینن واقعا نتیجه‌اش از همین الان مشخصه 👏",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-009",
+      "batchId": "instagram-first-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "دوستانی که یکی دو ماه من را ندیده بودند گفتند پوستت جوان‌تر شده و روی بینی‌ات خیلی تمیزتر است.",
+      "transcriptionFa": "سلام خانم فضائلی عزیزم 😍 همه دوستانی که یکی دو ماهی بود منو ندیده بودن، گفتن چقدر پوستت با اینکه مشکل خاصی نداشته جوون‌تر شده و روی بینیت خیلی تمیز و صاف شده (قبلا بصورت فشرده پر از جوش سرسیاه بود). خواستم نتیجه کار خارق‌العاده‌تون رو پوستم که افتخارش رو داشتم رو بگم 🤍🤍🤍",
+      "safetyFlags": ["outcome_claim"],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-010",
+      "batchId": "instagram-first-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "آن فیشیال و ماساژش چقدر به من چسبید؛ فکر کنم نیم‌ساعتی خوابم برد.",
+      "transcriptionFa": "وااای چقدرم بهم چسبید اون فیشیال و ماساژش، درست یه نیم ساعتی فکر کنم خوابم برد، درسته؟",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-011",
+      "batchId": "instagram-first-pass-2026-08-24",
+      "role": null,
+      "roleLabel": null,
+      "displayQuoteFa": null,
+      "transcriptionFa": "الهی فداتون بشم من بیشتر به خودتون نگاه کردم 😂 تا به صحبتاتون گوش کنم 😂🥰💕💕💕",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "hold",
+      "holdReason": "affectionate aside about the presenter rather than the work"
+    },
+    {
+      "id": "testimonial-fa-012",
+      "batchId": "instagram-first-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "کاملاً حرفه‌ای، کاردرست و پر از عشق. افتخارم است که مراقبت پوستم را در چنین محیطی انجام می‌دهم.",
+      "transcriptionFa": "چندبار ویدئو رو دیدم تا کاملا متوجه حرفاتون شدم اینقد ک محو خودتون شدم 😍😍😍😍 عالی هستید کاملا حرفه‌ای، کاردرست و پر از عشق. باعث افتخارم هست ک مراقبت پوست مو رو در حضور پر عشق شما توی همچین محیط لوکس و پرانرژی خوب انجام می‌دیم ❤️❤️❤️❤️❤️",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-013",
+      "batchId": "instagram-first-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "برای مراقبت از پوست خودم به یک بیوتی‌تراپیست حرفه‌ای نیاز دارم و در این زمینه تا حالا کسی را بهتر ندیده‌ام.",
+      "transcriptionFa": "من، دانش و تجربه خانم فضائلی رو ندارم، علاوه بر اینکه آموزشی که من دیدم مربوط به سال ۱۴۰۰ هست و از اون زمان آپدیت نشدم. واسه همین برای مراقبت از پوست خودم نیاز به رجوع به یک بیوتی تراپیست حرفه‌ای دارم و من در این زمینه تا حالا کسی بهتر از خانم فضائلی پیدا نکردم. لطفا از ایشون درخواست کنین یک نوبت مشاوره برای من در نظر بگیرن 🌹🙏",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-014",
+      "batchId": "instagram-first-pass-2026-08-24",
+      "role": "peer",
+      "roleLabel": {
+        "fa": "همکار",
+        "en": "Colleague"
+      },
+      "displayQuoteFa": "حرفه‌ای در کار و در اخلاق. به شما افتخار می‌کنم.",
+      "transcriptionFa": "با اخلاق، بهترینین 💎🦋💙 حرفه‌ای در کار و اخلاق 💙💙 افتخار می‌کنم بهتون 🌸✌️💪💙",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-015",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "peer",
+      "roleLabel": {
+        "fa": "همکار",
+        "en": "Colleague"
+      },
+      "displayQuoteFa": "اصالت، دانش، فروتنی، نظم و حرفه‌ای بودن، همه یکجا.",
+      "transcriptionFa": "اصالت، دانش، فروتنی، دیسیپلین، حرفه‌ای بودن همگی یکجا در وجود شماست ❤️ بدرخشید ✨",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-016",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "تجربهٔ یک فیشیال بی‌نظیر. انرژی مثبت خودتان و فضایتان فوق‌العاده است.",
+      "transcriptionFa": "تجربه یه فیشیال بی‌نظیر و عالی 👌 با خانم فضائلی عزیز و دوست‌داشتنی. انرژی مثبت خودتون و فضاتون فوق‌العاده‌ست 😊 و اینکه اینقدر حرفه‌ای کار می‌کنید واقعا ارزشمنده 🫶 ممنون که یه تجربه عالی برامون رقم می‌زنید. همیشه تندرست و شاد و موفق ببینمتون 💛",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-017",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "دو جلسه فیشیال آمدم و صورتم بهتر شده. بی‌صبرانه منتظر جلسه‌های بعدی‌ام.",
+      "transcriptionFa": "عزیزم خواستم تشکر کنم. دو جلسه فیشال اومدم صورتم خداروشکر بهتر شده. بی‌صبرانه منتظر جلسات بعدی‌ام.",
+      "safetyFlags": ["outcome_claim"],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-018",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": null,
+      "roleLabel": null,
+      "displayQuoteFa": null,
+      "transcriptionFa": "سلام خسته نباشین 😍 پرنسس شاین همونطور که خودتون گفتین دو روز بعد نتیجه‌ش مشخص میشه (که البته بعد از جلسه هم کاملا تغییرات مشخص بود) و امروز بعد از دو سه روز از جلسه فیشال اسکار و آکنه پوستم خیلی کمتر شده. خیلی ممنونم. بهترینین واقعا خانم فضائلی 🫶🥰",
+      "safetyFlags": [
+        "medical_appearance_claim",
+        "named_treatment",
+        "outcome_claim"
+      ],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "hold",
+      "holdReason": "describes a medical or structural change to the skin"
+    },
+    {
+      "id": "testimonial-fa-019",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "student",
+      "roleLabel": {
+        "fa": "هنرجو",
+        "en": "Student"
+      },
+      "displayQuoteFa": "دیدم نسبت به پوست و هوم‌کر عوض شد. با صبر و حوصله و مشاورهٔ خوبتان با محصولاتی که باید استفاده می‌کردم آشنا شدم.",
+      "transcriptionFa": "ممنونم از شما. فکر می‌کنم دو سه سال پیش بود همون دوره اصلاح هوم‌کر که گذاشته بودین و من خوشبخت 😁 شرکت کردم. دیدم نسبت به پوست و هوم‌کر عوض شد و ممنون از شما که با صبر و حوصله زیاد و مشاوره خوبتون من رو واقعا با محصولاتی که باید استفاده کنم آشنا کردین و فکر کنم الان نیاز به یادآوری مجدد داشتم که خدمتتون پیام دادم. مرسی از شما. من که بی‌صبرانه منتظر اون دوره هستم که مجدد شرکت کنم.",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-020",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "بدون اغراق بهترین فیشیال را تجربه کردم؛ فضای زیبا، مشاورهٔ کامل، و از همه مهم‌تر آرامشی که گرفتم.",
+      "transcriptionFa": "دیروز وقت فیشیال داشتم، مرکز حرفه‌ای خانم فضائلی عزیز. بدون اغراق می‌تونم بگم بهترین فیشیال رو تجربه کردم؛ فضای زیباشون، مشاوره عالی و کامل، کار حرفه‌ای و از همه مهم‌تر آرامش و حس خوبی که از خودشون گرفتم 💛 واقعا برام ارزشمند و دلنشین بود.",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-021",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": null,
+      "roleLabel": null,
+      "displayQuoteFa": null,
+      "transcriptionFa": "خانم فضائلی عزیززززم 💕💕💕 ممنونم برای امروز، خیلی شرمنده کردین 🫂💖 یکتا جان خیلی راضی بود 🙏🫶 خیلی خیلی ممنونم که خداوند شما رو سر راه من قرار داد. سال ۲۰۲۳ فکر می‌کنم ۱۴۰۱ می‌شد. تأثیر خوبی که شما در زندگی من داشتین در تایم کوتاهی که پیشتون یاد گرفتم، بزرگ شدم، رشد کردم، واقعا غیر قابل وصف هست که چقدر آموزگار در هر تخصصی مهم هست 🥰🥰🥰 یک دنیا ممنونم 🫂🤍",
+      "safetyFlags": ["third_party_reference"],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "hold",
+      "holdReason": "names another person who did not consent"
+    },
+    {
+      "id": "testimonial-fa-022",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "با اطمینان درمان پوستم را با شما شروع کردم و قطعاً ادامه می‌دهم. صبورانه وقت گذاشتید و من را شنیدید.",
+      "transcriptionFa": "خیلی خیلی خوشحال شدم از دیدن شما خانم فضائلی عزیز ❤️❤️ با اطمینان درمان پوستم رو با شما شروع کردم و قطعا ادامه می‌دم. ممنونم که عاشقانه و صبورانه وقت گذاشتین برام و منو شنیدین و راهنماییم کردین 🙏🙏🙏",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-023",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": null,
+      "roleLabel": null,
+      "displayQuoteFa": null,
+      "transcriptionFa": "عزیززززم پوستم هلوووووووو، براق، پرآب، جون‌دار. اون خط روی پیشونیم خیلی بهتر شده، خدایی. گردنمم همینطور. فقط دلم می‌خواد خط اخمم برررررره، مجبور نشم بوتاکس بزنم.",
+      "safetyFlags": [
+        "injectable_reference",
+        "medical_appearance_claim",
+        "outcome_claim"
+      ],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "hold",
+      "holdReason": "mentions an injectable procedure; describes a medical or structural change to the skin"
+    },
+    {
+      "id": "testimonial-fa-024",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "peer",
+      "roleLabel": {
+        "fa": "همکار",
+        "en": "Colleague"
+      },
+      "displayQuoteFa": "نهایت خوش‌انرژی.",
+      "transcriptionFa": "نهایت خوش‌انرژی 🙌🏻🧡💛",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-025",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "در این سه جلسه پوستم آن‌قدر تغییر کرده که باورم نمی‌شود؛ چند وقت است دیگر آرایش نمی‌کنم.",
+      "transcriptionFa": "تو این سه دفعه‌ای که واسم تایم ماشین انجام دادین، انقدر پوستم تغییر کرده که باورم نمی‌شه. هم لک و منافذم خیلی خیلی کمتر شده، هم پوستم خیلی آبرسانی شده. واقعا شفاف شده پوستم و باعث شده دیگه آرایش نکنم چند وقته. خیلی خوشحالم که شمارو انتخاب کردم. واقعا برای تمام خدمات پوستی شما بهترینین. مرسی ازتون ❤️❤️❤️",
+      "safetyFlags": ["named_treatment", "outcome_claim"],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-026",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": null,
+      "roleLabel": null,
+      "displayQuoteFa": null,
+      "transcriptionFa": "خانم فضائلی عزیز که همیشه مثل پروتکل کره جنوبی عمل کردند و نتایج فوق‌العاده‌ای کلاینت‌هاشون از درمان با استوری‌درم دیدند 😍 مثل همیشه موفق باشید استاد فضائلی عزیز 🌹🙏",
+      "safetyFlags": ["named_brand", "outcome_claim", "third_party_claim"],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "hold",
+      "holdReason": "makes a claim on behalf of people who did not consent"
+    },
+    {
+      "id": "testimonial-fa-027",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "به کلاینت‌ها اهمیت می‌دهید و برای متریال خساست به خرج نمی‌دهید. فهمیدم فالوور زیاد داشتن کیفیت نمی‌آورد.",
+      "transcriptionFa": "راست می‌گن، واقعا ممنونم که اینقدر به کلاینت‌ها اهمیت می‌دین و محصولات باکیفیت استفاده می‌کنید و مهم‌تر از همه اینکه خساست به خرج نمی‌دین برای استفاده از متریال. اینو فهمیدم که فالوور زیاد داشتن کیفیت نمیاره 👌🏻",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-028",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": null,
+      "roleLabel": null,
+      "displayQuoteFa": null,
+      "transcriptionFa": "خانم فضائلی عزیز که همیشه مثل پروتکل کره جنوبی عمل کردند و نتایج فوق‌العاده‌ای کلاینت‌هاشون از درمان با استوری‌درم دیدند 😍 مثل همیشه موفق باشید استاد فضائلی عزیز 🌹🙏",
+      "safetyFlags": ["named_brand", "outcome_claim", "third_party_claim"],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "hold",
+      "holdReason": "makes a claim on behalf of people who did not consent"
+    },
+    {
+      "id": "testimonial-fa-029",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": null,
+      "roleLabel": null,
+      "displayQuoteFa": null,
+      "transcriptionFa": "واقعا ممنونم از کیفیت خوبتون عزیزم. من دستام خیلی بهتر شده از وقتی مرتب دارم خدمات می‌گیرم پیشتون. اصلا قبلا هر چی کرم می‌زدم جوابگو نبود و بعد از چند دقیقه دوباره خشک می‌شد و از دست دادن به بقیه معذب بودم و خجالت می‌کشیدم. ولی الان کرمم که می‌زنم بیشتر می‌شینه رو پوستم. قشنگ اون آلودگی‌ها کشیده شده بیرون و تقویت شده. مرسیییی هزاران بار 😍😍😍❤️❤️",
+      "safetyFlags": ["medical_appearance_claim", "outcome_claim"],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "hold",
+      "holdReason": "describes a medical or structural change to the skin"
+    },
+    {
+      "id": "testimonial-fa-030",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "همیشه بهترین‌ها را برایم انتخاب می‌کنند و خیلی هم وقت می‌گذارند.",
+      "transcriptionFa": "خانم فضائلی همیشه بهترین‌ها رو واسه من انتخاب می‌کنن و خیلی هم وقت می‌ذارن 👌🏻🤍",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-031",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "peer",
+      "roleLabel": {
+        "fa": "همکار",
+        "en": "Colleague"
+      },
+      "displayQuoteFa": "برندهایی که با آن‌ها کار می‌کنید بهترین‌اند، چون با دانش و تجربهٔ چندین‌سالهٔ شما انتخاب می‌شوند.",
+      "transcriptionFa": "مثل همیشه موفق باشید سرکار خانم فضائلی ❤️ بدون شک برندهایی که کار می‌کنید بهترینند و شکی در اون نیست، چراکه با دانش و تجربه چندین‌ساله شما انتخاب می‌شن 👏❤️",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-032",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "اول ترسیدم، ولی از بعدازظهر رنگ صورتم باز و صاف شد و منافذ کوچک. صبح که بلند شدم بهتر هم شده بود.",
+      "transcriptionFa": "عالی بود، عالی بود. اولش که ترسیدم، وقتی رسیدم خونه صورتم مثل لبو قرمز شده بود 😊 از بعدازظهر تا شب رنگ صورتم باز و صاف، منافذ کوچیک؛ صبحم که پاشدم بهتر شده. اصلا صورتمو می‌شورم با دست می‌کشم، انقد صاف و نرم شده کیف می‌کنم. خیلی ممنون از خدمات عالی‌تون.",
+      "safetyFlags": ["outcome_claim", "post_treatment_reaction"],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-033",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": null,
+      "roleLabel": null,
+      "displayQuoteFa": null,
+      "transcriptionFa": "تایم ماشین واقعا روی پوست من معجزه بود. بعد حمام اول به شدت پوستم نرم شده بود، دقیقا عین پوست بچه لطیف، و لک‌ها واقعا واقعا کم‌رنگ شده بودن. منافذ پوست به شدت کوچک شده بود و پوست یک درجه روشن‌تر شد. پوست به نظر من پرآب شده بود و جالبه که این روش حتی لیفت خوبی روی گونه‌ها داشت که من خط خنده‌ام رو که البته عمیق نبود رو دیگه ندارم. و این رو هم بگم خدمتتون که من طبق گفته سرکار خانم فضائلی پوسته‌ای که طی سه روز دوره نقاهت از روی پوست جدا می‌شه رو از روی پوست برنداشتم، چون داخل حمام با یه شستشوی ساده پوست صورت تمامی این پوسته‌ها از سطح پوست حذف می‌شن... واقعا روش جدید و جالبی بود به نظرم و من واقعا خوشحالم که هر سری به عهده خود خانم فضائلی عزیزم می‌ذارم و واقعا هر سری نتیجه‌ای رو که می‌خوام می‌بینم و واقعا ممنونم ازشون 💗",
+      "safetyFlags": [
+        "aftercare_claim",
+        "medical_appearance_claim",
+        "named_treatment",
+        "outcome_claim"
+      ],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "hold",
+      "holdReason": "describes a medical or structural change to the skin"
+    },
+    {
+      "id": "testimonial-fa-034",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": null,
+      "roleLabel": null,
+      "displayQuoteFa": null,
+      "transcriptionFa": "سلام خانم فضائلی عزیزم خوبین؟؟ واقعا خیر ببینید (شد مثل مادربزرگا 😁😊🤗) هر موقع خودم رو تو آینه می‌بینم دعاتون می‌کنم 😘🤗 التهاب و جوش صورتم خیلی بهتر شده. ممنونم از شما گوهر گرانبها 🌷💞🤩",
+      "safetyFlags": ["medical_appearance_claim", "outcome_claim"],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "hold",
+      "holdReason": "describes a medical or structural change to the skin"
+    },
+    {
+      "id": "testimonial-fa-035",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "دو سه روز اول پوسته‌ریزی داشتم و نگران بودم، ولی الان فوق‌العاده‌ام. از قبل گفته بودید که همین می‌شود.",
+      "transcriptionFa": "سلام خانوم فضائلی عزیزم، می‌خواستم ازتون تشکر کنم. حدودا یه هفته است که از فیشیالم گذشته و دفعه اولی بود که برام لایه‌بردار سنگین کار کردین. راستش دو سه روز اول صورتم کدر شده بود و پوسته‌ریزی می‌کرد، نگران بودم، ولی الان فوق‌العاده است، اینقد که شفاف شده و بهم حس خوب می‌ده. واقعا تو کارتون حرفه‌ای هستین. ازتون ممنونم که با صبوری همیشه بهم آرامش می‌دین ❤️🌹❤️🌹❤️🌹",
+      "safetyFlags": [
+        "aftercare_claim",
+        "outcome_claim",
+        "post_treatment_reaction"
+      ],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-036",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "عالی‌ترین مشاوره‌ای که داشتم.",
+      "transcriptionFa": "عاااالی‌ترین مشاوره‌ای که داشتم 👌🏻 ممنون ازتون 😍😍😍",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-037",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "با دقت و حوصله بهترین مشاوره را به من دادید.",
+      "transcriptionFa": "ممنون از برخورد و استقبال خیلی خوبتون که یکی از مهم‌ترین ویژگی‌هاست و ممنون از اینکه با دقت و حوصله بهترین مشاوره رو به من دادید 🌱✨",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-038",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "peer",
+      "roleLabel": {
+        "fa": "همکار",
+        "en": "Colleague"
+      },
+      "displayQuoteFa": "یک‌بار ملاقاتتان کردم و همان یک‌بار کافی بود تا منش درست و نیت خوبتان را بفهمم.",
+      "transcriptionFa": "محبت شما برای من ارزشمنده خانم فضائلی عزیز. من شما رو یکبار ملاقات کردم، اما یکبار برام کاملا کفایت می‌کنه که منش درست و نیت خوب آدم‌های گلی مثل شما رو بفهمم. براتون سلامتی و شادی رو آرزومندم 😍🥰😍😍😍",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-039",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "از پوستم خیلی راضی‌ام. جلوی آینه می‌روم و کیف می‌کنم.",
+      "transcriptionFa": "از پوستم که خیلی راضیم. می‌رم جلو آینه کیف می‌کنم، می‌گم خدا پدر و مادرتون رو حفظ کنه و مورد رحمت خدا قرار بگیرن. و همش می‌گم چقد پوستم عالی شده، دست‌طلا خانم فضائلی. شما نمی‌دونین چقد با شخصیتتون کیف می‌کنم. احساس می‌کنم خیلی سال می‌شناسمتون؛ تو اینستاگرام که دیدم اینجوری نبودین، ولی از روزی که از نزدیک دیدمتون حس می‌کنم دوست قدیمی منین.",
+      "safetyFlags": ["outcome_claim"],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-040",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "همان‌طور که گفته بودید دو سه روز پوسته‌ریزی داشتم. الان خوب شده و از پوستم راضی‌ام.",
+      "transcriptionFa": "خانم فضائلی عزیز، همونجور که گفتین من دو سه روز پوست‌ریزه داشتم. الان خوب شده، خیلی از پوستم راضیم. ممنون. خدا برکت بده به کارتون.",
+      "safetyFlags": [
+        "aftercare_claim",
+        "outcome_claim",
+        "post_treatment_reaction"
+      ],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-041",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "ممنونم که حال پوستم را به بهترین حالت ممکن تغییر دادید.",
+      "transcriptionFa": "ممنونم که حال پوستم رو به بهترین حالت ممکن تغییر دادین ❤️😍",
+      "safetyFlags": ["outcome_claim"],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-042",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "ماساژ صورتتان و دانشتان در انتخاب محصول، یکی از بهترین لذت‌های دنیاست.",
+      "transcriptionFa": "ماساژ صورتتون و البته 😍😍 با تجربه بودن و دانش در انتخاب محصولاتی که استفاده می‌کنین، یکی از بهترین لذت‌های دنیاست ❤️🌹🌷😍 خیلی عالی بود 🙏 ممنونم ازتون ❤️",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    },
+    {
+      "id": "testimonial-fa-043",
+      "batchId": "instagram-second-pass-2026-08-24",
+      "role": "client",
+      "roleLabel": {
+        "fa": "مراجعه‌کننده",
+        "en": "Client"
+      },
+      "displayQuoteFa": "ندیدم کسی برای مشاورهٔ رایگان این‌قدر وقت بگذارد و این‌قدر کامل توضیح بدهد.",
+      "transcriptionFa": "من ندیدم کسی برای مشاوره رایگان اینقدر زمان بذاره و عالی همه‌چیز رو توضیح بده 🌷 خیلی ممنون از وقتی که می‌ذارین 🙏🌸",
+      "safetyFlags": [],
+      "publicationConsent": "granted",
+      "consentSource": "owner_confirmation_2026-08-26",
+      "disposition": "publish",
+      "holdReason": null
+    }
+  ]
+}

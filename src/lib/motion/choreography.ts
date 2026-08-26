@@ -105,3 +105,129 @@ export function drawStrokes(
 
   return () => animation.pause();
 }
+
+/**
+ * A decorative layer that drifts against the scroll — `E-1`.
+ *
+ * Parallax was refused by `L-3` and the refusal was withdrawn by the maintainer
+ * on 2026-08-26. The reasons for refusing it did not go away, so they are
+ * answered here instead of argued with:
+ *
+ * - **`translate3d` only.** Never `background-position`, `top` or `height`.
+ *   Anything on the layout or paint path drops frames on exactly the mid-range
+ *   hardware this site is built for.
+ * - **Driven by `requestAnimationFrame` off a passive scroll listener**, not by
+ *   a scroll handler doing work. The listener records; the frame renders.
+ * - **Inert under `prefers-reduced-motion`**, at the resting position. Parallax
+ *   is a vestibular trigger rather than a preference.
+ * - **No pinning and no scroll hijack.** The page scrolls at the speed the
+ *   reader chose. That half of `L-3` is not withdrawn.
+ *
+ * `depth` is the fraction of the scrolled distance the layer keeps: 0.2 drifts
+ * gently, 0.5 is already too much for a photograph with a subject in it.
+ */
+export function parallaxLayer(
+  target: HTMLElement,
+  options: { readonly depth?: number } = {},
+): () => void {
+  if (prefersReducedMotion()) return () => {};
+  if (typeof window === "undefined") return () => {};
+
+  const depth = options.depth ?? 0.18;
+  let frame = 0;
+  let latest = 0;
+
+  const render = () => {
+    frame = 0;
+    // Measured against the viewport centre, so a layer is at rest when its
+    // section is centred rather than when the document happens to be at zero.
+    const box = target.getBoundingClientRect();
+    const distance = box.top + box.height / 2 - window.innerHeight / 2;
+    target.style.transform = `translate3d(0, ${(-distance * depth).toFixed(2)}px, 0)`;
+  };
+
+  const onScroll = () => {
+    latest = window.scrollY;
+    void latest;
+    if (frame === 0) frame = window.requestAnimationFrame(render);
+  };
+
+  render();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+
+  return () => {
+    window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("resize", onScroll);
+    if (frame !== 0) window.cancelAnimationFrame(frame);
+    target.style.transform = "";
+  };
+}
+
+/**
+ * A section whose entrance is tied to scroll position rather than fired once at
+ * a threshold — `E-5`.
+ *
+ * This is what "storytelling on scroll" means in practice, and it is the
+ * opposite of a scroll hijack: the reader sets the pace and the page follows.
+ * Nothing is pinned, nothing is snapped, and scrolling back runs it backwards
+ * because the state is a function of position rather than of an event that
+ * already fired.
+ *
+ * **It cannot hide content.** The starting state is applied in the browser one
+ * frame before the first update, so the server-rendered HTML is the finished
+ * section — the same rule `revealSequence` follows and the reason both live
+ * here rather than in a component.
+ */
+export function scrubReveal(
+  targets: readonly Element[],
+  options: { readonly distance?: number; readonly span?: number } = {},
+): () => void {
+  const list = [...targets].filter(
+    (node): node is HTMLElement => node instanceof HTMLElement,
+  );
+  if (list.length === 0 || prefersReducedMotion()) return () => {};
+  if (typeof window === "undefined") return () => {};
+
+  const distance = options.distance ?? 28;
+  // How much of the viewport the reader crosses before the section is fully
+  // resolved. Below about a third it reads as a jump; above two thirds the
+  // reader has scrolled past before it finishes.
+  const span = options.span ?? 0.45;
+
+  let frame = 0;
+  const render = () => {
+    frame = 0;
+    for (const [index, node] of list.entries()) {
+      const box = node.getBoundingClientRect();
+      const entered = window.innerHeight - box.top;
+      const progress = Math.min(
+        1,
+        Math.max(0, entered / (window.innerHeight * span)),
+      );
+      // A small per-element offset makes a group resolve in reading order
+      // without any element ever being fully hidden.
+      const own = Math.min(1, Math.max(0, progress * 1.15 - index * 0.08));
+      node.style.opacity = String(0.25 + own * 0.75);
+      node.style.transform = `translate3d(0, ${((1 - own) * distance).toFixed(2)}px, 0)`;
+    }
+  };
+
+  const onScroll = () => {
+    if (frame === 0) frame = window.requestAnimationFrame(render);
+  };
+
+  render();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
+
+  return () => {
+    window.removeEventListener("scroll", onScroll);
+    window.removeEventListener("resize", onScroll);
+    if (frame !== 0) window.cancelAnimationFrame(frame);
+    for (const node of list) {
+      node.style.opacity = "";
+      node.style.transform = "";
+    }
+  };
+}

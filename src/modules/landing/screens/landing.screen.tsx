@@ -41,7 +41,7 @@ export function LandingScreen({ page }: { readonly page: LandingPage }) {
   const brand = useTranslations("brand");
 
   return (
-    <main className="ms-14">
+    <main>
       {/* ── Beat 1 · the portrait, held ─────────────────────────────────── */}
       <section className="relative flex min-h-[86svh] items-stretch">
         <GrowthSpine stage="bare" />

@@ -41,7 +41,7 @@ export function ProductListingScreen({
   const galleries = page.bands.filter((band) => band.kind === "gallery");
 
   return (
-    <main className="ms-14">
+    <main>
       <Container className="pt-14">
         <Breadcrumbs items={page.breadcrumbs} />
 

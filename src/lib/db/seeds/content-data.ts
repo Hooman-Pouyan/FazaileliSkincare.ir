@@ -32,10 +32,20 @@ export const CONTENT_AUTHOR_NOTE = "unreviewed_draft";
 
 type Bilingual = { readonly fa: string; readonly en: string };
 
+/**
+ * Persian required, English optional.
+ *
+ * Used for body copy, because some content genuinely has no English: a Persian
+ * testimonial translated into English is words put into someone's mouth in a
+ * language they did not speak. A missing English row means the exact-locale
+ * read drops the item on `/en`, which is the correct outcome rather than a gap.
+ */
+type PersianFirst = { readonly fa: string; readonly en?: string };
+
 export type SeedContentItem = Readonly<{
   key: string;
   title: Bilingual;
-  body?: Bilingual;
+  body?: PersianFirst;
   mediaObjectKey?: string;
   mediaAlt?: Bilingual;
 }>;
@@ -56,6 +66,14 @@ export type SeedContentBlock = Readonly<{
   heading?: Bilingual;
   body?: Bilingual;
   cta?: { readonly label: Bilingual; readonly href: string };
+  /**
+   * Items supplied by a curated content file rather than written inline.
+   *
+   * Testimonials are other people's words. They belong in a reviewable file
+   * beside their transcription and their consent record, not typed into a
+   * TypeScript literal where the edit cannot be compared to the original.
+   */
+  itemsFrom?: "testimonials";
   /** Days from the seed run. Only a campaign carries one — `C-13`, `L-6`. */
   effectiveFromDays?: number;
   effectiveUntilDays?: number;
@@ -322,58 +340,30 @@ export const CONTENT_BLOCKS: readonly SeedContentBlock[] = [
   },
 
   /*
-    The proof rail. Every quote below is invented and says so in its own
-    attribution — «نمونه» / "sample" — because `CONTENT-03` requires a preview
-    set that cannot be mistaken for a customer's words.
+    The proof rail — real words, and `E-3` is why they are here at all.
 
-    The forty-two real transcriptions are deliberately NOT imported. Consent is
-    `unknown` on every one of them, and storing a person's words about their own
-    skin with no consent and no purpose is worse than a thin rail. That departs
-    from `CONTENT-02`, which asked for them as unpublished drafts; the reason is
-    in the packet 6 review log, and it makes the guarantee stronger rather than
-    weaker — no path can publish a real testimonial because no real testimonial
-    is stored.
+    Consent on all 43 transcriptions read `unknown`, which is what packet 6
+    treated as "no". The maintainer confirmed on 2026-08-26 that consent was
+    obtained and the OCR simply could not see it, and that is their call to
+    make: it is a fact about their business, like a price or a credential.
+
+    Thirty-three publish. Ten are held, and not for a consent reason — nine
+    carry a medical-appearance, injectable or third-party claim, which is an
+    advertising-rules question that consent from the speaker does not answer,
+    and one is a warm aside about the presenter rather than about the work.
+    Every one of them says which, in its own row, in
+    `content/testimonials/curated-2026-08-26.json`.
   */
   {
     key: "landing.proof.testimonials",
     kind: "testimonial",
     surface: "landing",
     sortOrder: 40,
-    heading: { fa: "از زبان مراجعان", en: "In their words" },
-    items: [
-      {
-        key: "sample-1",
-        title: { fa: "سمیرا ن. — نمونه", en: "Samira N. — sample" },
-        body: {
-          fa: "بعد از چند ماه امتحان کردن محصول‌های مختلف، اولین بار بود که کسی پرسید پوستم به چه چیزی نیاز دارد، نه اینکه چه چیزی بفروشد.",
-          en: "After months of trying different products, it was the first time anyone asked what my skin needed rather than what they could sell.",
-        },
-      },
-      {
-        key: "sample-2",
-        title: { fa: "مرضیه ک. — نمونه", en: "Marziyeh K. — sample" },
-        body: {
-          fa: "روتینم از پنج محصول به سه تا رسید و نتیجه‌اش بهتر شد. توضیح دادند چرا، که از خودش مهم‌تر بود.",
-          en: "My routine went from five products to three and worked better. They explained why, which mattered more than the change itself.",
-        },
-      },
-      {
-        key: "sample-3",
-        title: { fa: "نگار الف. — نمونه", en: "Negar A. — sample" },
-        body: {
-          fa: "پوستم حساس است و همیشه از جلسه‌های درمانی می‌ترسیدم. هر مرحله را پیش از شروع گفتند و هیچ‌چیز غافلگیرکننده نبود.",
-          en: "My skin is sensitive and treatments always worried me. Every step was explained before it started and nothing was a surprise.",
-        },
-      },
-      {
-        key: "sample-4",
-        title: { fa: "الهام ر. — نمونه", en: "Elham R. — sample" },
-        body: {
-          fa: "دوره را که تمام کردم توانستم کار خودم را شروع کنم. آموزش عملی بود، نه فقط جزوه.",
-          en: "I could start working for myself once the course finished. The teaching was hands-on rather than notes.",
-        },
-      },
-    ],
+    heading: {
+      fa: "از زبان کسانی که آمده‌اند",
+      en: "From the people who came",
+    },
+    itemsFrom: "testimonials",
   },
 
   {

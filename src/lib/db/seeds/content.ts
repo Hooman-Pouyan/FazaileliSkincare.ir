@@ -1,4 +1,7 @@
+import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
 import { eq, inArray } from "drizzle-orm";
+import { z } from "zod";
 import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { isObjectKey } from "@/lib/media/url";
 import type * as schema from "../schema";
@@ -12,7 +15,72 @@ import {
   contentItemTranslation,
   locale,
 } from "../schema";
-import { CONTENT_AUTHOR_NOTE, CONTENT_BLOCKS } from "./content-data";
+import {
+  CONTENT_AUTHOR_NOTE,
+  CONTENT_BLOCKS,
+  type SeedContentItem,
+} from "./content-data";
+
+/**
+ * The curated testimonials, parsed.
+ *
+ * Read from a file rather than written inline because they are other people's
+ * words: the edit that produced each display quote has to sit beside the
+ * transcription it came from and the consent that permits it. A TypeScript
+ * literal cannot show that, and `E-3` turns on being able to.
+ */
+const CuratedTestimonials = z.object({
+  consentSource: z.string().min(1),
+  reconciliation: z.object({
+    transcribed: z.number().int(),
+    published: z.number().int(),
+    held: z.number().int(),
+  }),
+  records: z.array(
+    z.object({
+      id: z.string().min(1),
+      role: z.enum(["client", "student", "peer"]).nullable(),
+      roleLabel: z.object({ fa: z.string(), en: z.string() }).nullable(),
+      displayQuoteFa: z.string().min(1).nullable(),
+      disposition: z.enum(["publish", "hold"]),
+      holdReason: z.string().nullable(),
+      publicationConsent: z.literal("granted"),
+    }),
+  ),
+});
+
+function curatedTestimonials(): readonly SeedContentItem[] {
+  const parsed = CuratedTestimonials.parse(
+    JSON.parse(
+      readFileSync(
+        resolve(
+          __dirname,
+          "../../../../content/testimonials/curated-2026-08-26.json",
+        ),
+        "utf8",
+      ),
+    ),
+  );
+
+  return parsed.records
+    .filter((record) => record.disposition === "publish")
+    .map((record) => {
+      if (!record.displayQuoteFa || !record.roleLabel) {
+        throw new ContentSeedRefusedError(
+          `${record.id} is marked publish with no display quote. Re-run \`pnpm content:testimonials\`.`,
+        );
+      }
+      return {
+        key: record.id,
+        title: { fa: record.roleLabel.fa, en: record.roleLabel.en },
+        // Persian only, deliberately. Translating someone's testimonial puts
+        // words in their mouth in a language they did not speak, so the English
+        // row simply has no body — and the exact-locale read then drops the
+        // quote on `/en` rather than showing Persian to an English reader.
+        body: { fa: record.displayQuoteFa },
+      };
+    });
+}
 
 /**
  * Seeds the content spine — `CONTENT3`.
@@ -160,7 +228,10 @@ export async function seedContent(
           });
       }
 
-      const items = entry.items ?? [];
+      const items =
+        entry.itemsFrom === "testimonials"
+          ? curatedTestimonials()
+          : (entry.items ?? []);
       for (const [index, item] of items.entries()) {
         if (item.mediaObjectKey && !isObjectKey(item.mediaObjectKey)) {
           throw new ContentSeedRefusedError(
