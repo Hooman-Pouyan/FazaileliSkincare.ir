@@ -172,6 +172,32 @@ function slugsOf(page: { results: readonly { slug: string }[] }): string[] {
   return page.results.map((tile) => tile.slug);
 }
 
+/**
+ * Every slug in a scope, across every page.
+ *
+ * Fifty products at a page size of 24 means "is it in the listing" is not the
+ * same question as "is it on page one", and a test that only reads page one
+ * passes for the wrong reason the day the catalogue grows.
+ */
+async function everySlug(
+  scope: Parameters<typeof listProducts>[1],
+  locale = FA,
+): Promise<string[]> {
+  const first = await listing(scope, new URLSearchParams(), locale);
+  const slugs = slugsOf(first);
+
+  for (let page = 2; page <= first.pagination.pageCount; page += 1) {
+    const next = await listing(
+      scope,
+      new URLSearchParams({ page: String(page) }),
+      locale,
+    );
+    slugs.push(...slugsOf(next));
+  }
+
+  return slugs;
+}
+
 async function listing(
   scope: Parameters<typeof listProducts>[1],
   search = new URLSearchParams(),
@@ -251,23 +277,14 @@ describe("listProducts — what the catalogue may and may not show", () => {
     // C-17: a held product's variants are seeded inactive, and preview
     // deliberately does not relax the active-variant requirement.
     expect(HELD.length).toBeGreaterThan(0);
-    const page = await listing(HUB, new URLSearchParams("page=2"));
-    const everywhere = new Set([
-      ...slugsOf(page),
-      ...slugsOf(await listing(HUB)),
-    ]);
+    const everywhere = new Set(await everySlug(HUB));
     for (const slug of HELD) expect(everywhere.has(slug)).toBe(false);
   });
 
   it("hides an untranslated product from Persian and shows it in English", async () => {
     // No fallback chain — English copy never stands in for Persian.
-    const persian = await listing(HUB, new URLSearchParams("q="), FA);
-    const english = await listing(HUB, new URLSearchParams("q="), "en");
-    expect(slugsOf(persian)).not.toContain(ENGLISH_ONLY);
-    expect([
-      ...slugsOf(english),
-      ...slugsOf(await listing(HUB, new URLSearchParams("page=2"), "en")),
-    ]).toContain(ENGLISH_ONLY);
+    expect(await everySlug(HUB, FA)).not.toContain(ENGLISH_ONLY);
+    expect(await everySlug(HUB, "en")).toContain(ENGLISH_ONLY);
   });
 
   it("keeps restricted and unpriced products visible but not purchasable", async () => {
@@ -298,8 +315,7 @@ describe("listProducts — scopes, filters and the URL contract", () => {
     );
     expect(acne).toBeDefined();
 
-    const page = await listing({ kind: "concern", slug: "acne" });
-    const slugs = slugsOf(page);
+    const slugs = await everySlug({ kind: "concern", slug: "acne" });
     expect(slugs).toContain(acne?.slug);
     for (const slug of slugs) {
       expect(bySlug.get(slug)?.taxonomy.concerns).toContain("acne");
@@ -378,13 +394,13 @@ describe("listProducts — scopes, filters and the URL contract", () => {
     expect(concern).toBeDefined();
     if (!concern) return;
 
-    const all = await listing({ kind: "concern", slug: concern });
+    const all = await everySlug({ kind: "concern", slug: concern });
     const inStock = await listing(
       { kind: "concern", slug: concern },
       new URLSearchParams("in_stock=1"),
     );
 
-    expect(slugsOf(all)).toContain(OUT_OF_STOCK);
+    expect(all).toContain(OUT_OF_STOCK);
     expect(slugsOf(inStock)).not.toContain(OUT_OF_STOCK);
   });
 
@@ -392,9 +408,10 @@ describe("listProducts — scopes, filters and the URL contract", () => {
     const ladder = bySlug.get(MULTI_VARIANT);
     expect(ladder?.variants.length).toBeGreaterThan(1);
 
-    const page = await listing(HUB);
-    const appearances = slugsOf(page).filter((slug) => slug === MULTI_VARIANT);
-    expect(appearances.length).toBeLessThanOrEqual(1);
+    const appearances = (await everySlug(HUB)).filter(
+      (slug) => slug === MULTI_VARIANT,
+    );
+    expect(appearances).toHaveLength(1);
   });
 });
 
