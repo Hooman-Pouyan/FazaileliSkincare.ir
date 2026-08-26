@@ -38,6 +38,7 @@ export function ListingToolbar({
         <span className="text-small text-stone-text">{t("sortLabel")}</span>
         {page.sortOptions.map((option) => (
           <Link
+            scroll={false}
             key={option.value}
             href={option.href}
             aria-current={option.isCurrent ? "true" : undefined}
@@ -83,6 +84,7 @@ export function Pagination({ page }: { readonly page: ProductListingPage }) {
 
       {pagination.pages.map((entry) => (
         <Link
+          scroll={false}
           key={entry.page}
           href={entry.href}
           aria-current={entry.isCurrent ? "page" : undefined}
@@ -134,6 +136,7 @@ function PageLink({
 
   return (
     <Link
+      scroll={false}
       href={href}
       className={cn(
         shared,

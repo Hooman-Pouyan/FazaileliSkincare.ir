@@ -72,7 +72,20 @@ export function ProductListingScreen({
       </Container>
 
       <Container className="grid items-start gap-12 pb-24 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] lg:gap-16">
-        <div className="order-2 flex flex-col gap-10 lg:order-1">
+        {/*
+          `R-7` — the rail stays put while the results scroll.
+
+          Desktop only, and that is not a detail: on mobile the rail is
+          deliberately *below* the results (`7.8`), so a sticky rule there would
+          pin the wrong thing to the wrong edge. `lg:` is the same breakpoint
+          that reorders the two columns.
+
+          `max-h` with its own `overflow-y` so a rail taller than the viewport
+          scrolls inside itself instead of truncating — the failure mode that is
+          cheap to cause and expensive to notice. The offset is the header's,
+          expressed once here.
+        */}
+        <div className="order-2 flex flex-col gap-10 lg:order-1 lg:sticky lg:top-8 lg:max-h-[calc(100dvh-4rem)] lg:overflow-y-auto lg:pe-2">
           <FacetRail page={page} />
           {page.price && <PriceFilter price={page.price} />}
         </div>

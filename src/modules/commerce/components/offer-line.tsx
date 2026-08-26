@@ -89,7 +89,9 @@ export function OfferLine({
       // as a gap rather than being papered over with a dead tap target.
       const destination = resolveEnquiryHref(enquiryHref);
       if (!destination) {
-        return <p className="text-small text-firouzeh-text">{t("onRequest")}</p>;
+        return (
+          <p className="text-small text-firouzeh-text">{t("onRequest")}</p>
+        );
       }
       return (
         <a

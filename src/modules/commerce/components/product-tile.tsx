@@ -11,6 +11,13 @@ import { OfferLine, ProfessionalMark } from "./offer-line";
  * reason is that a card grid is what makes a skincare site look like every
  * other skincare site.
  *
+ * **`object-contain`, not `cover` — `R-4`.** The Storyderm packshots are
+ * 1916 × 3547, so `cover` in a 4:5 box cropped roughly the middle third of a
+ * bottle. The maintainer saw it and said the packshot should sit smaller and
+ * centred; `GalleryBand` had been using `contain` all along, which is why its
+ * images looked right and these did not. The padding is what makes the product
+ * float on the field rather than touch its edges.
+ *
  * The whole model arrives finished from `getShopHub`/`listProducts`: `href`,
  * `brandHref` and `price.label` are already correct. The tile builds no URL and
  * formats no money, so it cannot format either differently from the page it
@@ -31,8 +38,19 @@ export function ProductTile({
 
   return (
     <article className={cn("group flex flex-col gap-4", className)}>
-      <div className="relative aspect-[4/5] w-full overflow-hidden bg-sand">
-        <Link href={product.href} tabIndex={-1} className="block size-full">
+      <div className="relative aspect-[4/5] max-h-[var(--media-max-h)] w-full overflow-hidden bg-sand">
+        {/*
+          `relative` because `<Image fill>` positions against its *immediate*
+          parent, and this link sits between the image and the aspect box. It
+          rendered correctly by accident — absolute resolved to the grandparent
+          — while Next warned about it on every tile on every page. Correct by
+          construction now rather than by luck.
+        */}
+        <Link
+          href={product.href}
+          tabIndex={-1}
+          className="relative block size-full"
+        >
           {product.image ? (
             <Image
               src={product.image.src}
@@ -40,7 +58,7 @@ export function ProductTile({
               fill
               priority={priority}
               sizes="(max-width: 768px) 50vw, (max-width: 1280px) 33vw, 320px"
-              className="object-cover transition-transform duration-[var(--duration)] ease-[var(--easing)] group-hover:scale-[1.02]"
+              className="object-contain p-4 transition-transform duration-[var(--duration)] ease-[var(--easing)] group-hover:scale-[1.02]"
             />
           ) : (
             <span className="grid size-full place-items-center text-micro tracking-[0.14em] text-stone-text">

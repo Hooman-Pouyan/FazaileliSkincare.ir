@@ -43,6 +43,7 @@ export function FacetRail({
             {group.options.map((option) => (
               <li key={option.value}>
                 <Link
+                  scroll={false}
                   href={option.href}
                   aria-current={option.isApplied ? "true" : undefined}
                   className={cn(
@@ -101,6 +102,7 @@ function AudienceFilter({ page }: { readonly page: ProductListingPage }) {
           return (
             <li key={value}>
               <Link
+                scroll={false}
                 href={facetToggleHref(page.query, "audience", value)}
                 aria-current={isApplied ? "true" : undefined}
                 className={cn(
@@ -149,6 +151,7 @@ export function AppliedFilters({
 
       {page.appliedFilters.map((filter) => (
         <Link
+          scroll={false}
           key={`${filter.parameter}-${filter.value}`}
           href={filter.removeHref}
           className="inline-flex items-center gap-2 rounded-control border border-[var(--hairline)] py-1.5 ps-3 pe-2 text-small transition-colors duration-[var(--duration)] ease-[var(--easing)] hover:bg-surface"
@@ -161,6 +164,7 @@ export function AppliedFilters({
 
       {page.clearFiltersHref && (
         <Link
+          scroll={false}
           href={page.clearFiltersHref}
           className="ms-1 border-b border-firouzeh-text pb-0.5 text-small font-medium text-firouzeh-text"
         >

@@ -65,6 +65,9 @@
   --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px; --space-5: 24px;
   --space-6: 32px; --space-7: 48px; --space-8: 64px; --space-9: 96px; --space-10: 128px;
 
+  /* D-5 — editorial surfaces are uncapped; compact ones are not. */
+  --media-max-h: none;
+
   /* radius — two values, nothing between */
   --radius-control: 2px;
   --radius-surface: 20px;
@@ -82,6 +85,55 @@
   /* motion */
   --duration: 480ms;
   --easing:   cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/*
+  DENSITY — `docs/33-density-decisions.md`, D-2.
+
+  Compact is a property of the SURFACE, not of the site: editorial on the
+  Landing, compact where someone is comparing and buying. A surface opts in by
+  carrying `data-density="compact"`; the Landing carries nothing and inherits
+  `:root` untouched.
+
+  `--spacing` is Tailwind v4's own base for its whole numeric scale — every
+  `gap-2`, `py-24` and `gap-y-14` compiles to `calc(var(--spacing) * N)`, and
+  all 176 of them inherit. Redefining it here retunes every spacing utility
+  beneath the scope without one `className` changing, which is the thing R-3
+  asked for and the reason this is a token change rather than fifty edits.
+
+  The shop surfaces read almost no `var(--space-N)` — five uses against
+  seventy-seven raw utilities — so overriding the semantic tokens alone would
+  have moved almost nothing. They are overridden as well, because the section
+  rhythm needs a steeper ratio than a uniform multiplier gives: the design
+  system's own `density-3-compact-48` study goes 96 → 48 for sections but only
+  24 → 20 for grid gaps.
+
+  Type is deliberately NOT here. R-3 protects the editorial type scale by name,
+  and changing it in the same pass would make it impossible to tell which change
+  did the work. See D-3 — it is the next lever, not this one.
+*/
+[data-density="compact"] {
+  --spacing: 0.1875rem; /* 3px base, 0.75x — was 4px */
+
+  --space-7: 36px; /* was 48 */
+  --space-8: 44px; /* was 64 */
+  --space-9: 48px; /* was 96 — the design system's "Ant-like" section rhythm */
+  --space-10: 64px; /* was 128 */
+
+  /*
+    D-5 — a ratio is not a size.
+
+    Four components render media at `aspect-[4/5]`, which at three columns on a
+    1200px canvas is 380x475, and at the spotlight's split is 570x712. The
+    design system's own compact study uses 4:5 too, but on a 900px canvas: the
+    ratio was inherited without the width it assumed.
+
+    Capped rather than re-ratioed because a cap is width-independent — a ratio
+    tuned at 1440 is wrong at 1920 — and because `object-contain` means a
+    shorter box just gives the packshot more air, which is the treatment R-4
+    asked for.
+  */
+  --media-max-h: 22rem;
 }
 
 @media (max-width: 767px) {

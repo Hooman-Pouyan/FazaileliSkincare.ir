@@ -97,7 +97,7 @@ function ConcernPanel({ concern }: { readonly concern: HubConcern }) {
 
   return (
     <Link href={concern.href} className="group flex h-full flex-col">
-      <div className="relative aspect-[4/5] w-full overflow-hidden bg-sand">
+      <div className="relative aspect-[4/5] max-h-[var(--media-max-h)] w-full overflow-hidden bg-sand">
         <span
           aria-hidden
           className="absolute inset-0 bg-teal opacity-0 transition-opacity duration-[var(--duration)] ease-[var(--easing)] group-hover:opacity-[0.06]"
