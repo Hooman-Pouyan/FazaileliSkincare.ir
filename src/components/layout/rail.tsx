@@ -10,6 +10,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { Logo } from "@/components/brand/logo";
 import {
   type NavigationItemId,
   type NavigationRoom,
@@ -25,7 +26,7 @@ import { RailLink } from "./rail-link";
  *
  * It sits at the inline-start edge — right in Persian and Arabic, left in
  * English — and mirrors for free because every property here is logical. The
- * brand medallion and the room marks are the exception the design calls for:
+ * brand glyph and the room marks are the exception the design calls for:
  * they are symbols, not directions, so they never flip.
  */
 
@@ -69,12 +70,7 @@ export async function Rail() {
           aria-label={t(brand.labelKey)}
           className="grid size-11 place-items-center"
         >
-          <span className="grid size-[30px] place-items-center rounded-full border-[1.5px] border-solid border-[color:var(--gold)]">
-            <span
-              className="size-[11px] rounded-full bg-[color:var(--lapis)]"
-              aria-hidden
-            />
-          </span>
+          <Logo />
         </Link>
       ) : null}
 

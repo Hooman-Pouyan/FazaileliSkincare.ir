@@ -1,15 +1,10 @@
 "use client";
 
-import {
-  Home,
-  Search,
-  ShoppingBag,
-  ShoppingCart,
-  UserRound,
-} from "lucide-react";
+import { Search, ShoppingBag, ShoppingCart, UserRound } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
+import { Logo } from "@/components/brand/logo";
 import {
   type NavigationItem,
   type NavigationItemId,
@@ -32,7 +27,6 @@ import { useCommandPalette } from "./command-palette-context";
  */
 
 const ICONS: Partial<Record<NavigationItemId, LucideIcon>> = {
-  brand: Home,
   shop: ShoppingBag,
   command: Search,
   account: UserRound,
@@ -59,9 +53,13 @@ export function BottomNavigation() {
           data-current={isCurrent ? "true" : undefined}
           className="h-0.5 w-6 bg-transparent data-[current=true]:bg-[color:var(--accent-shop)]"
         />
-        {Icon ? (
-          <Icon size={20} strokeWidth={isCurrent ? 2 : 1.5} aria-hidden />
-        ) : null}
+        <span className="grid size-6 place-items-center">
+          {item.id === "brand" ? (
+            <Logo size={24} />
+          ) : Icon ? (
+            <Icon size={20} strokeWidth={isCurrent ? 2 : 1.5} aria-hidden />
+          ) : null}
+        </span>
         <span className={isCurrent ? "font-semibold" : undefined}>
           {t(item.labelKey)}
         </span>

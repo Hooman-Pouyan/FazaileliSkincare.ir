@@ -1,5 +1,6 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { Logo } from "@/components/brand/logo";
 import { hrefFor, navigationFor } from "@/lib/navigation/manifest";
 
 /**
@@ -35,6 +36,9 @@ export async function SiteFooter() {
     <footer className="border-t border-solid border-[color:var(--hairline)] bg-[color:var(--ground)] px-6 py-12 lg:px-16 lg:py-16">
       <div className="mx-auto grid w-full max-w-[76rem] gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
         <div>
+          <Link href="/" aria-label={nav("home")} className="mb-4 inline-flex">
+            <Logo form="medallion" size={96} />
+          </Link>
           <p className="m-0 text-[length:var(--text-body)] font-semibold text-[color:var(--ink)]">
             {brand("name")}
           </p>

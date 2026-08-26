@@ -65,8 +65,12 @@ describe("Rail", () => {
     expect(order).toEqual([...order].sort((a, b) => a - b));
   });
 
-  it("sends the brand medallion to the locale landing page", async () => {
-    expect(await markup()).toContain('href="/"');
+  it("uses the official compact glyph to link to the locale landing page", async () => {
+    const html = await markup();
+
+    expect(html).toContain('href="/"');
+    expect(html).toContain("brand-glyph-128.png");
+    expect(html).toContain('alt=""');
   });
 
   it("points the identity entry at /account, not /studio", async () => {
