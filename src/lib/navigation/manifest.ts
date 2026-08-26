@@ -142,15 +142,32 @@ export const NAVIGATION: readonly NavigationItem[] = [
 export type NavigationSurface = "rail" | "bottom" | "utility";
 
 export type NavigationOptions = Readonly<{
-  /** Opens the cart entry. Closed until the Cart contract exists. */
+  /** Overrides the gate below. Tests use it; production does not need to. */
   cartGateOpen?: boolean;
 }>;
+
+/**
+ * The cart entry is live.
+ *
+ * `SHELL-04`: *"an affordance which cannot act must not appear as a production
+ * control."* It could not act until packet 9 — there was no cart module, no
+ * `/cart` route and no actions behind it — so the item stayed in the manifest,
+ * as the single source, and out of the interface.
+ *
+ * That condition is met. `/cart` renders, `getCart` reads, and the three
+ * actions transact. The gate stays as a named constant rather than being
+ * deleted, because the reasoning is worth keeping next to the switch: the next
+ * gated affordance will want the same shape, and `SHELL-04` is still the rule.
+ */
+const CART_GATE_OPEN = true;
 
 function isAvailable(
   item: NavigationItem,
   options: NavigationOptions,
 ): boolean {
-  return item.availability === "always" || options.cartGateOpen === true;
+  return (
+    item.availability === "always" || (options.cartGateOpen ?? CART_GATE_OPEN)
+  );
 }
 
 export function navigationFor(

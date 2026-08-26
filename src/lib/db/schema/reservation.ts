@@ -9,7 +9,7 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 import { variant } from "./catalog";
-import { cartItem } from "./cart";
+import { cart, cartItem } from "./cart";
 import { reservationStatusEnum } from "./enums";
 import { orderLine } from "./order";
 
@@ -20,9 +20,32 @@ export const inventoryReservation = pgTable(
     variantId: uuid()
       .notNull()
       .references(() => variant.id, { onDelete: "restrict" }),
-    sourceCartItemId: uuid()
+    /**
+     * The cart line this reservation was taken for, while that line still
+     * exists — correction `C5`.
+     *
+     * It was `notNull` with `onDelete: "restrict"`, which made removing an item
+     * from a cart impossible: the reservation held the line down, and the only
+     * ways out were to delete audit history or to leave the line in the cart.
+     * `restrict` was protecting the wrong thing. What must survive a removal is
+     * the *record* that stock was held — the variant, the quantity, the cart —
+     * not the pointer to a row the customer deleted on purpose.
+     */
+    sourceCartItemId: uuid().references(() => cartItem.id, {
+      onDelete: "set null",
+    }),
+    /**
+     * The cart itself, and this one is permanent.
+     *
+     * `sourceCartItemId` goes null when the line is removed; this does not, so
+     * "which cart held this stock, and what happened to it" stays answerable
+     * after the fact. `onDelete: "restrict"` because a cart with reservation
+     * history is not something to delete casually — expiry resolves the
+     * reservation, it does not erase the cart.
+     */
+    sourceCartId: uuid()
       .notNull()
-      .references(() => cartItem.id, { onDelete: "restrict" }),
+      .references(() => cart.id, { onDelete: "restrict" }),
     orderLineId: uuid().references(() => orderLine.id, {
       onDelete: "restrict",
     }),
@@ -46,6 +69,7 @@ export const inventoryReservation = pgTable(
       .on(table.variantId, table.expiresAt)
       .where(sql`${table.status} = 'active'`),
     index("inventory_reservation_order_line_idx").on(table.orderLineId),
+    index("inventory_reservation_cart_idx").on(table.sourceCartId),
     check("inventory_reservation_quantity_check", sql`${table.quantity} > 0`),
     check(
       "inventory_reservation_resolution_check",

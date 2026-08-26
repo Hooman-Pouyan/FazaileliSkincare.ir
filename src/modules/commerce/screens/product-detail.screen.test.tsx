@@ -5,6 +5,8 @@ import { describe, expect, it, vi } from "vitest";
 import fa from "@/messages/fa.json";
 import type { OfferState } from "../models/offer";
 import type { ProductDetailPage } from "../models/page-models";
+import { QueryProvider } from "@/lib/query/query-provider";
+import { CartStoreProvider } from "@/modules/cart/cart.store-provider";
 import { ProductDetailScreen } from "./product-detail.screen";
 
 vi.mock("@/i18n/navigation", () => ({
@@ -33,10 +35,19 @@ vi.mock("next/image", () => ({
   },
 }));
 
+/**
+ * The real boundaries, not mocks. `AddToCart` is a Query consumer inside a
+ * Zustand provider, and rendering it without them would test a component the
+ * application never mounts.
+ */
 function render(page: ProductDetailPage): string {
   return renderToStaticMarkup(
     <NextIntlClientProvider locale="fa" messages={fa}>
-      <ProductDetailScreen page={page} />
+      <QueryProvider>
+        <CartStoreProvider>
+          <ProductDetailScreen page={page} />
+        </CartStoreProvider>
+      </QueryProvider>
     </NextIntlClientProvider>,
   );
 }
@@ -65,7 +76,12 @@ const BASE: ProductDetailPage = {
   category: { slug: "cream", name: "کرم", href: "/shop/c/cream" },
   concerns: [],
   media: [
-    { src: "/media/a-1600.webp", alt: "کرم Ultra A-Z", width: 1600, height: 2000 },
+    {
+      src: "/media/a-1600.webp",
+      alt: "کرم Ultra A-Z",
+      width: 1600,
+      height: 2000,
+    },
   ],
   variants: [
     {
@@ -104,16 +120,32 @@ describe("ProductDetailScreen", () => {
     expect(html).toContain("کرم Ultra A-Z");
   });
 
-  /**
-   * `CART-05`: "do not ship a dead button." The cart is the next packet, so
-   * there is no add control yet — and a disabled one would be worse than none,
-   * because it says the product cannot be bought rather than that the shop
-   * cannot yet sell it.
-   */
-  it("ships no add-to-cart control until the cart exists", () => {
+  it("offers the add control for a purchasable product", () => {
     const html = render(BASE);
-    expect(html).not.toContain("افزودن به سبد");
-    expect(html).not.toContain("<button");
+    expect(html).toContain(fa.cart.addToCart);
+  });
+
+  /**
+   * `PDP-05`, and the reason there is no disabled branch: a greyed-out button
+   * tells a customer the product cannot be bought, when the truth is that they
+   * must choose a size, or ask, or that it is for professionals. `OfferLine`
+   * says which; the button simply is not there.
+   */
+  it.each([
+    ["professional_only", { kind: "professional_only" } as const],
+    ["on_request", { kind: "on_request" } as const],
+    ["out_of_stock", { kind: "out_of_stock" } as const],
+    ["unavailable", { kind: "unavailable" } as const],
+    ["variant_required", { kind: "variant_required", variantIds: [] } as const],
+  ])("offers no add control for %s", (_label, offer) => {
+    const html = render({ ...BASE, offer, price: null });
+    expect(html).not.toContain(fa.cart.addToCart);
+  });
+
+  /** `CART-05`: "do not ship a dead button." Checkout is a later programme. */
+  it("ships no checkout control anywhere on the page", () => {
+    const html = render(BASE);
+    expect(html).not.toContain("پرداخت");
   });
 
   /**

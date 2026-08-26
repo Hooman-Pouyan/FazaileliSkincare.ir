@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth/auth-client";
+import { mergeGuestCartIntoAccount } from "@/modules/cart/cart.merge";
 import {
   verifySchema,
   type ParsedVerifyValues,
@@ -54,6 +55,27 @@ export function VerifyForm({
       });
       if (result.error) throw new Error("AUTH_REQUEST_FAILED");
       sessionStorage.removeItem(pendingPhoneStorageKey);
+
+      /*
+        The one moment a guest cart can become an account's — `COM-D4`.
+
+        Before this line the person is authenticated and still carrying the
+        guest cookie, and that overlap is the only window in which the two carts
+        exist together. It resolves its own identity from the session and the
+        httpOnly cookie, so nothing about either cart crosses from the browser.
+
+        Awaited rather than fired and forgotten: navigating first would race the
+        merge against the page that renders the cart, and a customer who signed
+        in to buy something should not watch it disappear and reappear.
+
+        It cannot throw the sign-in away. A merge that conflicts leaves both
+        carts intact for the customer to resolve, and a merge that fails for any
+        other reason must not turn a successful sign-in into an error — they are
+        signed in either way, and the cart is recoverable while the cookie is
+        still there.
+      */
+      await mergeGuestCartIntoAccount().catch(() => undefined);
+
       router.replace("/");
       router.refresh();
     } catch {

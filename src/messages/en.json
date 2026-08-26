@@ -273,5 +273,45 @@
       "body": "The address may have changed. Try finding it again from the product list.",
       "action": "All products"
     }
+  },
+  "cart": {
+    "title": "Basket",
+    "open": "Basket",
+    "close": "Close",
+    "currency": "Toman",
+    "subtotal": "Subtotal",
+    "itemCount": "{count, plural, one {# item} other {# items}}",
+    "viewCart": "View basket",
+    "addToCart": "Add to basket",
+    "adding": "Adding…",
+    "remove": "Remove {name}",
+    "quantity": {
+      "label": "Quantity",
+      "decrease": "One fewer",
+      "increase": "One more"
+    },
+    "loading": "Loading your basket…",
+    "checkoutPending": "Checkout is not open yet. Get in touch to complete an order.",
+    "empty": {
+      "title": "Your basket is empty",
+      "body": "You haven't added anything yet.",
+      "action": "See products"
+    },
+    "issue": {
+      "price_changed": "The price of this product has changed.",
+      "reservation_expired": "The hold on this item lapsed; changing the quantity takes it again.",
+      "quantity_reduced": "Only {available} available.",
+      "unavailable": "This product is not available right now.",
+      "restricted": "This product is for professionals only.",
+      "unpublished": "This product is no longer in the shop."
+    },
+    "error": {
+      "unavailable": "This product is not available right now.",
+      "restricted": "This product is not sold online.",
+      "insufficient-stock": "Only {available} available.",
+      "invalid-quantity": "That quantity is not valid.",
+      "not-found": "We couldn't find this product.",
+      "not-yours": "Please try again."
+    }
   }
 }

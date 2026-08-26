@@ -49,3 +49,29 @@ export function resolveDraftPreview(
   // exactly as a customer will see it, without changing any data.
   return { previewDrafts: setting !== "off" };
 }
+
+/**
+ * Is this row visible to a reader on this server?
+ *
+ * The predicate `visibleInLocale` applies in SQL, expressed for a row already
+ * in hand — the cart has its rows loaded and needs the same answer the
+ * catalogue gave when the customer added them.
+ *
+ * It exists because the rule was written out by hand twice inside one packet
+ * and was wrong both times, in the same way: `isPublished && approved` looks
+ * stricter and is simply incorrect here, because the whole Storyderm catalogue
+ * is `draft` by design (`C-1`). The cart refused every add, and then marked
+ * every line it did hold as withdrawn — while every product page rendered
+ * happily. A shop you can browse and cannot buy from is not a safer shop.
+ *
+ * Both mistakes would have vanished in production, where `previewDrafts` is off
+ * and the hand-written rule agrees again. That is what makes this the sort of
+ * duplicate worth deleting rather than tidying.
+ */
+export function isVisiblePublication(
+  row: { readonly isPublished: boolean; readonly reviewState: string },
+  preview: DraftPreview = resolveDraftPreview(),
+): boolean {
+  if (preview.previewDrafts) return true;
+  return row.isPublished && row.reviewState === "approved";
+}

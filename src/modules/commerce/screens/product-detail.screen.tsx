@@ -3,6 +3,7 @@ import { Breadcrumbs } from "@/components/layout/breadcrumbs";
 import { Container, Section } from "@/components/layout/container";
 import { Reveal } from "@/components/layout/reveal";
 import { Link } from "@/i18n/navigation";
+import { AddToCart } from "@/modules/cart/components/add-to-cart";
 import { OfferLine } from "../components/offer-line";
 import { PairsWith } from "../components/pairs-with";
 import { ProductDisclosure } from "../components/product-disclosure";
@@ -120,6 +121,17 @@ export function ProductDetailScreen({
                   })}
                 </ul>
               </fieldset>
+            )}
+
+            {/*
+              The one purchase control, and only for a `purchasable` offer.
+              Every other state is refused before this renders, so there is no
+              disabled branch: a greyed-out button says "you cannot buy this",
+              where the truth is usually "choose a size", "ask us", or "this is
+              for professionals" — which `OfferLine` above has already said.
+            */}
+            {page.offer.kind === "purchasable" && (
+              <AddToCart variantId={page.offer.variantId} />
             )}
 
             {page.offer.kind === "professional_only" && (

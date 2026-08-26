@@ -104,17 +104,27 @@ describe("surfaces", () => {
       "command",
       "account",
       "locale",
+      // Last, at `order: 70`. That is the manifest's own placement and is left
+      // alone: where the cart sits on the rail is a design decision, and this
+      // packet opened a gate rather than re-ordering a surface.
+      "cart",
     ]);
   });
 
-  it("holds the bottom bar to four repeat destinations", () => {
+  it("holds the bottom bar to five repeat destinations", () => {
     // N-1: a bottom bar is repeat-navigation furniture. Booking and Academy are
     // destination visits reached from the Landing doors or command search, and
     // a sixth item pushes every target below the 44px floor.
+    //
+    // It was four until packet 9. The cart was always defined with
+    // `mobile: "bottom"` and held back by `SHELL-04` because it could not act;
+    // opening that gate is what makes it five, which N-1's own reasoning
+    // permits — the number it warns about is six. Measured at 390: five items
+    // give 78px each, comfortably over the floor.
     const ids = navigationFor("bottom").map((entry) => entry.id);
 
-    expect(ids).toEqual(["brand", "shop", "command", "account"]);
-    expect(ids).toHaveLength(4);
+    expect(ids).toEqual(["brand", "shop", "command", "account", "cart"]);
+    expect(ids).toHaveLength(5);
   });
 
   it("never shows the same item on both interactive navigations", () => {
@@ -140,15 +150,22 @@ describe("surfaces", () => {
 });
 
 describe("availability gates", () => {
-  it("hides the cart until its contract exists", () => {
+  it("shows the cart now that its contract exists", () => {
     // SHELL-04: an affordance that cannot act must never appear as a production
-    // control
-    expect(navigationFor("rail").map((entry) => entry.id)).not.toContain(
-      "cart",
-    );
-    expect(navigationFor("bottom").map((entry) => entry.id)).not.toContain(
-      "cart",
-    );
+    // control. It could not until packet 9 — no module, no `/cart`, no actions
+    // — and this test asserted its absence for five packets. The condition is
+    // met, so the assertion is inverted rather than deleted: what it protects
+    // is that the item follows the gate, in either direction.
+    expect(navigationFor("rail").map((entry) => entry.id)).toContain("cart");
+    expect(navigationFor("bottom").map((entry) => entry.id)).toContain("cart");
+  });
+
+  it("still hides it when the gate is explicitly closed", () => {
+    // The mechanism has to keep working, or the next gated affordance inherits
+    // a switch that is wired to nothing.
+    expect(
+      navigationFor("rail", { cartGateOpen: false }).map((entry) => entry.id),
+    ).not.toContain("cart");
   });
 
   it("reveals the cart when its gate opens, without a second definition", () => {

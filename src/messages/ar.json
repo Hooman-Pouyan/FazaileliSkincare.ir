@@ -273,5 +273,45 @@
       "body": "قد يكون العنوان قد تغيّر. جربي إيجاده من قائمة المنتجات.",
       "action": "كل المنتجات"
     }
+  },
+  "cart": {
+    "title": "سلة الشراء",
+    "open": "سلة الشراء",
+    "close": "إغلاق",
+    "currency": "تومان",
+    "subtotal": "المجموع",
+    "itemCount": "{count, plural, one {# منتج} other {# منتجات}}",
+    "viewCart": "عرض السلة",
+    "addToCart": "أضيفي إلى السلة",
+    "adding": "جارٍ الإضافة…",
+    "remove": "حذف {name}",
+    "quantity": {
+      "label": "الكمية",
+      "decrease": "واحد أقل",
+      "increase": "واحد أكثر"
+    },
+    "loading": "جارٍ تحميل السلة…",
+    "checkoutPending": "الدفع غير مفعّل بعد. تواصلي معنا لإتمام الطلب.",
+    "empty": {
+      "title": "سلتك فارغة",
+      "body": "لم تضيفي شيئاً بعد.",
+      "action": "عرض المنتجات"
+    },
+    "issue": {
+      "price_changed": "تغيّر سعر هذا المنتج.",
+      "reservation_expired": "انتهى حجز هذا المنتج؛ تغيير الكمية يعيد حجزه.",
+      "quantity_reduced": "المتوفر {available} فقط.",
+      "unavailable": "هذا المنتج غير متوفر حالياً.",
+      "restricted": "هذا المنتج للمختصات فقط.",
+      "unpublished": "لم يعد هذا المنتج في المتجر."
+    },
+    "error": {
+      "unavailable": "هذا المنتج غير متوفر حالياً.",
+      "restricted": "لا يُباع هذا المنتج عبر الإنترنت.",
+      "insufficient-stock": "المتوفر {available} فقط.",
+      "invalid-quantity": "الكمية غير صحيحة.",
+      "not-found": "لم نعثر على هذا المنتج.",
+      "not-yours": "حاولي مرة أخرى."
+    }
   }
 }
