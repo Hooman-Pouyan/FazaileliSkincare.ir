@@ -1,7 +1,7 @@
 import { cache } from "react";
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { type Locale, routing } from "@/i18n/routing";
 import { localeAlternates, localeUrl } from "@/lib/site";
 import { getShopHub } from "@/modules/commerce/commerce.reads";
@@ -25,8 +25,15 @@ type ShopPageProps = { params: Promise<{ locale: Locale }> };
  * makes that one query rather than two. Without it the alternative is a second
  * source for the page title, which is the duplication the page model exists to
  * prevent.
+ *
+ * The translator is resolved here and passed in. The read used to import
+ * `next-intl/server` itself, which bound it to the React server runtime and made
+ * it uncallable from a test.
  */
-const readHub = cache(getShopHub);
+const readHub = cache(async (locale: Locale) => {
+  const t = await getTranslations({ locale, namespace: "shop" });
+  return getShopHub(locale, (key) => t(key));
+});
 
 export async function generateMetadata({
   params,

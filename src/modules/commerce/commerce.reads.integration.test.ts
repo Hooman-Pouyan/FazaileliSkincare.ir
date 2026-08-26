@@ -24,6 +24,28 @@ const { getProduct, getShopHub, listProducts } = await import(
 const FA = "fa";
 const HUB = { kind: "hub" } as const;
 
+/**
+ * The real Persian catalogue, resolved the way the route resolves it.
+ *
+ * Reading the shipped JSON rather than echoing keys back is the lesson from
+ * packet 4: a test that returns its own key cannot see a key that does not
+ * exist.
+ */
+const faMessages = (await import("@/messages/fa.json")).default;
+const translateShop = (key: string): string => {
+  const value = key
+    .split(".")
+    .reduce<unknown>(
+      (node, part) =>
+        typeof node === "object" && node !== null
+          ? (node as Record<string, unknown>)[part]
+          : undefined,
+      faMessages.shop,
+    );
+  if (typeof value !== "string") throw new Error(`Missing message shop.${key}`);
+  return value;
+};
+
 beforeAll(async () => {
   await seedReference(db);
   await seedDevCatalogue(db, "test");
@@ -35,7 +57,7 @@ function slugsOf(page: { results: readonly { slug: string }[] }): string[] {
 
 describe("getShopHub", () => {
   it("returns taxonomy that leads somewhere and bounded featured products", async () => {
-    const outcome = await getShopHub(FA);
+    const outcome = await getShopHub(FA, translateShop);
 
     expect(outcome.kind).toBe("ready");
     if (outcome.kind !== "ready") return;
@@ -185,7 +207,8 @@ describe("listProducts — scopes, filters and the URL contract", () => {
 
     expect(outcome.kind).toBe("redirect");
     if (outcome.kind !== "redirect") return;
-    expect(outcome.href).toBe("/fa/shop");
+    // Locale-agnostic: prefixing belongs to `@/i18n/navigation` — decision R-1.
+    expect(outcome.href).toBe("/shop");
   });
 
   it("rejects an unrecognised sort rather than defaulting", async () => {
@@ -208,7 +231,7 @@ describe("listProducts — scopes, filters and the URL contract", () => {
     expect(outcome.kind).toBe("ready");
     if (outcome.kind !== "ready") return;
     expect(outcome.page.meta.robots).toBe("noindex,follow");
-    expect(outcome.page.meta.canonicalPath).toBe("/fa/shop/concern/hydration");
+    expect(outcome.page.meta.canonicalPath).toBe("/shop/concern/hydration");
     expect(outcome.page.appliedFilters).toHaveLength(1);
   });
 

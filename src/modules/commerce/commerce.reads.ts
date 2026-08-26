@@ -9,7 +9,6 @@ import {
   lte,
   sql,
 } from "drizzle-orm";
-import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 import {
   brand,
@@ -859,8 +858,24 @@ async function resolveScopeTitle(
   };
 }
 
+/**
+ * Resolves one message. The route supplies it from `getTranslations`.
+ *
+ * Injected rather than imported, because importing `next-intl/server` here
+ * bound the read to the React server runtime: it could only be called from
+ * inside an RSC render, and calling it from a test raised
+ * "`getTranslations` is not supported in Client Components" — which is what
+ * finding this cost. A read that cannot be called outside a render is a read
+ * nobody can test.
+ *
+ * The copy still has one home. The route looks it up; the page model still
+ * carries the finished string, so no screen translates its own title.
+ */
+export type Translate = (key: string) => string;
+
 export async function getShopHub(
   localeCode: string,
+  translate: Translate,
 ): Promise<StorefrontOutcome<ShopHubPage>> {
   const visible = visibleInLocale(localeCode);
 
@@ -974,7 +989,6 @@ export async function getShopHub(
   );
 
   const hubHref = "/shop";
-  const t = await getTranslations({ locale: localeCode, namespace: "shop" });
 
   const hubConcerns = concerns
     .filter((row) => row.productCount > 0)
@@ -1018,8 +1032,8 @@ export async function getShopHub(
       // Copy resolved here, not in the route: the page model is the one
       // presentation-ready shape, and a route that translates its own title
       // would be a second place for the hub's name to live.
-      title: t("meta.title"),
-      description: t("meta.description"),
+      title: translate("meta.title"),
+      description: translate("meta.description"),
       canonicalPath: hubHref,
       robots: "index,follow",
     },
