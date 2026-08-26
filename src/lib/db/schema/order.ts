@@ -111,3 +111,46 @@ export const orderLine = pgTable(
     ),
   ],
 );
+
+/**
+ * How a guest reaches their own order — `COM-D1`, which does not require an
+ * account to buy.
+ *
+ * **The hash is stored, never the token.** The raw value goes to the customer
+ * once, in the link they are given, and never comes back into the database.
+ * That is the same reasoning as the guest cart's `anonymousKeyHash` and as
+ * `AGENTS.md` rule 4: a bearer token is a credential, and a database dump must
+ * not hand over live order access.
+ *
+ * **An order number is never sufficient authorisation.** Order numbers are
+ * sequential-looking, quotable over the phone and printed on things — which is
+ * exactly what makes them useless as a secret. This table is what separates
+ * "knowing which order" from "being allowed to see it".
+ *
+ * Expiry and revocation are both here because they answer different questions:
+ * a token lapses on its own, and a customer who forwarded a link to the wrong
+ * person needs it stopped before it does.
+ */
+export const orderAccessToken = pgTable(
+  "order_access_token",
+  {
+    id: uuid().primaryKey().defaultRandom(),
+    orderId: uuid()
+      .notNull()
+      .references(() => customerOrder.id, { onDelete: "cascade" }),
+    /** SHA-256 of the token handed to the customer. The raw value is never here. */
+    tokenHash: text().notNull(),
+    expiresAt: timestamp({ withTimezone: true }).notNull(),
+    revokedAt: timestamp({ withTimezone: true }),
+    lastUsedAt: timestamp({ withTimezone: true }),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("order_access_token_hash_unique").on(table.tokenHash),
+    index("order_access_token_order_idx").on(table.orderId),
+    // The lookup a request actually performs: live tokens only.
+    index("order_access_token_live_idx")
+      .on(table.orderId, table.expiresAt)
+      .where(sql`${table.revokedAt} is null`),
+  ],
+);

@@ -172,3 +172,48 @@ export const contentReviewStateEnum = pgEnum("content_review_state", [
  * to find every invented suggestion without reading a seed script.
  */
 export const pairSourceEnum = pgEnum("pair_source", ["development", "owner"]);
+
+/**
+ * A return's progress — `COM-D11`, which keeps returns, refunds and restocking
+ * as three separate decisions rather than one status ladder.
+ *
+ * `received` is distinct from `resolved` on purpose: the goods arriving and the
+ * money going back are different events, often days apart, and collapsing them
+ * is how a customer gets refunded for a parcel nobody opened.
+ */
+export const returnStatusEnum = pgEnum("return_status", [
+  "requested",
+  "approved",
+  "rejected",
+  "received",
+  "resolved",
+  "cancelled",
+]);
+
+/**
+ * What happens to the goods, decided per line rather than per return.
+ *
+ * `restock` is the only value that touches inventory, and it is deliberately
+ * not the default: skincare that has left the building does not automatically
+ * go back on a shelf, and `COM-D11` makes restocking its own decision.
+ */
+export const returnDispositionEnum = pgEnum("return_disposition", [
+  "pending",
+  "restock",
+  "discard",
+  "quarantine",
+]);
+
+/**
+ * A refund's own lifecycle, separate from the return that caused it.
+ *
+ * `COM-D6` keeps order state and payment state apart; this is the same rule one
+ * level down. A return can be resolved while its refund is still in flight, and
+ * a refund can fail without reopening the return.
+ */
+export const refundStatusEnum = pgEnum("refund_status", [
+  "pending",
+  "processing",
+  "completed",
+  "failed",
+]);

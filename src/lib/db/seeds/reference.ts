@@ -5,6 +5,8 @@ import {
   categoryTranslation,
   concern,
   concernTranslation,
+  iranCity,
+  iranProvince,
   locale,
   protocol,
   protocolPhase,
@@ -14,6 +16,7 @@ import {
   skinStateTranslation,
 } from "../schema";
 import type * as schema from "../schema";
+import { IRAN_PROVINCES } from "./geo-data";
 import {
   REFERENCE_CATEGORIES,
   REFERENCE_CONCERNS,
@@ -36,6 +39,58 @@ export async function seedReference(
   database: PostgresJsDatabase<typeof schema>,
 ): Promise<void> {
   await database.transaction(async (transaction) => {
+    /*
+      Iranian geography — reference data with a recorded source (`geo-data.ts`).
+
+      Provinces are complete: thirty-one, ISO 3166-2:IR. Cities are one per
+      province, the administrative centre, and `isCapital` marks them so a
+      reader can tell an incomplete province from a single-city one. A full
+      city list needs an authoritative dataset and is the maintainer's to
+      choose — see `geo-data.ts`.
+
+      No `shipping_rate` rows are seeded, deliberately. What Mashhad courier
+      costs is a fact about the business, and inventing a plausible number is
+      how a fixture becomes a price somebody quotes.
+    */
+    for (const [index, entry] of IRAN_PROVINCES.entries()) {
+      await transaction
+        .insert(iranProvince)
+        .values({
+          code: entry.code,
+          nameFa: entry.nameFa,
+          nameEn: entry.nameEn,
+          sortOrder: index,
+        })
+        .onConflictDoUpdate({
+          target: iranProvince.code,
+          set: {
+            nameFa: entry.nameFa,
+            nameEn: entry.nameEn,
+            sortOrder: index,
+          },
+        });
+
+      await transaction
+        .insert(iranCity)
+        .values({
+          code: `${entry.code}-01`,
+          provinceCode: entry.code,
+          nameFa: entry.capitalFa,
+          nameEn: entry.capitalEn,
+          isCapital: 1,
+          sortOrder: 0,
+        })
+        .onConflictDoUpdate({
+          target: iranCity.code,
+          set: {
+            provinceCode: entry.code,
+            nameFa: entry.capitalFa,
+            nameEn: entry.capitalEn,
+            isCapital: 1,
+          },
+        });
+    }
+
     await transaction.update(locale).set({ isPrimary: false });
 
     for (const entry of REFERENCE_LOCALES) {
