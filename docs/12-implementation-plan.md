@@ -124,6 +124,8 @@ Seed: brands (Forlle'd/Storyderm/Thalgo with `countryOfOrigin`), concerns (لک 
 
 The temporary Storyderm image set is a **draft input, not catalogue truth**. Its manifest, idempotent seed profiles, image-derivative pipeline, database gaps, and draft-to-production gates are specified in [`14-storyderm-draft-catalog-pipeline.md`](14-storyderm-draft-catalog-pipeline.md). Do not infer prices, stock, SKUs, claims, or sellable product boundaries from filenames.
 
+**Phase 2A — catalogue truth and the content spine.** Added 2026-08-26, ahead of Phase 2B. Two plans: [`system-design/catalogue/storyderm-catalogue.md`](system-design/catalogue/storyderm-catalogue.md) turns the Storyderm image set into a curated manifest, real brand and line reference rows, a media-derivative pipeline and three seed profiles; [`system-design/content/content-spine.md`](system-design/content/content-spine.md) adds the four content tables every surface reads editorial copy from — the PLP's FAQ and bands first, the Landing's beats next. Decisions: [`26-content-and-catalogue-decisions.md`](26-content-and-catalogue-decisions.md) `C-1`–`C-17`. The rule that governs both: **truth is per field, not per row** — real brand, product, form, size and imagery; price, stock, SKU and every claim invented and marked as such *in the row*. Phase 2B's `LANDING0` is superseded by `CONTENT0`–`CONTENT3`: the Landing consumes this spine rather than building a second content store.
+
 ### Routes
 
 `/shop` (PHP hub) · `/shop/concern/[slug]` · `/shop/brand/[slug]` · `/shop/c/[category]` · `/shop/p/[slug]` · `/cart` · `/checkout` · `/checkout/transfer/[orderId]` · `/order/[orderNumber]` · `/order/[orderNumber]/invoice`
@@ -197,6 +199,10 @@ Binding decisions: [`21-landing-composition-decisions.md`](21-landing-compositio
   entirely rather than rendering an empty frame.
 
 ### Source content
+
+**Storage is settled by Phase 2A.** These batches land in the same four content
+tables the PLP uses ([`system-design/content/content-spine.md`](system-design/content/content-spine.md)),
+not in a Landing-specific store. `LANDING0` is re-scoped accordingly.
 
 The three `content/` batches (42 testimonials, 13 brands, 10 academy offerings)
 are transcriptions from Instagram highlights and are all unpublished drafts.

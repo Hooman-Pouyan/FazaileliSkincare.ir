@@ -1,6 +1,6 @@
 # Storyderm draft catalogue and shop data pipeline
 
-**Status:** Accepted Phase 2 working plan. Database foundation and reference seed implemented in `7f212b7`; Storyderm ingestion, catalogue reads, APIs, and Server Actions remain pending.
+**Status:** Accepted, and **carried forward** by packet 7B. The policy in this document stands unchanged; its P0–P2 execution now lives in [`system-design/catalogue/storyderm-catalogue.md`](system-design/catalogue/storyderm-catalogue.md), and the one rule it stated that has been *refined* rather than kept is recorded as `C-1` in [`26-content-and-catalogue-decisions.md`](26-content-and-catalogue-decisions.md): **truth is per field, not per row.** This document made the whole development catalogue fictional in order to protect commercial truth; `C-1` keeps every protection here and recovers the part that was real — brand and product identity, form, pack size and the images themselves — while marking price, stock, SKU and any claim as invented *in the row*. Nothing below permits a generated claim, a guessed SKU, or a filename promoted to a product sheet.
 **Date:** 2026-08-24 · Companion to [`03-domain-model.md`](03-domain-model.md), [`10-design-playbook.md`](10-design-playbook.md), and [`12-implementation-plan.md`](12-implementation-plan.md).
 
 ---

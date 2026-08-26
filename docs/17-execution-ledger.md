@@ -84,6 +84,7 @@ research deferrals expire the moment it is shown to a customer.
 | 5   | `/fa/shop` product hub                                                                                                                                                                                                       | Stage 2, DB4                                                          | Concern-first hub renders from PostgreSQL with JavaScript disabled; route states and metadata present                                                                                                                                                                                                                                                                                                                                                                        | **built — awaiting a request against a real database, review item 5.8** |
 | 6   | Landing composition — the five IA beats, the growth spine and ornament set, and the three source-content batches seeded as marked drafts. Plan: [`system-design/storefront/landing.md`](system-design/storefront/landing.md) | Stage 2, `LAND-01`–`LAND-11`, `CONTENT-01`–`CONTENT-04`, `L-1`–`L-15` | `/fa` renders the five beats in order at 390/768/1440 with Persian RTL passing and JavaScript disabled; every beat whose content is unapproved is **absent**, not empty-framed; motion is reveal-once on the existing duration and easing, and `prefers-reduced-motion` is verified; `Organization`+`LocalBusiness`+`WebSite` JSON-LD emits, with no `AggregateRating`; every batch is seeded idempotently, refuses under production, and no real testimonial is publishable |                                                                         |
 | 7   | PLP and search                                                                                                                                                                                                               | Stage 3, `PLP0–5`                                                     | Concern, brand, category and `?q=` routes use canonical URL state, server results, live counts, stable pagination, verified empty and error states                                                                                                                                                                                                                                                                                                                           |                                                                         |
+| 7B  | **Catalogue truth and the content spine.** Plans: [`system-design/catalogue/storyderm-catalogue.md`](system-design/catalogue/storyderm-catalogue.md) and [`system-design/content/content-spine.md`](system-design/content/content-spine.md) | `CAT0–CAT5`, `CONTENT0–CONTENT5`, `C-1`–`C-17`, `docs/14` P0–P2 | `/fa/shop/all` lists the real Storyderm catalogue from real imagery served through derivatives, with an editorial band below the breadcrumb and an FAQ accordion below the results, both read from PostgreSQL; the manifest reconciles to ninety source files; every invented commercial figure carries a `DEMO-` marker in the row; held, unpublished and professional-only rows are provably absent; `FAQPage` markup matches the rendered questions exactly; both seeds are idempotent and refuse production | **in progress** |
 | 8   | PDP                                                                                                                                                                                                                          | Stage 4, `PDP1–6`                                                     | Offer states are truthful; `on_request`, professional-only, unavailable and variant-required cannot enter the cart                                                                                                                                                                                                                                                                                                                                                           |                                                                         |
 | 9   | Cart presentation — drawer and `/fa/cart`                                                                                                                                                                                    | Stage 4, `CART1`                                                      | The shared cart model renders in both surfaces; no checkout, payment or settlement code exists                                                                                                                                                                                                                                                                                                                                                                               |                                                                         |
 | 10  | Transactional cart, reservations, `resolveCartOwner`                                                                                                                                                                         | DB5, C5                                                               | Concurrent requests cannot oversell; removal works; retries and guest-to-account merge are idempotent; the expiry predicate is observable                                                                                                                                                                                                                                                                                                                                    |                                                                         |
@@ -124,6 +125,35 @@ preview rail runs on a separate fictional set.
 closed it: each group is counted with its own selections removed, one query per
 group, and the scope's own axis is not offered as a facet. The behaviour is
 asserted by integration tests rather than by inspection.
+
+### Why 7B was inserted ahead of the Landing
+
+Packet 6 is the Landing and was next. It is deferred one packet by the
+maintainer's instruction on 2026-08-26, and the reason is structural rather
+than a change of mind.
+
+The Landing's own plan says its reads come from PostgreSQL, always
+(`CONTENT-01`), and that unapproved content must be **absent** rather than
+empty-framed (`L-4`). Neither is achievable: there is no content table in the
+schema. The PLP hit the same wall first — `F-5` built an FAQ block and a
+`FAQPage` emitter against `questions: []`, a literal in `commerce.reads.ts`
+because nothing exists to read.
+
+Building the content store on the PLP is the cheaper place to get it right: one
+surface, two block kinds, and an integration suite already pointed at it. The
+Landing then consumes the same four tables instead of growing a second store
+beside them. `LANDING0` is therefore superseded by `CONTENT0`–`CONTENT3` and
+should be re-scoped to Landing-specific blocks when packet 6 resumes.
+
+The catalogue half rides along for the same reason: the content seed references
+media by object key, and the object-key convention has to exist before either
+half can be seeded. See [`26-content-and-catalogue-decisions.md`](26-content-and-catalogue-decisions.md).
+
+**Explicitly not blocking:** the Arvan or Liara object-storage account. `C-10`
+makes the CDN an environment variable, so the infrastructure work can happen on
+its own day without any of this being rewritten.
+
+---
 
 ### Direction decisions binding this block
 

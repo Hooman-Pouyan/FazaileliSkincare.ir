@@ -134,6 +134,16 @@ looking for a meaning and should wait until they have one.
 
 ## F-5 · PLP editorial and SEO content
 
+> **Carried forward by packet 7B.** The table below records what was decided and
+> built on 2026-08-26: structure with no content behind it. The content store
+> those rows were waiting for is now specified in
+> [`system-design/content/content-spine.md`](system-design/content/content-spine.md)
+> and decided in `C-11`–`C-15`. Two entries change: the **editorial gallery** is
+> no longer deferred — it becomes a `gallery` block on the same spine — and the
+> **campaign banner** gets its slot, bounded by a real `effectiveUntil` window
+> (`C-13`) rather than by anyone remembering to remove it. `L-6`'s refusal of
+> permanent promotional furniture is unchanged and is now enforceable in a query.
+
 The request was for FAQ, promotional banners and a gallery on listing pages.
 
 | Element                                     | Decision                                                                                                                                                                                                                                                                               |
