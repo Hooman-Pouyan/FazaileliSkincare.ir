@@ -154,3 +154,57 @@ engine.
 **Needs the maintainer.** This is her voice and I am approximating it. Read the
 Persian on the hub and tell me where it sounds like me rather than like her —
 that correction is worth more than another pass from me.
+
+---
+
+## Appendix · The block library — proposed, awaiting selection
+
+⚠️ **Nothing here is decided.** These are the section types available to the
+storefront, offered so the maintainer can choose rather than react. Each row
+says what it needs before it can be built, because most of them are blocked on
+content rather than on code.
+
+Ordering is by what the business gets, not by visual appeal.
+
+### Blocks that sell
+
+| #   | Block                            | What it is                                                                                                                                                           | Needs                                                              | Surface                |
+| --- | -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------ | ---------------------- |
+| B1  | **Product spotlight, paginated** | One product at a time, large image against an offset panel, name, promise, one action, previous/next through a curated set. The Forlle'd reference's strongest block | Nothing — `getShopHub().featured` already supplies it              | Shop hub               |
+| B2  | **Routine builder**              | Three or four numbered steps — cleanse, treat, protect — each naming a real product, as one composed row rather than a grid                                          | A `routine` relation, or an editorial list of product slugs        | Shop hub, PDP          |
+| B3  | **Concern → product bridge**     | A concern's name, one sentence about it, and the three products for it side by side. Repeats per concern                                                             | Nothing new; a per-concern read                                    | Shop hub               |
+| B4  | **Before / after**               | Reader-controlled pair or divider. Structure already specified in `landing.md` `LAND-09`                                                                             | Consent per person **and** the Iranian advertising question — L-15 | Landing, concern pages |
+| B5  | **Pairs with**                   | Two or three products that genuinely go together, from the PDP's own relation                                                                                        | The PDP's pairing data                                             | PDP                    |
+
+### Blocks that answer objections
+
+| #   | Block                  | What it is                                                                                                                                                    | Needs                                                                  | Surface              |
+| --- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------- |
+| B6  | **Mechanism diagram**  | One drawn diagram explaining how something works — the Forlle'd reference uses a molecule. Ours would be the skin barrier, or how a peel differs from an acid | A drawn SVG and copy that makes **no medical claim** we cannot support | Shop hub, brand page |
+| B7  | **Authenticity proof** | Built. The 日本製 mark, the representation, the offer to check a package                                                                                      | Done                                                                   | Shop hub             |
+| B8  | **Practitioner note**  | A short signed paragraph in her own voice beside a product or concern — "why I use this"                                                                      | Her words, per product or concern                                      | PDP, concern pages   |
+| B9  | **Testimonial rail**   | Reader-paced RTL scroll-snap rail                                                                                                                             | Consent on the 42 records — L-4                                        | Landing              |
+
+### Blocks that carry the brand
+
+| #   | Block                         | What it is                                                                                                              | Needs                                                                 | Surface                  |
+| --- | ----------------------------- | ----------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- | ------------------------ |
+| B10 | **Asymmetric photo mosaic**   | Three or four photographs in an uneven grid beside a heading and one paragraph. The Forlle'd reference's fourth section | Cleared photography — **available now**, the Pexels/Unsplash/CC0 sets | Shop hub, Landing        |
+| B11 | **Full-bleed quiet band**     | One photograph edge to edge with one line over it. A breath between dense sections                                      | Cleared photography — available now                                   | Between any two sections |
+| B12 | **Ritual / garden interlude** | The Japanese reference photography — raked garden, tea, stone path — with one line tying it to how she actually works   | Copy that earns it, per L-9: a real method, not atmosphere            | Landing                  |
+| B13 | **Sticky-pinned statement**   | A lapis band that holds while content scrolls past it. The parallax substitute from L-3                                 | Nothing                                                               | Landing                  |
+
+### What is deliberately absent
+
+A countdown, a discount ribbon, a newsletter interstitial, a "customers also
+bought" strip driven by nothing, a star-rating summary, an autoplay carousel,
+and a values row of icons and adjectives. The first six are refused by
+`09-brand-brief.md` or D-18-3; the last by L-12.
+
+### Recommendation if only three are chosen
+
+**B1**, because it makes the hub's merchandising feel intentional and needs no
+new content. **B3**, because it is the shortest path from a concern to a
+purchase and the concern axis is this site's whole competitive argument.
+**B10**, because cleared photography is sitting unused and it is the cheapest
+change with the largest effect on how the page feels.
