@@ -191,7 +191,16 @@ that note exists, and an unknown status means the mark does not render.
 
 ## 5. Phased task list
 
-### LANDING0 — Content tables, importers and the fictional completion
+### LANDING0 — ~~Content tables, importers and the fictional completion~~ · **superseded**
+
+Packet 7B built the content spine — four tables serving every surface — so the
+Landing consumes it rather than growing a parallel store. What this task asked
+for is done, differently and once: `landing` blocks are seeded through the same
+importer as the PLP's, and `getLanding` resolves them through the same
+`resolveBlocks`. See `C-11` and the packet 6 review log; the testimonial and
+before/after departures are recorded as `6.2` and `6.3`.
+
+### LANDING0 (original) — Content tables, importers and the fictional completion
 
 Add the `testimonial`, academy-offering and brand-candidate tables with their
 migrations. Write importers per `CONTENT-02`–`CONTENT-04`. Generate the fictional
