@@ -302,7 +302,7 @@ photography that is cleared, which is `7B.9`'s question.
 
 ---
 
-## R-9 · The server-rendered document looks empty — **verify before believing either answer**
+## R-9 · The server-rendered document looks empty — **verified, and it is not** ✅
 
 **Observed.** In DevTools → Network → the `all` document → **Preview**, the
 response shows the footer, the skip links and «در حال بارگذاری…», and none of
@@ -349,8 +349,27 @@ commented out in `next.config.ts`, and `AGENTS.md` lists Cache Components and
 Instant Navigations under **deferred, do not build without asking**. Whatever is
 decided here should be decided with that, not before it.
 
-**Needs the maintainer:** run the three commands and paste the numbers. Nothing
-else in this entry can be settled without them.
+**Answered on 2026-08-26, on the maintainer's own machine.** The commands were
+run against the dev server with the real seeded catalogue:
+
+| Check                                                | Result  |
+| ---------------------------------------------------- | ------- |
+| `article` elements left after stripping every script | **24**  |
+| `ItemList` `numberOfItems`                           | **47**  |
+| `FAQPage`                                            | present |
+| `BreadcrumbList`                                     | present |
+
+All non-zero, so this is the streaming artefact the entry predicted and **not a
+defect**. It does not become a packet and it does not move ahead of anything.
+The tiles are real markup rather than flight payload — that is what stripping
+the scripts first proves, and it is the check worth keeping, because a document
+that carries the catalogue only inside `self.__next_f` would pass a naive `grep`
+and still be invisible to a crawler that does not execute JavaScript.
+
+**What is still open is the second half**, unchanged: whether a listing route
+should carry a `loading.tsx` at all. That is a preference rather than a defect,
+it is entangled with `cacheComponents`, and it should be decided with that and
+not before it.
 
 ---
 

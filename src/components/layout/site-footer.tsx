@@ -47,6 +47,14 @@ export async function SiteFooter() {
           </p>
         </div>
 
+        {/*
+          `py-1` is a tap target, not spacing. These links are 22px tall at the
+          small type size, and WCAG 2.2 AA (2.5.8) sets a 24×24 floor — the
+          "inline in a sentence" exception does not cover a link list. Measured
+          at 390 during packet 6's browser pass; 30px clears it and matches the
+          Landing's own CTA height, so the open question is one number for the
+          whole site rather than two.
+        */}
         <nav aria-label={t("roomsHeading")}>
           <h2 className="m-0 text-[length:var(--text-micro)] font-semibold tracking-[0.12em] text-[color:var(--gold-text)]">
             {t("roomsHeading")}
@@ -59,7 +67,7 @@ export async function SiteFooter() {
                 <li key={item.id}>
                   <Link
                     href={item.path}
-                    className="text-[length:var(--text-small)] text-[color:var(--ink)]"
+                    className="inline-flex items-center py-1 text-[length:var(--text-small)] text-[color:var(--ink)]"
                   >
                     {nav(item.labelKey)}
                   </Link>
@@ -78,7 +86,7 @@ export async function SiteFooter() {
               <li key={entry.key}>
                 <Link
                   href={entry.href}
-                  className="text-[length:var(--text-small)] text-[color:var(--ink)]"
+                  className="inline-flex items-center py-1 text-[length:var(--text-small)] text-[color:var(--ink)]"
                 >
                   {t(entry.key)}
                 </Link>

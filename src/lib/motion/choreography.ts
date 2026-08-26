@@ -107,6 +107,21 @@ export function drawStrokes(
 }
 
 /**
+ * Tailwind's `lg`, as a media query, in one place.
+ *
+ * `E-1` puts parallax on desktop and tablet and nowhere else: "a phone has no
+ * room for depth and the least headroom for it." Both call sites already carry
+ * `hidden lg:block`, which satisfies the *room* half — but `display: none` does
+ * not stop a scroll listener, so the *headroom* half was still being paid on
+ * exactly the mid-range hardware the constraint was written for.
+ *
+ * It is enforced here rather than at the call sites for the reason `E-6`
+ * records: a rule that lives in one caller is not a rule, it is a habit, and
+ * the next caller will not have it.
+ */
+const PARALLAX_VIEWPORT = "(min-width: 64rem)";
+
+/**
  * A decorative layer that drifts against the scroll — `E-1`.
  *
  * Parallax was refused by `L-3` and the refusal was withdrawn by the maintainer
@@ -122,6 +137,9 @@ export function drawStrokes(
  *   is a vestibular trigger rather than a preference.
  * - **No pinning and no scroll hijack.** The page scrolls at the speed the
  *   reader chose. That half of `L-3` is not withdrawn.
+ * - **Above `lg` only**, re-evaluated as the viewport crosses the breakpoint,
+ *   so a layer that stops qualifying is returned to its resting position
+ *   rather than frozen mid-drift.
  *
  * `depth` is the fraction of the scrolled distance the layer keeps: 0.2 drifts
  * gently, 0.5 is already too much for a photograph with a subject in it.
@@ -134,8 +152,9 @@ export function parallaxLayer(
   if (typeof window === "undefined") return () => {};
 
   const depth = options.depth ?? 0.18;
+  const wideEnough = window.matchMedia(PARALLAX_VIEWPORT);
   let frame = 0;
-  let latest = 0;
+  let running = false;
 
   const render = () => {
     frame = 0;
@@ -147,20 +166,39 @@ export function parallaxLayer(
   };
 
   const onScroll = () => {
-    latest = window.scrollY;
-    void latest;
     if (frame === 0) frame = window.requestAnimationFrame(render);
   };
 
-  render();
-  window.addEventListener("scroll", onScroll, { passive: true });
-  window.addEventListener("resize", onScroll, { passive: true });
+  const start = () => {
+    if (running) return;
+    running = true;
+    render();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+  };
 
-  return () => {
+  const stop = () => {
+    if (!running) return;
+    running = false;
     window.removeEventListener("scroll", onScroll);
     window.removeEventListener("resize", onScroll);
-    if (frame !== 0) window.cancelAnimationFrame(frame);
+    if (frame !== 0) {
+      window.cancelAnimationFrame(frame);
+      frame = 0;
+    }
+    // Back to the resting position, which is where the layer belongs whenever
+    // the effect is not running — the same state reduced motion gets.
     target.style.transform = "";
+  };
+
+  const sync = () => (wideEnough.matches ? start() : stop());
+
+  sync();
+  wideEnough.addEventListener("change", sync);
+
+  return () => {
+    wideEnough.removeEventListener("change", sync);
+    stop();
   };
 }
 

@@ -112,10 +112,18 @@ export function LandingScreen({ page }: { readonly page: LandingPage }) {
           <GrowthSpine stage="bud" tone="dark" />
           <Container>
             <Reveal className="flex flex-col gap-8">
+              {/*
+                An `h2`, not a `p`. It is styled as an overline because that is
+                what the composition wants, but «چرا اینجا» is the beat's name
+                and the beat is a `section` — so as a paragraph it left the one
+                region on the page with no accessible name, and beat 2 missing
+                from the document outline entirely. Found at 390 during packet
+                6's browser pass. Styling is unchanged; only the tag is.
+              */}
               {page.claim.heading && (
-                <p className="text-small font-medium tracking-[0.16em] text-gold-light">
+                <h2 className="m-0 text-small font-medium tracking-[0.16em] text-gold-light">
                   {page.claim.heading}
-                </p>
+                </h2>
               )}
               {page.claim.body && (
                 <p className="max-w-[34em] text-h3 leading-fa font-light">
