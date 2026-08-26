@@ -281,8 +281,6 @@ Nothing below is a defect. Each is a decision, a fact or a permission only you c
 | Packet 7 — PLP and search | 7.7 | `invalid-query` renders not-found rather than dropping the bad parameter | product |
 | Packet 7 — PLP and search | 7.8 | The facet rail sits below the results on mobile, not behind a drawer | UI |
 | Packet 7 — PLP and search | 7.10 | `getShopHub` and `listProducts` now run several queries each | performance |
-| Packet 7 — PLP and search | 7.12 | An unknown taxonomy slug returns `200`, not `404` | SEO |
-| Packet 7 — PLP and search | 7.13 | The not-found page emits two `robots` metas | SEO / drift |
 | Packet 6, second pass — scroll storytelling — 2026-08-26 | 6b.5 | Testimonials are Persian-only on purpose | content |
 | Packet 6, second pass — scroll storytelling — 2026-08-26 | 6b.7 | The Landing's editorial photography is static paths, not object keys | structure |
 | Packet 6, second pass — scroll storytelling — 2026-08-26 | 6b.8 | The Forlle'd beat links to `/shop`, not `/shop/brand/forlled` | product |
@@ -314,7 +312,7 @@ Nothing below is a defect. Each is a decision, a fact or a permission only you c
 | Landing direction pass — 2026-08-25, ahead of packet 6 | L.12 | The Japanese concepts are carried by a growth spine, not a values row | UI |
 | Landing direction pass — 2026-08-25, ahead of packet 6 | L.14 | Source batches are completed with fictional development values | data |
 
-**Totals:** 40 waiting on the maintainer, 51 open.
+**Totals:** 40 waiting on the maintainer, 49 open.
 
 <!-- END:open-items -->
 

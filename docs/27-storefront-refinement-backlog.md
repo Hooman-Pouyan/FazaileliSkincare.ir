@@ -375,10 +375,43 @@ the scripts first proves, and it is the check worth keeping, because a document
 that carries the catalogue only inside `self.__next_f` would pass a naive `grep`
 and still be invisible to a crawler that does not execute JavaScript.
 
-**What is still open is the second half**, unchanged: whether a listing route
-should carry a `loading.tsx` at all. That is a preference rather than a defect,
-it is entangled with `cacheComponents`, and it should be decided with that and
-not before it.
+**The second half turned out not to be a preference.** It asked whether a
+listing route should carry a `loading.tsx` at all, and assumed the trade was
+first-byte against completeness. It is not. The boundary was also breaking
+status codes.
+
+A `loading.tsx` wraps its segment in Suspense, so the response streams and the
+**status line goes out with the first flush** — before the page has decided
+anything. By the time `notFound()` runs, `200` has already been sent. Measured
+with the file present, then moved aside:
+
+| URL                       | with `loading.tsx` | without |
+| ------------------------- | ------------------ | ------- |
+| `/shop/p/does-not-exist`  | `200`              | `404`   |
+| `/shop/concern/nope`      | `200`              | `404`   |
+| `/shop/c/nonsense`        | `200`              | `404`   |
+| `/shop/brand/nope`        | `200`              | `404`   |
+| `/shop/p/ultra-a-z-cream` | `200`              | `200`   |
+
+Every one of those was a soft-404: an error page served as a success. That is
+review item `7.12`, whose cause nobody had connected to the boundary, and it
+also produced the duplicated `robots` meta in `7.13` — the streamed document
+carried the route's metadata _and_ the not-found page's.
+
+**Decided on 2026-08-26, on the maintainer's instruction: the storefront's
+`loading.tsx` is removed.** The first byte of a listing is now a complete
+document rather than a shell, which is the trade this entry originally
+described — and it was the right one for a reason the entry did not know.
+
+`src/lib/navigation/route-status.test.ts` is the gate. Nothing else can see a
+status code: it is invisible to typecheck, to ESLint and to every render test,
+and `loading.tsx` is a file the framework's own documentation encourages adding.
+If a listing genuinely needs a loading state, it belongs in a Suspense boundary
+_inside_ the page, below the point where the outcome is decided.
+
+This no longer waits on `cacheComponents`. That decision is still open and still
+belongs with Cache Components — but it is now about caching, not about whether
+404s work.
 
 ---
 
