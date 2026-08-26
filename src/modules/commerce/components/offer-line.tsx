@@ -1,5 +1,6 @@
 import { MessageCircleIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { resolveEnquiryHref } from "../models/enquiry";
 import type { OfferState } from "../models/offer";
 import type { PriceView } from "../models/page-models";
 
@@ -27,7 +28,11 @@ export function OfferLine({
 }: {
   offer: OfferState;
   price: PriceView | null;
-  /** Where an `on_request` enquiry goes. */
+  /**
+   * Where an `on_request` enquiry goes. Passed through
+   * `resolveEnquiryHref`, so a destination that goes nowhere renders no
+   * control rather than a dead one.
+   */
   enquiryHref: string;
   size?: "default" | "large";
 }) {
@@ -72,18 +77,30 @@ export function OfferLine({
         </div>
       );
 
-    case "on_request":
+    case "on_request": {
       // Never a price and never a cart control: taking an order at a price
       // nobody agreed is worse than asking the customer to write.
+      //
+      // And never a control that goes nowhere. `shop.enquiryHref` is still
+      // `https://wa.me/` with no number (review item `5.3`), which opens
+      // WhatsApp with no conversation in it. `PDP-09`: no fake contact action.
+      // Without a destination the state still renders and still explains
+      // itself — only the link disappears, so the missing number stays visible
+      // as a gap rather than being papered over with a dead tap target.
+      const destination = resolveEnquiryHref(enquiryHref);
+      if (!destination) {
+        return <p className="text-small text-firouzeh-text">{t("onRequest")}</p>;
+      }
       return (
         <a
-          href={enquiryHref}
+          href={destination}
           className="inline-flex items-center gap-2 self-start border-b border-firouzeh-text pb-1 text-small font-medium text-firouzeh-text"
         >
           {t("onRequest")}
           <MessageCircleIcon className="size-4" strokeWidth={1.5} aria-hidden />
         </a>
       );
+    }
 
     case "professional_only":
       return (

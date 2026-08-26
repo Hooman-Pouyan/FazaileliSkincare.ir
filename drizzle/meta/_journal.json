@@ -43,6 +43,13 @@
       "when": 1787752037772,
       "tag": "0005_content_testimonial_kind",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1787758808828,
+      "tag": "0006_product_pairings",
+      "breakpoints": true
     }
   ]
 }

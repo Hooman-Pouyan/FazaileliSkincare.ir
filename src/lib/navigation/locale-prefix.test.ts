@@ -38,6 +38,9 @@ const ALLOWED_RAW_NAVIGATION = new Set([
   "src/app/[locale]/(storefront)/shop/page.tsx",
   // `notFound` only. Its localised `redirect` comes from `@/i18n/navigation`.
   "src/modules/commerce/listing-route.tsx",
+  // `notFound` only. Every outcome that is not `ready` is a 404 here: there is
+  // no fallback chain, so the route never redirects and never needs a pathname.
+  "src/app/[locale]/(storefront)/shop/p/[slug]/page.tsx",
 ]);
 
 describe("one locale-prefixing mechanism", () => {

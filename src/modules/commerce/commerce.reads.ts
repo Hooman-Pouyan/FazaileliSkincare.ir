@@ -25,6 +25,7 @@ import {
   productLineTranslation,
   productMedia,
   productMediaTranslation,
+  productPair,
   productProtocolPhase,
   productSkinState,
   productTranslation,
@@ -61,12 +62,13 @@ import {
 import type {
   ContentBand,
   FacetGroup,
-  PriceFacet,
   HubConcern,
   HubConcernSpotlight,
   MediaView,
+  PriceFacet,
   PriceView,
   ProductDetailPage,
+  ProductDisclosureSection,
   ProductListingPage,
   ProductTile,
   ScopeQuestion,
@@ -101,6 +103,15 @@ const SORTS: readonly CatalogueSort[] = [
 
 /** Anonymous visitors are always `public`; roles arrive with AUTH3. */
 const ANONYMOUS_GROUP: CustomerGroup = "public";
+
+/**
+ * How many companions «مکمل این محصول» shows — `PDP-08` fixes it at three
+ * "unless #6 accepts another value".
+ *
+ * Bounded in the query rather than by slicing the result, so a product with
+ * twenty pairings costs the same as one with three.
+ */
+const PAIRS_WITH_LIMIT = 3;
 
 /** Bounded on purpose: the hub is an entry point, not a listing. */
 const HUB_FEATURED_LIMIT = 8;
@@ -1424,6 +1435,7 @@ export async function getProduct(
       reviewState: product.reviewState,
       isProfessionalOnly: product.isProfessionalOnly,
       priceVisibility: product.priceVisibility,
+      ircCode: product.ircCode,
       brandSlug: brand.slug,
       brandCountry: brand.countryCode,
       brandName: brandTranslation.name,
@@ -1584,6 +1596,88 @@ export async function getProduct(
   const detailHref = `/shop/p/${row.slug}`;
   const brandName = row.brandName ?? row.brandSlug;
 
+  /*
+    The accordion, in the order the design system fixes: what is in it, how to
+    use it, who it suits, and whether it is genuine.
+
+    A section with nothing to say is not built. `PDP-07` permits omitting an
+    empty optional section, and a heading that opens onto nothing reads as a
+    fault rather than as an absence — the same rule `L-4` applies to a Landing
+    beat.
+
+    «اصالت کالا» therefore renders only once an IRC code exists. The design
+    system's own component fills it with «کد اصالت این محصول به‌زودی … درج
+    می‌شود» when the code is missing, and that sentence is a promise about the
+    maintainer's business on a timeline nobody has agreed — the class of claim
+    `18-storefront-direction-decisions.md` reserves to him. All fifty products
+    carry a null `irc_code` today, so today this section is absent everywhere;
+    it appears by itself, with no layout work, the day the codes are entered.
+  */
+  const disclosures: ProductDisclosureSection[] = [];
+  if (row.ingredients)
+    disclosures.push({ key: "ingredients", body: row.ingredients });
+  if (row.usage) disclosures.push({ key: "usage", body: row.usage });
+  if (row.suitableFor)
+    disclosures.push({ key: "suitableFor", body: row.suitableFor });
+  if (row.ircCode) disclosures.push({ key: "authenticity", body: row.ircCode });
+
+  /*
+    «مکمل این محصول» — `PDP-08`.
+
+    Explicit rows only, ordered by the person who chose them, bounded to three.
+    The join runs through `visibleInLocale`, so a companion cannot escape
+    publication, exact-locale or the active-variant rule that keeps a `C-17`
+    hold invisible: pairing is a way to reach a product, not a way around the
+    gate on it. `loadTiles` then applies the same offer policy the listing uses,
+    so a companion cannot advertise a state its own page would refuse.
+  */
+  const pairRows = await db
+    .select({
+      id: product.id,
+      slug: product.slug,
+      name: productTranslation.name,
+      promise: productTranslation.promise,
+      isProfessionalOnly: product.isProfessionalOnly,
+      priceVisibility: product.priceVisibility,
+      brandSlug: brand.slug,
+      brandName: brandTranslation.name,
+    })
+    .from(productPair)
+    .innerJoin(product, eq(product.id, productPair.pairedProductId))
+    .innerJoin(
+      productTranslation,
+      and(
+        eq(productTranslation.productId, product.id),
+        eq(productTranslation.localeCode, localeCode),
+      ),
+    )
+    .innerJoin(brand, eq(brand.id, product.brandId))
+    .leftJoin(
+      brandTranslation,
+      and(
+        eq(brandTranslation.brandId, brand.id),
+        eq(brandTranslation.localeCode, localeCode),
+      ),
+    )
+    .where(and(eq(productPair.productId, row.id), visibleInLocale(localeCode)))
+    .orderBy(asc(productPair.sortOrder), asc(product.slug))
+    .limit(PAIRS_WITH_LIMIT);
+
+  const pairsWith = await loadTiles(
+    localeCode,
+    pairRows.map((entry) => ({
+      id: entry.id,
+      slug: entry.slug,
+      name: entry.name,
+      promise: entry.promise,
+      isProfessionalOnly: entry.isProfessionalOnly,
+      priceVisibility: entry.priceVisibility,
+      brandSlug: entry.brandSlug,
+      brandName: entry.brandName ?? entry.brandSlug,
+    })),
+    ANONYMOUS_GROUP,
+  );
+
   return ready({
     slug: row.slug,
     name: row.name,
@@ -1647,6 +1741,8 @@ export async function getProduct(
       row.priceVisibility === "on_request"
         ? null
         : priceView(floor, localeCode),
+    disclosures,
+    pairsWith,
     breadcrumbs: [
       { label: "فروشگاه", href: `/shop` },
       { label: brandName, href: `/shop/brand/${row.brandSlug}` },

@@ -233,5 +233,45 @@
       "previous": "Previous",
       "next": "Next"
     }
+  },
+  "pdp": {
+    "gallery": {
+      "label": "Product images",
+      "thumbnail": "Image {index}",
+      "imagePending": "Product image"
+    },
+    "brandLine": "{brand} · {line}",
+    "sizeLabel": "Size",
+    "variants": {
+      "label": "Choose a size",
+      "unavailable": "Unavailable"
+    },
+    "quantity": {
+      "label": "Quantity",
+      "decrease": "One fewer",
+      "increase": "One more"
+    },
+    "disclosure": {
+      "title": "Product details",
+      "ingredients": "Key ingredients",
+      "usage": "How to use",
+      "suitableFor": "Who it suits",
+      "authenticity": "Authenticity",
+      "ircLabel": "IRC code"
+    },
+    "pairsWith": {
+      "title": "Use it with"
+    },
+    "consult": {
+      "eyebrow": "Not sure?",
+      "body": "You don't have to guess. Tell us what your skin is doing and we'll work out together whether this is right for you.",
+      "action": "Book a consultation"
+    },
+    "professionalNote": "This product is for professional use. Ask for advice before buying.",
+    "notFound": {
+      "title": "We couldn't find this product",
+      "body": "The address may have changed. Try finding it again from the product list.",
+      "action": "All products"
+    }
   }
 }

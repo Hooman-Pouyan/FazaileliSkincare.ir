@@ -16,6 +16,7 @@ import {
   productLineTranslation,
   productMedia,
   productMediaTranslation,
+  productPair,
   productProtocolPhase,
   productSkinState,
   productTranslation,
@@ -560,8 +561,118 @@ export async function seedCommerceDemo(
           });
       }
     }
+
+    await seedProductPairs(transaction, manifest, productIdBySlug);
   });
 }
+
+/**
+ * The order a routine is actually performed in.
+ *
+ * This is the sequence on the back of the boxes — cleanse, tone, treat,
+ * moisturise, then the weekly things — not a judgement about anyone's skin. It
+ * exists so a companion list reads as a routine rather than as an arbitrary
+ * three, and so the ordering is reproducible instead of depending on insertion
+ * order.
+ */
+const ROUTINE_STEP: readonly string[] = [
+  "cleanser",
+  "toner",
+  "essence",
+  "ampoule",
+  "serum",
+  "gel",
+  "cream",
+  "balm",
+  "eye-care",
+  "patch",
+  "mask",
+  "peel",
+  "powder",
+];
+
+function routineRank(category: string): number {
+  const index = ROUTINE_STEP.indexOf(category);
+  // An unlisted category sorts last rather than first, so a category added to
+  // the manifest later cannot silently take over the head of every list.
+  return index === -1 ? ROUTINE_STEP.length : index;
+}
+
+/**
+ * «مکمل این محصول» — development pairings, marked as such.
+ *
+ * **Every row is `source: "development"`.** Which products belong together is
+ * product knowledge that belongs to the maintainer, and `C-1` is truth per
+ * field: the relationship is invented, so the row says so and one predicate
+ * finds all of them on the day the real ones arrive.
+ *
+ * The rule is deliberately mechanical rather than clinical: **the same
+ * Storyderm range, in routine order, bounded to three.** That two products are
+ * in the `ultra-lift` range is a fact the manifest already states from the
+ * packshots; that two products suit a particular face is advice, and advice is
+ * not something a seeder is entitled to invent. `PDP-08` refuses concern and
+ * category inference at read time for the same reason — this does not
+ * reintroduce it, because the rows are explicit and replaceable.
+ *
+ * Held products (`C-17`) are excluded on both sides. The read would hide them
+ * anyway through `visibleInLocale`, but seeding a pairing that can never render
+ * would leave rows nothing explains.
+ */
+async function seedProductPairs(
+  transaction: PostgresJsDatabase<typeof schema>,
+  manifest: StorydermManifest,
+  productIdBySlug: ReadonlyMap<string, string>,
+): Promise<void> {
+  const seedable = manifest.products.filter(
+    (entry) => entry.disposition === "seed",
+  );
+
+  const byLine = new Map<string, typeof seedable>();
+  for (const entry of seedable) {
+    const bucket = byLine.get(entry.line) ?? [];
+    bucket.push(entry);
+    byLine.set(entry.line, bucket);
+  }
+
+  for (const entry of seedable) {
+    const productId = productIdBySlug.get(entry.slug);
+    if (!productId) continue;
+
+    const companions = (byLine.get(entry.line) ?? [])
+      .filter((candidate) => candidate.slug !== entry.slug)
+      .sort(
+        (a, b) =>
+          routineRank(a.category) - routineRank(b.category) ||
+          a.slug.localeCompare(b.slug),
+      )
+      .slice(0, PAIRS_PER_PRODUCT);
+
+    for (const [index, companion] of companions.entries()) {
+      const pairedProductId = productIdBySlug.get(companion.slug);
+      if (!pairedProductId || pairedProductId === productId) continue;
+
+      await transaction
+        .insert(productPair)
+        .values({
+          productId,
+          pairedProductId,
+          sortOrder: index,
+          source: "development",
+        })
+        .onConflictDoUpdate({
+          target: [productPair.productId, productPair.pairedProductId],
+          set: {
+            sortOrder: index,
+            source: "development",
+            updatedAt: new Date(),
+          },
+        });
+    }
+  }
+}
+
+/** Matches `PAIRS_WITH_LIMIT` in the read — three is what `PDP-08` fixes. */
+const PAIRS_PER_PRODUCT = 3;
 
 /** Removes only what these two profiles create, in foreign-key order. */
 export async function clearStorydermCatalogue(

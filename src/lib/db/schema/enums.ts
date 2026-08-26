@@ -162,3 +162,13 @@ export const contentReviewStateEnum = pgEnum("content_review_state", [
   "reviewed",
   "approved",
 ]);
+
+/**
+ * Who chose a `product_pair` row.
+ *
+ * `development` is a pairing a seeder invented so the surface can be judged;
+ * `owner` is one Mahdieh chose. The PDP renders both identically — the
+ * distinction is for whoever promotes this catalogue to production, who needs
+ * to find every invented suggestion without reading a seed script.
+ */
+export const pairSourceEnum = pgEnum("pair_source", ["development", "owner"]);

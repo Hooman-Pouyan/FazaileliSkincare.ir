@@ -17,6 +17,7 @@ import {
   mediaProvenanceEnum,
   mediaRightsEnum,
   mediaRoleEnum,
+  pairSourceEnum,
   priceVisibilityEnum,
   productReviewStateEnum,
   sizeUnitEnum,
@@ -260,4 +261,63 @@ export const variantTranslation = pgTable(
     sizeLabel: text(),
   },
   (table) => [primaryKey({ columns: [table.variantId, table.localeCode] })],
+);
+
+/**
+ * «مکمل این محصول» — the explicit companions shown at the foot of a product
+ * page (`PDP-08`).
+ *
+ * **Directional on purpose.** A row means "when someone is looking at
+ * `productId`, offer `pairedProductId`", and it says nothing about the reverse.
+ * A cleanser belongs under a peel without the peel belonging under the
+ * cleanser, and a symmetric table cannot express that without a second
+ * convention nobody would remember.
+ *
+ * **Why a table at all**, when concern and category could produce a plausible
+ * list for free: `PDP-08` forbids exactly that. An inferred pairing is a
+ * clinical suggestion the database was never told to make — two products
+ * sharing the concern «لک» is not a reason to use them together, and on a
+ * skincare page a wrong companion is advice, not a layout defect.
+ *
+ * The two integrity rules are here rather than in application code because
+ * they are the kind that only ever break at 3am through a seeder: a product
+ * cannot pair with itself, and a pair cannot be entered twice.
+ */
+export const productPair = pgTable(
+  "product_pair",
+  {
+    productId: uuid()
+      .notNull()
+      .references(() => product.id, { onDelete: "cascade" }),
+    pairedProductId: uuid()
+      .notNull()
+      .references(() => product.id, { onDelete: "cascade" }),
+    sortOrder: integer().notNull().default(0),
+    /**
+     * Who decided this pairing. `C-1` is truth per field, not per row, and a
+     * companion list is a clinical suggestion — so the row records whether a
+     * person with standing chose it or a seeder invented it for development.
+     * Same discipline as `nameSource` on a product and `consentSource` on a
+     * testimonial: a value someone asserted is stored with who asserted it.
+     *
+     * A query can therefore find every invented pairing in one predicate on
+     * the day the real ones arrive, which is the thing a comment in a seed
+     * file cannot do for whoever ships this.
+     */
+    source: pairSourceEnum().notNull().default("development"),
+    createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+    updatedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.productId, table.pairedProductId] }),
+    // The reverse lookup: "what is this product a companion to". Unused by the
+    // PDP and indexed anyway, because the cascade above walks it on delete.
+    index("product_pair_paired_idx").on(table.pairedProductId),
+    index("product_pair_order_idx").on(table.productId, table.sortOrder),
+    check(
+      "product_pair_not_self_check",
+      sql`${table.productId} <> ${table.pairedProductId}`,
+    ),
+    check("product_pair_sort_order_check", sql`${table.sortOrder} >= 0`),
+  ],
 );

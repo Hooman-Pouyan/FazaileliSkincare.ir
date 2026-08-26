@@ -233,5 +233,45 @@
       "previous": "السابق",
       "next": "التالي"
     }
+  },
+  "pdp": {
+    "gallery": {
+      "label": "صور المنتج",
+      "thumbnail": "صورة {index}",
+      "imagePending": "صورة المنتج"
+    },
+    "brandLine": "{brand} · {line}",
+    "sizeLabel": "الحجم",
+    "variants": {
+      "label": "اختر الحجم",
+      "unavailable": "غير متوفر"
+    },
+    "quantity": {
+      "label": "الكمية",
+      "decrease": "واحد أقل",
+      "increase": "واحد أكثر"
+    },
+    "disclosure": {
+      "title": "تفاصيل المنتج",
+      "ingredients": "المكونات الأساسية",
+      "usage": "طريقة الاستعمال",
+      "suitableFor": "لأي بشرة",
+      "authenticity": "أصالة المنتج",
+      "ircLabel": "رمز IRC"
+    },
+    "pairsWith": {
+      "title": "مكمّل هذا المنتج"
+    },
+    "consult": {
+      "eyebrow": "لست متأكدة؟",
+      "body": "لا داعي للتخمين. أخبرينا بحال بشرتك لنرى معاً إن كان هذا المنتج مناسباً لك.",
+      "action": "احجزي استشارة"
+    },
+    "professionalNote": "هذا المنتج للاستعمال المهني. اطلبي استشارة قبل الشراء.",
+    "notFound": {
+      "title": "لم نعثر على هذا المنتج",
+      "body": "قد يكون العنوان قد تغيّر. جربي إيجاده من قائمة المنتجات.",
+      "action": "كل المنتجات"
+    }
   }
 }

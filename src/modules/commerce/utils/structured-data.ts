@@ -1,5 +1,6 @@
 import type {
   BreadcrumbLink,
+  ProductDetailPage,
   ProductListingPage,
   ScopeQuestion,
   ShopHubPage,
@@ -26,6 +27,17 @@ import type {
 
 /** Turns a locale-agnostic pathname into the absolute URL for this request. */
 export type AbsoluteUrl = (pathname: string) => string;
+
+/**
+ * Turns a media `src` into an absolute URL.
+ *
+ * Separate from `AbsoluteUrl` because it is a different rule: a route is
+ * locale-prefixed and an asset is not, so running an image through `localeUrl`
+ * would emit `/en/media/…`. Injected for the same reason as `AbsoluteUrl` — this
+ * module stays pure, and the one place allowed to know where media is served
+ * from stays `lib/media/url.ts`.
+ */
+export type AbsoluteAsset = (src: string) => string;
 
 export type JsonLd = Record<string, unknown>;
 
@@ -145,4 +157,79 @@ export function faqPage(questions: readonly ScopeQuestion[]): JsonLd | null {
       acceptedAnswer: { "@type": "Answer", text: entry.answer },
     })),
   };
+}
+
+/**
+ * `Product` for the product page — `PDP-10`.
+ *
+ * **An `offers` block appears only when the page shows a price.** That is the
+ * whole discipline here. `professional_only` and `on_request` deliberately show
+ * no money to the reader, and emitting one to a crawler would be structured
+ * data that contradicts the page — the exact fabrication D-18-3 calls a
+ * manual-action risk rather than a growth tactic. A hidden price published to
+ * Google is also a real commercial leak: `professional_only` exists because the
+ * trade price is not the public one.
+ *
+ * Availability is likewise the offer state's own answer, never a guess from
+ * stock: `out_of_stock` says `OutOfStock`, and nothing else claims `InStock`.
+ *
+ * No rating, no review count, no `priceValidUntil` — there is no review data,
+ * and a validity date nobody set is a fact invented to satisfy a validator.
+ *
+ * **The amount is rials, and the currency is `IRR`, which is the rial.** The
+ * page renders toman, because that is what a customer in Iran reads — but
+ * toman has no ISO 4217 code, so a feed cannot express it. Publishing the
+ * toman figure under `IRR` would understate every price by a factor of ten,
+ * which is `AGENTS.md` rule 1 arriving through the back door: the ÷10 is a
+ * *view* transform, and structured data is not a view. The two are the same
+ * amount stated in different units, and only one of them is expressible here.
+ */
+export function productSchema(
+  page: ProductDetailPage,
+  absolute: AbsoluteUrl,
+  absoluteAsset: AbsoluteAsset,
+): JsonLd {
+  const url = absolute(page.meta.canonicalPath);
+  const offer = page.offer;
+
+  const schema: JsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: page.name,
+    url,
+    brand: { "@type": "Brand", name: page.brand.name },
+  };
+
+  if (page.promise) schema.description = page.promise;
+  if (page.media.length > 0) {
+    // Absolute, like every other URL in the graph — and resolved by an injected
+    // function rather than by importing the origin. Reaching for `@/lib/site`
+    // here pulled `@/i18n/navigation` into this module, which needs the Next
+    // runtime, and broke `commerce.reads.integration.test.ts` on import. The
+    // module's own contract already said why: builders take a resolver so they
+    // stay pure and testable without a request or a React tree.
+    schema.image = page.media.map((entry) => absoluteAsset(entry.src));
+  }
+  if (page.category) schema.category = page.category.name;
+
+  const showsAPrice =
+    (offer.kind === "purchasable" ||
+      offer.kind === "variant_required" ||
+      offer.kind === "out_of_stock") &&
+    page.price !== null;
+
+  if (showsAPrice && page.price) {
+    schema.offers = {
+      "@type": "Offer",
+      url,
+      priceCurrency: "IRR",
+      price: page.price.amountRials.toString(),
+      availability:
+        offer.kind === "out_of_stock"
+          ? "https://schema.org/OutOfStock"
+          : "https://schema.org/InStock",
+    };
+  }
+
+  return schema;
 }

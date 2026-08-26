@@ -54,7 +54,11 @@ export function ProductTile({
       <div className="flex flex-col gap-1.5">
         <Link
           href={product.brandHref}
-          className="text-micro uppercase tracking-[0.13em] text-gold-text hover:underline"
+          // `py-1` is a tap target, not spacing: at the micro size this link
+          // is 22px tall, under the 24×24 floor in WCAG 2.2 AA (2.5.8), and
+          // the "inline in a sentence" exception does not cover a standalone
+          // link. Measured at 390 during packet 8's browser pass.
+          className="inline-flex min-h-6 items-center py-1 text-micro uppercase tracking-[0.13em] text-gold-text hover:underline"
         >
           {product.brandName}
         </Link>

@@ -235,6 +235,24 @@ export type ProductVariantView = Readonly<{
   href: string;
 }>;
 
+/**
+ * One section of the product page's accordion — `PDP-07`.
+ *
+ * The key travels, the title does not. Section titles are fixed interface
+ * labels («ترکیبات کلیدی», «روش استفاده») and belong in the message catalogue
+ * with every other label; the body is catalogue data from
+ * `product_translation`. Putting the title in the model would give the page a
+ * second place for the same words to live, in only one language.
+ *
+ * A section with no body is not built. `PDP-07` allows omitting an empty
+ * optional section, and the alternative — a heading that opens onto nothing —
+ * reads as a fault rather than as an absence.
+ */
+export type ProductDisclosureSection = Readonly<{
+  key: "ingredients" | "usage" | "suitableFor" | "authenticity";
+  body: string;
+}>;
+
 export type ProductDetailPage = Readonly<{
   slug: string;
   name: string;
@@ -255,6 +273,20 @@ export type ProductDetailPage = Readonly<{
   variants: readonly ProductVariantView[];
   offer: OfferState;
   price: PriceView | null;
+  /**
+   * The four accordion sections, in the order the design system fixes them.
+   * Already filtered to those with something to say.
+   */
+  disclosures: readonly ProductDisclosureSection[];
+  /**
+   * «مکمل این محصول» — explicit companions only, bounded to three (`PDP-08`).
+   *
+   * Empty when no one has chosen any. It is never filled in from a shared
+   * concern or category: two products treating «لک» is not a reason to use
+   * them together, and on a skincare page a wrong companion is advice rather
+   * than a layout defect.
+   */
+  pairsWith: readonly ProductTile[];
   breadcrumbs: readonly BreadcrumbLink[];
   meta: PageMeta;
 }>;

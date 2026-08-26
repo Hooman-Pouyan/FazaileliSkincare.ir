@@ -96,6 +96,27 @@ export function mediaUrlOrNull(objectKey: string | null): string | null {
 }
 
 /**
+ * The same address, absolute — for structured data and anything else that
+ * leaves the page.
+ *
+ * `mediaUrl` returns `/media/…` today because that is what an `img` wants, and
+ * a relative `src` is correct there. JSON-LD is not a page: Google resolves an
+ * `image` against the document, but the rest of the graph already carries
+ * absolute URLs from `localeUrl`, and a graph that mixes the two is one a
+ * consumer other than Google may read wrongly.
+ *
+ * It lives here, beside `mediaUrl`, because `url.guard.test.ts` keeps this file
+ * the only one allowed to know where media is served from — prefixing an origin
+ * in the structured-data builder would be exactly the second mechanism `C-7`
+ * exists to prevent. When `NEXT_PUBLIC_MEDIA_ORIGIN` moves to a CDN the value
+ * is already absolute and this returns it untouched.
+ */
+export function absoluteMediaUrl(src: string, siteOrigin: string): string {
+  if (/^[a-z][a-z0-9+.-]*:/i.test(src) || src.startsWith("//")) return src;
+  return `${siteOrigin.replace(/\/+$/, "")}${src.startsWith("/") ? "" : "/"}${src}`;
+}
+
+/**
  * One media row's slot within its product: `primary`, `gallery-2`, `package-1`.
  *
  * The slot rather than the row's UUID keeps a bucket listing readable and

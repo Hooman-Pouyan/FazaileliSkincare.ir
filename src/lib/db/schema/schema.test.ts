@@ -45,6 +45,7 @@ const EXPECTED_TABLES = [
   "product_line_translation",
   "product_media",
   "product_media_translation",
+  "product_pair",
   "product_protocol_phase",
   "product_skin_state",
   "product_translation",
