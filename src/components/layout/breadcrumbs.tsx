@@ -1,38 +1,59 @@
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { Container } from "./container";
+import { cn } from "@/lib/utils";
 
-export interface Crumb {
-  label: string;
-  href?: string;
-}
+export type Crumb = Readonly<{ label: string; href: string }>;
 
-/** Directional separators mirror automatically because the glyph is neutral. */
-export function Breadcrumbs({ items }: { items: Crumb[] }) {
+/**
+ * The trail from the Shop's front door to this page.
+ *
+ * Takes the page model's own `breadcrumbs` — the same array the `BreadcrumbList`
+ * JSON-LD is built from — so what a reader sees and what a crawler is told
+ * cannot disagree. The last entry is the current page and renders as text with
+ * `aria-current`, not as a link to where the reader already is.
+ *
+ * It lays out no gutter of its own; the screen decides where it sits.
+ */
+export function Breadcrumbs({
+  items,
+  className,
+}: {
+  readonly items: readonly Crumb[];
+  readonly className?: string;
+}) {
+  const t = useTranslations("plp");
+
+  if (items.length === 0) return null;
+
   return (
-    <Container className="pt-8">
-      <nav
-        aria-label="مسیر"
-        className="flex flex-wrap items-center gap-2 text-[13px] text-[var(--stone-text)]"
-      >
-        {items.map((c, i) => (
-          <span key={`${c.label}-${i}`} className="flex items-center gap-2">
-            {c.href ? (
-              <Link href={c.href} className="hover:text-[var(--ink)]">
-                {c.label}
-              </Link>
-            ) : (
-              <span className="text-[var(--ink)]" aria-current="page">
-                {c.label}
+    <nav
+      aria-label={t("breadcrumbLabel")}
+      className={cn(
+        "flex flex-wrap items-center gap-2 text-small text-stone-text",
+        className,
+      )}
+    >
+      {items.map((crumb, index) => {
+        const isCurrent = index === items.length - 1;
+        return (
+          <span key={crumb.href} className="flex items-center gap-2">
+            {isCurrent ? (
+              <span className="text-ink" aria-current="page">
+                {crumb.label}
               </span>
+            ) : (
+              <Link href={crumb.href} className="hover:text-ink">
+                {crumb.label}
+              </Link>
             )}
-            {i < items.length - 1 && (
-              <span aria-hidden className="opacity-50">
+            {!isCurrent && (
+              <span aria-hidden className="opacity-40">
                 /
               </span>
             )}
           </span>
-        ))}
-      </nav>
-    </Container>
+        );
+      })}
+    </nav>
   );
 }

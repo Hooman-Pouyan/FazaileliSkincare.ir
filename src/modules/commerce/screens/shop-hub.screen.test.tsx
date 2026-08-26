@@ -156,6 +156,16 @@ describe("shop hub — sections appear only when they have something behind them
 });
 
 describe("shop hub — the page reads correctly before any script runs", () => {
+  it.each([
+    ["empty", EMPTY],
+    ["stocked", { ...EMPTY, concerns: [CONCERN] }],
+  ] as const)(
+    "leaves rail spacing to the shared shell for the %s shop",
+    (_, page) => {
+      expect(render(page).match(/<main\b[^>]*>/u)?.[0]).not.toContain("ms-14");
+    },
+  );
+
   // renderToStaticMarkup runs no effects, so this is the document a crawler and
   // a reader with JavaScript disabled receive. Everything below must be in it.
   it("puts the headline, the lede and both hero actions in the static HTML", () => {
@@ -187,7 +197,12 @@ describe("shop hub — the page reads correctly before any script runs", () => {
       ...EMPTY,
       featured: [
         tile(
-          { kind: "purchasable", variantId: "v1", amountRials: 4_800_000n, onHand: 5 },
+          {
+            kind: "purchasable",
+            variantId: "v1",
+            amountRials: 4_800_000n,
+            onHand: 5,
+          },
           PRICE,
         ),
       ],

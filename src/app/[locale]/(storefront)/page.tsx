@@ -22,7 +22,7 @@ export default async function LandingPage({
 
   return (
     <>
-      <main className="ms-14">
+      <main>
         {/* HERO — editorial scroll, asymmetric split, no card, no shadow */}
         <section className="flex min-h-screen items-stretch">
           <div className="flex flex-1 flex-col justify-center gap-7 px-8 md:px-20">

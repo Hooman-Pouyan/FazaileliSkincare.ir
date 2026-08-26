@@ -39,7 +39,6 @@ function toggleList(
 }
 
 export function facetToggleHref(
-  locale: string,
   query: CatalogueQuery,
   parameter: FacetParameter,
   value: string,
@@ -58,7 +57,6 @@ export function facetToggleHref(
 }
 
 export function appliedFilters(
-  locale: string,
   query: CatalogueQuery,
 ): readonly AppliedFilter[] {
   const filters: AppliedFilter[] = [];
@@ -68,7 +66,7 @@ export function appliedFilters(
       filters.push({
         parameter,
         value,
-        removeHref: facetToggleHref(locale, query, parameter, value),
+        removeHref: facetToggleHref(query, parameter, value),
       });
     }
   }
@@ -77,7 +75,7 @@ export function appliedFilters(
     filters.push({
       parameter: "in_stock",
       value: "1",
-      removeHref: facetToggleHref(locale, query, "in_stock", "1"),
+      removeHref: facetToggleHref(query, "in_stock", "1"),
     });
   }
 

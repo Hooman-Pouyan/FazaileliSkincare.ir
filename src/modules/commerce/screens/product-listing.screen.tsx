@@ -1,0 +1,103 @@
+import { useTranslations } from "next-intl";
+import { Breadcrumbs } from "@/components/layout/breadcrumbs";
+import { Container } from "@/components/layout/container";
+import { EmptyState } from "@/components/layout/empty-state";
+import { Reveal } from "@/components/layout/reveal";
+import { Link } from "@/i18n/navigation";
+import { AppliedFilters, FacetRail } from "../components/facet-rail";
+import { ListingToolbar, Pagination } from "../components/listing-toolbar";
+import { ProductTile } from "../components/product-tile";
+import type { ProductListingPage } from "../models/page-models";
+
+/**
+ * One screen for every listing: concern, brand, category and search.
+ *
+ * They differ only in their scope, which the page model already resolved into a
+ * title, an introduction and a breadcrumb trail. Four screens that differ by a
+ * heading would be four places to fix the same bug.
+ *
+ * Layout is a facet rail beside a borderless grid — `10-design-playbook.md`
+ * template 3. The rail is a plain column on mobile, below the results, because
+ * a drawer that has to open before a customer can see what is filterable hides
+ * the site's main competitive advantage behind a tap.
+ */
+export function ProductListingScreen({
+  page,
+}: {
+  readonly page: ProductListingPage;
+}) {
+  const t = useTranslations("plp");
+  const isSearch = page.scope.kind === "search";
+
+  return (
+    <main className="ms-14">
+      <Container className="pt-14">
+        <Breadcrumbs items={page.breadcrumbs} />
+
+        <Reveal className="flex flex-col gap-4 pt-6 pb-10">
+          <h1 className="max-w-[20ch] text-h1 font-black leading-[1.28] text-balance">
+            {page.scope.title}
+          </h1>
+          {page.scope.introduction && (
+            <p className="max-w-[42em] text-lede leading-fa font-light text-stone-text">
+              {page.scope.introduction}
+            </p>
+          )}
+        </Reveal>
+      </Container>
+
+      <Container className="grid items-start gap-12 pb-24 lg:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] lg:gap-16">
+        <div className="order-2 lg:order-1">
+          <FacetRail facets={page.facets} />
+        </div>
+
+        <div className="order-1 flex flex-col gap-6 lg:order-2">
+          <ListingToolbar page={page} />
+          <AppliedFilters page={page} />
+
+          {page.results.length === 0 ? (
+            <EmptyState
+              title={isSearch ? t("empty.searchTitle") : t("empty.title")}
+              body={isSearch ? t("empty.searchBody") : t("empty.body")}
+              action={
+                page.clearFiltersHref ? (
+                  <Link
+                    href={page.clearFiltersHref}
+                    className="border-b border-firouzeh-text pb-1 text-small font-medium text-firouzeh-text"
+                  >
+                    {t("clearFilters")}
+                  </Link>
+                ) : (
+                  <Link
+                    href="/shop"
+                    className="border-b border-firouzeh-text pb-1 text-small font-medium text-firouzeh-text"
+                  >
+                    {t("empty.action")}
+                  </Link>
+                )
+              }
+            />
+          ) : (
+            <Reveal
+              as="ul"
+              stagger
+              step={45}
+              className="grid grid-cols-2 gap-x-6 gap-y-14 pt-2 lg:grid-cols-3"
+            >
+              {page.results.map((product) => (
+                <li key={product.slug}>
+                  <ProductTile
+                    product={product}
+                    enquiryHref={t("enquiryHref")}
+                  />
+                </li>
+              ))}
+            </Reveal>
+          )}
+
+          <Pagination page={page} />
+        </div>
+      </Container>
+    </main>
+  );
+}

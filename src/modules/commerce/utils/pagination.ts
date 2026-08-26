@@ -44,16 +44,11 @@ export type PaginationInput = Readonly<{
   window?: number;
 }>;
 
-function hrefForPage(
-  locale: string,
-  query: CatalogueQuery,
-  page: number,
-): string {
+function hrefForPage(query: CatalogueQuery, page: number): string {
   return catalogueHref({ ...query, page });
 }
 
 export function buildPagination(
-  locale: string,
   query: CatalogueQuery,
   input: PaginationInput,
 ): Pagination {
@@ -78,7 +73,7 @@ export function buildPagination(
   for (let page = start; page < start + width; page += 1) {
     pages.push({
       page,
-      href: hrefForPage(locale, query, page),
+      href: hrefForPage(query, page),
       isCurrent: page === current,
     });
   }
@@ -90,10 +85,9 @@ export function buildPagination(
     total: input.total,
     pages,
     previousHref:
-      current > DEFAULT_PAGE ? hrefForPage(locale, query, current - 1) : null,
-    nextHref:
-      current < pageCount ? hrefForPage(locale, query, current + 1) : null,
-    lastPageHref: hrefForPage(locale, query, pageCount),
+      current > DEFAULT_PAGE ? hrefForPage(query, current - 1) : null,
+    nextHref: current < pageCount ? hrefForPage(query, current + 1) : null,
+    lastPageHref: hrefForPage(query, pageCount),
     isOutOfRange,
   };
 }

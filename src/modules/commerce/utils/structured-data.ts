@@ -1,4 +1,8 @@
-import type { BreadcrumbLink, ShopHubPage } from "../models/page-models";
+import type {
+  BreadcrumbLink,
+  ProductListingPage,
+  ShopHubPage,
+} from "../models/page-models";
 
 /**
  * JSON-LD, bounded to what is true.
@@ -86,4 +90,36 @@ export function collectionPage(
   // absent property.
   if (page.meta.description) node.description = page.meta.description;
   return node;
+}
+
+/**
+ * The results on this page of a listing, as an `ItemList`.
+ *
+ * `position` is absolute across the whole listing rather than within the page,
+ * so page two starts at 13 and not at 1 — otherwise every page of a listing
+ * claims to hold the same first item.
+ *
+ * Names and URLs only. No price and no availability: the product page carries
+ * those with its real offer state, and repeating them here means two places
+ * that can disagree about whether something can be bought.
+ */
+export function listingItemList(
+  page: ProductListingPage,
+  absolute: AbsoluteUrl,
+): JsonLd | null {
+  if (page.results.length === 0) return null;
+
+  const offset = (page.pagination.page - 1) * page.pagination.pageSize;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    numberOfItems: page.pagination.total,
+    itemListElement: page.results.map((product, index) => ({
+      "@type": "ListItem",
+      position: offset + index + 1,
+      name: product.name,
+      url: absolute(product.href),
+    })),
+  };
 }

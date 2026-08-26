@@ -11,7 +11,7 @@ function queryOn(page: number) {
 
 describe("buildPagination", () => {
   it("reports a single page when everything fits", () => {
-    const pagination = buildPagination("fa", queryOn(1), {
+    const pagination = buildPagination(queryOn(1), {
       total: 12,
       pageSize: 24,
     });
@@ -26,7 +26,7 @@ describe("buildPagination", () => {
 
   it("reports one page for an empty result set, not zero", () => {
     // Given: zero results is a ready page with an empty state, so page 1 exists
-    const pagination = buildPagination("fa", queryOn(1), {
+    const pagination = buildPagination(queryOn(1), {
       total: 0,
       pageSize: 24,
     });
@@ -36,7 +36,7 @@ describe("buildPagination", () => {
   });
 
   it("omits page=1 from the first page's href", () => {
-    const pagination = buildPagination("fa", queryOn(2), {
+    const pagination = buildPagination(queryOn(2), {
       total: 60,
       pageSize: 24,
     });
@@ -46,7 +46,7 @@ describe("buildPagination", () => {
   });
 
   it("has no next link on the last page", () => {
-    const pagination = buildPagination("fa", queryOn(3), {
+    const pagination = buildPagination(queryOn(3), {
       total: 60,
       pageSize: 24,
     });
@@ -59,7 +59,7 @@ describe("buildPagination", () => {
   it("flags a page beyond the end instead of quietly showing nothing", () => {
     // Given: a stale link or a hand-edited URL. An empty grid on page 40 of 3
     // looks like a broken catalogue; the route needs to know it was out of range.
-    const pagination = buildPagination("fa", queryOn(40), {
+    const pagination = buildPagination(queryOn(40), {
       total: 60,
       pageSize: 24,
     });
@@ -69,7 +69,7 @@ describe("buildPagination", () => {
   });
 
   it("windows a long run of pages around the current one", () => {
-    const pagination = buildPagination("fa", queryOn(10), {
+    const pagination = buildPagination(queryOn(10), {
       total: 480,
       pageSize: 24,
       window: 2,
@@ -83,12 +83,12 @@ describe("buildPagination", () => {
   });
 
   it("keeps the window full at the edges rather than shrinking it", () => {
-    const first = buildPagination("fa", queryOn(1), {
+    const first = buildPagination(queryOn(1), {
       total: 480,
       pageSize: 24,
       window: 2,
     });
-    const last = buildPagination("fa", queryOn(20), {
+    const last = buildPagination(queryOn(20), {
       total: 480,
       pageSize: 24,
       window: 2,
@@ -107,7 +107,7 @@ describe("buildPagination", () => {
     if (parsed.kind === "invalid")
       throw new Error("expected a parseable query");
 
-    const pagination = buildPagination("fa", parsed.query, {
+    const pagination = buildPagination(parsed.query, {
       total: 100,
       pageSize: 24,
     });

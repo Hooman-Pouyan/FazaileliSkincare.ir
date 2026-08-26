@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
 
 /**
- * Page gutter. The rail occupies 56px at the inline-start edge, so main
- * content is offset with `ms-14` at the layout level, not here.
+ * Page gutter. StorefrontShell alone reserves the desktop rail's width;
+ * pages and containers must not add another rail offset.
  */
 export function Container({
   className,

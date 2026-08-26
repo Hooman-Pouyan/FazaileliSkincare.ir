@@ -165,5 +165,35 @@
       "title": "The calm of the corridor, not the noise of the marketplace",
       "body": "Our work is unhurried. Skin is not fixed in a night, and it is not fixed by advertising; it is fixed by a simple routine you actually keep to. What we sell here is what we use in the clinic — nothing more."
     }
+  },
+  "plp": {
+    "breadcrumbLabel": "Breadcrumb",
+    "sortLabel": "Sort",
+    "paginationLabel": "Pages",
+    "previousPage": "Previous",
+    "nextPage": "Next",
+    "appliedLabel": "Filters:",
+    "removeFilter": "Remove this filter",
+    "clearFilters": "Clear all filters",
+    "enquiryHref": "https://wa.me/",
+    "resultCount": "{count, plural, =0 {No products found} one {# product} other {# products}}",
+    "facets": {
+      "brand": "Brand",
+      "concern": "Concern",
+      "category": "Product type"
+    },
+    "sort": {
+      "featured": "Our pick",
+      "newest": "Newest",
+      "price_asc": "Lowest price",
+      "price_desc": "Highest price"
+    },
+    "empty": {
+      "title": "Nothing matches these filters",
+      "body": "Remove one of them to see more.",
+      "searchTitle": "We could not find that",
+      "searchBody": "It may be spelled differently, or we may not stock it yet. You could start from your skin concern instead.",
+      "action": "Back to the shop"
+    }
   }
 }

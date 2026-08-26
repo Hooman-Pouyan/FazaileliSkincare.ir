@@ -36,6 +36,8 @@ const ALLOWED_RAW_NAVIGATION = new Set([
   // pathname is involved.
   "src/app/[locale]/layout.tsx",
   "src/app/[locale]/(storefront)/shop/page.tsx",
+  // `notFound` only. Its localised `redirect` comes from `@/i18n/navigation`.
+  "src/modules/commerce/listing-route.tsx",
 ]);
 
 describe("one locale-prefixing mechanism", () => {

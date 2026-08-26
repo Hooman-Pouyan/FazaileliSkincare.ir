@@ -1,5 +1,6 @@
 import { config as loadEnv } from "dotenv";
 import { beforeAll, describe, expect, it } from "vitest";
+import type { FacetGroup } from "./models/page-models";
 
 loadEnv({ path: [".env.local", ".env"], quiet: true });
 
@@ -228,6 +229,117 @@ describe("listProducts — scopes, filters and the URL contract", () => {
 
     expect(slugsOf(all.page)).toContain("dev-product-3-krem-mahtab");
     expect(slugsOf(inStock.page)).not.toContain("dev-product-3-krem-mahtab");
+  });
+});
+
+describe("listProducts — facet counts", () => {
+  function groupOf(
+    page: { facets: readonly FacetGroup[] },
+    parameter: FacetGroup["parameter"],
+  ): FacetGroup | undefined {
+    return page.facets.find((group) => group.parameter === parameter);
+  }
+
+  it("offers every axis except the one the page already is", async () => {
+    // Given: a concern page filtered by concern would invite a customer to
+    // narrow a concern page by a different concern.
+    const outcome = await listProducts(
+      FA,
+      { kind: "concern", slug: "lak" },
+      new URLSearchParams(),
+    );
+    expect(outcome.kind).toBe("ready");
+    if (outcome.kind !== "ready") return;
+
+    expect(groupOf(outcome.page, "concern")).toBeUndefined();
+    expect(groupOf(outcome.page, "brand")).toBeDefined();
+  });
+
+  it("counts a group with its own selections removed, so a shopper can widen", async () => {
+    // This is PLP-03, and it is the whole reason facet counting is a separate
+    // query. Count `brand` with the brand filter still applied and every
+    // unselected brand reads zero — the rail can then only ever narrow.
+    const unfiltered = await listProducts(FA, HUB, new URLSearchParams());
+    expect(unfiltered.kind).toBe("ready");
+    if (unfiltered.kind !== "ready") return;
+
+    const brands = groupOf(unfiltered.page, "brand");
+    const first = brands?.options[0];
+    expect(first).toBeDefined();
+    if (!first) return;
+
+    const filtered = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams({ brand: first.value }),
+    );
+    expect(filtered.kind).toBe("ready");
+    if (filtered.kind !== "ready") return;
+
+    const filteredBrands = groupOf(filtered.page, "brand");
+    expect(filteredBrands).toBeDefined();
+
+    // Every other brand keeps the count it had before, because the brand
+    // filter was removed when counting brands.
+    const before = new Map(
+      brands.options.map((option) => [option.value, option.count]),
+    );
+    for (const option of filteredBrands?.options ?? []) {
+      expect(option.count).toBe(before.get(option.value));
+    }
+
+    // And the applied one is marked, so the rail can render it as removable.
+    expect(
+      filteredBrands?.options.find((option) => option.value === first.value)
+        ?.isApplied,
+    ).toBe(true);
+  });
+
+  it("narrows one group when a different group is filtered", async () => {
+    // The other half of the rule: a group's counts do respect every *other*
+    // group's selections, or the numbers would be lies.
+    const unfiltered = await listProducts(FA, HUB, new URLSearchParams());
+    if (unfiltered.kind !== "ready") return;
+
+    const concerns = groupOf(unfiltered.page, "concern");
+    const concernSlug = concerns?.options[0]?.value;
+    expect(concernSlug).toBeDefined();
+    if (!concernSlug) return;
+
+    const filtered = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams({ concern: concernSlug }),
+    );
+    if (filtered.kind !== "ready") return;
+
+    const brandsBefore = groupOf(unfiltered.page, "brand");
+    const brandsAfter = groupOf(filtered.page, "brand");
+
+    const totalBefore = (brandsBefore?.options ?? []).reduce(
+      (sum, option) => sum + option.count,
+      0,
+    );
+    const totalAfter = (brandsAfter?.options ?? []).reduce(
+      (sum, option) => sum + option.count,
+      0,
+    );
+
+    expect(totalAfter).toBeLessThanOrEqual(totalBefore);
+    expect(totalAfter).toBeGreaterThan(0);
+  });
+
+  it("gives every option a link that toggles only that value", async () => {
+    const outcome = await listProducts(FA, HUB, new URLSearchParams());
+    if (outcome.kind !== "ready") return;
+
+    for (const group of outcome.page.facets) {
+      for (const option of group.options) {
+        expect(option.href.startsWith("/shop")).toBe(true);
+        // Prefixing belongs to the navigation layer — decision R-1.
+        expect(option.href.startsWith("/fa/")).toBe(false);
+      }
+    }
   });
 });
 

@@ -118,12 +118,12 @@ invented ones through the same idempotent importer when they arrive. Real
 testimonials are the one exception: they are imported and never rendered, and the
 preview rail runs on a separate fictional set.
 
-### Known bound — facet counts
+### Closed bound — facet counts
 
-`listProducts` returns an empty `facets` array. PLP-03 requires each group's
-counts to be computed with that group's own selections removed, which is a
-separate query per group, and it lands with the facet rail in packet 7 that
-renders them. Recorded here rather than left to read as a complete result.
+`listProducts` returned an empty `facets` array through packets 3–6. Packet 7
+closed it: each group is counted with its own selections removed, one query per
+group, and the scope's own axis is not offered as a facet. The behaviour is
+asserted by integration tests rather than by inspection.
 
 ### Direction decisions binding this block
 

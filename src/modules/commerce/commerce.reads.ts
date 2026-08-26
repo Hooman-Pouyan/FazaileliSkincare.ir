@@ -47,6 +47,7 @@ import {
   redirect,
 } from "./models/outcome";
 import type {
+  FacetGroup,
   HubConcern,
   HubConcernSpotlight,
   MediaView,
@@ -482,6 +483,151 @@ async function loadConcernSpotlights(
   return spotlights;
 }
 
+/**
+ * Live counts for every facet value, one query per group.
+ *
+ * **The rule that makes a facet rail usable** — `PLP-03` — is that a group's own
+ * selections are *removed* before its counts are computed, while every other
+ * group's selections still apply. Count `brand` with the brand filter left in
+ * and every unselected brand reads zero, so a shopper can only ever narrow. The
+ * rail stops being a way to explore and becomes a dead end that has to be
+ * cleared and restarted.
+ *
+ * **Why one query per group and not one clever query.** Three groups, three
+ * small aggregates, each one readable on its own. A single query with
+ * conditional aggregates would compute the same numbers and nobody could change
+ * it later.
+ *
+ * **The scope's own axis is not offered as a facet.** On `/shop/concern/lak` the
+ * concern is the page, not a filter; showing a concern group there would invite
+ * a customer to filter a concern page by a different concern.
+ *
+ * A value appears when it has at least one product under the other filters, or
+ * when it is currently applied — an applied value must always be removable, even
+ * if another group has since reduced it to nothing.
+ */
+async function loadFacets(
+  localeCode: string,
+  query: CatalogueQuery,
+  clauses: Readonly<Record<string, ReturnType<typeof and> | undefined>>,
+): Promise<readonly FacetGroup[]> {
+  const groups: FacetGroup[] = [];
+
+  for (const parameter of FACET_PARAMETERS) {
+    if (query.scope.kind === parameter) continue;
+
+    const others = Object.entries(clauses)
+      .filter(([key, clause]) => key !== parameter && clause !== undefined)
+      .map(([, clause]) => clause);
+
+    const applied = new Set(query[LIST_PARAMETER_KEYS[parameter]]);
+    const rows = await facetCounts(localeCode, parameter, and(...others));
+
+    const options = rows
+      .filter((row) => row.count > 0 || applied.has(row.slug))
+      .map((row) => ({
+        value: row.slug,
+        label: row.name,
+        count: Number(row.count),
+        isApplied: applied.has(row.slug),
+        href: facetToggleHref(query, parameter, row.slug),
+      }));
+
+    if (options.length > 0) groups.push({ parameter, options });
+  }
+
+  return groups;
+}
+
+const FACET_PARAMETERS = ["brand", "concern", "category"] as const;
+
+const LIST_PARAMETER_KEYS = {
+  brand: "brands",
+  concern: "concerns",
+  category: "categories",
+} as const;
+
+/** One group's counts. Split out so `loadFacets` reads as the policy it is. */
+async function facetCounts(
+  localeCode: string,
+  parameter: (typeof FACET_PARAMETERS)[number],
+  where: ReturnType<typeof and>,
+): Promise<readonly { slug: string; name: string; count: number }[]> {
+  const productCount = sql<number>`count(distinct ${product.id})`;
+
+  if (parameter === "brand") {
+    return db
+      .select({
+        slug: brand.slug,
+        name: brandTranslation.name,
+        count: productCount,
+      })
+      .from(brand)
+      .innerJoin(
+        brandTranslation,
+        and(
+          eq(brandTranslation.brandId, brand.id),
+          eq(brandTranslation.localeCode, localeCode),
+        ),
+      )
+      .leftJoin(product, eq(product.brandId, brand.id))
+      .where(where)
+      .groupBy(brand.id, brand.slug, brand.sortOrder, brandTranslation.name)
+      .orderBy(asc(brand.sortOrder), asc(brand.slug));
+  }
+
+  if (parameter === "category") {
+    return db
+      .select({
+        slug: category.slug,
+        name: categoryTranslation.name,
+        count: productCount,
+      })
+      .from(category)
+      .innerJoin(
+        categoryTranslation,
+        and(
+          eq(categoryTranslation.categoryId, category.id),
+          eq(categoryTranslation.localeCode, localeCode),
+        ),
+      )
+      .leftJoin(product, eq(product.categoryId, category.id))
+      .where(where)
+      .groupBy(
+        category.id,
+        category.slug,
+        category.sortOrder,
+        categoryTranslation.name,
+      )
+      .orderBy(asc(category.sortOrder), asc(category.slug));
+  }
+
+  return db
+    .select({
+      slug: concern.slug,
+      name: concernTranslation.name,
+      count: productCount,
+    })
+    .from(concern)
+    .innerJoin(
+      concernTranslation,
+      and(
+        eq(concernTranslation.concernId, concern.id),
+        eq(concernTranslation.localeCode, localeCode),
+      ),
+    )
+    .leftJoin(productConcern, eq(productConcern.concernId, concern.id))
+    .leftJoin(product, eq(product.id, productConcern.productId))
+    .where(where)
+    .groupBy(
+      concern.id,
+      concern.slug,
+      concern.sortOrder,
+      concernTranslation.name,
+    )
+    .orderBy(asc(concern.sortOrder), asc(concern.slug));
+}
+
 export async function listProducts(
   localeCode: string,
   scope: CatalogueScope,
@@ -499,18 +645,35 @@ export async function listProducts(
   if (scopeTitle === "locale-unavailable") return localeUnavailable();
 
   const floor = eligiblePriceFloor(ANONYMOUS_GROUP);
-  const conditions = [
-    visibleInLocale(localeCode),
-    scopePredicate(query.scope, localeCode),
-    slugFilter(query.brands, "brand", localeCode),
-    slugFilter(query.categories, "category", localeCode),
-    slugFilter(query.concerns, "concern", localeCode),
-    query.inStockOnly ? inStockPredicate(ANONYMOUS_GROUP) : undefined,
-    query.minPriceRials !== null ? gte(floor, query.minPriceRials) : undefined,
-    query.maxPriceRials !== null ? lte(floor, query.maxPriceRials) : undefined,
-  ].filter((clause) => clause !== undefined);
 
-  const where = and(...conditions);
+  /**
+   * The predicate, kept in named parts rather than pre-combined.
+   *
+   * Facet counting needs the same set of conditions *minus one group's own
+   * selections* — PLP-03 — so the parts have to stay separable. Combining them
+   * here and rebuilding a second predicate for the facets would be two
+   * definitions of what this listing shows, and they would drift.
+   */
+  const clauses = {
+    visible: visibleInLocale(localeCode),
+    scope: scopePredicate(query.scope, localeCode),
+    brand: slugFilter(query.brands, "brand", localeCode),
+    category: slugFilter(query.categories, "category", localeCode),
+    concern: slugFilter(query.concerns, "concern", localeCode),
+    inStock: query.inStockOnly ? inStockPredicate(ANONYMOUS_GROUP) : undefined,
+    minPrice:
+      query.minPriceRials !== null
+        ? gte(floor, query.minPriceRials)
+        : undefined,
+    maxPrice:
+      query.maxPriceRials !== null
+        ? lte(floor, query.maxPriceRials)
+        : undefined,
+  } as const;
+
+  const where = and(
+    ...Object.values(clauses).filter((clause) => clause !== undefined),
+  );
   const offset = (query.page - 1) * DEFAULT_PAGE_SIZE;
 
   const rows = await db
@@ -553,11 +716,12 @@ export async function listProducts(
     ANONYMOUS_GROUP,
   );
 
-  const pagination = buildPagination(localeCode, query, {
+  const pagination = buildPagination(query, {
     total,
     pageSize: DEFAULT_PAGE_SIZE,
   });
-  const filters = appliedFilters(localeCode, query);
+  const filters = appliedFilters(query);
+  const facets = await loadFacets(localeCode, query, clauses);
 
   const sortOptions: readonly SortOption[] = SORTS.map((value) => ({
     value,
@@ -579,12 +743,7 @@ export async function listProducts(
     breadcrumbs: scopeTitle.breadcrumbs,
     query,
     results: tiles,
-    // Facet counts are not built here. PLP-03 requires each group's counts to be
-    // computed with that group's own selections removed, which is a separate
-    // query per group; it lands with the facet rail in the listing slice that
-    // renders it. Returning an empty array is deliberate and visible rather than
-    // a silently truncated set.
-    facets: [],
+    facets,
     appliedFilters: filters,
     clearFiltersHref:
       filters.length > 0

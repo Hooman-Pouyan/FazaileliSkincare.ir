@@ -46,7 +46,7 @@ export function ShopHubScreen({ page }: { readonly page: ShopHubPage }) {
 
   if (hasNothing) {
     return (
-      <main className="ms-14">
+      <main>
         <HubHero />
         <Container>
           <EmptyState
@@ -67,7 +67,7 @@ export function ShopHubScreen({ page }: { readonly page: ShopHubPage }) {
   }
 
   return (
-    <main className="ms-14">
+    <main>
       <HubHero />
 
       {page.concerns.length > 0 && (
