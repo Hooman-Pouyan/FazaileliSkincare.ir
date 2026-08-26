@@ -12,7 +12,7 @@
  * render.
  */
 
-import { type CataloguePreview, PUBLIC_CATALOGUE } from "./catalogue-preview";
+import { type DraftPreview, PUBLIC_ONLY } from "@/lib/preview";
 
 export type ProductReviewState = "draft" | "verified" | "approved";
 
@@ -49,12 +49,12 @@ export type PublicationBlocker =
  * required, which is what keeps a deliberately held product invisible in every
  * mode (`C-17`) and stops preview from becoming "show everything".
  *
- * The flag is resolved by `resolveCataloguePreview`, which is server-owned and
+ * The flag is resolved by `resolveDraftPreview`, which is server-owned and
  * cannot be turned on in production. It is never a search parameter.
  */
 export function isPubliclyVisible(
   input: CatalogueVisibilityInput,
-  preview: CataloguePreview = PUBLIC_CATALOGUE,
+  preview: DraftPreview = PUBLIC_ONLY,
 ): boolean {
   const publicationSatisfied =
     preview.previewDrafts ||

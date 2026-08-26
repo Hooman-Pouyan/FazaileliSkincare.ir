@@ -1,11 +1,20 @@
 /**
- * Whether this server may show catalogue rows a customer must never see.
+ * Whether this server may show records a customer must never see.
  *
- * The Storyderm catalogue is real identity with unverified commercial truth, so
- * every row is `reviewState: 'draft'` and unpublished — and the database's own
+ * Shared by the catalogue and the content spine, and by whatever surface asks
+ * next — Landing beats, Academy offerings, Booking copy all reach the same
+ * question. It lives in `lib/` rather than inside one module because a second
+ * copy of a rule this consequential is a second place for it to be wrong, and
+ * modules do not import each other's types (`AGENTS.md`).
+ *
+ * Two kinds of record need it, for the same reason. The Storyderm catalogue is
+ * real identity with unverified commercial truth; seeded editorial copy is
+ * written in Mahdieh's voice without her review (`C-14`). Both are `draft` and
+ * unpublished — and the database's own
  * `product_published_state_check` makes that pair inseparable: a product cannot
- * be published unless it is approved. That is correct, and it means the
- * development storefront would render an empty catalogue unless the *read*
+ * be published unless it is approved, and `content_block_published_state_check`
+ * says the same for a block. That is correct, and it means the development
+ * storefront would render an empty shop with no answers on it unless the *read*
  * relaxes rather than the data lying.
  *
  * `14-storyderm-draft-catalog-pipeline.md` P2 authorised exactly this and drew
@@ -22,18 +31,18 @@
  * publication alone.
  */
 
-export type CataloguePreview = Readonly<{ previewDrafts: boolean }>;
+export type DraftPreview = Readonly<{ previewDrafts: boolean }>;
 
-export const PUBLIC_CATALOGUE: CataloguePreview = { previewDrafts: false };
+export const PUBLIC_ONLY: DraftPreview = { previewDrafts: false };
 
-export function resolveCataloguePreview(
+export function resolveDraftPreview(
   nodeEnv: string | undefined = process.env.NODE_ENV,
-  setting: string | undefined = process.env.CATALOGUE_DRAFT_PREVIEW,
-): CataloguePreview {
+  setting: string | undefined = process.env.CONTENT_DRAFT_PREVIEW,
+): DraftPreview {
   // Production first, and not overridable. An environment variable set by
   // accident on a production host must not be able to publish a draft
   // catalogue; the only way to show drafts there is to approve them.
-  if (nodeEnv === "production") return PUBLIC_CATALOGUE;
+  if (nodeEnv === "production") return PUBLIC_ONLY;
 
   // On by default outside production, because an empty shop is not a useful
   // development environment. `off` exists so the storefront can be looked at

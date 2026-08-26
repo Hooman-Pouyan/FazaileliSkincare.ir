@@ -4,4 +4,5 @@ export * from "./catalog-reference";
 export * from "./catalog";
 export * from "./pricing-inventory";
 export * from "./commerce";
+export * from "./content";
 export * from "./audit";

@@ -123,3 +123,32 @@ export const outboxStatusEnum = pgEnum("outbox_status", [
   "failed",
   "dead",
 ]);
+
+/**
+ * Editorial content — the four tables every surface reads copy from.
+ * `docs/system-design/content/content-spine.md`, decisions `C-11`–`C-15`.
+ */
+export const contentBlockKindEnum = pgEnum("content_block_kind", [
+  "faq",
+  "editorial",
+  "gallery",
+  "campaign",
+]);
+export const contentSurfaceEnum = pgEnum("content_surface", [
+  "shop.hub",
+  "shop.listing",
+  "pdp",
+  "landing",
+  "booking",
+  "academy",
+]);
+export const contentScopeKindEnum = pgEnum("content_scope_kind", [
+  "concern",
+  "brand",
+  "category",
+]);
+export const contentReviewStateEnum = pgEnum("content_review_state", [
+  "draft",
+  "reviewed",
+  "approved",
+]);

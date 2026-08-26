@@ -44,10 +44,7 @@ import {
   emptyQuery,
   parseCatalogueQuery,
 } from "./models/catalogue-query";
-import {
-  type CataloguePreview,
-  resolveCataloguePreview,
-} from "./models/catalogue-preview";
+import { type DraftPreview, resolveDraftPreview } from "@/lib/preview";
 import type { CustomerGroup } from "./models/offer";
 import { resolveOfferState } from "./models/offer";
 import {
@@ -144,14 +141,14 @@ function eligiblePriceFloor(customerGroup: CustomerGroup) {
  */
 function visibleInLocale(
   localeCode: string,
-  preview: CataloguePreview = resolveCataloguePreview(),
+  preview: DraftPreview = resolveDraftPreview(),
 ) {
   return and(
     // Relaxed only under the server-owned draft preview, which cannot be on in
     // production. The Storyderm catalogue is real identity with unverified
     // commercial truth, so every row is draft and unpublished; approving it to
     // make a development page render would be the lie this exists to avoid.
-    // See models/catalogue-preview.ts and C-4.
+    // See src/lib/preview.ts and C-4.
     preview.previewDrafts ? undefined : eq(product.isPublished, true),
     preview.previewDrafts ? undefined : eq(product.reviewState, "approved"),
     exists(
@@ -1385,7 +1382,7 @@ export async function getProduct(
   // An unpublished product is not-found rather than locale-unavailable: from
   // outside, it does not exist at all.
   if (
-    !resolveCataloguePreview().previewDrafts &&
+    !resolveDraftPreview().previewDrafts &&
     (!row.isPublished || row.reviewState !== "approved")
   ) {
     return notFound();
