@@ -1,177 +1,186 @@
 import { describe, expect, it } from "vitest";
-import { DEV_PRODUCTS } from "@/lib/db/seeds/dev-data";
+import { loadStorydermManifest } from "@/lib/db/seeds/storyderm-manifest";
+import { PUBLIC_ONLY } from "@/lib/preview";
 import {
   type CustomerGroup,
   type OfferState,
   type OfferVariant,
-  type PriceVisibility,
   resolveOfferState,
 } from "./offer";
 import { isPubliclyVisible } from "./publication";
-import type { ProductReviewState } from "./publication";
 
 /**
- * The development seed declares what each fixture product is *for*. This suite
- * is what makes that declaration binding: it runs the real policy functions over
- * the real fixture and asserts the stated outcome.
+ * The manifest declares what each product *is*. This suite makes that
+ * declaration binding: it runs the real policy functions over the real
+ * curation and asserts the stated outcome.
  *
  * It needs no database, so a policy regression fails in seconds rather than
- * surviving until someone opens a browser.
+ * surviving until someone opens a browser. Its counterpart,
+ * `commerce.reads.integration.test.ts`, asserts the same statements from the
+ * other side — through SQL.
+ *
+ * It replaces the version that ran over the fictional `dev` catalogue. The
+ * fixture changed; the idea — that a seed's intent should be executable — did
+ * not.
  */
 
-type SeedProduct = Readonly<{
-  slug: string;
-  isProfessionalOnly: boolean;
-  priceVisibility: string;
-  reviewState: string;
-  isPublished: boolean;
-  expectation: string;
-  translations: readonly { readonly localeCode: string }[];
-  variants: readonly {
-    readonly sku: string;
-    readonly isActive: boolean;
-    readonly onHand: number;
-    readonly prices: readonly {
-      readonly customerGroup: string;
-      readonly amountRials: bigint;
-    }[];
-  }[];
-}>;
+const manifest = loadStorydermManifest();
+const PREVIEW = { previewDrafts: true } as const;
 
-const products: readonly SeedProduct[] = DEV_PRODUCTS;
-
-function variantsOf(entry: SeedProduct): readonly OfferVariant[] {
-  return entry.variants.map((item) => ({
-    id: item.sku,
-    isActive: item.isActive,
-    onHand: item.onHand,
-    prices: item.prices.map((price) => ({
-      customerGroup: price.customerGroup as CustomerGroup,
-      amountRials: price.amountRials,
-    })),
+/** What the reads assemble, rebuilt here from the curation. */
+function variantsOf(
+  entry: (typeof manifest.products)[number],
+): readonly OfferVariant[] {
+  return entry.variants.map((variant) => ({
+    id: variant.sku,
+    // A held product's variants are seeded inactive — `C-17`.
+    isActive: entry.disposition === "seed",
+    onHand: variant.demoStock,
+    prices:
+      variant.demoPriceRials === null
+        ? []
+        : [
+            {
+              customerGroup: "public" as const,
+              amountRials: BigInt(variant.demoPriceRials),
+            },
+          ],
   }));
 }
 
 function offerFor(
-  entry: SeedProduct,
+  entry: (typeof manifest.products)[number],
   customerGroup: CustomerGroup = "public",
-  selectedVariantId?: string,
+  selectedVariantId: string | null = null,
 ): OfferState {
   return resolveOfferState({
-    isProfessionalOnly: entry.isProfessionalOnly,
-    priceVisibility: entry.priceVisibility as PriceVisibility,
+    isProfessionalOnly: entry.audience === "professional",
+    priceVisibility: entry.priceVisibility,
     customerGroup,
     variants: variantsOf(entry),
     selectedVariantId,
   });
 }
 
-function visibleIn(entry: SeedProduct, localeCode: string): boolean {
-  return isPubliclyVisible({
-    isPublished: entry.isPublished,
-    reviewState: entry.reviewState as ProductReviewState,
-    hasTranslationForLocale: entry.translations.some(
-      (translation) => translation.localeCode === localeCode,
-    ),
-    hasActiveVariant: entry.variants.some((item) => item.isActive),
-  });
+function visible(
+  entry: (typeof manifest.products)[number],
+  preview: { previewDrafts: boolean },
+): boolean {
+  return isPubliclyVisible(
+    {
+      // Nothing in a development seed publishes or approves anything — `C-4`.
+      isPublished: false,
+      reviewState: "draft",
+      hasTranslationForLocale: true,
+      hasActiveVariant: variantsOf(entry).some((variant) => variant.isActive),
+    },
+    preview,
+  );
 }
 
-function bySlug(fragment: string): SeedProduct {
-  const found = products.find((entry) => entry.slug.includes(fragment));
-  if (!found) throw new Error(`No development product matching ${fragment}`);
-  return found;
-}
-
-describe("every development product behaves as its expectation declares", () => {
-  it("declares an expectation this suite knows how to check", () => {
-    const checked = new Set<string>([
-      "purchasable",
-      "purchasable-multi-variant",
-      "purchasable-without-media",
-      "out-of-stock",
-      "on-request-not-purchasable",
-      "professional-only-not-purchasable",
-      "no-active-variant-not-purchasable",
-      "absent-from-fa-catalogue",
-      "absent-from-catalogue",
-    ]);
-    const unchecked = products
-      .map((entry) => entry.expectation)
-      .filter((expectation) => !checked.has(expectation));
-
-    expect(unchecked).toEqual([]);
-  });
-
-  it("purchasable products are visible in Persian and buyable", () => {
-    for (const entry of products.filter((item) =>
-      ["purchasable", "purchasable-without-media"].includes(item.expectation),
-    )) {
-      expect(visibleIn(entry, "fa"), entry.slug).toBe(true);
-      expect(offerFor(entry).kind, entry.slug).toBe("purchasable");
+describe("publication, over the real curation", () => {
+  it("shows a customer nothing, because nothing is approved", () => {
+    for (const entry of manifest.products) {
+      expect(visible(entry, PUBLIC_ONLY), entry.slug).toBe(false);
     }
   });
 
-  it("the multi-variant product asks for a choice, then becomes buyable", () => {
-    const entry = bySlug("serum-shabnam");
-
-    expect(visibleIn(entry, "fa")).toBe(true);
-    expect(offerFor(entry).kind).toBe("variant_required");
-
-    const firstSku = entry.variants[0]?.sku;
-    expect(firstSku).toBeDefined();
-    expect(offerFor(entry, "public", firstSku).kind).toBe("purchasable");
+  it("shows the seeded catalogue under draft preview", () => {
+    const seeded = manifest.products.filter(
+      (entry) => entry.disposition === "seed",
+    );
+    for (const entry of seeded) {
+      expect(visible(entry, PREVIEW), entry.slug).toBe(true);
+    }
   });
 
-  it("the empty product is visible but out of stock", () => {
-    const entry = bySlug("krem-mahtab");
+  it("keeps a held product invisible even under preview", () => {
+    const held = manifest.products.filter(
+      (entry) => entry.disposition === "hold",
+    );
+    expect(held.length).toBeGreaterThan(0);
+    for (const entry of held) {
+      expect(visible(entry, PREVIEW), entry.slug).toBe(false);
+    }
+  });
+});
 
-    expect(visibleIn(entry, "fa")).toBe(true);
-    expect(offerFor(entry).kind).toBe("out_of_stock");
+describe("offer state, over the real curation", () => {
+  const seeded = manifest.products.filter(
+    (entry) => entry.disposition === "seed",
+  );
+
+  it("never offers a price for an on-request product", () => {
+    const onRequest = seeded.filter(
+      (entry) => entry.priceVisibility === "on_request",
+    );
+    expect(onRequest.length).toBeGreaterThan(0);
+    for (const entry of onRequest) {
+      expect(offerFor(entry).kind, entry.slug).toBe(
+        entry.audience === "professional" ? "professional_only" : "on_request",
+      );
+    }
   });
 
-  it("the on-request product is visible and carries no purchase path", () => {
-    const entry = bySlug("mask-parniyan");
-
-    expect(visibleIn(entry, "fa")).toBe(true);
-    expect(offerFor(entry).kind).toBe("on_request");
+  it("never lets an anonymous visitor buy a professional-only product", () => {
+    const professional = seeded.filter(
+      (entry) => entry.audience === "professional",
+    );
+    expect(professional.length).toBeGreaterThan(0);
+    for (const entry of professional) {
+      // Restriction is decided before price or stock, so it can never present
+      // as buyable to someone who may not buy it.
+      expect(offerFor(entry, "public").kind, entry.slug).toBe(
+        "professional_only",
+      );
+    }
   });
 
-  it("the professional-only product is visible to the public but not buyable", () => {
-    // D-18-2: visible for authority and Persian SEO, never purchasable by an
-    // anonymous visitor, who is always the public customer group until AUTH3.
-    const entry = bySlug("peeling-atrisa");
-
-    expect(visibleIn(entry, "fa")).toBe(true);
-    expect(offerFor(entry, "public").kind).toBe("professional_only");
-    expect(offerFor(entry, "professional").kind).toBe("purchasable");
+  it("reports out of stock rather than purchasable when nothing is on hand", () => {
+    const empty = seeded.filter(
+      (entry) =>
+        entry.variants.length > 0 &&
+        entry.priceVisibility === "public" &&
+        entry.audience === "home" &&
+        entry.variants.every((variant) => variant.demoStock === 0),
+    );
+    expect(empty.length).toBeGreaterThanOrEqual(2);
+    for (const entry of empty) {
+      expect(offerFor(entry).kind, entry.slug).toBe("out_of_stock");
+    }
   });
 
-  it("a product whose only variant is inactive leaves the catalogue entirely", () => {
-    const entry = bySlug("tonik-baran");
+  it("asks for a size before selling one, then sells the size chosen", () => {
+    const ladders = seeded.filter(
+      (entry) =>
+        entry.variants.length > 1 &&
+        entry.priceVisibility === "public" &&
+        entry.audience === "home" &&
+        entry.variants.every((variant) => variant.demoStock > 0),
+    );
+    expect(ladders.length).toBeGreaterThan(5);
 
-    expect(visibleIn(entry, "fa")).toBe(false);
-    expect(offerFor(entry).kind).toBe("unavailable");
+    for (const entry of ladders) {
+      expect(offerFor(entry).kind, entry.slug).toBe("variant_required");
+      const first = entry.variants[0];
+      if (!first) continue;
+      expect(offerFor(entry, "public", first.sku).kind, entry.slug).toBe(
+        "purchasable",
+      );
+    }
   });
 
-  it("an untranslated product is absent from Persian and present in English", () => {
-    // Given: no fallback chain, so English copy never stands in for Persian
-    const entry = bySlug("english-only-cream");
-
-    expect(visibleIn(entry, "fa")).toBe(false);
-    expect(visibleIn(entry, "en")).toBe(true);
-  });
-
-  it("unpublished products are absent from every locale", () => {
-    for (const entry of products.filter(
-      (item) => item.expectation === "absent-from-catalogue",
-    )) {
-      for (const localeCode of ["fa", "en", "ar"]) {
-        expect(
-          visibleIn(entry, localeCode),
-          `${entry.slug} ${localeCode}`,
-        ).toBe(false);
-      }
+  it("sells a single-variant product in stock without asking anything", () => {
+    const simple = seeded.filter(
+      (entry) =>
+        entry.variants.length === 1 &&
+        entry.priceVisibility === "public" &&
+        entry.audience === "home" &&
+        (entry.variants[0]?.demoStock ?? 0) > 0,
+    );
+    expect(simple.length).toBeGreaterThan(5);
+    for (const entry of simple) {
+      expect(offerFor(entry).kind, entry.slug).toBe("purchasable");
     }
   });
 });

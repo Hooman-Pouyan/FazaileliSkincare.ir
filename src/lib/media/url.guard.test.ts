@@ -25,12 +25,12 @@ const CONCATENATED_ASSET_PATH = /["']\/(?:images|media)\/[^"']*["']\s*\+/;
 /** Only `url.ts` reads the origin. Everything else calls `mediaUrl`. */
 const READS_ORIGIN = /NEXT_PUBLIC_MEDIA_ORIGIN/;
 
-const ALLOWED_COMPUTED = new Set([
-  // Retired by CAT4. The fictional catalogue paints its own placeholder SVGs
-  // because it has no real media; the manifest-derived seed carries object
-  // keys instead. Delete this entry with the file.
-  "src/lib/db/seeds/dev.ts",
-]);
+/**
+ * Empty, and it should stay that way. It briefly held the fictional seed, which
+ * painted its own placeholder SVG paths because it had no real media; that file
+ * is gone and the manifest-derived seed carries object keys.
+ */
+const ALLOWED_COMPUTED = new Set<string>([]);
 
 const ALLOWED_ORIGIN_READERS = new Set([
   "src/lib/media/url.ts",

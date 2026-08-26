@@ -37,3 +37,6 @@ design-system/Untitled
 # `pnpm media:derive`. The sources stay in the repo; a hundred megabytes of
 # WebP does not belong in git history. See docs/26 C-9.
 public/media/
+
+# Python bytecode from the offline tooling in scripts/ (C-18)
+__pycache__/

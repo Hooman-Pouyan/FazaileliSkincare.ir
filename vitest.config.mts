@@ -17,6 +17,18 @@ export default defineConfig({
   },
   test: {
     setupFiles: ["./vitest.setup.mts"],
-    exclude: ["**/node_modules/**", "**/.tmp-app*/**", "**/.next/**"],
+    /*
+      `.git/**` is not paranoia. Files that cannot be deleted on this mount are
+      moved aside into `.git/`, and vitest happily collected them — a retired
+      suite kept running, and a stale copy of a moved test inflated the count
+      by three without anyone noticing. A test runner has no business reading
+      the object store either way.
+    */
+    exclude: [
+      "**/node_modules/**",
+      "**/.tmp-app*/**",
+      "**/.next/**",
+      "**/.git/**",
+    ],
   },
 });

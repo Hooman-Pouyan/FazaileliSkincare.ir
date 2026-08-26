@@ -31,29 +31,29 @@ across ten numbered range folders. The counts below are **files**, and the
 importer never turns a file count into a product count (`docs/14`, restated as
 C-16).
 
-| Folder                | Files | What the filenames actually settle                                              |
-| --------------------- | ----: | -------------------------------------------------------------------------------- |
-| `1.Ultra Lift`        |     9 | Two size pairs (A-Z Cream 50/220, Essence Aqua 150/500) plus one powder in four repeat shots |
-| `2.Princess Shine`    |    16 | Ten `Princess Peel_IMG` frames are one gallery; the rest are a size ladder      |
-| `3.O2 White`          |     7 | Three size pairs and one peel                                                    |
-| `4.TimeMachine Calming` |   8 | Two size pairs, one Hyal pair, two peel frames of one subject                    |
-| `5.Clinic-A`          |     7 | Three size pairs and one spot treatment                                          |
-| `6.Anti Wrinkle Care` |     5 | Two contour products and one patch in three frames                               |
-| `7.Personal Care`     |    15 | Four size pairs, several singletons, one box-package shot                        |
-| `8.Protection`        |     2 | Korean-suffixed filenames (`신형` = "new model") — identification unresolved     |
-| `9.Mask/1.72 Capsule` |    10 | Three colours × (retail / pouch / 1 kg bulk) plus one small pack                  |
-| `9.Mask/2.Gelato`     |     3 | Three distinct masks                                                             |
-| `9.Mask/3.Sheet`      |     6 | Six distinct sheet masks                                                         |
-| `10.Anti-Red`         |     2 | Two distinct Resens Red products                                                 |
+| Folder                  | Files | What the filenames actually settle                                                           |
+| ----------------------- | ----: | -------------------------------------------------------------------------------------------- |
+| `1.Ultra Lift`          |     9 | Two size pairs (A-Z Cream 50/220, Essence Aqua 150/500) plus one powder in four repeat shots |
+| `2.Princess Shine`      |    16 | Ten `Princess Peel_IMG` frames are one gallery; the rest are a size ladder                   |
+| `3.O2 White`            |     7 | Three size pairs and one peel                                                                |
+| `4.TimeMachine Calming` |     8 | Two size pairs, one Hyal pair, two peel frames of one subject                                |
+| `5.Clinic-A`            |     7 | Three size pairs and one spot treatment                                                      |
+| `6.Anti Wrinkle Care`   |     5 | Two contour products and one patch in three frames                                           |
+| `7.Personal Care`       |    15 | Four size pairs, several singletons, one box-package shot                                    |
+| `8.Protection`          |     2 | Korean-suffixed filenames (`신형` = "new model") — identification unresolved                 |
+| `9.Mask/1.72 Capsule`   |    10 | Three colours × (retail / pouch / 1 kg bulk) plus one small pack                             |
+| `9.Mask/2.Gelato`       |     3 | Three distinct masks                                                                         |
+| `9.Mask/3.Sheet`        |     6 | Six distinct sheet masks                                                                     |
+| `10.Anti-Red`           |     2 | Two distinct Resens Red products                                                             |
 
 **The grouping rules used**, stated so they can be checked:
 
 1. **Same name, different millilitres → one product, two variants.** `Clinic-A
-   Aqua 150ml` and `500ml` are one PDP with a size ladder.
+Aqua 150ml` and `500ml` are one PDP with a size ladder.
 2. **Same subject, many frames → one product, one primary and the rest
    gallery.** The ten Princess Peel photographs are a gallery, not ten products.
 3. **A bulk pack is a variant, and it is professional-only.** `72 capsule mask
-   blue 1kg` is the salon size of the retail pouch, not a different product.
+blue 1kg` is the salon size of the retail pouch, not a different product.
 4. **A colour is a variant only where the colour names a formula.** The 72
    Capsule Mask's blue, wine and yellow are three formulas and therefore three
    products; a pouch photograph of one of them is packaging imagery.
@@ -71,36 +71,50 @@ input to the seed (C-16).
 {
   "brand": "storyderm",
   "generatedBy": "hand-curated",
-  "reviewedBy": null,              // set when the maintainer signs off
+  "reviewedBy": null, // set when the maintainer signs off
   "products": [
     {
       "draftKey": "storyderm-clinic-a-cream",
       "slug": "clinic-a-cream",
       "line": "clinic-a",
       "category": "cream",
-      "disposition": "seed",       // seed | hold  (C-17)
-      "audience": "home",          // home | professional
+      "disposition": "seed", // seed | hold  (C-17)
+      "audience": "home", // home | professional
       "names": {
         "form": { "fa": "کرم", "en": "Cream", "source": "packshot" },
-        "product": { "value": "Clinic-A", "source": "packshot" }
+        "product": { "value": "Clinic-A", "source": "packshot" },
       },
       "concerns": ["acne"],
       "skinStates": ["oily", "combination"],
       "phases": ["treat"],
       "variants": [
-        { "sizeValue": 50,  "sizeUnit": "ml", "source": "filename", "demoPriceRials": 24800000, "demoStock": 6 },
-        { "sizeValue": 220, "sizeUnit": "ml", "source": "filename", "demoPriceRials": 78500000, "demoStock": 2 }
+        {
+          "sizeValue": 50,
+          "sizeUnit": "ml",
+          "source": "filename",
+          "demoPriceRials": 24800000,
+          "demoStock": 6,
+        },
+        {
+          "sizeValue": 220,
+          "sizeUnit": "ml",
+          "source": "filename",
+          "demoPriceRials": 78500000,
+          "demoStock": 2,
+        },
       ],
       "media": [
         { "path": "1.Ultra Lift/…png", "role": "primary" },
-        { "path": "…",                  "role": "gallery" }
-      ]
-    }
+        { "path": "…", "role": "gallery" },
+      ],
+    },
   ],
   "unresolved": [
-    { "path": "8.Protection/BB Ecocell Balm 50ml 신형.png",
-      "reason": "Korean packaging suffix; product identity and current SKU not confirmed" }
-  ]
+    {
+      "path": "8.Protection/BB Ecocell Balm 50ml 신형.png",
+      "reason": "Korean packaging suffix; product identity and current SKU not confirmed",
+    },
+  ],
 }
 ```
 
@@ -115,7 +129,7 @@ range's own name where it is unambiguous — Anti-Red to redness, O2 White to
 brightening, TimeMachine Calming to sensitivity — and recorded with
 `"source": "range_name"` so the maintainer can see exactly which associations
 are inference rather than fact. They are taxonomy placement, not a clinical
-claim: the product is *filed under* redness, it does not *claim to treat* it.
+claim: the product is _filed under_ redness, it does not _claim to treat_ it.
 
 ---
 

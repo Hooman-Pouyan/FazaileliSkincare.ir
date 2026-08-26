@@ -4,7 +4,6 @@ import postgres from "postgres";
 import { z } from "zod";
 import * as schema from "./schema";
 import { seedContent } from "./seeds/content";
-import { seedDevCatalogue } from "./seeds/dev";
 import { seedReference } from "./seeds/reference";
 import { seedCommerceDemo, seedStorydermCatalogue } from "./seeds/storyderm";
 
@@ -26,7 +25,7 @@ async function main(): Promise<void> {
   const input = z
     .object({
       databaseUrl: z.string().url(),
-      profile: z.enum(["reference", "dev", "storyderm", "demo"]),
+      profile: z.enum(["reference", "storyderm", "demo"]),
     })
     .parse({
       databaseUrl: process.env.DATABASE_URL,
@@ -52,17 +51,13 @@ async function main(): Promise<void> {
       Both `storyderm` and `demo` also seed the editorial content spine: FAQ
       sets, the listing intro, a dated campaign and a gallery. All draft, all
       unpublishable, all visible only through the draft preview.
-        dev         the older fictional catalogue. Retired by C-6 once the
-                    Storyderm integration suite is green; see docs/26.
-
-      `dev` and `storyderm` are ALTERNATIVES, not layers. Each refuses a
-      database holding the other's products, so a mixed catalogue is a loud
-      failure rather than a confusing page.
+      The fictional `dev` profile is gone — C-6. It existed to give the routes
+      something to render before there was anything real; there is now. Its
+      state coverage moved onto real products and is asserted by name in
+      `storyderm-manifest.test.ts`, because replacing a fixture with realistic
+      data is a regression if the realistic data happens to be uniform.
     */
     await seedReference(database);
-    if (input.profile === "dev") {
-      await seedDevCatalogue(database);
-    }
     if (input.profile === "storyderm" || input.profile === "demo") {
       await seedStorydermCatalogue(database);
     }

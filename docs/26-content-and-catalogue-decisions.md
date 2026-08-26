@@ -80,15 +80,21 @@ existing `NODE_ENV=production` refusal is retained and extended to
 The fictional `dev-*` catalogue is **retired**, not deleted in place: its
 coverage matters. See C-6.
 
-**Retirement is a two-step, deliberately.** `dev` still exists as a profile
-while the Storyderm integration suite is written and proven, because deleting a
-600-line integration test's fixture and rewriting its expectations in the same
-change, in an environment where integration tests cannot be run, is how a
-regression ships. The two are **alternatives, not layers**: each profile refuses
-a database holding the other's products, so a mixed catalogue fails loudly
-instead of rendering a confusing page. `dev` is deleted in the same packet, once
-the replacement suite is green — tracked as an open item rather than left to
-drift.
+**Retirement was a two-step, deliberately — and it is now complete.** `dev`
+outlived the Storyderm seed by exactly one run: deleting a 600-line integration
+test's fixture and rewriting its expectations in the same change, in an
+environment where those tests cannot be run, is how a regression ships. The two
+were **alternatives, not layers** — each profile refused a database holding the
+other's products — and that guard immediately earned its place: the first real
+seed run stopped with _"This database already holds a product the development
+seed did not create (ultra-a-z-cream)"_, which is the failure being loud instead
+of a mixed catalogue rendering a confusing page.
+
+`dev.ts`, `dev-data.ts` and their tests are gone. The replacement suite derives
+its expectations **from the manifest** rather than from constants, so a curation
+change cannot silently invalidate a test — and the assertion it makes is
+stronger than the one it replaced: _the database matches the curated
+manifest_.
 
 ---
 
@@ -468,7 +474,7 @@ script someone avoids.
 | 5   | **Arabic catalogue vocabulary.** Carried forward from `F-8`; the same gap now applies to content translations                                                                                                                 | `/ar` browsability                |
 | 6   | **Forlle'd and Thalgo.** This packet covers Storyderm only, because Storyderm is the brand with usable imagery in the repository. The other two need assets before they can be modelled                                       | Their listings                    |
 | 7   | **Object storage account** (Arvan or Liara). Deferred by the maintainer; C-10 makes it configuration                                                                                                                          | Production media serving          |
-| 8   | **The `dev` profile's retirement** — held open until the Storyderm integration suite is green. `C-2`                                                                                                                          | Closing packet 7B                 |
+| 8   | ~~The `dev` profile's retirement~~ — **done.** Deleted once the replacement suite existed; see `7B.12`                                                                                                                        | —                                 |
 
 ---
 

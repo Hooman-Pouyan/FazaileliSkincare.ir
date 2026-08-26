@@ -14,6 +14,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "catalogue:curate": "python3 scripts/catalogue/curate-storyderm.py",
+    "docs:open-items": "python3 scripts/docs/open-items.py",
     "media:derive": "python3 scripts/media/derive.py",
     "db:down": "bash scripts/database.sh down",
     "db:generate": "drizzle-kit generate",

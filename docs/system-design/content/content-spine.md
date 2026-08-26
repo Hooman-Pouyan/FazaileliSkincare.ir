@@ -33,21 +33,21 @@ Four tables. Two hold structure, two hold language.
 
 ### `content_block`
 
-| Column           | Type                     | Meaning                                                                  |
-| ---------------- | ------------------------ | ------------------------------------------------------------------------ |
-| `id`             | `uuid` pk                |                                                                          |
-| `key`            | `text` unique            | Stable upsert key, e.g. `shop.listing.concern.lak.faq`                    |
-| `kind`           | `content_block_kind`     | `faq` · `editorial` · `gallery` · `campaign`                             |
-| `surface`        | `content_surface`        | `shop.hub` · `shop.listing` · `pdp` · `landing` · `booking` · `academy`  |
-| `scopeKind`      | `content_scope_kind`     | nullable — `concern` · `brand` · `category`                              |
-| `scopeSlug`      | `text`                   | nullable — the taxonomy slug, checked against the taxonomy by the seeder |
-| `sortOrder`      | `integer`                | Order among sibling blocks on one surface                                |
-| `reviewState`    | `content_review_state`   | `draft` · `reviewed` · `approved` — C-14                                 |
-| `isPublished`    | `boolean`                | Deliberate visibility, separate from review — mirrors `product`          |
-| `effectiveFrom`  | `timestamptz` nullable   | C-13                                                                     |
-| `effectiveUntil` | `timestamptz` nullable   | C-13                                                                     |
-| `authorNote`     | `text` nullable          | Where the copy came from; `unreviewed_draft` for seeded voice            |
-| `createdAt` / `updatedAt` | `timestamptz`   |                                                                          |
+| Column                    | Type                   | Meaning                                                                  |
+| ------------------------- | ---------------------- | ------------------------------------------------------------------------ |
+| `id`                      | `uuid` pk              |                                                                          |
+| `key`                     | `text` unique          | Stable upsert key, e.g. `shop.listing.concern.lak.faq`                   |
+| `kind`                    | `content_block_kind`   | `faq` · `editorial` · `gallery` · `campaign`                             |
+| `surface`                 | `content_surface`      | `shop.hub` · `shop.listing` · `pdp` · `landing` · `booking` · `academy`  |
+| `scopeKind`               | `content_scope_kind`   | nullable — `concern` · `brand` · `category`                              |
+| `scopeSlug`               | `text`                 | nullable — the taxonomy slug, checked against the taxonomy by the seeder |
+| `sortOrder`               | `integer`              | Order among sibling blocks on one surface                                |
+| `reviewState`             | `content_review_state` | `draft` · `reviewed` · `approved` — C-14                                 |
+| `isPublished`             | `boolean`              | Deliberate visibility, separate from review — mirrors `product`          |
+| `effectiveFrom`           | `timestamptz` nullable | C-13                                                                     |
+| `effectiveUntil`          | `timestamptz` nullable | C-13                                                                     |
+| `authorNote`              | `text` nullable        | Where the copy came from; `unreviewed_draft` for seeded voice            |
+| `createdAt` / `updatedAt` | `timestamptz`          |                                                                          |
 
 Constraints: `scopeKind` and `scopeSlug` are both null or both set;
 `effectiveUntil > effectiveFrom` when both are set; unique on `key`; index on

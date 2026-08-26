@@ -50,6 +50,12 @@ jobs:
       - name: Lint
         run: pnpm lint
 
+      # The register in the ledger is generated from the review log. A stale
+      # one is worse than none, because it is read as complete — so closing an
+      # item without refreshing it fails here.
+      - name: Open-items register is current
+        run: python3 scripts/docs/open-items.py --check
+
       # Includes the class-compilation gate, which is the only thing standing
       # between a mistyped Tailwind utility and a page that renders slightly
       # wrong with every other check green — AGENTS.md.

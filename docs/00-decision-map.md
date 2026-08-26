@@ -67,6 +67,35 @@ Confirmed from the account and the space: official representative of **Forlle'd*
 
 Server/Drizzle owns domain truth; the URL owns applied shareable query state; module-scoped Zustand owns coordinated UI interaction; React Hook Form owns form buffers; TanStack Query owns only approved browser-refetched server state. The complete contract is [`architecture/data-and-state-ownership.md`](architecture/data-and-state-ownership.md).
 
+## Decisions with a re-review trigger
+
+Some decisions are correct _for now_ and carry the condition that would change
+them. Written down here because a conditional decision whose condition nobody
+remembers is just an unexplained constraint two years later.
+
+This list is short by design. A decision only belongs here if the trigger is
+something that could actually happen and would actually change the answer — not
+"revisit someday".
+
+| Decision                                                                     | Holds until                                                                                                                                                             | Lives in                                                                           |
+| ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| **`C-18` — offline asset and data tooling is Python**                        | `sharp` becomes installable **and** a second Node-side asset task appears. One script is not worth a rewrite; two are                                                   | [`26-content-and-catalogue-decisions.md`](26-content-and-catalogue-decisions.md)   |
+| **`C-2` — the fictional `dev` seed profile still exists beside `storyderm`** | The Storyderm integration suite is green. Then `dev` is deleted, not kept                                                                                               | [`26-content-and-catalogue-decisions.md`](26-content-and-catalogue-decisions.md)   |
+| **`C-9` — two derivative widths, 640 and 1600**                              | A surface needs a third. Adding one speculatively doubles the derivation cost for nothing                                                                               | [`26-content-and-catalogue-decisions.md`](26-content-and-catalogue-decisions.md)   |
+| **`C-11` — no authoring UI; content is seeded**                              | `/studio` exists (Phase 5). Building half an admin now creates the second source of truth the spine exists to avoid                                                     | [`system-design/content/content-spine.md`](system-design/content/content-spine.md) |
+| **`C-12` — scope fallback is one level deep**                                | Someone writes copy that genuinely wants a middle tier. A three-level cascade is a rule nobody can hold in their head while writing                                     | [`26-content-and-catalogue-decisions.md`](26-content-and-catalogue-decisions.md)   |
+| **Content `body` is plain text, not rich text**                              | An author exists who needs structure. Choosing a rich-text format before anyone authors anything picks a migration blind                                                | [`system-design/content/content-spine.md`](system-design/content/content-spine.md) |
+| **`F-3` — `audience` is single-select**                                      | Customer roles exist. Today every viewer is `public`, so a multi-select would be three checkboxes with one meaningful state                                             | [`24-facet-manifest.md`](24-facet-manifest.md)                                     |
+| **`F-4` — six requested filters are not built**                              | Each has its own named unblocker — a discount model, a review model, a bundle model. None is "we forgot"                                                                | [`24-facet-manifest.md`](24-facet-manifest.md)                                     |
+| **One `daily-care` protocol**                                                | A second protocol is added. `protocol_phase` is unique on `(protocolId, slug)`, so a second "treat" phase makes `?phase=treat` ambiguous and the facet has to be scoped | [`../src/lib/db/seeds/reference-data.ts`](../src/lib/db/seeds/reference-data.ts)   |
+| **Categories are flat; `category.parentId` stays null**                      | A level has enough products to be worth drilling into. Thirteen forms over fifty products does not                                                                      | [`../src/lib/db/seeds/reference-data.ts`](../src/lib/db/seeds/reference-data.ts)   |
+| **`D12` — skincare only at launch, schema open for health care**             | The range broadens. The catalogue models attributes flexibly so new categories are rows, not a migration                                                                | this file                                                                          |
+| **`DS-4` — the `Divider` appears at most twice on a page**                   | Nothing. It stops being special the third time, which is the whole point                                                                                                | [`25-design-system-adherence.md`](25-design-system-adherence.md)                   |
+| **`M-3` — Swiper is the only carousel; `Autoplay` is not imported**          | Nothing. `L-3` refuses autoplay outright, and the module's absence is what makes that unbypassable by a prop                                                            | [`23-motion-and-interaction-decisions.md`](23-motion-and-interaction-decisions.md) |
+| **`L-12` — 3D/WebGL brand storytelling is deferred**                         | Phase 5 at the earliest, as a lazy-loaded route. Not a Landing beat                                                                                                     | [`21-landing-composition-decisions.md`](21-landing-composition-decisions.md)       |
+
+---
+
 ## Deliberately deferred
 
 | Question                                      | Until                 | Why it's safe to wait                       |
