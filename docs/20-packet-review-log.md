@@ -129,6 +129,27 @@ carried gap has become a real problem.
 
 ---
 
+## Packet 6, second pass — scroll storytelling — 2026-08-26
+
+Triggered by the maintainer seeing the first Landing: _"a normal landing"_ — not
+storytelling, not using the assets already in the repository, missing motion
+that had been asked for, and copy that read as robotic. Decisions in
+[`28-landing-experience-decisions.md`](28-landing-experience-decisions.md).
+
+| #    | What                                                                                                                                                                                                                                                                                                                                                                                  | Kind        | Status        |
+| ---- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- | ------------- |
+| 6b.1 | **Parallax was refused by `L-3` and `LAND-07`; the refusal is withdrawn** at the maintainer's instruction. The reasons it was refused are answered rather than argued with — `translate3d` only, rAF off a passive listener, decorative and `aria-hidden`, space reserved so CLS stays zero, off under reduced motion, desktop only. Pinning, snapping and scroll hijack stay refused | UI / motion | resolved      |
+| 6b.2 | **`L-2`'s five fixed beats become eight.** The new ones sit between the originals rather than after them. The rule that stops it becoming a scroll of modules is unchanged and matters more: every beat sits beside a fact that is independently true                                                                                                                                 | product     | resolved      |
+| 6b.3 | **Ten testimonials are held, and not for a consent reason.** Nine carry `medical_appearance_claim`, `injectable_reference` or a third-party claim — a customer saying a treatment removed a dent in her forehead is a medical claim the _business_ publishes, and the speaker's permission does not make the business's use of it compliant. Decide them one at a time                | legal       | **needs you** |
+| 6b.4 | **The 33 display quotes are my edits of other people's words.** Greetings, sign-offs, emoji and elongated letters removed; their sentence and meaning kept; the full transcription stored beside each one so the edit is visible. They are seeded unpublished, so development shows them and production cannot, until you have read them                                              | content     | **needs you** |
+| 6b.5 | **Testimonials are Persian-only on purpose.** Translating someone's testimonial puts words in their mouth in a language they did not speak, so the English row carries no body and the exact-locale read drops the quote on `/en`. The rail is therefore absent in English until real English quotes exist                                                                            | content     | open          |
+| 6b.6 | **The rail gap was a defect the repository already had a test for.** `shop-hub.screen.test.tsx` asserted its own `<main>` carried no `ms-14`; scoped to one file, it protected one file, and the next two screens reintroduced it — one written the same day by the same author as the test. The guard now walks every file under `src/`                                              | correctness | resolved      |
+| 6b.7 | **The Landing's editorial photography is static paths, not object keys.** `mediaUrl` and `C-7` govern catalogue media, whose address changes when the CDN does. This set is art direction versioned with the code, like the brand glyph, and the guard already allows a static literal for exactly that. Worth confirming the line is drawn where you expect                          | structure   | open          |
+| 6b.8 | **The Forlle'd beat links to `/shop`, not `/shop/brand/forlled`.** Forlle'd has no catalogue rows — no usable imagery — so the branded route would 404. It moves when the brand is seeded                                                                                                                                                                                             | product     | open          |
+| 6b.9 | **`p01` and the transparent Forlle'd hero are still `Permission not verified`.** They render under the same narrow reasoning the Shop hero already uses. One sentence from the distributor closes it                                                                                                                                                                                  | legal       | **needs you** |
+
+---
+
 ## Packet 6 — the Landing — 2026-08-26
 
 | #    | What                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Kind            | Status        |

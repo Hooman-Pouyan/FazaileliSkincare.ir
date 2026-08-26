@@ -227,6 +227,9 @@ Nothing below is a defect. Each is a decision, a fact or a permission only you c
 | Design-system adherence and the facet manifest — 2026-08-26    | D.8   | The FAQ block ships as structure with no content                                       | content / SEO      |
 | Design-system adherence and the facet manifest — 2026-08-26    | D.14  | Arabic catalogue vocabulary is unreviewed, so `/ar` lists products with no facets      | content            |
 | Packet 7 — PLP and search                                      | 7.11  | No listing has been rendered against a real database in this session                   | verification       |
+| Packet 6, second pass — scroll storytelling — 2026-08-26       | 6b.3  | Ten testimonials are held, and not for a consent reason                                | legal              |
+| Packet 6, second pass — scroll storytelling — 2026-08-26       | 6b.4  | The 33 display quotes are my edits of other people's words                             | content            |
+| Packet 6, second pass — scroll storytelling — 2026-08-26       | 6b.9  | `p01` and the transparent Forlle'd hero are still `Permission not verified`            | legal              |
 | Packet 6 — the Landing — 2026-08-26                            | 6.2   | The forty-two real testimonials are deliberately not imported                          | content / legal    |
 | Packet 6 — the Landing — 2026-08-26                            | 6.3   | Before/after ships as a tested component with nothing behind it, so the beat is absent | content / legal    |
 | Packet 6 — the Landing — 2026-08-26                            | 6.6   | Beat 2 renders two credentials and no numbers                                          | content            |
@@ -284,6 +287,9 @@ Nothing below is a defect. Each is a decision, a fact or a permission only you c
 | Packet 7 — PLP and search                                      | 7.7   | `invalid-query` renders not-found rather than dropping the bad parameter                                                              | product         |
 | Packet 7 — PLP and search                                      | 7.8   | The facet rail sits below the results on mobile, not behind a drawer                                                                  | UI              |
 | Packet 7 — PLP and search                                      | 7.10  | `getShopHub` and `listProducts` now run several queries each                                                                          | performance     |
+| Packet 6, second pass — scroll storytelling — 2026-08-26       | 6b.5  | Testimonials are Persian-only on purpose                                                                                              | content         |
+| Packet 6, second pass — scroll storytelling — 2026-08-26       | 6b.7  | The Landing's editorial photography is static paths, not object keys                                                                  | structure       |
+| Packet 6, second pass — scroll storytelling — 2026-08-26       | 6b.8  | The Forlle'd beat links to `/shop`, not `/shop/brand/forlled`                                                                         | product         |
 | Packet 6 — the Landing — 2026-08-26                            | 6.5   | `LAND-06` restricts the ornament to lapis and teal bands                                                                              | UI              |
 | Shop hub and PLP refinement backlog — 2026-08-26               | R.1   | Infinite scroll instead of pagination                                                                                                 | product         |
 | Shop hub and PLP refinement backlog — 2026-08-26               | R.2   | Filter changes lose the scroll position                                                                                               | UX / a11y       |
@@ -314,7 +320,7 @@ Nothing below is a defect. Each is a decision, a fact or a permission only you c
 | Landing direction pass — 2026-08-25, ahead of packet 6         | L.12  | The Japanese concepts are carried by a growth spine, not a values row                                                                 | UI              |
 | Landing direction pass — 2026-08-25, ahead of packet 6         | L.14  | Source batches are completed with fictional development values                                                                        | data            |
 
-**Totals:** 43 waiting on the maintainer, 48 open.
+**Totals:** 46 waiting on the maintainer, 51 open.
 
 <!-- END:open-items -->
 
