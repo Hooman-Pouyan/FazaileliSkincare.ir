@@ -304,7 +304,11 @@ export function parseCatalogueQuery(
 function scopePath(scope: CatalogueScope): string {
   switch (scope.kind) {
     case "hub":
-      return "/shop";
+      // `/shop` is the hub *screen* — an editorial front door. The whole
+      // catalogue as a filterable listing is a different page, and it needs an
+      // address of its own or there is nowhere to browse without first picking
+      // a concern.
+      return "/shop/all";
     case "concern":
       return `/shop/concern/${scope.slug}`;
     case "brand":

@@ -151,6 +151,56 @@ the day it is written.
 
 ---
 
+## F-7 · The whole catalogue has an address: `/shop/all`
+
+**Decision.** The `hub` scope — "no scope" — renders at `/shop/all`, not `/shop`.
+
+**What was wrong.** `/shop` is the hub _screen_: an editorial front door that
+asks a customer to choose a concern. The query grammar's `hub` scope has always
+meant the unfiltered catalogue, `listProducts` has always handled it, and
+`scopePath` mapped it to `/shop` — where the hub screen renders instead. So
+there was no page anywhere on the site where a customer could see the filter
+rail without first picking an axis.
+
+That is backwards. A rail exists so someone can narrow from everything; making
+it appear only _after_ something has already narrowed is the opposite of
+browsing. It is also the page every competitor in the research has — Face
+Reality's is literally called "All Products".
+
+The hub links to it from the concerns heading, or nobody would find it.
+
+---
+
+## F-8 · The facets were empty because two taxonomies had no rows
+
+**What was actually wrong** when the rail looked deserted: nothing in the
+manifest, the queries or the components. `skin_state` and `protocol_phase` had
+**zero rows** — neither the reference seed nor the development seed created any,
+and no product linked to them. Under the zero-count policy every value was
+hidden, correctly, and the groups rendered as nothing.
+
+**Fixed:** five skin states and one `daily-care` protocol with four phases
+(cleanse, treat, hydrate, protect) are now reference taxonomy, seeded beside the
+concerns where they belong. All ten development products link to both, chosen so
+every value has at least one product and no value has all of them — a facet
+where everything matches teaches nothing.
+
+**The lesson worth keeping.** A facet with no data and a facet that is broken
+look identical from the outside. When a group is missing, check the row count
+before the query.
+
+**Arabic is deliberately absent.** `reference-data.test.ts` guards a decision in
+the name of its own test — _"seeds only reviewed Persian and English concern
+translations"_. Arabic catalogue vocabulary has not been reviewed, so under the
+exact-locale rule these facets do not render on `/ar`. Arabic names were briefly
+added here and then removed: inventing them is the same mistake as fabricating
+any other unreviewed content.
+
+**Needs the maintainer.** Arabic concern, skin-state and phase names, if `/ar`
+is meant to be browsable. Until then it lists products without facets.
+
+---
+
 ## F-6 · Adding a facet later
 
 One row in F-1, one field or relation that already exists, one migration if it

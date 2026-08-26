@@ -173,7 +173,8 @@ describe("hrefs", () => {
       return catalogueHref(result.query);
     };
 
-    expect(bare({ kind: "hub" })).toBe("/shop");
+    // `/shop` is the hub screen; the whole catalogue as a listing is its own page.
+    expect(bare({ kind: "hub" })).toBe("/shop/all");
     expect(bare({ kind: "concern", slug: "lak" })).toBe("/shop/concern/lak");
     expect(bare({ kind: "brand", slug: "forlled" })).toBe(
       "/shop/brand/forlled",

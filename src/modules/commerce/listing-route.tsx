@@ -1,7 +1,7 @@
 import { cache } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { localeAlternates, localeUrl } from "@/lib/site";
@@ -31,8 +31,17 @@ import {
 type ListingParams = Promise<{ locale: Locale; slug?: string }>;
 type ListingSearch = Promise<Record<string, string | string[] | undefined>>;
 
-/** The page and `generateMetadata` both read; the request cache makes it one query. */
-const read = cache(listProducts);
+/**
+ * The page and `generateMetadata` both read; the request cache makes it one
+ * query. The translator is resolved here and injected, so the read never
+ * imports `next-intl/server` and stays callable outside a React render.
+ */
+const read = cache(
+  async (locale: Locale, scope: CatalogueScope, search: URLSearchParams) => {
+    const t = await getTranslations({ locale, namespace: "plp" });
+    return listProducts(locale, scope, search, (key) => t(key));
+  },
+);
 
 function toSearchParams(
   raw: Record<string, string | string[] | undefined>,

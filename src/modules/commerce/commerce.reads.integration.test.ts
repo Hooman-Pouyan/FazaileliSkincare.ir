@@ -32,6 +32,24 @@ const HUB = { kind: "hub" } as const;
  * exist.
  */
 const faMessages = (await import("@/messages/fa.json")).default;
+const enMessages = (await import("@/messages/en.json")).default;
+function messageAt(root: unknown, key: string): string {
+  const value = key
+    .split(".")
+    .reduce<unknown>(
+      (node, part) =>
+        typeof node === "object" && node !== null
+          ? (node as Record<string, unknown>)[part]
+          : undefined,
+      root,
+    );
+  if (typeof value !== "string") throw new Error(`Missing message ${key}`);
+  return value;
+}
+
+/** The `plp` namespace, for `listProducts`'s scope titles and crumbs. */
+const translatePlp = (key: string): string => messageAt(faMessages.plp, key);
+
 const translateShop = (key: string): string => {
   const value = key
     .split(".")
@@ -80,7 +98,12 @@ describe("getShopHub", () => {
 
 describe("listProducts — what the catalogue may and may not show", () => {
   it("shows published, approved, Persian-translated products", async () => {
-    const outcome = await listProducts(FA, HUB, new URLSearchParams());
+    const outcome = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams(),
+      translatePlp,
+    );
 
     expect(outcome.kind).toBe("ready");
     if (outcome.kind !== "ready") return;
@@ -88,7 +111,12 @@ describe("listProducts — what the catalogue may and may not show", () => {
   });
 
   it("never shows an unpublished product", async () => {
-    const outcome = await listProducts(FA, HUB, new URLSearchParams());
+    const outcome = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams(),
+      translatePlp,
+    );
     if (outcome.kind !== "ready") throw new Error("expected ready");
 
     expect(slugsOf(outcome.page)).not.toContain(
@@ -100,7 +128,12 @@ describe("listProducts — what the catalogue may and may not show", () => {
   });
 
   it("never shows a product whose only variant is inactive", async () => {
-    const outcome = await listProducts(FA, HUB, new URLSearchParams());
+    const outcome = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams(),
+      translatePlp,
+    );
     if (outcome.kind !== "ready") throw new Error("expected ready");
 
     expect(slugsOf(outcome.page)).not.toContain("dev-product-6-tonik-baran");
@@ -108,8 +141,18 @@ describe("listProducts — what the catalogue may and may not show", () => {
 
   it("hides an untranslated product from Persian and shows it in English", async () => {
     // Given: no fallback chain — English copy never stands in for Persian
-    const persian = await listProducts(FA, HUB, new URLSearchParams());
-    const english = await listProducts("en", HUB, new URLSearchParams());
+    const persian = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams(),
+      translatePlp,
+    );
+    const english = await listProducts(
+      "en",
+      HUB,
+      new URLSearchParams(),
+      (key) => messageAt(enMessages.plp, key),
+    );
     if (persian.kind !== "ready" || english.kind !== "ready") {
       throw new Error("expected both ready");
     }
@@ -121,7 +164,12 @@ describe("listProducts — what the catalogue may and may not show", () => {
   });
 
   it("keeps restricted and unpriced products visible but not purchasable", async () => {
-    const outcome = await listProducts(FA, HUB, new URLSearchParams());
+    const outcome = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams(),
+      translatePlp,
+    );
     if (outcome.kind !== "ready") throw new Error("expected ready");
 
     const onRequest = outcome.page.results.find(
@@ -139,7 +187,12 @@ describe("listProducts — what the catalogue may and may not show", () => {
   it("keeps a published product with no media in the catalogue", async () => {
     // Guards the LOW-8 amendment: media is a publication gate, not a runtime
     // predicate, so losing an image must not make stock unbuyable
-    const outcome = await listProducts(FA, HUB, new URLSearchParams());
+    const outcome = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams(),
+      translatePlp,
+    );
     if (outcome.kind !== "ready") throw new Error("expected ready");
 
     const tile = outcome.page.results.find(
@@ -156,6 +209,7 @@ describe("listProducts — scopes, filters and the URL contract", () => {
       FA,
       { kind: "concern", slug: "acne" },
       new URLSearchParams(),
+      translatePlp,
     );
 
     expect(outcome.kind).toBe("ready");
@@ -169,6 +223,7 @@ describe("listProducts — scopes, filters and the URL contract", () => {
       FA,
       { kind: "concern", slug: "no-such-concern" },
       new URLSearchParams(),
+      translatePlp,
     );
 
     expect(outcome.kind).toBe("not-found");
@@ -179,6 +234,7 @@ describe("listProducts — scopes, filters and the URL contract", () => {
       FA,
       { kind: "search", query: "" },
       new URLSearchParams("q=شبنم"),
+      translatePlp,
     );
 
     expect(outcome.kind).toBe("ready");
@@ -194,6 +250,7 @@ describe("listProducts — scopes, filters and the URL contract", () => {
       FA,
       { kind: "search", query: "" },
       new URLSearchParams("q=zzzzzznotathing"),
+      translatePlp,
     );
 
     expect(outcome.kind).toBe("ready");
@@ -203,7 +260,12 @@ describe("listProducts — scopes, filters and the URL contract", () => {
   });
 
   it("redirects a non-canonical URL instead of serving it", async () => {
-    const outcome = await listProducts(FA, HUB, new URLSearchParams("page=1"));
+    const outcome = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams("page=1"),
+      translatePlp,
+    );
 
     expect(outcome.kind).toBe("redirect");
     if (outcome.kind !== "redirect") return;
@@ -216,6 +278,7 @@ describe("listProducts — scopes, filters and the URL contract", () => {
       FA,
       HUB,
       new URLSearchParams("sort=banana"),
+      translatePlp,
     );
 
     expect(outcome.kind).toBe("invalid-query");
@@ -226,6 +289,7 @@ describe("listProducts — scopes, filters and the URL contract", () => {
       FA,
       { kind: "concern", slug: "hydration" },
       new URLSearchParams("in_stock=1"),
+      translatePlp,
     );
 
     expect(outcome.kind).toBe("ready");
@@ -240,11 +304,13 @@ describe("listProducts — scopes, filters and the URL contract", () => {
       FA,
       { kind: "concern", slug: "barrier" },
       new URLSearchParams(),
+      translatePlp,
     );
     const inStock = await listProducts(
       FA,
       { kind: "concern", slug: "barrier" },
       new URLSearchParams("in_stock=1"),
+      translatePlp,
     );
     if (all.kind !== "ready" || inStock.kind !== "ready") {
       throw new Error("expected both ready");
@@ -270,6 +336,7 @@ describe("listProducts — facet counts", () => {
       FA,
       { kind: "concern", slug: "lak" },
       new URLSearchParams(),
+      translatePlp,
     );
     expect(outcome.kind).toBe("ready");
     if (outcome.kind !== "ready") return;
@@ -282,7 +349,12 @@ describe("listProducts — facet counts", () => {
     // This is PLP-03, and it is the whole reason facet counting is a separate
     // query. Count `brand` with the brand filter still applied and every
     // unselected brand reads zero — the rail can then only ever narrow.
-    const unfiltered = await listProducts(FA, HUB, new URLSearchParams());
+    const unfiltered = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams(),
+      translatePlp,
+    );
     expect(unfiltered.kind).toBe("ready");
     if (unfiltered.kind !== "ready") return;
 
@@ -295,6 +367,7 @@ describe("listProducts — facet counts", () => {
       FA,
       HUB,
       new URLSearchParams({ brand: first.value }),
+      translatePlp,
     );
     expect(filtered.kind).toBe("ready");
     if (filtered.kind !== "ready") return;
@@ -321,7 +394,12 @@ describe("listProducts — facet counts", () => {
   it("narrows one group when a different group is filtered", async () => {
     // The other half of the rule: a group's counts do respect every *other*
     // group's selections, or the numbers would be lies.
-    const unfiltered = await listProducts(FA, HUB, new URLSearchParams());
+    const unfiltered = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams(),
+      translatePlp,
+    );
     if (unfiltered.kind !== "ready") return;
 
     const concerns = groupOf(unfiltered.page, "concern");
@@ -333,6 +411,7 @@ describe("listProducts — facet counts", () => {
       FA,
       HUB,
       new URLSearchParams({ concern: concernSlug }),
+      translatePlp,
     );
     if (filtered.kind !== "ready") return;
 
@@ -353,7 +432,12 @@ describe("listProducts — facet counts", () => {
   });
 
   it("gives every option a link that toggles only that value", async () => {
-    const outcome = await listProducts(FA, HUB, new URLSearchParams());
+    const outcome = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams(),
+      translatePlp,
+    );
     if (outcome.kind !== "ready") return;
 
     for (const group of outcome.page.facets) {
@@ -374,7 +458,12 @@ describe("listProducts — the facet manifest's new axes", () => {
   it("does not offer brand ranges until the results are one brand", async () => {
     // F-2: on the hub, `line` is every range from every brand side by side,
     // meaning nothing to someone who has not chosen a brand.
-    const hub = await listProducts(FA, HUB, new URLSearchParams());
+    const hub = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams(),
+      translatePlp,
+    );
     if (hub.kind !== "ready") return;
     expect(codes(hub.page)).not.toContain("line");
 
@@ -386,6 +475,7 @@ describe("listProducts — the facet manifest's new axes", () => {
       FA,
       { kind: "brand", slug: brandSlug },
       new URLSearchParams(),
+      translatePlp,
     );
     if (scoped.kind !== "ready") return;
     // The brand axis is the page, so it is gone; its ranges take its place.
@@ -395,6 +485,7 @@ describe("listProducts — the facet manifest's new axes", () => {
       FA,
       HUB,
       new URLSearchParams({ brand: brandSlug }),
+      translatePlp,
     );
     if (narrowed.kind !== "ready") return;
     // One brand selected on the hub counts too.
@@ -406,6 +497,7 @@ describe("listProducts — the facet manifest's new axes", () => {
       FA,
       HUB,
       new URLSearchParams("phase=treat&skin_type=dry&audience=home"),
+      translatePlp,
     );
     // Order in the URL is not the order the manifest emits, so this is a
     // redirect to the canonical spelling rather than a served page.
@@ -421,12 +513,18 @@ describe("listProducts — the facet manifest's new axes", () => {
       FA,
       HUB,
       new URLSearchParams({ audience: "everyone" }),
+      translatePlp,
     );
     expect(outcome.kind).toBe("invalid-query");
   });
 
   it("reports the price range the current results actually span", async () => {
-    const outcome = await listProducts(FA, HUB, new URLSearchParams());
+    const outcome = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams(),
+      translatePlp,
+    );
     if (outcome.kind !== "ready") return;
 
     if (outcome.page.price) {
@@ -439,7 +537,12 @@ describe("listProducts — the facet manifest's new axes", () => {
   });
 
   it("ships with no questions, and emits no FAQ markup for none", async () => {
-    const outcome = await listProducts(FA, HUB, new URLSearchParams());
+    const outcome = await listProducts(
+      FA,
+      HUB,
+      new URLSearchParams(),
+      translatePlp,
+    );
     if (outcome.kind !== "ready") return;
     expect(outcome.page.questions).toEqual([]);
   });

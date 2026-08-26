@@ -164,7 +164,8 @@
     "mosaic": {
       "title": "The calm of the corridor, not the noise of the marketplace",
       "body": "Our work is unhurried. Skin is not fixed in a night, and it is not fixed by advertising; it is fixed by a simple routine you actually keep to. What we sell here is what we use in the clinic — nothing more."
-    }
+    },
+    "browseAll": "Or browse everything"
   },
   "plp": {
     "breadcrumbLabel": "Breadcrumb",
@@ -206,6 +207,11 @@
     },
     "applyPrice": "Apply price",
     "questionsTitle": "Questions we are asked a lot",
-    "currencyShort": "toman"
+    "currencyShort": "toman",
+    "shopCrumb": "Shop",
+    "allProducts": {
+      "title": "All products",
+      "introduction": "Everything we stock, on one page. If you are not after something specific, start from the filters — skin type, brand, or where it sits in a routine."
+    }
   }
 }

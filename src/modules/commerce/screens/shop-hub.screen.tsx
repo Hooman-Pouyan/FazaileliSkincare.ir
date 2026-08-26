@@ -77,6 +77,14 @@ export function ShopHubScreen({ page }: { readonly page: ShopHubPage }) {
             <SectionHeading
               title={t("concerns.title")}
               lede={t("concerns.lede")}
+              action={
+                <Link
+                  href="/shop/all"
+                  className="border-b border-firouzeh-text pb-1 text-small font-medium text-firouzeh-text"
+                >
+                  {t("browseAll")}
+                </Link>
+              }
             />
             <ConcernTiles concerns={page.concerns} />
           </Container>

@@ -892,6 +892,7 @@ export async function listProducts(
   localeCode: string,
   scope: CatalogueScope,
   search: URLSearchParams,
+  translate: Translate,
 ): Promise<StorefrontOutcome<ProductListingPage>> {
   const parsed = parseCatalogueQuery(scope, search);
   if (parsed.kind === "invalid") return invalidQuery(parsed.issues);
@@ -900,7 +901,11 @@ export async function listProducts(
   }
 
   const query = parsed.query;
-  const scopeTitle = await resolveScopeTitle(localeCode, query.scope);
+  const scopeTitle = await resolveScopeTitle(
+    localeCode,
+    query.scope,
+    translate,
+  );
   if (scopeTitle === "not-found") return notFound();
   if (scopeTitle === "locale-unavailable") return localeUnavailable();
 
@@ -1059,11 +1064,21 @@ type ScopeTitle =
 async function resolveScopeTitle(
   localeCode: string,
   scope: CatalogueScope,
+  translate: Translate,
 ): Promise<ScopeTitle> {
-  const shopCrumb = { label: "فروشگاه", href: `/shop` };
+  // Translated rather than hardcoded Persian. The same leak as `getShopHub`'s
+  // metadata: copy inside a read that only ever spoke one language.
+  const shopCrumb = { label: translate("shopCrumb"), href: "/shop" };
 
   if (scope.kind === "hub") {
-    return { title: "فروشگاه", introduction: null, breadcrumbs: [shopCrumb] };
+    return {
+      title: translate("allProducts.title"),
+      introduction: translate("allProducts.introduction"),
+      breadcrumbs: [
+        shopCrumb,
+        { label: translate("allProducts.title"), href: "/shop/all" },
+      ],
+    };
   }
   if (scope.kind === "search") {
     return {

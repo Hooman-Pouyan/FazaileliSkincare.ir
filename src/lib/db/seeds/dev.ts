@@ -18,7 +18,11 @@ import {
   productLineTranslation,
   productMedia,
   productMediaTranslation,
+  productProtocolPhase,
+  productSkinState,
   productTranslation,
+  protocolPhase,
+  skinState,
   variant,
   variantTranslation,
 } from "../schema";
@@ -109,6 +113,18 @@ export async function seedDevCatalogue(
         "No concerns found. Run `pnpm db:seed reference` before the development catalogue seed.",
       );
     }
+
+    const skinStateRows = await transaction
+      .select({ id: skinState.id, slug: skinState.slug })
+      .from(skinState);
+    const skinStateIdBySlug = new Map(
+      skinStateRows.map((row) => [row.slug, row.id]),
+    );
+
+    const phaseRows = await transaction
+      .select({ id: protocolPhase.id, slug: protocolPhase.slug })
+      .from(protocolPhase);
+    const phaseIdBySlug = new Map(phaseRows.map((row) => [row.slug, row.id]));
 
     // ── brands, lines, categories ───────────────────────────────────────────
     const brandIdBySlug = new Map<string, string>();
@@ -338,6 +354,35 @@ export async function seedDevCatalogue(
         await transaction
           .insert(productConcern)
           .values({ productId: row.id, concernId })
+          .onConflictDoNothing();
+      }
+
+      /*
+        Skin states and routine phases. Both taxonomies are seeded by
+        `seedReference`, so an unknown slug here means the reference seed did
+        not run rather than that the fixture is wrong — the error says so.
+      */
+      for (const slug of entry.skinStateSlugs) {
+        const skinStateId = skinStateIdBySlug.get(slug);
+        if (!skinStateId)
+          throw new DevSeedRefusedError(
+            `Unknown skin state: ${slug}. Run the reference seed first.`,
+          );
+        await transaction
+          .insert(productSkinState)
+          .values({ productId: row.id, skinStateId })
+          .onConflictDoNothing();
+      }
+
+      for (const slug of entry.phaseSlugs) {
+        const phaseId = phaseIdBySlug.get(slug);
+        if (!phaseId)
+          throw new DevSeedRefusedError(
+            `Unknown protocol phase: ${slug}. Run the reference seed first.`,
+          );
+        await transaction
+          .insert(productProtocolPhase)
+          .values({ productId: row.id, protocolPhaseId: phaseId })
           .onConflictDoNothing();
       }
 
