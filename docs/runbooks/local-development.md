@@ -201,12 +201,28 @@ to a route, action, or screen.
 
 ## Test suites
 
-| Command                 | Needs PostgreSQL           | Contents                                                                                                                                                                                                 |
-| ----------------------- | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `pnpm test:unit`        | no                         | 14 files — money, jalali, phone, rate-limit keys, notifier, request boundary, runtime config, schema contract, search normalization, reference seed shape, i18n routing, rail, auth schemas, next config |
-| `pnpm test:integration` | yes                        | the three `*.integration.test.ts` files — Better Auth runtime, the PostgreSQL rate-limit store, and the Better Auth schema mapping                                                                       |
-| `pnpm test`             | yes                        | both                                                                                                                                                                                                     |
-| `pnpm test:e2e`         | yes, plus a running server | Playwright                                                                                                                                                                                               |
+| Command                 | Needs PostgreSQL           | Contents                                                                                                                                               |
+| ----------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `pnpm test:unit`        | no                         | 37 files, 352 tests — the domain utilities (money, jalali, phone), the read and page models, every screen, and the four gates below                    |
+| `pnpm test:integration` | yes                        | the four `*.integration.test.ts` files — Better Auth runtime, the PostgreSQL rate-limit store, the Better Auth schema mapping, and the catalogue reads |
+| `pnpm test`             | yes                        | both                                                                                                                                                   |
+| `pnpm test:e2e`         | yes, plus a running server | Playwright                                                                                                                                             |
+
+Four of the unit files are **gates** rather than tests of a feature, and none
+of them is optional scaffolding — each exists because a defect class got
+through once and nothing else could see it:
+
+| Gate                                         | Catches                                                                              |
+| -------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `src/lib/design/tailwind-candidates.test.ts` | A Tailwind class that compiles to nothing. Has bitten in four separate packets       |
+| `src/lib/navigation/locale-prefix.test.ts`   | A hand-built locale prefix, or a raw `next/navigation` import                        |
+| `src/lib/media/url.guard.test.ts`            | Any file computing an image path instead of calling `mediaUrl()`. Allowlist is empty |
+| `src/components/layout/shell-offset.test.ts` | A screen adding `ms-14` on top of the shell's own rail offset                        |
+
+`pnpm lint` is a gate too, and it only reads `src/` and `scripts/` — the
+`ignores` list in `eslint.config.mjs` keeps it out of the gitignored scratch
+directories, which otherwise bury real findings under thousands of errors from
+build output.
 
 The split exists so most changes can be verified without provisioning a
 database, and so a schema or policy regression is caught by a suite that runs in

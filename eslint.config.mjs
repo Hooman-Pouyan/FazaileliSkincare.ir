@@ -19,7 +19,36 @@ const cssPropertyAsClass =
 const eslintConfig = [
   ...nextVitals,
   {
-    ignores: [".tmp-app2/**", ".tmp-app3/**"],
+    /**
+     * Only source is linted. Everything here is already in `.gitignore`, but
+     * flat config does not read `.gitignore` and — unlike eslintrc — no longer
+     * skips dot-directories, so without this list ESLint walks the scratch
+     * directories and lints build output.
+     *
+     * That is not cosmetic. `.agent-tmp/` alone held 2.4 GB of old `next build`
+     * chunks, and minified CSS inside them tripped the logical-property rule
+     * 378 files deep: `pnpm lint` failed with 2105 errors, none of them in
+     * `src/`. CI never saw it, because a fresh checkout has no scratch
+     * directories — so the gate passed in the one place nobody was reading it
+     * and cried wolf in the one place the maintainer was.
+     *
+     * A gate that always fails is a gate that gets ignored, which is the same
+     * outcome as deleting it. Keep this list in step with `.gitignore`.
+     */
+    ignores: [
+      ".next/**",
+      ".agent-tmp/**",
+      ".artifacts/**",
+      ".tmp-app2/**",
+      ".tmp-app3/**",
+      ".tmp-ds/**",
+      ".claude/**",
+      ".omo/**",
+      ".serena/**",
+      ".playwright-cli/**",
+      "output/**",
+      "tmp/**",
+    ],
   },
   {
     rules: {
