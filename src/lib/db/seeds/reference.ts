@@ -1,6 +1,8 @@
 import type { PostgresJsDatabase } from "drizzle-orm/postgres-js";
 import { normalizeCatalogSearchText } from "../normalize-catalog-search";
 import {
+  category,
+  categoryTranslation,
   concern,
   concernTranslation,
   locale,
@@ -13,6 +15,7 @@ import {
 } from "../schema";
 import type * as schema from "../schema";
 import {
+  REFERENCE_CATEGORIES,
   REFERENCE_CONCERNS,
   REFERENCE_LOCALES,
   REFERENCE_PROTOCOL,
@@ -74,6 +77,45 @@ export async function seedReference(
             target: [
               concernTranslation.concernId,
               concernTranslation.localeCode,
+            ],
+            set: {
+              name: translation.name,
+              normalizedName: normalizeCatalogSearchText(translation.name),
+            },
+          });
+      }
+    }
+
+    /*
+      Categories are reference taxonomy for the same reason concerns are: they
+      are shared across every brand, so a brand-specific seed owning them would
+      make the second brand either duplicate them or depend on the first.
+    */
+    for (const entry of REFERENCE_CATEGORIES) {
+      const rows = await transaction
+        .insert(category)
+        .values({ slug: entry.slug, sortOrder: entry.sortOrder })
+        .onConflictDoUpdate({
+          target: category.slug,
+          set: { sortOrder: entry.sortOrder, updatedAt: new Date() },
+        })
+        .returning({ id: category.id });
+      const seeded = rows[0];
+      if (!seeded) throw new ReferenceSeedError(entry.slug);
+
+      for (const translation of entry.translations) {
+        await transaction
+          .insert(categoryTranslation)
+          .values({
+            categoryId: seeded.id,
+            localeCode: translation.localeCode,
+            name: translation.name,
+            normalizedName: normalizeCatalogSearchText(translation.name),
+          })
+          .onConflictDoUpdate({
+            target: [
+              categoryTranslation.categoryId,
+              categoryTranslation.localeCode,
             ],
             set: {
               name: translation.name,

@@ -44,6 +44,10 @@ import {
   emptyQuery,
   parseCatalogueQuery,
 } from "./models/catalogue-query";
+import {
+  type CataloguePreview,
+  resolveCataloguePreview,
+} from "./models/catalogue-preview";
 import type { CustomerGroup } from "./models/offer";
 import { resolveOfferState } from "./models/offer";
 import {
@@ -138,10 +142,18 @@ function eligiblePriceFloor(customerGroup: CustomerGroup) {
  * active variant. Media is not here — that is the staff publication gate, for
  * the reasons recorded against review item LOW-8.
  */
-function visibleInLocale(localeCode: string) {
+function visibleInLocale(
+  localeCode: string,
+  preview: CataloguePreview = resolveCataloguePreview(),
+) {
   return and(
-    eq(product.isPublished, true),
-    eq(product.reviewState, "approved"),
+    // Relaxed only under the server-owned draft preview, which cannot be on in
+    // production. The Storyderm catalogue is real identity with unverified
+    // commercial truth, so every row is draft and unpublished; approving it to
+    // make a development page render would be the lie this exists to avoid.
+    // See models/catalogue-preview.ts and C-4.
+    preview.previewDrafts ? undefined : eq(product.isPublished, true),
+    preview.previewDrafts ? undefined : eq(product.reviewState, "approved"),
     exists(
       db
         .select({ one: sql`1` })
@@ -1372,7 +1384,12 @@ export async function getProduct(
 
   // An unpublished product is not-found rather than locale-unavailable: from
   // outside, it does not exist at all.
-  if (!row.isPublished || row.reviewState !== "approved") return notFound();
+  if (
+    !resolveCataloguePreview().previewDrafts &&
+    (!row.isPublished || row.reviewState !== "approved")
+  ) {
+    return notFound();
+  }
   if (row.name === null) return localeUnavailable();
 
   const variantRows = await db

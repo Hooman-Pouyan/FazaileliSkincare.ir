@@ -127,6 +127,10 @@
         "product": {
           "value": "Ultra A-Z Cream",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "کرم Ultra A-Z",
+          "en": "Ultra A-Z Cream"
         }
       },
       "taxonomy": {
@@ -193,6 +197,10 @@
         "product": {
           "value": "Ultra Essence Aqua",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "تونر Ultra Essence Aqua",
+          "en": "Ultra Essence Aqua"
         }
       },
       "taxonomy": {
@@ -259,6 +267,10 @@
         "product": {
           "value": "Ultra Essence Clean",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "پاک‌کننده Ultra Essence Clean",
+          "en": "Ultra Essence Clean"
         }
       },
       "taxonomy": {
@@ -308,6 +320,10 @@
         "product": {
           "value": "Ultra Lift Powder",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "پودر Ultra Lift",
+          "en": "Ultra Lift Powder"
         }
       },
       "taxonomy": {
@@ -372,6 +388,10 @@
         "product": {
           "value": "Princess Shine Ampoule",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "آمپول Princess Shine",
+          "en": "Princess Shine Ampoule"
         }
       },
       "taxonomy": {
@@ -421,6 +441,10 @@
         "product": {
           "value": "Princess Shine Aqua",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "تونر Princess Shine Aqua",
+          "en": "Princess Shine Aqua"
         }
       },
       "taxonomy": {
@@ -487,6 +511,10 @@
         "product": {
           "value": "Princess Shine Clean",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "پاک‌کننده Princess Shine Clean",
+          "en": "Princess Shine Clean"
         }
       },
       "taxonomy": {
@@ -553,6 +581,10 @@
         "product": {
           "value": "Princess Peel",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "پیلینگ Princess Peel",
+          "en": "Princess Peel"
         }
       },
       "taxonomy": {
@@ -652,6 +684,10 @@
         "product": {
           "value": "O2 White Aqua",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "تونر O2 White Aqua",
+          "en": "O2 White Aqua"
         }
       },
       "taxonomy": {
@@ -718,6 +754,10 @@
         "product": {
           "value": "O2 White Clean",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "پاک‌کننده O2 White Clean",
+          "en": "O2 White Clean"
         }
       },
       "taxonomy": {
@@ -784,6 +824,10 @@
         "product": {
           "value": "O2 White Essence",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "اسنس O2 White",
+          "en": "O2 White Essence"
         }
       },
       "taxonomy": {
@@ -850,6 +894,10 @@
         "product": {
           "value": "O2 Jewelry Peel",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "پیلینگ O2 Jewelry",
+          "en": "O2 Jewelry Peel"
         }
       },
       "taxonomy": {
@@ -899,6 +947,10 @@
         "product": {
           "value": "TimeMachine Calming Aqua",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "تونر TimeMachine Calming Aqua",
+          "en": "TimeMachine Calming Aqua"
         }
       },
       "taxonomy": {
@@ -965,6 +1017,10 @@
         "product": {
           "value": "TimeMachine Water Clean",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "پاک‌کننده TimeMachine Water Clean",
+          "en": "TimeMachine Water Clean"
         }
       },
       "taxonomy": {
@@ -1031,6 +1087,10 @@
         "product": {
           "value": "TimeMachine Hyal 1000",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "اسنس TimeMachine Hyal 1000",
+          "en": "TimeMachine Hyal 1000"
         }
       },
       "taxonomy": {
@@ -1097,6 +1157,10 @@
         "product": {
           "value": "TimeMachine Peel",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "پیلینگ TimeMachine Peel",
+          "en": "TimeMachine Peel"
         }
       },
       "taxonomy": {
@@ -1151,6 +1215,10 @@
         "product": {
           "value": "Clinic-A Aqua",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "تونر Clinic-A Aqua",
+          "en": "Clinic-A Aqua"
         }
       },
       "taxonomy": {
@@ -1217,6 +1285,10 @@
         "product": {
           "value": "Clinic-A Clean",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "پاک‌کننده Clinic-A Clean",
+          "en": "Clinic-A Clean"
         }
       },
       "taxonomy": {
@@ -1283,6 +1355,10 @@
         "product": {
           "value": "Clinic-A Cream",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "کرم Clinic-A",
+          "en": "Clinic-A Cream"
         }
       },
       "taxonomy": {
@@ -1349,6 +1425,10 @@
         "product": {
           "value": "Clinic-A Spot",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "سرم Clinic-A Spot",
+          "en": "Clinic-A Spot"
         }
       },
       "taxonomy": {
@@ -1398,6 +1478,10 @@
         "product": {
           "value": "Anti-Wrinkle Eye Contour",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "کرم دور چشم Anti-Wrinkle",
+          "en": "Anti-Wrinkle Eye Contour"
         }
       },
       "taxonomy": {
@@ -1447,6 +1531,10 @@
         "product": {
           "value": "Anti-Wrinkle Face Contour",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "کرم Anti-Wrinkle Face Contour",
+          "en": "Anti-Wrinkle Face Contour"
         }
       },
       "taxonomy": {
@@ -1496,6 +1584,10 @@
         "product": {
           "value": "Time Patch",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "پچ Time Patch",
+          "en": "Time Patch"
         }
       },
       "taxonomy": {
@@ -1555,6 +1647,10 @@
         "product": {
           "value": "24h Smooth Multi Balm",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "بالم 24h Smooth Multi",
+          "en": "24h Smooth Multi Balm"
         }
       },
       "taxonomy": {
@@ -1621,6 +1717,10 @@
         "product": {
           "value": "Black Cavi Heating Gel",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ژل Black Cavi Heating",
+          "en": "Black Cavi Heating Gel"
         }
       },
       "taxonomy": {
@@ -1670,6 +1770,10 @@
         "product": {
           "value": "EX Cloud Peel",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "پیلینگ EX Cloud",
+          "en": "EX Cloud Peel"
         }
       },
       "taxonomy": {
@@ -1719,6 +1823,10 @@
         "product": {
           "value": "Laser Repair Serum",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "سرم Laser Repair",
+          "en": "Laser Repair Serum"
         }
       },
       "taxonomy": {
@@ -1785,6 +1893,10 @@
         "product": {
           "value": "Omso Enzyme Wash",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "پاک‌کننده Omso Enzyme Wash",
+          "en": "Omso Enzyme Wash"
         }
       },
       "taxonomy": {
@@ -1821,6 +1933,10 @@
         "product": {
           "value": "Osmo Snail Cream",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "کرم Osmo Snail",
+          "en": "Osmo Snail Cream"
         }
       },
       "taxonomy": {
@@ -1870,6 +1986,10 @@
         "product": {
           "value": "Osmo Vita7 Ampoule",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "آمپول Osmo Vita7",
+          "en": "Osmo Vita7 Ampoule"
         }
       },
       "taxonomy": {
@@ -1919,6 +2039,10 @@
         "product": {
           "value": "Peptide Gold Lifting Pack",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک Peptide Gold Lifting",
+          "en": "Peptide Gold Lifting Pack"
         }
       },
       "taxonomy": {
@@ -1968,6 +2092,10 @@
         "product": {
           "value": "Pure Origin Cell",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "آمپول Pure Origin Cell",
+          "en": "Pure Origin Cell"
         }
       },
       "taxonomy": {
@@ -2039,6 +2167,10 @@
         "product": {
           "value": "Shape Memory Repair",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "کرم Shape Memory Repair",
+          "en": "Shape Memory Repair"
         }
       },
       "taxonomy": {
@@ -2105,6 +2237,10 @@
         "product": {
           "value": "72 Capsule Mask Blue",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک 72 Capsule Blue",
+          "en": "72 Capsule Mask Blue"
         }
       },
       "taxonomy": {
@@ -2159,6 +2295,10 @@
         "product": {
           "value": "72 Capsule Mask Wine",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک 72 Capsule Wine",
+          "en": "72 Capsule Mask Wine"
         }
       },
       "taxonomy": {
@@ -2213,6 +2353,10 @@
         "product": {
           "value": "72 Capsule Mask Yellow",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک 72 Capsule Yellow",
+          "en": "72 Capsule Mask Yellow"
         }
       },
       "taxonomy": {
@@ -2267,6 +2411,10 @@
         "product": {
           "value": "72 Capsule Mask Blue 1kg",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک 72 Capsule Blue 1kg",
+          "en": "72 Capsule Mask Blue 1kg"
         }
       },
       "taxonomy": {
@@ -2316,6 +2464,10 @@
         "product": {
           "value": "72 Capsule Mask Wine 1kg",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک 72 Capsule Wine 1kg",
+          "en": "72 Capsule Mask Wine 1kg"
         }
       },
       "taxonomy": {
@@ -2365,6 +2517,10 @@
         "product": {
           "value": "72 Capsule Mask Yellow 1kg",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک 72 Capsule Yellow 1kg",
+          "en": "72 Capsule Mask Yellow 1kg"
         }
       },
       "taxonomy": {
@@ -2414,6 +2570,10 @@
         "product": {
           "value": "Cool Gelato Mask",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک Cool Gelato",
+          "en": "Cool Gelato Mask"
         }
       },
       "taxonomy": {
@@ -2463,6 +2623,10 @@
         "product": {
           "value": "Oily Gelato Mask",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک Oily Gelato",
+          "en": "Oily Gelato Mask"
         }
       },
       "taxonomy": {
@@ -2512,6 +2676,10 @@
         "product": {
           "value": "Vitamin C Gelato Mask",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک Vitamin C Gelato",
+          "en": "Vitamin C Gelato Mask"
         }
       },
       "taxonomy": {
@@ -2561,6 +2729,10 @@
         "product": {
           "value": "EGF Advanced Cell Mask",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک ورقه‌ای EGF Advanced Cell",
+          "en": "EGF Advanced Cell Mask"
         }
       },
       "taxonomy": {
@@ -2610,6 +2782,10 @@
         "product": {
           "value": "O2 White Mask",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک ورقه‌ای O2 White",
+          "en": "O2 White Mask"
         }
       },
       "taxonomy": {
@@ -2659,6 +2835,10 @@
         "product": {
           "value": "Princess Shine Mask",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک ورقه‌ای Princess Shine",
+          "en": "Princess Shine Mask"
         }
       },
       "taxonomy": {
@@ -2708,6 +2888,10 @@
         "product": {
           "value": "TimeMachine Calming Mask",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک ورقه‌ای TimeMachine Calming",
+          "en": "TimeMachine Calming Mask"
         }
       },
       "taxonomy": {
@@ -2757,6 +2941,10 @@
         "product": {
           "value": "Ultra Peptide Mask",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک ورقه‌ای Ultra Peptide",
+          "en": "Ultra Peptide Mask"
         }
       },
       "taxonomy": {
@@ -2806,6 +2994,10 @@
         "product": {
           "value": "Vitamin C Brightening Mask",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "ماسک ورقه‌ای Vitamin C Brightening",
+          "en": "Vitamin C Brightening Mask"
         }
       },
       "taxonomy": {
@@ -2855,6 +3047,10 @@
         "product": {
           "value": "Resens Red Aqua",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "تونر Resens Red Aqua",
+          "en": "Resens Red Aqua"
         }
       },
       "taxonomy": {
@@ -2904,6 +3100,10 @@
         "product": {
           "value": "Resens Red Cream",
           "source": "packshot"
+        },
+        "display": {
+          "fa": "کرم Resens Red",
+          "en": "Resens Red Cream"
         }
       },
       "taxonomy": {

@@ -1,4 +1,4 @@
-# Catalogue truth and the content spine — C-1 … C-17
+# Catalogue truth and the content spine — C-1 … C-18
 
 **Date:** 2026-08-26 · **Packet:** 8
 **Trigger:** the PLP's FAQ accordion and editorial band rendered as nothing because no table exists to hold their content, while ninety real Storyderm packshots sat unused beside a deliberately fictional development catalogue.
@@ -65,12 +65,12 @@ guessed SKU, or a filename promoted to a product sheet. `docs/14` P0 stands.
 
 ## C-2 · Three seed profiles, named in `docs/14` P2 and now implemented
 
-| Profile           | Contains                                                                                                     | Publishable | Runs in production |
-| ----------------- | ------------------------------------------------------------------------------------------------------------ | ----------- | ------------------ |
-| `reference`       | Locales, concerns, skin states, protocol phases, real brands, real product lines, real categories            | Yes         | Yes                |
-| `storyderm-draft` | Real product identities and real media from the curated manifest, `reviewState: draft`, no price, no stock   | No          | **Refused**        |
-| `commerce-demo`   | `DEMO-` variants, invented rial prices, invented inventory, and the publication flip that makes them visible | No          | **Refused**        |
-| `content-draft`   | Scope questions, editorial bands and galleries, all `reviewState: draft`                                     | No          | **Refused**        |
+| Profile           | Contains                                                                                                   | Publishable | Runs in production |
+| ----------------- | ---------------------------------------------------------------------------------------------------------- | ----------- | ------------------ |
+| `reference`       | Locales, concerns, skin states, protocol phases, real brands, real product lines, real categories          | Yes         | Yes                |
+| `storyderm-draft` | Real product identities and real media from the curated manifest, `reviewState: draft`, no price, no stock | No          | **Refused**        |
+| `commerce-demo`   | `DEMO-` variants, invented rial prices, invented inventory. Publishes nothing — see `C-4`                  | No          | **Refused**        |
+| `content-draft`   | Scope questions, editorial bands and galleries, all `reviewState: draft`                                   | No          | **Refused**        |
 
 Each profile is a transaction, is idempotent under a second run, upserts by
 canonical key, and queries generated UUIDs rather than hardcoding them. The
@@ -79,6 +79,16 @@ existing `NODE_ENV=production` refusal is retained and extended to
 
 The fictional `dev-*` catalogue is **retired**, not deleted in place: its
 coverage matters. See C-6.
+
+**Retirement is a two-step, deliberately.** `dev` still exists as a profile
+while the Storyderm integration suite is written and proven, because deleting a
+600-line integration test's fixture and rewriting its expectations in the same
+change, in an environment where integration tests cannot be run, is how a
+regression ships. The two are **alternatives, not layers**: each profile refuses
+a database holding the other's products, so a mixed catalogue fails loudly
+instead of rendering a confusing page. `dev` is deleted in the same packet, once
+the replacement suite is green — tracked as an open item rather than left to
+drift.
 
 ---
 
@@ -102,23 +112,44 @@ were never real.
 
 ---
 
-## C-4 · Draft products are visible in development and invisible in production
+## C-4 · The data stays honest and the _read_ relaxes
 
-**Decision.** `commerce-demo` sets `isPublished = true` on manifest-derived
-products. Production reads remain gated on **both** an approved review state and
-`isPublished`, and no search parameter can bypass that predicate.
+**Superseded on implementation, and the correction is worth keeping.** The first
+version of this decision said the demo profile would set `isPublished = true`
+while `reviewState` stayed `draft`. The database refuses that:
 
-Three independent things must all fail before a draft row reaches a customer:
+```sql
+check (not is_published or (review_state = 'approved' and published_at is not null))
+```
 
-1. the seed profile refuses to run against a production environment;
-2. the production read requires `reviewState` in (`verified`, `approved`);
-3. `product_media` with `rights = 'unknown'` is excluded from production reads.
+`product_published_state_check` makes published imply approved. Publishing a
+draft catalogue would have required either approving fifty unverified products
+or weakening a constraint that is correct. Both are the lie this packet exists
+to avoid, and the schema caught it before any row was written.
 
-**Why the flip is acceptable.** The alternative — leaving draft products
-unpublished — means the PLP renders nothing, which is the state we are fixing.
-The flip is local to a profile that cannot run in production, and it is
-belt-and-braces with two predicates that live in the read layer rather than the
-seed.
+**Decision.** Nothing in a development seed publishes or approves anything.
+Every manifest-derived product is `reviewState: 'draft'`, `isPublished: false`,
+`publishedAt: null`. The storefront sees them through a **server-owned draft
+preview** instead — `resolveCataloguePreview` in
+`src/modules/commerce/models/catalogue-preview.ts`.
+
+This is what `docs/14` P2 already authorised, in its own words: _"Local and
+staging catalogue queries may expose those rows only through an explicit
+server-owned draft-preview mode … a client search parameter must never bypass
+that predicate."_
+
+| Rule                                                    | Where it is enforced                                           |
+| ------------------------------------------------------- | -------------------------------------------------------------- |
+| Never on in production                                  | `NODE_ENV` is checked first and the env var cannot override it |
+| Never settable by a visitor                             | Resolved from the environment; no search parameter reaches it  |
+| On by default outside production                        | An empty shop is not a useful development environment          |
+| `CATALOGUE_DRAFT_PREVIEW="off"` shows the customer view | So the public predicate can be looked at without moving data   |
+
+**What preview does not relax.** A translation in the requested locale, and an
+active variant. That second one is load-bearing: it is how a **held** product
+(`C-17`) stays invisible in _both_ modes, because the seeder marks a held
+product's variants inactive. Preview means "show unapproved", not "show
+everything" — and the difference is what makes the held row a usable test.
 
 **Needs the maintainer.** Image rights. Every Storyderm packshot is
 `supplier_draft` / `unknown`, and `docs/14` permits publication only for
@@ -167,15 +198,15 @@ we can supply truthfully.
 manifest-derived catalogue. The **states** they were chosen to cover are moved
 onto real products and asserted by name in the seed test:
 
-| State that must exist                 | Where it lives now                                       |
-| ------------------------------------- | ---------------------------------------------------------- |
-| Published, priced, in stock           | The bulk of the manifest                                  |
-| Published, priced, out of stock       | Two products, marked in the manifest                      |
-| `priceVisibility: on_request`         | The professional-only clinic products                     |
-| Professional-only                     | Clinic-A and the 1 kg bulk masks                          |
-| Unpublished — must not appear         | Two manifest entries flagged `hold`                       |
-| No active variant                     | The unresolved gallery groups                             |
-| Multi-variant size ladder             | Every 150 ml / 500 ml and 50 ml / 220 ml pair             |
+| State that must exist           | Where it lives now                            |
+| ------------------------------- | --------------------------------------------- |
+| Published, priced, in stock     | The bulk of the manifest                      |
+| Published, priced, out of stock | Two products, marked in the manifest          |
+| `priceVisibility: on_request`   | The professional-only clinic products         |
+| Professional-only               | Clinic-A and the 1 kg bulk masks              |
+| Unpublished — must not appear   | Two manifest entries flagged `hold`           |
+| No active variant               | The unresolved gallery groups                 |
+| Multi-variant size ladder       | Every 150 ml / 500 ml and 50 ml / 220 ml pair |
 
 **Why this is worth stating.** The fictional set existed to make the route
 handle every branch. Replacing it with realistic data is a regression if
@@ -402,17 +433,42 @@ prove the publication predicate actually works.
 
 ---
 
+## C-18 · Offline asset and data tooling is Python
+
+**Decision.** `scripts/catalogue/curate-storyderm.py` and
+`scripts/media/derive.py` are Python. Nothing that ships in the application
+bundle is.
+
+**Why, honestly.** The Node image library the ecosystem would reach for is
+`sharp`. It is not installed, and it cannot be installed in this environment.
+Pillow and ImageMagick both are. Rather than one Python script as a
+special-case detour, the rule is stated and applied to both offline tools, so
+there is one boundary — build-time asset and data tooling — rather than an
+exception someone has to remember.
+
+**Re-review trigger.** If `sharp` becomes installable **and** a second
+Node-side asset task appears, converge on one language. Rewriting two scripts
+is worth it then; it is not worth it for one.
+
+**A measurement worth keeping.** WebP `method=6` costs 10.3 s per packshot and
+`method=4` costs 0.8 s, for a file-size difference of a percent or two. Across
+ninety sources that is the difference between a script someone runs and a
+script someone avoids.
+
+---
+
 ## Open items for the maintainer
 
-| # | Item | Blocks |
-| - | ---- | ------ |
-| 1 | **Storyderm image rights.** All ninety packshots are `supplier_draft` / `unknown`. `docs/14` permits publication only at `approved_supplier` or `brand_owned`. Confirm with the supplier, or say to hold them out of the seed | Production media, not this packet |
-| 2 | **FAQ answers.** Seeded drafts need her review before they can publish. They are listed in `system-design/content/content-spine.md` §7 | Production FAQ |
-| 3 | **Product sheets.** Ingredients, usage, indications, IRC codes and the verified sellable boundary for each Storyderm product | `reviewState: verified` |
-| 4 | **Real prices and stock.** Every price in the seed is `DEMO-` | A sellable shop |
-| 5 | **Arabic catalogue vocabulary.** Carried forward from `F-8`; the same gap now applies to content translations | `/ar` browsability |
-| 6 | **Forlle'd and Thalgo.** This packet covers Storyderm only, because Storyderm is the brand with usable imagery in the repository. The other two need assets before they can be modelled | Their listings |
-| 7 | **Object storage account** (Arvan or Liara). Deferred by the maintainer; C-10 makes it configuration | Production media serving |
+| #   | Item                                                                                                                                                                                                                          | Blocks                            |
+| --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| 1   | **Storyderm image rights.** All ninety packshots are `supplier_draft` / `unknown`. `docs/14` permits publication only at `approved_supplier` or `brand_owned`. Confirm with the supplier, or say to hold them out of the seed | Production media, not this packet |
+| 2   | **FAQ answers.** Seeded drafts need her review before they can publish. They are listed in `system-design/content/content-spine.md` §7                                                                                        | Production FAQ                    |
+| 3   | **Product sheets.** Ingredients, usage, indications, IRC codes and the verified sellable boundary for each Storyderm product                                                                                                  | `reviewState: verified`           |
+| 4   | **Real prices and stock.** Every price in the seed is `DEMO-`                                                                                                                                                                 | A sellable shop                   |
+| 5   | **Arabic catalogue vocabulary.** Carried forward from `F-8`; the same gap now applies to content translations                                                                                                                 | `/ar` browsability                |
+| 6   | **Forlle'd and Thalgo.** This packet covers Storyderm only, because Storyderm is the brand with usable imagery in the repository. The other two need assets before they can be modelled                                       | Their listings                    |
+| 7   | **Object storage account** (Arvan or Liara). Deferred by the maintainer; C-10 makes it configuration                                                                                                                          | Production media serving          |
+| 8   | **The `dev` profile's retirement** — held open until the Storyderm integration suite is green. `C-2`                                                                                                                          | Closing packet 7B                 |
 
 ---
 

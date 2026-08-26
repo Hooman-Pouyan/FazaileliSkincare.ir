@@ -12,6 +12,8 @@
  * render.
  */
 
+import { type CataloguePreview, PUBLIC_CATALOGUE } from "./catalogue-preview";
+
 export type ProductReviewState = "draft" | "verified" | "approved";
 
 export type CatalogueVisibilityInput = Readonly<{
@@ -41,10 +43,25 @@ export type PublicationBlocker =
   | "missing_approved_primary_media"
   | "missing_price";
 
-export function isPubliclyVisible(input: CatalogueVisibilityInput): boolean {
+/**
+ * `preview.previewDrafts` relaxes publication and review state — and only those
+ * two. A translation in the exact locale and an active variant are still
+ * required, which is what keeps a deliberately held product invisible in every
+ * mode (`C-17`) and stops preview from becoming "show everything".
+ *
+ * The flag is resolved by `resolveCataloguePreview`, which is server-owned and
+ * cannot be turned on in production. It is never a search parameter.
+ */
+export function isPubliclyVisible(
+  input: CatalogueVisibilityInput,
+  preview: CataloguePreview = PUBLIC_CATALOGUE,
+): boolean {
+  const publicationSatisfied =
+    preview.previewDrafts ||
+    (input.isPublished && input.reviewState === "approved");
+
   return (
-    input.isPublished &&
-    input.reviewState === "approved" &&
+    publicationSatisfied &&
     input.hasTranslationForLocale &&
     input.hasActiveVariant
   );

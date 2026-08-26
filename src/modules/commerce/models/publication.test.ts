@@ -112,3 +112,38 @@ describe("publication gate", () => {
     ]);
   });
 });
+
+describe("draft preview relaxes publication and nothing else", () => {
+  const draft = {
+    isPublished: false,
+    reviewState: "draft",
+    hasTranslationForLocale: true,
+    hasActiveVariant: true,
+  } as const;
+
+  it("hides a draft product from a customer", () => {
+    expect(isPubliclyVisible(draft)).toBe(false);
+  });
+
+  it("shows it under preview", () => {
+    expect(isPubliclyVisible(draft, { previewDrafts: true })).toBe(true);
+  });
+
+  it("still requires a translation in the exact locale", () => {
+    expect(
+      isPubliclyVisible(
+        { ...draft, hasTranslationForLocale: false },
+        { previewDrafts: true },
+      ),
+    ).toBe(false);
+  });
+
+  it("still requires an active variant — this is what holds a product back", () => {
+    expect(
+      isPubliclyVisible(
+        { ...draft, hasActiveVariant: false },
+        { previewDrafts: true },
+      ),
+    ).toBe(false);
+  });
+});

@@ -57,6 +57,12 @@ const Product = z.object({
   names: z.object({
     form: Translated.extend({ source: NameSource }),
     product: z.object({ value: z.string().min(1), source: NameSource }),
+    /**
+     * The final strings, composed in the manifest rather than in the seeder so
+     * that what a customer reads is reviewable in one file — `C-5`. Persian is
+     * the form word plus the Latin identity; English is the printed name.
+     */
+    display: Translated,
   }),
   taxonomy: z.object({
     concerns: z.array(z.string()),

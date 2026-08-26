@@ -52,12 +52,42 @@ FORMS = {
 
 def P(slug, line, category, name, form, concerns, skin, phases, variants, media,
       audience="home", price_visibility="public", disposition="seed",
-      form_key=None, notes=None, assignment_source="range_name"):
+      form_key=None, notes=None, assignment_source="range_name", identity=None):
     return dict(slug=slug, line=line, category=category, name=name,
                 form=form_key or form, concerns=concerns, skin=skin, phases=phases,
                 variants=variants, media=media, audience=audience,
                 price_visibility=price_visibility, disposition=disposition,
-                notes=notes, assignment_source=assignment_source)
+                notes=notes, assignment_source=assignment_source, identity=identity)
+
+
+# C-5: a Persian product name is composed from facts, never invented. The form
+# word translates because it is a fact about the object; the product name stays
+# in Latin script because transliterating it would invent a Persian spelling the
+# supplier has not chosen and nobody searches for.
+#
+#   کرم Clinic-A          Clinic-A Cream
+#   آمپول Princess Shine  Princess Shine Ampoule
+#
+# The Latin half is the printed name with its trailing English form word removed
+# when it has one, so the Persian side does not read «کرم Clinic-A Cream». Where
+# that rule misfires — a name whose form word is not at the end, or is the only
+# thing that distinguishes it — the curation table sets `identity` explicitly
+# rather than the rule being made cleverer.
+STRIPPABLE = ["Cream", "Toner", "Essence", "Serum", "Ampoule", "Cleanser",
+              "Sheet mask", "Mask", "Peel", "Patch", "Balm", "Gel", "Powder",
+              "Eye cream"]
+
+
+def latin_identity(name, override):
+    if override is not None:
+        return override
+    for word in STRIPPABLE:
+        suffix = " " + word
+        if name.lower().endswith(suffix.lower()):
+            stripped = name[: -len(suffix)].strip()
+            if stripped:
+                return stripped
+    return name
 
 # (size, unit, price_rials, stock)
 def V(size, unit, price, stock): return (size, unit, price, stock)
@@ -107,7 +137,8 @@ PRODUCTS = [
    [V(4,"unit",39500000,4)],
    [("primary","2.Princess Shine/Princess peel 2ml 4ea.png")] +
    [("gallery","2.Princess Shine/Princess Peel_IMG (%d).jpg" % i) for i in range(1,11)],
-   notes="The ten Princess Peel_IMG frames are one gallery of a single subject, not ten products — rule 2. Packshot is primary."),
+   notes="The ten Princess Peel_IMG frames are one gallery of a single subject, not ten products — rule 2. Packshot is primary.",
+   identity="Princess Peel"),
 
 # ── 3. O2 White ──────────────────────────────────────────────────────────────
  P("o2-white-aqua","o2-white","toner","O2 White Aqua","toner",
@@ -152,7 +183,8 @@ PRODUCTS = [
    [V(4,"unit",37500000,6)],
    [("primary","4.TimeMachine Calming/Timemachine peel.png"),
     ("gallery","4.TimeMachine Calming/Timemachine Peel2.png")],
-   notes="Two frames of one subject. The pack count is not stated on either file; 4 × 2 ml follows the sibling peels in this brand and is marked demo."),
+   notes="Two frames of one subject. The pack count is not stated on either file; 4 × 2 ml follows the sibling peels in this brand and is marked demo.",
+   identity="TimeMachine Peel"),
 
 # ── 5. Clinic-A ──────────────────────────────────────────────────────────────
  P("clinic-a-aqua","clinic-a","toner","Clinic-A Aqua","toner",
@@ -181,7 +213,8 @@ PRODUCTS = [
  P("anti-wrinkle-eye-contour","anti-wrinkle-care","eye-care","Anti-Wrinkle Eye Contour","eye-care",
    ["aging"],["normal","dry"],["treat"],
    [V(15,"ml",43600000,7)],
-   [("primary","6.Anti Wrinkle Care/Anti-wrinkle eye contour 15ml.png")]),
+   [("primary","6.Anti Wrinkle Care/Anti-wrinkle eye contour 15ml.png")],
+   identity="Anti-Wrinkle"),
  P("anti-wrinkle-face-contour","anti-wrinkle-care","cream","Anti-Wrinkle Face Contour","cream",
    ["aging"],["normal","dry"],["hydrate"],
    [V(50,"ml",52400000,5)],
@@ -192,7 +225,8 @@ PRODUCTS = [
    [("primary","6.Anti Wrinkle Care/Time patch 2ea 5pouch.png"),
     ("gallery","6.Anti Wrinkle Care/Time Patch2.png"),
     ("gallery","6.Anti Wrinkle Care/Time patch needle.png")],
-   notes="Three frames of one subject: retail pack, styled shot, and a macro of the microneedle surface."),
+   notes="Three frames of one subject: retail pack, styled shot, and a macro of the microneedle surface.",
+   identity="Time Patch"),
 
 # ── 7. Personal Care ─────────────────────────────────────────────────────────
  P("smooth-multi-balm-24h","personal-care","balm","24h Smooth Multi Balm","balm",
@@ -238,7 +272,8 @@ PRODUCTS = [
    ["aging"],["normal","dry"],["treat"],
    [V(15,"ml",26900000,11)],
    [("primary","7.Personal Care/Peptide Gold Lifting Pack 15ml.png")],
-   assignment_source="inference"),
+   assignment_source="inference",
+   identity="Peptide Gold Lifting"),
  P("pure-origin-cell","personal-care","ampoule","Pure Origin Cell","ampoule",
    ["aging","barrier"],["dry","sensitive"],["treat"],
    [V(30,"ml",96000000,3), V(5,"unit",72000000,4)],
@@ -261,7 +296,7 @@ PRODUCTS = [
    [V(1,"unit",price,stock)],
    [("primary","9.Mask/1.72 Capsule Mask/%s" % retail),
     ("package","9.Mask/1.72 Capsule Mask/%s" % pouch)],
-   assignment_source="inference",
+   assignment_source="inference", identity="72 Capsule %s" % t,
    notes="Colour names the formula, so blue, wine and yellow are three products rather than one with three variants — rule 4. The 1 kg salon size is a separate professional-only product.")
  for c,t,retail,pouch,concerns,skin,price,stock in [
    ("blue","Blue","72 Capsule Mask blue.png","72 Capsule Mask blue paush.png",["hydration"],["dry","normal"],18900000,14),
@@ -274,7 +309,7 @@ PRODUCTS = [
    [V(1,"kit",None,3)],
    [("primary","9.Mask/1.72 Capsule Mask/%s" % bulk)],
    audience="professional", price_visibility="on_request",
-   assignment_source="inference",
+   assignment_source="inference", identity="72 Capsule %s 1kg" % t,
    notes="The salon bulk size. Professional-only and price-on-request: isProfessionalOnly is a property of the product, not the variant, so the bulk pack is its own product rather than a variant of the retail one.")
  for c,t,bulk,concerns,skin in [
    ("blue","Blue","72 capsule mask_blue 1kg.png",["hydration"],["dry","normal"]),
@@ -405,6 +440,8 @@ for rank, p in enumerate(PRODUCTS, start=1):
       "names": {
         "form": {"fa": form_fa, "en": form_en, "source": "packshot"},
         "product": {"value": p["name"], "source": "packshot"},
+        "display": {"fa": "%s %s" % (form_fa, latin_identity(p["name"], p["identity"])),
+                    "en": p["name"]},
       },
       "taxonomy": {
         "concerns": p["concerns"],
