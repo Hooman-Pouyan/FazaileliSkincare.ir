@@ -1,0 +1,113 @@
+name: Tests
+
+# The integration suite needs PostgreSQL, and the maintainer's development
+# environment cannot always give it one. Without this workflow the suite is
+# written and never run, which is worse than not having it: a green unit run
+# reads as "tested" while the half that touches SQL goes unchecked. Recorded
+# against packet 7B in docs/20-packet-review-log.md.
+
+on:
+  pull_request:
+  push:
+    branches:
+      - develop
+
+permissions:
+  contents: read
+
+env:
+  # No .env exists in CI. dotenv does not overwrite what is already in the
+  # environment, so these win everywhere the app, drizzle-kit and the seeder
+  # read them.
+  DATABASE_URL: postgresql://fazaieli:fazaieli_local@127.0.0.1:5432/fazaieli
+  BETTER_AUTH_SECRET: ci-only-secret-not-used-for-anything-real-000
+  BETTER_AUTH_URL: http://localhost:3000
+  AUTH_IDENTIFIER_PEPPER: ci-only-pepper-not-used-for-anything-real-00
+
+jobs:
+  static:
+    name: Types, lint and unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - name: Enable pinned pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@11.23.0 --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      # Includes the class-compilation gate, which is the only thing standing
+      # between a mistyped Tailwind utility and a page that renders slightly
+      # wrong with every other check green — AGENTS.md.
+      - name: Unit tests
+        run: pnpm test:unit
+
+  integration:
+    name: Integration against PostgreSQL 16
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16.9-alpine
+        env:
+          POSTGRES_DB: fazaieli
+          POSTGRES_USER: fazaieli
+          POSTGRES_PASSWORD: fazaieli_local
+          # UTF8 with the C locale, matching compose.yaml. Collation affects
+          # ordering, and a suite that sorts differently from production is
+          # testing a different database.
+          POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U fazaieli -d fazaieli"
+          --health-interval 1s
+          --health-timeout 5s
+          --health-retries 30
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+
+      - name: Enable pinned pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@11.23.0 --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # generate → review committed SQL → migrate. CI runs the third step only;
+      # it never generates, so a schema change that was not committed as a
+      # migration fails here rather than diverging quietly.
+      - name: Apply committed migrations
+        run: pnpm db:migrate
+
+      # The demo profile: reference taxonomy, the real Storyderm catalogue as
+      # drafts, the DEMO- commercial layer, and the draft content spine. The
+      # seeder refuses NODE_ENV=production, so this can only ever be a
+      # development database.
+      - name: Seed the catalogue and content
+        run: pnpm db:seed demo
+
+      - name: Seed again — it must change nothing
+        run: pnpm db:seed demo
+
+      - name: Integration tests
+        run: pnpm test:integration
