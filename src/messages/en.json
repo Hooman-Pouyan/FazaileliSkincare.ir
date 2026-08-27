@@ -413,6 +413,34 @@
       "invalid-quantity": "That quantity is not valid.",
       "not-found": "We couldn't find this product.",
       "not-yours": "Please try again."
-    }
+    },
+    "goToCheckout": "Continue to checkout"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "backToCart": "Back to cart",
+    "addressTitle": "Delivery address",
+    "chooseAddress": "Choose an address",
+    "addAddress": "Add an address in your account",
+    "noAddress": "Add an address to continue.",
+    "shippingTitle": "Shipping method",
+    "noShipping": "No shipping method is configured for this address.",
+    "free": "Free",
+    "summaryTitle": "Order summary",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Amount due",
+    "place": "Place order",
+    "placing": "Placing…",
+    "signInFirst": "Sign in to check out.",
+    "signIn": "Sign in",
+    "emptyCart": "Your cart is empty.",
+    "emptyCartAction": "See products",
+    "blockedTitle": "Before you order",
+    "blockedBody": "Please review these items in your cart:",
+    "reviewCart": "Review cart",
+    "contactTitle": "Contact number",
+    "contactHint": "We call this number to arrange delivery.",
+    "placeholderRates": "Shipping prices are not final yet."
   }
 }

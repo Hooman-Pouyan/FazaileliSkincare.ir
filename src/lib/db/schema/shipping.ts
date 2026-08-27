@@ -46,6 +46,19 @@ export const shippingRate = pgTable(
     amountRials: bigint({ mode: "bigint" }).notNull(),
     /** What the customer sees this option called. */
     labelFa: text().notNull(),
+    /**
+     * Free above this subtotal, when set — `COM2`'s "free threshold if
+     * configured".
+     *
+     * Nullable rather than `0`, because those mean different things: null is
+     * "this method is never free", `0` would be "always free". A threshold that
+     * defaults to zero is a shop that ships everything for nothing the day
+     * somebody forgets to set it.
+     *
+     * Compared against the **subtotal**, not the total, or the threshold would
+     * depend on the shipping it is deciding.
+     */
+    freeAboveRials: bigint({ mode: "bigint" }),
     isActive: boolean().notNull().default(true),
     createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
@@ -73,6 +86,10 @@ export const shippingRate = pgTable(
       .where(sql`${table.isActive} and ${table.cityCode} is not null`),
 
     check("shipping_rate_amount_check", sql`${table.amountRials} >= 0`),
+    check(
+      "shipping_rate_free_above_check",
+      sql`${table.freeAboveRials} is null or ${table.freeAboveRials} > 0`,
+    ),
     // A city-scoped rule must say which province it is in, so the resolver can
     // fall back one level without a second lookup.
     check(

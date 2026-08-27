@@ -71,9 +71,19 @@ export function CartScreen({ cart }: { readonly cart: CartOutcome }) {
                 )}
               </div>
 
-              <p className="m-0 text-small leading-fa text-stone-text">
-                {t("checkoutPending")}
-              </p>
+              {/*
+                This was `checkoutPending` — "payment is not active yet, call
+                us" — for as long as there was no checkout. `COM2` and `COM3`
+                built one, so the placeholder becomes the thing it was standing
+                in for. The message key stays in the catalogue: it is the right
+                copy again the moment ordering has to be suspended.
+              */}
+              <Link
+                href="/checkout"
+                className="inline-flex min-h-12 w-full items-center justify-center bg-ink px-6 text-small font-medium text-sand"
+              >
+                {t("goToCheckout")}
+              </Link>
             </aside>
           </div>
         )}

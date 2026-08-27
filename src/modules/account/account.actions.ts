@@ -1,6 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { getLocale } from "next-intl/server";
+import { redirect } from "@/i18n/navigation";
 import { and, eq, ne } from "drizzle-orm";
 import { db } from "@/lib/db";
 import { address, iranCity, person } from "@/lib/db/schema";
@@ -255,10 +257,13 @@ export async function setDefaultAddress(
  * normalised here and then handed to the same Zod schema as every other
  * caller. The parse is not skipped; it is reached by a different road.
  *
- * Results are discarded because a form post has nowhere to put one — the
- * re-render is the feedback, and a rejected save leaves the previous values in
- * place. When these grow real per-field errors they should use `useActionState`
- * rather than a second parallel path.
+ * **A rejection redirects with its reason rather than being discarded.** The
+ * first version swallowed the result, on the theory that the re-render was
+ * feedback enough. It is not: a save that fails validation became a silent
+ * no-op with nothing to tell the customer why — and it cost real time to
+ * diagnose here, which is exactly the confusion a customer would have had with
+ * no way to resolve it. `?error=` survives without JavaScript, which is the
+ * constraint that rules out `useActionState` as the only channel.
  */
 
 function text(formData: FormData, key: string): string {
@@ -266,9 +271,26 @@ function text(formData: FormData, key: string): string {
   return typeof value === "string" ? value : "";
 }
 
+/**
+ * Send the customer back to the account page, carrying why it failed.
+ *
+ * Locale-prefixed through `@/i18n/navigation` — a raw redirect drops the prefix
+ * and lands a Persian customer on the default locale (`R-1`).
+ */
+async function back(result: AccountActionResult): Promise<void> {
+  const locale = await getLocale();
+  if (result.kind === "ok") {
+    return redirect({ href: { pathname: "/account" }, locale });
+  }
+  return redirect({
+    href: { pathname: "/account", query: { error: result.reason } },
+    locale,
+  });
+}
+
 export async function saveAddressFormAction(formData: FormData): Promise<void> {
   const id = text(formData, "id");
-  await saveAddress({
+  const result = await saveAddress({
     ...(id ? { id } : {}),
     recipientName: text(formData, "recipientName"),
     recipientPhone: text(formData, "recipientPhone"),
@@ -277,26 +299,29 @@ export async function saveAddressFormAction(formData: FormData): Promise<void> {
     line: text(formData, "line"),
     isDefault: formData.get("isDefault") !== null,
   });
+  return back(result);
 }
 
 export async function deleteAddressFormAction(
   formData: FormData,
 ): Promise<void> {
-  await deleteAddress({ id: text(formData, "id") });
+  return back(await deleteAddress({ id: text(formData, "id") }));
 }
 
 export async function setDefaultAddressFormAction(
   formData: FormData,
 ): Promise<void> {
-  await setDefaultAddress({ id: text(formData, "id") });
+  return back(await setDefaultAddress({ id: text(formData, "id") }));
 }
 
 export async function updateProfileFormAction(
   formData: FormData,
 ): Promise<void> {
-  await updateProfile({
-    firstName: text(formData, "firstName"),
-    lastName: text(formData, "lastName"),
-    preferredLocaleCode: text(formData, "preferredLocaleCode"),
-  });
+  return back(
+    await updateProfile({
+      firstName: text(formData, "firstName"),
+      lastName: text(formData, "lastName"),
+      preferredLocaleCode: text(formData, "preferredLocaleCode"),
+    }),
+  );
 }

@@ -1,0 +1,2 @@
+ALTER TABLE "shipping_rate" ADD COLUMN "free_above_rials" bigint;--> statement-breakpoint
+ALTER TABLE "shipping_rate" ADD CONSTRAINT "shipping_rate_free_above_check" CHECK ("shipping_rate"."free_above_rials" is null or "shipping_rate"."free_above_rials" > 0);

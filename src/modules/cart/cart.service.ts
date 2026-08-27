@@ -45,7 +45,7 @@ const ANONYMOUS_GROUP = "public" as const;
 /** Ninety days, matching the guest cookie. The row is the authority. */
 const CART_LIFETIME_MS = 90 * 24 * 60 * 60 * 1000;
 
-type Tx = Parameters<Parameters<typeof db.transaction>[0]>[0];
+export type Tx = Parameters<Parameters<typeof db.transaction>[0]>[0];
 
 function ownerFilter(owner: CartOwner) {
   return owner.kind === "person"
@@ -127,7 +127,13 @@ async function lockAndMeasure(
 }
 
 /** The catalogue's own verdict on this variant, re-read rather than trusted. */
-async function offerFor(tx: Tx, variantId: string) {
+/*
+  Exported because checkout needs the same verdict, and the review log records
+  what happens otherwise: the publication rule was hand-written twice and wrong
+  both times (`9.4`). A third copy in `placeOrder` would have been the third
+  chance to get it wrong — this is the one definition of what may be sold.
+*/
+export async function offerFor(tx: Tx, variantId: string) {
   const rows = await tx
     .select({
       variantId: variant.id,

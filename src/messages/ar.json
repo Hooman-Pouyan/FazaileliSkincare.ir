@@ -413,6 +413,34 @@
       "invalid-quantity": "الكمية غير صحيحة.",
       "not-found": "لم نعثر على هذا المنتج.",
       "not-yours": "حاولي مرة أخرى."
-    }
+    },
+    "goToCheckout": "متابعة الشراء"
+  },
+  "checkout": {
+    "title": "إتمام الشراء",
+    "backToCart": "العودة إلى السلة",
+    "addressTitle": "عنوان التسليم",
+    "chooseAddress": "اختاري عنواناً",
+    "addAddress": "أضيفي عنواناً في حسابك",
+    "noAddress": "أضيفي عنواناً للمتابعة.",
+    "shippingTitle": "طريقة الشحن",
+    "noShipping": "لا توجد طريقة شحن معرّفة لهذا العنوان.",
+    "free": "مجاني",
+    "summaryTitle": "ملخص الطلب",
+    "subtotal": "مجموع المنتجات",
+    "shipping": "الشحن",
+    "total": "المبلغ المستحق",
+    "place": "تأكيد الطلب",
+    "placing": "جارٍ التأكيد…",
+    "signInFirst": "سجّلي الدخول لإتمام الشراء.",
+    "signIn": "تسجيل الدخول",
+    "emptyCart": "سلتك فارغة.",
+    "emptyCartAction": "عرض المنتجات",
+    "blockedTitle": "قبل تأكيد الطلب",
+    "blockedBody": "راجعي هذه المنتجات في سلتك:",
+    "reviewCart": "مراجعة السلة",
+    "contactTitle": "رقم التواصل",
+    "contactHint": "نتصل بهذا الرقم لترتيب التسليم.",
+    "placeholderRates": "أسعار الشحن ليست نهائية بعد."
   }
 }

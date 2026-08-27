@@ -98,9 +98,13 @@ export function CartDrawer() {
               </span>
             </div>
 
-            <p className="m-0 text-small leading-fa text-stone-text">
-              {t("checkoutPending")}
-            </p>
+            <Link
+              href="/checkout"
+              onClick={closeDrawer}
+              className="inline-flex min-h-12 w-full items-center justify-center bg-ink px-6 text-small font-medium text-sand"
+            >
+              {t("goToCheckout")}
+            </Link>
 
             <Link
               href="/cart"

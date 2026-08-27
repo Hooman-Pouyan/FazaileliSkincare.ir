@@ -1,4 +1,10 @@
-import { index, integer, pgTable, text, uniqueIndex } from "drizzle-orm/pg-core";
+import {
+  index,
+  integer,
+  pgTable,
+  text,
+  uniqueIndex,
+} from "drizzle-orm/pg-core";
 
 /**
  * Iranian provinces and cities — reference data, not catalogue data.

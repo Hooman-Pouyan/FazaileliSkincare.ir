@@ -155,10 +155,7 @@ export const returnLine = pgTable(
       table.orderLineId,
     ),
     index("return_line_order_line_idx").on(table.orderLineId),
-    check(
-      "return_line_requested_check",
-      sql`${table.quantityRequested} > 0`,
-    ),
+    check("return_line_requested_check", sql`${table.quantityRequested} > 0`),
     check(
       "return_line_received_check",
       sql`${table.quantityReceived} is null or (${table.quantityReceived} >= 0 and ${table.quantityReceived} <= ${table.quantityRequested})`,

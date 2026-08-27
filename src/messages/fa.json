@@ -413,6 +413,34 @@
       "invalid-quantity": "تعداد معتبر نیست.",
       "not-found": "این محصول پیدا نشد.",
       "not-yours": "دوباره تلاش کنید."
-    }
+    },
+    "goToCheckout": "ادامهٔ خرید"
+  },
+  "checkout": {
+    "title": "تکمیل خرید",
+    "backToCart": "بازگشت به سبد",
+    "addressTitle": "نشانی تحویل",
+    "chooseAddress": "یک نشانی انتخاب کنید",
+    "addAddress": "افزودن نشانی در حساب کاربری",
+    "noAddress": "برای ادامه، یک نشانی ثبت کنید.",
+    "shippingTitle": "روش ارسال",
+    "noShipping": "برای این نشانی روش ارسالی تعریف نشده است.",
+    "free": "رایگان",
+    "summaryTitle": "خلاصهٔ سفارش",
+    "subtotal": "جمع کالاها",
+    "shipping": "هزینهٔ ارسال",
+    "total": "مبلغ قابل پرداخت",
+    "place": "ثبت سفارش",
+    "placing": "در حال ثبت…",
+    "signInFirst": "برای تکمیل خرید وارد شوید.",
+    "signIn": "ورود",
+    "emptyCart": "سبد شما خالی است.",
+    "emptyCartAction": "دیدن محصولات",
+    "blockedTitle": "پیش از ثبت سفارش",
+    "blockedBody": "این کالاها را از سبد بررسی کنید:",
+    "reviewCart": "بررسی سبد",
+    "contactTitle": "شمارهٔ تماس",
+    "contactHint": "برای هماهنگی ارسال با این شماره تماس می‌گیریم.",
+    "placeholderRates": "قیمت‌های ارسال هنوز نهایی نشده‌اند."
   }
 }

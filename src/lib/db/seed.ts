@@ -5,6 +5,7 @@ import { z } from "zod";
 import * as schema from "./schema";
 import { seedContent } from "./seeds/content";
 import { seedReference } from "./seeds/reference";
+import { seedDevelopmentShippingRates } from "./seeds/shipping-development";
 import { seedCommerceDemo, seedStorydermCatalogue } from "./seeds/storyderm";
 
 // Same precedence Next.js uses. Plain `dotenv/config` reads .env only, so a
@@ -63,6 +64,9 @@ async function main(): Promise<void> {
     }
     if (input.profile === "demo") {
       await seedCommerceDemo(database);
+      // Placeholder rates so checkout can be exercised end to end. Demo only —
+      // `reference` is what a production database runs, and it seeds none.
+      await seedDevelopmentShippingRates(database);
     }
     // Content last: a block that targets a brand or a concern checks that slug
     // against the taxonomy, so the catalogue it refers to has to exist first.
