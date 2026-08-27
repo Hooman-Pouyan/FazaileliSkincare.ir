@@ -5,6 +5,7 @@ import type { Locale } from "@/i18n/routing";
 import { OrderDetailScreen } from "@/modules/account/screens/order-detail.screen";
 import { SignInRequired } from "@/modules/account/components/sign-in-required";
 import { getOrder } from "@/modules/account/account.reads";
+import { getTransferFor } from "@/modules/payment/payment.reads";
 import { resolveViewer } from "@/modules/account/account.ownership";
 
 /**
@@ -34,5 +35,19 @@ export default async function OrderPage({
   const order = await getOrder(viewer, id, locale);
   if (!order) notFound();
 
-  return <OrderDetailScreen order={order} />;
+  /*
+    Transfer instructions belong on the invoice, not on a separate page.
+
+    The order and the amount to send are the same fact, and splitting them
+    costs a customer a navigation at the exact moment they are trying to pay.
+    `getTransferFor` is owner-scoped and returns null once the order is no
+    longer awaiting money, so the panel simply stops appearing.
+  */
+  const awaitingTransfer =
+    order.status === "awaiting_transfer" || order.status === "payment_review";
+  const transfer = awaitingTransfer
+    ? await getTransferFor(viewer.personId, id, locale)
+    : null;
+
+  return <OrderDetailScreen order={order} transfer={transfer} />;
 }

@@ -45,6 +45,10 @@ const ALLOWED_RAW_NAVIGATION = new Set([
   // forbidden — saying "exists, but not yours" confirms the order number is
   // real, which is what an enumeration attack needs.
   "src/app/[locale]/(account)/account/orders/[id]/page.tsx",
+  // `notFound` only. An unauthorised visitor is told the page does not exist
+  // rather than that they may not see it — the queue's existence is not
+  // something a customer needs to know.
+  "src/app/[locale]/(admin)/admin/transfers/page.tsx",
 ]);
 
 describe("one locale-prefixing mechanism", () => {

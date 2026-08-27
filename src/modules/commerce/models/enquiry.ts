@@ -19,12 +19,7 @@
  */
 
 /** Hosts whose bare origin is a valid page but a useless destination. */
-const MESSAGING_HOSTS = new Set([
-  "wa.me",
-  "api.whatsapp.com",
-  "t.me",
-  "m.me",
-]);
+const MESSAGING_HOSTS = new Set(["wa.me", "api.whatsapp.com", "t.me", "m.me"]);
 
 export function resolveEnquiryHref(
   raw: string | null | undefined,

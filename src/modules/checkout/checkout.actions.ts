@@ -1,6 +1,7 @@
 "use server";
 
 import { createHash } from "node:crypto";
+import { derivedUuid } from "@/lib/idempotency";
 import { z } from "zod";
 import { getLocale } from "next-intl/server";
 import { redirect } from "@/i18n/navigation";
@@ -32,26 +33,11 @@ const placeOrderInput = z.object({
   method: z.enum(["post", "courier", "pickup"]),
 });
 
-/** A stable UUID from arbitrary text, so the unique index can do its job. */
-function derivedKey(parts: readonly string[]): string {
-  const hex = createHash("sha256").update(parts.join(" ")).digest("hex");
-  const variant = ((parseInt(hex.slice(16, 18), 16) & 0x3f) | 0x80)
-    .toString(16)
-    .padStart(2, "0");
-  return [
-    hex.slice(0, 8),
-    hex.slice(8, 12),
-    `5${hex.slice(13, 16)}`,
-    variant + hex.slice(18, 20),
-    hex.slice(20, 32),
-  ].join("-");
-}
-
 /** Exported for the test that proves a repeated submission repeats the key. */
 export async function deriveIdempotencyKey(
   parts: readonly string[],
 ): Promise<string> {
-  return derivedKey(parts);
+  return derivedUuid(parts);
 }
 
 export async function placeOrderFormAction(formData: FormData): Promise<void> {
@@ -95,7 +81,7 @@ export async function placeOrderFormAction(formData: FormData): Promise<void> {
     addressId: parsed.data.addressId,
     method: parsed.data.method,
     contactPhone,
-    idempotencyKey: derivedKey([viewer.personId, requestHash]),
+    idempotencyKey: derivedUuid([viewer.personId, requestHash]),
     requestHash,
   });
 

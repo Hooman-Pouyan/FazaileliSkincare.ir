@@ -442,5 +442,38 @@
     "contactTitle": "Contact number",
     "contactHint": "We call this number to arrange delivery.",
     "placeholderRates": "Shipping prices are not final yet."
+  },
+  "transfer": {
+    "title": "Bank transfer",
+    "instructionsTitle": "Transfer the amount to this account",
+    "notConfigured": "Account details aren't set up yet. Please contact us.",
+    "holder": "Account name",
+    "bank": "Bank",
+    "card": "Card number",
+    "iban": "IBAN",
+    "amount": "Exact amount",
+    "amountHint": "Send exactly this amount; the last digits are how we find your order.",
+    "claimTitle": "After transferring, tell us the details",
+    "trackingNumber": "Reference number",
+    "last4": "Last four digits of your card",
+    "transferredAt": "Transfer date",
+    "submit": "Submit transfer details",
+    "submitted": "We have your details and are checking them.",
+    "reviewNote": "Once the transfer is confirmed we'll prepare your order.",
+    "rejected": "The transfer wasn't confirmed. Please check and try again."
+  },
+  "admin": {
+    "transfersTitle": "Transfer review",
+    "empty": "No transfers waiting.",
+    "order": "Order",
+    "customer": "Customer",
+    "expected": "Expected amount",
+    "tracking": "Reference",
+    "last4": "Last 4",
+    "submittedAt": "Submitted",
+    "accept": "Confirm and settle",
+    "reject": "Reject",
+    "rejectReason": "Reason",
+    "notAuthorised": "You don't have access."
   }
 }

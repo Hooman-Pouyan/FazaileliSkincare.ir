@@ -1,5 +1,5 @@
 import { config as loadEnv } from "dotenv";
-import { desc, eq, inArray } from "drizzle-orm";
+import { and, asc, eq, inArray, ne } from "drizzle-orm";
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 
 loadEnv({ path: [".env.local", ".env"], quiet: true });
@@ -17,6 +17,7 @@ const {
   person,
   shippingRate,
   variant,
+  product,
 } = await import("@/lib/db/schema");
 const { placeOrder } = await import("./checkout.service");
 
@@ -35,6 +36,8 @@ const { placeOrder } = await import("./checkout.service");
 const databaseUrl = process.env.DATABASE_URL;
 const suite = databaseUrl ? describe : describe.skip;
 
+/** Pinned by `cart.service.integration.test.ts`; left alone here. */
+const CART_SUITE_SLUG = "ultra-a-z-cream";
 const SUITE_EMAIL = "checkout-suite@example.invalid";
 /** A label no other suite uses, so the rate can be found and removed precisely. */
 const SUITE_RATE = "checkout-suite-courier";
@@ -63,16 +66,20 @@ let rateId: string;
 suite("placeOrder", () => {
   beforeAll(async () => {
     /*
-      Ordered descending so this suite deterministically takes a *different*
-      variant from `cart.service.integration.test.ts`, which takes the first it
-      finds. Two parallel suites mutating one variant's `on_hand` is the same
-      shared-state race the scoped `beforeEach` below exists to avoid.
+      A variant no other integration suite touches.
+
+      `cart.service.integration.test.ts` pins to `ultra-a-z-cream`; this suite
+      and the bank-transfer one take opposite ends of everything else. Vitest runs
+      these files in parallel against one database, so two suites mutating one
+      variant's `on_hand` is the shared-state race `14.5` records — avoided by
+      construction rather than by luck.
     */
     const [v] = await db
       .select({ id: variant.id })
       .from(variant)
-      .where(eq(variant.isActive, true))
-      .orderBy(desc(variant.id))
+      .innerJoin(product, eq(product.id, variant.productId))
+      .where(and(eq(variant.isActive, true), ne(product.slug, CART_SUITE_SLUG)))
+      .orderBy(asc(variant.id))
       .limit(1);
     if (!v)
       throw new Error("seed the demo catalogue before running this suite");
@@ -204,6 +211,20 @@ suite("placeOrder", () => {
     await db.insert(cartItem).values({ cartId: c!.id, variantId, quantity: 2 });
   });
 
+  /*
+    Assertions have to be scoped too, not just fixtures.
+
+    `14.5` was about `beforeEach` deleting other suites' rows; this is its other
+    half — `select().from(customerOrder)` counts every order in a database three
+    suites share, so a test that asserts "exactly one order" passes alone and
+    fails the moment anything else places one. Scope the read, not the schedule.
+  */
+  const myOrders = () =>
+    db
+      .select({ id: customerOrder.id })
+      .from(customerOrder)
+      .where(eq(customerOrder.personId, personId));
+
   const input = (key: string) => ({
     personId,
     addressId,
@@ -223,7 +244,8 @@ suite("placeOrder", () => {
         shipping: customerOrder.shippingRials,
         total: customerOrder.totalRials,
       })
-      .from(customerOrder);
+      .from(customerOrder)
+      .where(eq(customerOrder.personId, personId));
 
     const [line] = await db
       .select({
@@ -231,7 +253,13 @@ suite("placeOrder", () => {
         quantity: orderLine.quantity,
         total: orderLine.lineTotalRials,
       })
-      .from(orderLine);
+      .from(orderLine)
+      .where(
+        inArray(
+          orderLine.orderId,
+          (await myOrders()).map((o) => o.id),
+        ),
+      );
 
     // Given: nothing in the input said what anything costs.
     // Then: every number is derived, and the arithmetic closes.
@@ -253,10 +281,7 @@ suite("placeOrder", () => {
       replayed: true,
     });
 
-    const orders = await db
-      .select({ id: customerOrder.id })
-      .from(customerOrder);
-    expect(orders).toHaveLength(1);
+    expect(await myOrders()).toHaveLength(1);
   });
 
   it("creates one order when two identical requests are genuinely concurrent", async () => {
@@ -268,10 +293,7 @@ suite("placeOrder", () => {
       placeOrder(input(key)),
     ]);
 
-    const orders = await db
-      .select({ id: customerOrder.id })
-      .from(customerOrder);
-    expect(orders).toHaveLength(1);
+    expect(await myOrders()).toHaveLength(1);
 
     // At least one caller must have been told it worked; neither may be told
     // something happened that did not.
@@ -344,7 +366,7 @@ suite("placeOrder", () => {
       kind: "rejected",
       reason: "shipping-unavailable",
     });
-    expect(await db.select().from(customerOrder)).toHaveLength(0);
+    expect(await myOrders()).toHaveLength(0);
   });
 
   it("binds reservations to the order line without consuming them", async () => {
@@ -391,16 +413,19 @@ suite("placeOrder", () => {
 
   it("creates exactly one pending payment attempt for the order total", async () => {
     await placeOrder(input(crypto.randomUUID()));
+    const mine = (await myOrders()).map((o) => o.id);
     const attempts = await db
       .select({
         method: payment.method,
         status: payment.status,
         amount: payment.amountRials,
       })
-      .from(payment);
+      .from(payment)
+      .where(inArray(payment.orderId, mine));
     const [order] = await db
       .select({ total: customerOrder.totalRials })
-      .from(customerOrder);
+      .from(customerOrder)
+      .where(eq(customerOrder.personId, personId));
 
     expect(attempts).toHaveLength(1);
     expect(attempts[0]).toMatchObject({

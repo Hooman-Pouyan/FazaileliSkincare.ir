@@ -73,7 +73,8 @@ export async function AddressBook({
                   dir="ltr"
                   className="text-small tabular-nums text-stone-text"
                 >
-                  {entry.postalCode} · {formatIranianPhone(entry.recipientPhone)}
+                  {entry.postalCode} ·{" "}
+                  {formatIranianPhone(entry.recipientPhone)}
                 </span>
               </div>
 

@@ -3,6 +3,8 @@ import { Container } from "@/components/layout/container";
 import { formatJalali } from "@/lib/jalali";
 import { Link } from "@/i18n/navigation";
 import type { OrderDetailView } from "../account.reads";
+import { TransferPanel } from "@/modules/payment/components/transfer-panel";
+import type { TransferView } from "@/modules/payment/payment.reads";
 
 /**
  * The order detail page, which **is** the invoice.
@@ -36,8 +38,10 @@ function readSnapshot(value: unknown): AddressSnapshot | null {
 
 export async function OrderDetailScreen({
   order,
+  transfer = null,
 }: {
   readonly order: OrderDetailView;
+  readonly transfer?: TransferView | null;
 }) {
   const t = await getTranslations("account");
   const shipTo = readSnapshot(order.addressSnapshot);
@@ -72,7 +76,9 @@ export async function OrderDetailScreen({
                 <th className="py-2 text-start font-medium">
                   {t("order.product")}
                 </th>
-                <th className="py-2 text-start font-medium">{t("order.sku")}</th>
+                <th className="py-2 text-start font-medium">
+                  {t("order.sku")}
+                </th>
                 <th className="py-2 text-start font-medium">
                   {t("order.quantity")}
                 </th>
@@ -149,6 +155,8 @@ export async function OrderDetailScreen({
             </p>
           </aside>
         </div>
+
+        {transfer && <TransferPanel transfer={transfer} />}
 
         <section className="flex flex-col gap-3">
           <h2 className="m-0 text-body font-medium">{t("order.payments")}</h2>
