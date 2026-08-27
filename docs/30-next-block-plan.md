@@ -218,18 +218,14 @@ claim — and no gateway, no eNamad, no merchant account involved.
 
 Both were confirmed in scope: schema, relations, phased plan and UI.
 
-- [ ] **Write `docs/system-design/booking.md` first.** There is no plan document
-      and there are no tables; `03-domain-model.md` §3 has the bounded context
-      and `D4` records the design intent — PostgreSQL range types and exclusion
-      constraints for multi-resource double-booking — and nothing has been built
-      against it.
-- [ ] It must settle: the resource model (§7 records **3 practitioners, 2 rooms,
-      3 beds**, and a service needing a practitioner _and_ a bed is why
-      exclusion constraints are the design); how a slot is offered, held,
-      confirmed and expired; Jalali rendering over `timestamptz` storage; what a
-      customer sees when nothing is free; and **whether a booking takes a
-      deposit** — if it does, it inherits Phase E's payment path rather than
-      inventing a second one.
+- [x] **`docs/system-design/booking.md` is written** (2026-08-27) and covers the
+      resource model, `BOOK-D3`'s dwell-time scheduling, hold/deposit/confirm/expire,
+      Jalali over `timestamptz`, the empty-calendar case, and the deposit question —
+      answered yes, so it inherits Phase E's payment path rather than inventing a
+      second one. [`system-design/academy.md`](system-design/academy.md) and
+      [`system-design/studio.md`](system-design/studio.md) were written alongside it,
+      because mentorship reuses Booking's scheduler and Studio composes all three.
+      **All three await the maintainer's approval and his answers to their `§10`.**
 - [ ] Then schema and migration, with the double-booking invariant enforced **in
       the database** and proved by a concurrent integration test the way the
       cart's oversell test is.
