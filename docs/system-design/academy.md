@@ -285,6 +285,32 @@ sequence intact:
 Ordered this way, none of the three additions delays what the whole sequence was
 arranged around.
 
+### ACAD-D17 - Three gaps in the enrolment lifecycle, closed
+
+Each is small, and each would have been found in production rather than in
+review.
+
+**A person cannot hold two live enrolments in one cohort.** `§7` returns
+`already-enrolled` as a rejection, and nothing in the schema makes it true. A
+partial unique index does:
+
+```sql
+CREATE UNIQUE INDEX enrolment_one_live_per_cohort
+  ON enrolment (person_id, cohort_id)
+  WHERE status IN ('held','pending_review','confirmed','active');
+```
+
+**A held seat expires when the cohort starts, whatever `hold_hours` says.** A
+48-hour hold placed the day before a cohort begins otherwise survives into a
+course that has already started, holding a seat nobody can now use. The sweeper
+takes the earlier of `expires_at` and `cohort.starts_on`.
+
+**Publishing a graduate's name requires their consent.** `/verify/[code]` is a
+public page carrying a real person's name and qualification. Consent is a
+checkbox at enrolment, stored on the enrolment, and a certificate whose holder
+did not consent verifies by **course, date and status only** - which still proves
+the certificate is genuine, which is the page's actual job.
+
 ---
 
 ## 3. Database contract

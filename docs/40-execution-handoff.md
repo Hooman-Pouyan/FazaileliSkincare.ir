@@ -53,6 +53,13 @@ Its exit gate passes **and** a review-log section exists in
 `docs/20-packet-review-log.md` **and** a row exists in `docs/17-execution-ledger.md`.
 Per `8.10`. No exceptions.
 
+### 0.35 · Two things to do before B0
+
+| # | Task | Why |
+|---|---|---|
+| P.1 | **Fix `R-9`** — the integration suite writes to the development database | Booking and Academy add more integration tests than every previous packet combined. Left alone this gets much worse, fast |
+| P.2 | Confirm a **privacy policy page** is scheduled | `B3.14` collects health data. `35` finding F-3 stops being a commerce concern the moment intake ships (`BOOK-D23`) |
+
 ### 0.4 · Stop and ask — never guess these
 
 | Blocked on | Do this |
@@ -62,6 +69,8 @@ Per `8.10`. No exceptions.
 | Attendance threshold for a certificate | `A3` blocks. Log it and continue with the rest of `A3` |
 | Credit validity period | Default 12 months, marked as a placeholder in the review log |
 | Anything about her credentials or claims | Never generate. Leave empty |
+| Intake retention period | Default to the relationship plus 2 years, marked placeholder, logged |
+| Persian SMS and notification copy | `B6` needs fa/en/ar templates. Draft structure, leave wording to her, log it |
 
 ### 0.5 · Notation
 
@@ -106,13 +115,17 @@ runs first.
 | B0.3 | `service_step` | `occupies_practitioner` boolean — the `BOOK-D3` model |
 | B0.4 ‖ | `practitioner`, `practitioner_skill`, `room`, `resource` | Assistant is a `practitioner` row with narrow skills (`BOOK-D17`) |
 | B0.5 ‖ | `availability_rule`, `availability_exception`, `public_holiday` | |
-| B0.6 | `appointment` + `appointment_practitioner_block` | `time_range` is `tstzrange`, UTC |
+| B0.6 | `appointment` | `time_range` is `tstzrange`, UTC. `practitioner_id` is the **lead, for display only** — it carries no constraint (`BOOK-D21`) |
+| B0.6a | `appointment_practitioner_block` | Own `practitioner_id`, `time_range`, denormalised `status`. **Always populated** — one row for a non-interleaving service |
+| B0.6b | `duration_minutes` derived from `service_step` | Contract test asserts they agree for every seeded service (`BOOK-D22`) |
 | B0.7 ‖ | `intake_question`, `intake_response` | Versioned |
 | B0.8 ‖ | `waitlist_entry` | |
 | B0.9 | `treatment_series`, and `appointment.series_id` | `BOOK-D20` |
 | B0.10 | **The shared payment migration** — `ACAD-D12` | `order_id` nullable; `appointment_id` **and** `enrolment_id` added; three-way check. **Do this once for both contexts** |
 | B0.11 | Revisit `payment_id_order_unique` and `payment_order_time_idx` | Partial `WHERE order_id IS NOT NULL`, in the same migration |
-| B0.12 | `CREATE EXTENSION btree_gist` + both exclusion constraints | `WHERE status IN ('held','confirmed')` present on both |
+| B0.12 | `CREATE EXTENSION btree_gist` | Before either constraint, or migration fails confusingly |
+| B0.12a | `no_resource_overlap` **on `appointment`** | Correct as `BOOK-D2` wrote it. `WHERE status IN ('held','confirmed')` |
+| B0.12b | `no_practitioner_overlap` **on `appointment_practitioner_block`** | **NOT on `appointment`** — `BOOK-D2` is wrong and `BOOK-D21` corrects it. Putting it on `appointment` makes interleaving impossible and destroys the 75% capacity gain |
 | B0.13 | FK index audit | Every new FK indexed, **proved by query**, as packet 12 did |
 | B0.14 | Dev fixtures | One short consultation, one 2-hour treatment with passive steps, one series; one practitioner, one assistant, one room, three beds. **Demo-profile fenced and labelled** |
 | B0.15 | Iranian public holidays, current year | **Sourced and recorded, not invented.** Source noted in the seed |
@@ -232,6 +245,8 @@ The largest packet. Every screen: JS-off, RTL, Jalali, shell offset respected.
 | B4.6 | `joinWaitlist`, matching on service and window | |
 | B4.7 | Offer-on-release with a claim window | One slot never promised to five people |
 | B4.8 | `claimWaitlistOffer`, `expireWaitlistClaims` | |
+| B4.9 | Intake retention sweep; `person.closedAt` **deletes** intake responses | `BOOK-D23`. The appointment survives; its answers do not |
+| B4.10 | Test: no intake answer reaches a notification body | |
 
 **Exit gate:** a cancellation inside the window releases and offers onward;
 outside it, the same, with the deposit becoming credit rather than a refund.
@@ -364,7 +379,9 @@ confirmed session makes its instructors unbookable for that window plus buffer.
 | A2.8 ‖ | `joinCohortWaitlist` with position | |
 | A2.9 | Offer on expiry or withdrawal | |
 | A2.10 | `withdraw` → **credit, never cash** | `ACAD-D15`, 12 months (placeholder — log it) |
-| A2.11 | `expireHeldSeats` sweeper | |
+| A2.11 | `expireHeldSeats` sweeper | Takes the **earlier** of `expires_at` and `cohort.starts_on` (`ACAD-D17`) |
+| A2.11a | Partial unique index: one live enrolment per person per cohort | `ACAD-D17`. `already-enrolled` is a rejection with nothing enforcing it today |
+| A2.11b | Consent checkbox at enrolment for public name display | `ACAD-D17` |
 | A2.12 | **Capacity proof** | Two simultaneous holds → exactly one; removing `FOR UPDATE` makes it fail |
 
 **Exit gate:** A2.12 passes, **and** a student enrols → transfers → uploads a
@@ -386,6 +403,7 @@ on this site.**
 | A3.7 | `/verify/[code]` | No session; name, course, date, status, **nothing else**; `noindex` |
 | A3.8 | Rate limiting | A thousand guesses are limited, not answered |
 | A3.9 | Unknown code indistinguishable from malformed | The page cannot probe which codes exist |
+| A3.10 | No consent → verify by **course, date and status only** | Still proves the certificate is genuine, which is the page's job (`ACAD-D17`) |
 
 **Exit gate:** a certificate issued from real attendance verifies at a public URL;
 a superseded one says so rather than vanishing.

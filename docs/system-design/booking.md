@@ -57,6 +57,10 @@ bed.** Rooms matter for privacy rules; beds matter for capacity. Both are
 
 ### BOOK-D2 - Double-booking is prevented by the database, on both axes
 
+> **The practitioner constraint below is WRONG and is corrected by `BOOK-D21`.**
+> As written it forbids the very overlap `BOOK-D3` exists to create. The resource
+> constraint is correct and stands.
+
 A `SELECT` for conflicts followed by an `INSERT` does not survive two people
 tapping "book" in the same second. Both axes get an exclusion constraint:
 
@@ -388,6 +392,82 @@ Where `session_count > 1`:
 (`ACAD-D9`). A series is N sessions of one treatment inside Booking. Two
 different things that would be worse merged.
 
+### BOOK-D21 - The practitioner constraint belongs on the blocks, not on the appointment
+
+**Correcting `BOOK-D2`, which contradicts `BOOK-D3`.** As written:
+
+```sql
+EXCLUDE USING gist (practitioner_id WITH =, time_range WITH &&)
+```
+
+on `appointment` forbids **any** two appointments sharing a practitioner from
+overlapping in wall-clock time. That is exactly what `BOOK-D3` requires to
+happen: a client in a mask while the practitioner starts somebody else means two
+appointments, one practitioner, overlapping ranges. **Interleaving is impossible
+under `BOOK-D2` as specified**, and with it the 75% capacity gain that is the
+single highest-value decision in this context.
+
+It would not have failed at migration time. It would have failed at `B1.13`'s
+test - after the schema was built, and possibly after real appointments existed.
+
+**The correction, and it is simpler than what it replaces:**
+
+1. **`appointment_practitioner_block` always has rows** - for a service with
+   `allows_interleaving = false`, exactly one block spanning the whole
+   appointment. One mechanism, no branch, no special case in the availability
+   query.
+2. The block table carries **its own `practitioner_id` and `time_range`**. It must:
+   `BOOK-D17` has the assistant covering minutes 30-90 while Ms. Fazaieli covers
+   0-30 and 90-135, and a single `appointment.practitioner_id` cannot express
+   that.
+3. **The practitioner exclusion constraint moves to the block table** and comes
+   off `appointment` entirely:
+
+```sql
+ALTER TABLE appointment_practitioner_block
+  ADD CONSTRAINT no_practitioner_overlap
+  EXCLUDE USING gist (practitioner_id WITH =, time_range WITH &&)
+  WHERE (status IN ('held', 'confirmed'));
+```
+
+   The block denormalises its appointment's `status` so the partial index works,
+   kept in step by the same transaction that moves the appointment.
+4. `appointment.practitioner_id` **stays**, as the lead practitioner for display
+   and for "who will you be seeing" (`BOOK-D15` as amended). It carries no
+   constraint.
+5. **`no_resource_overlap` on `appointment` is correct and unchanged.** The bed is
+   genuinely held for the whole duration - that is the entire point of the two
+   axes.
+
+### BOOK-D22 - A service's duration is derived from its steps, never stored twice
+
+`service.duration_minutes` and the sum of `service_step.minutes` are two
+statements of one fact, and two statements of one fact eventually disagree - here
+by overbooking a treatment room.
+
+`duration_minutes` is **derived** from the steps. Where a service has no steps it
+is a single implicit step. A schema contract test asserts the two agree for every
+seeded service, so a hand-edited row cannot drift.
+
+### BOOK-D23 - Intake responses are health data, and health data has an end
+
+`BOOK-D10` says who may see an intake response and never says how long it lives.
+For medical-adjacent data about a named person that is not a small omission.
+
+- **Retention** is the life of the client relationship plus a stated period. The
+  period is the maintainer's; the mechanism is a dated sweep.
+- **`person.closedAt` triggers deletion** of intake responses, not anonymisation -
+  a contraindication tied to a treatment history is re-identifiable however the
+  name is scrubbed.
+- The appointment record **survives** (`BOOK-D11` - it is the record of a
+  commitment and of money); its intake answers do not.
+- No intake answer is ever included in a notification body, per `BOOK-D10`, and a
+  test asserts it.
+
+**This makes a privacy policy page non-optional.** The site collects health data
+the moment `B3.14` ships, and `35`'s finding F-3 - that the legal pages are
+missing entirely - stops being a commerce concern and becomes this one.
+
 ---
 
 ## 3. Database contract
@@ -420,7 +500,7 @@ settlement path branches on which aggregate is present.
 | `availability_exception`         | `practitioner_id`, `date`, `starts_at`, `ends_at`, `is_closed` - leave and one-off changes                                                                                                                                                                                          |
 | `public_holiday`                 | `date`, `name_fa`, `is_closed` - maintained, per `BOOK-D6`                                                                                                                                                                                                                          |
 | `appointment`                    | `person_id`, `service_id`, `practitioner_id`, `resource_id`, `time_range` (`tstzrange`), `status`, `expires_at`, `deposit_payment_id`, `customer_note`, `staff_note`, `idempotency_key`, `request_hash`, plus `cancelled_at`, `cancelled_by`, `cancellation_reason`, `completed_at` |
-| `appointment_practitioner_block` | The practitioner-occupied sub-intervals from `service_step`, so the exclusion constraint can hold a _set_ of intervals per appointment when `allows_interleaving` is on                                                                                                             |
+| `appointment_practitioner_block` | `appointment_id`, **`practitioner_id`**, `time_range`, `status` (denormalised), `sort_order`. Always populated - one row for a non-interleaving service. **Carries the practitioner exclusion constraint**, per `BOOK-D21`                                                              |
 | `intake_question`                | `version`, `sort_order`, `kind`, `is_blocking`, translations                                                                                                                                                                                                                        |
 | `intake_response`                | `appointment_id`, `question_version`, `answers` (jsonb), `submitted_at`                                                                                                                                                                                                             |
 | `waitlist_entry`                 | `person_id`, `service_id`, `window_start`, `window_end`, `status`, `notified_at`, `claim_expires_at`                                                                                                                                                                                |
