@@ -475,6 +475,23 @@ cancelling a practitioner's day re-offers every affected slot.
 
 ---
 
+## 10b. The `/book` hub page
+
+The booking hub is a **public marketing surface**, not part of the appointment
+lifecycle, so its composition is specified in
+[`storefront/public-surfaces.md`](storefront/public-surfaces.md) §6.2 rather than
+here. In summary it carries: what we treat, grouped by concern; the treatment
+rooms including the dedicated **Forlle'd room**; consented before-and-after
+cases; the practitioners and their credentials; what a visit is like; and
+testimonials from **clients** specifically - `PUB-D1` keeps client, customer and
+student proof on their own surfaces.
+
+Booking supplies two reads to that page and owns nothing else about it:
+`listServices` and `listPractitioners`. The rooms, cases and testimonials are
+content entities, per `PUB-D4` and `PUB-D5`.
+
+---
+
 ## 11. Capability catalogue
 
 **In v1** - service catalogue, availability search, hold/deposit/confirm,

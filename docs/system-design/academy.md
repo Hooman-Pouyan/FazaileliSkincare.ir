@@ -361,6 +361,24 @@ hours redeems into three contexts without any of them importing another's types.
 
 ---
 
+## 10b. The `/academy` hub page
+
+Specified in [`storefront/public-surfaces.md`](storefront/public-surfaces.md)
+§6.3. It carries: upcoming dated cohorts with remaining seats; the course
+catalogue; **where graduates are now**, which is the strongest section on the
+page; student work under consent; a preview of the classroom; what the
+certification is worth and how anyone verifies it; and testimonials from
+**students** specifically.
+
+Academy supplies `listCourses`, `listCohorts` and `listGraduateOutcomes`. The
+testimonials, student cases and classroom media are content entities.
+
+The buying decision here is career-shaped rather than product-shaped, which is
+why evidence of **outcomes** outranks description of **content** in the section
+order.
+
+---
+
 ## 11. Capability catalogue
 
 **In v1** - course catalogue, in-person cohorts with capacity and waitlist,
