@@ -270,6 +270,53 @@ its defaults.
 all and the policy exists only as a stated expectation and a no-show count on the
 customer record.
 
+### BOOK-D17 - The assistant is a practitioner row, and exclusivity is a service property
+
+Answering `§10` question 2, 2026-08-29. The clinic today is **one practitioner
+and one assistant**. The assistant does not perform services alone; she covers a
+client during a passive step so Ms. Fazaieli can be with a second client. That is
+`BOOK-D3`'s interleaving, arrived at by a different route: the practitioner is
+released because somebody else is present, not because nobody is.
+
+Two rules follow, and both are expressed in data rather than in code.
+
+**The assistant is a `practitioner` row** whose `practitioner_skill` covers only
+the steps she may cover. The concurrency ceiling then falls out of the exclusion
+constraint for free: two clients can overlap because two practitioners exist, and
+a third cannot, because there is no third. Nothing needs a
+`max_concurrent_clients` number, and the ceiling rises by itself the day somebody
+is hired.
+
+**Consultations and teaching are exclusive.** While Ms. Fazaieli is giving a
+treatment she is not available for a consultation, and while she is teaching she
+is not available at all. A consultation is therefore a service whose every
+`service_step` sets `occupies_practitioner = true` and whose
+`allows_interleaving` is false.
+
+**The model is not shaped by today's headcount.** `BOOK-D1`'s two axes,
+`practitioner_skill`, `service_step` and both exclusion constraints stay exactly
+as specified. One practitioner and one assistant is a *seed*, not a design. When
+there are four practitioners and the beds begin to bind, no migration is
+required - which is the whole reason the bed axis is kept even though it does not
+bind today.
+
+### BOOK-D18 - A teaching session blocks the practitioner's booking calendar
+
+Falling directly out of `BOOK-D17`, and a gap in the plans as they stood:
+`cohort_session` carries `starts_at` and `ends_at` in Academy, and
+`availability_exception` is per practitioner in Booking, and **nothing connects
+them.** As specified, the scheduler would happily confirm a facial in the middle
+of a workshop.
+
+Confirming a cohort session writes an `availability_exception` for every
+instructor on that cohort, through a narrow published function - Academy calling
+into Booking, never writing Booking's tables, per the bounded-context rule.
+Cancelling or moving a session withdraws or moves it.
+
+This is a real dependency between the two contexts and it belongs in `ACAD1`'s
+exit gate: a cohort session, once confirmed, makes its instructors unbookable for
+that window.
+
 ---
 
 ## 3. Database contract
@@ -543,8 +590,8 @@ cancelling a practitioner's day re-offers every affected slot.
    2026-08-29:** launch with `deposit_rials = 0` per `BOOK-D14`; the cancellation
    tiers are settled in `BOOK-D16`. Deposit amounts are needed only when deposits
    are switched on.
-2. **Does a practitioner ever leave a client mid-treatment?** `BOOK-D3`'s
-   interleaving switch, per service.
+2. ~~Does a practitioner ever leave a client mid-treatment?~~ **Answered
+   2026-08-29: yes, covered by an assistant.** See `BOOK-D17` and `BOOK-D18`.
 3. ~~May customers pick a practitioner by name?~~ **Answered 2026-08-29: no
    picker in v1.** `BOOK-D15`.
 4. **The intake questions**, and which are blocking. `BOOK-D10`.
