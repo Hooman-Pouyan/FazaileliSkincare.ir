@@ -53,6 +53,14 @@ no audience, no photo and no link to what it refers to.
 
 ## 3. The content entities that do not exist yet
 
+> **Corrected 2026-08-27 by [`../content-operations.md`](../content-operations.md)
+> §5.** This section originally implied all seven entities needed management
+> screens. Four of them — `credential`, `space`, `brand_relationship` and
+> `milestone` — change a few times a year and are better served by versioned seed
+> data reviewed in a pull request. The tables below are unchanged; only their
+> editing surface is. `testimonial`, `before_after_case` and `consent_record` do
+> need screens, and `D18` makes the last of those non-negotiable.
+
 `content_block` carries `heading`, `body`, `cta_label`, `cta_href` and nothing
 else. It is a good spine for editorial copy and **cannot** carry any of the
 following. These are real tables, not blocks.
