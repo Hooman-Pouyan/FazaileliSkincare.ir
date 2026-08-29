@@ -52,6 +52,53 @@ for you for ten minutes while you finish.
 If a day has nothing, you are not shown an empty grid: you are shown the next few
 days that do have something, and offered the waiting list.
 
+### 2.3a Two things people often confuse
+
+**The ten minutes is not the appointment.** It is how long the slot is held for
+*you* while you finish the health questions and confirm, so nobody takes it out
+from under you mid-form. A two-hour treatment still occupies two hours.
+
+**A treatment's stages are already handled.** A two-hour facial made of cleanse,
+peel, mask and serum is described stage by stage, with how long each takes and
+whether Ms. Fazaieli must be present for it. That is what lets the assistant
+cover a mask while she starts somebody else.
+
+### 2.3b Consultations, and when one is needed
+
+There are **three**, and they differ by what the person wants rather than by how
+long they last:
+
+- **Choosing a treatment** — short, free or nearly so. Its job is to send
+  somebody to the right treatment. Charged properly, people skip it and book the
+  wrong three-hour appointment.
+- **A skin assessment** — longer and paid, where the consultation *is* the
+  product. A longer "VIP" hour is a price on this one, not a fourth thing.
+- **Course advice** — should I take this course. A different audience asking a
+  career question; it belongs on the Academy pages.
+
+**A person the clinic has never seen must be seen once.** Booking a treatment
+with no history offers the short consultation instead. After one completed
+appointment they book anything directly, forever. It is set per treatment, so a
+treatment that should always need assessment — or never — is a setting, not a
+rebuild.
+
+**They never book twice.** At the end of a consultation she books the treatment
+for them from her own screen. Sending somebody back to the website to book again
+is where people are lost.
+
+### 2.3c Courses of treatment
+
+Some things are one appointment. Others are six sessions across three months,
+bought as one thing.
+
+Both work. A series is **paid once, then booked a session at a time** — not all
+six up front. Two reasons: peels and similar need real gaps between them, and the
+system refuses a session booked too soon; and six appointments claimed months
+ahead is capacity the clinic cannot recover when somebody drifts away.
+
+The person sees how many sessions they have left and when the balance expires.
+**Cancelling a session gives it back** rather than burning it.
+
 ### 2.4 The health questions
 
 A short form before the booking is confirmed — the questions Ms. Fazaieli decides
@@ -170,7 +217,6 @@ rises — no rebuild.
 | Taking a deposit at launch | Deposits are the only part that touches money, and money waits on merchant paperwork. Switched on later by changing one number per treatment (`BOOK-D14`) |
 | Refunds | Not needed — a deposit, when it exists, is credit toward a future booking rather than money returned (`BOOK-D16`) |
 | A map of the clinic | Every usable map provider is a foreign host. Address and directions in words instead |
-| A course of six treatments booked as one series | Real, and later. Each is booked individually first |
 | Adding it to your phone's calendar | Later |
 | Booking by SMS | Recreates the queue this replaces |
 | Customer ratings of practitioners | Three colleagues in one clinic; it creates a ranking nobody wants to manage |

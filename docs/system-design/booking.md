@@ -317,6 +317,69 @@ This is a real dependency between the two contexts and it belongs in `ACAD1`'s
 exit gate: a cohort session, once confirmed, makes its instructors unbookable for
 that window.
 
+### BOOK-D19 - Consultations are three services, and the gate is once per person
+
+**Three, not a tier per duration.** Tiers by length multiply into options a
+client cannot choose between and somebody has to maintain. What actually differs
+is intent:
+
+| Service | Intent | Note |
+| --- | --- | --- |
+| **Choosing a treatment** | Short. Which treatment is right for me | Free or near-free. Its job is conversion, not revenue - charged properly, people skip it and book the wrong three-hour treatment |
+| **Skin assessment** | The consultation *is* the product. Assessment and a plan | Paid. A longer "VIP" hour is a **price tier of this**, not a fourth service |
+| **Course advice** | Should I take this course | A different audience asking a career question. Lives on Academy's surface, not in the treatment list |
+
+**The gate.** `service.requires_prior_visit`, a boolean, default true for
+treatments and false for consultations. Booking a service that requires it, as a
+person with no completed appointment, is rejected as `consultation-required` and
+the short consultation is offered in its place.
+
+Read as: **a person the clinic has never seen must be seen once.** After one
+completed appointment they book anything directly. The flag is per service, so if
+a particular treatment should always require assessment - or should never require
+it - that is data, not a rewrite.
+
+**The drop-off this avoids.** A client who consults and must then return to the
+site to book the treatment is a second visit and a place to lose them. She books
+it for them at the end of the consultation from the day view, using
+`createAppointmentForCustomer`, which exists already for telephone bookings. The
+client books once.
+
+### BOOK-D20 - A series is one integer, sold once and scheduled a session at a time
+
+Both shapes exist: a single appointment made of stages, and a course of sessions
+across weeks sold as one thing. `§11` listed the second as "deliberately later";
+it moves into v1.
+
+**One column carries the difference.** `service.session_count`, default 1.
+`service_step` continues to describe the stages *inside* one session, unchanged -
+so a 1-session service is exactly what is specified today and needs no new
+concept.
+
+Where `session_count > 1`:
+
+- **`treatment_series`** records the purchase and the balance: person, service,
+  sessions bought, sessions used, `expires_on`.
+- **Sessions are ordinary appointments** carrying a `series_id`. They participate
+  in both exclusion constraints like any other. Nothing about availability
+  changes.
+- **Paid once, at purchase**, never per session. Until deposits are switched on
+  (`BOOK-D14`) the series is created by staff after payment in person, which is
+  how it already works.
+- **Sessions are booked one at a time, not six up front.** Two reasons, and both
+  matter: peels and similar treatments need clinical spacing, enforced as
+  `service.min_days_between_sessions`; and with one practitioner, six appointments
+  claimed months ahead is capacity the clinic cannot get back when the client
+  drifts.
+- **Cancelling a session returns it to the balance** rather than consuming it. A
+  cancelled session is not a lost session.
+- **`expires_on`** exists because an open-ended balance is a liability that never
+  closes. Twelve months is the usual answer; it is hers to set.
+
+**This is not Academy's `package`.** That bundles across contexts by snapshot
+(`ACAD-D9`). A series is N sessions of one treatment inside Booking. Two
+different things that would be worse merged.
+
 ---
 
 ## 3. Database contract
@@ -337,7 +400,8 @@ settlement path branches on which aggregate is present.
 
 | Table                            | Purpose and notable columns                                                                                                                                                                                                                                                         |
 | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `service`                        | `slug`, `kind` (`treatment`/`consultation`/`mentorship`), `duration_minutes`, `buffer_minutes`, `price_rials`, `deposit_rials`, `free_cancellation_hours`, `allows_interleaving`, `required_resource_kind`, `is_published`, `review_state`                   |
+| `service`                        | `slug`, `kind` (`treatment`/`consultation`/`mentorship`), `duration_minutes`, `buffer_minutes`, `price_rials`, `deposit_rials`, `free_cancellation_hours`, `allows_interleaving`, `required_resource_kind`, `requires_prior_visit`, `session_count`, `min_days_between_sessions`, `is_published`, `review_state` |
+| `treatment_series`               | `person_id`, `service_id`, `sessions_purchased`, `sessions_used`, `expires_on`, `payment_id`, `status` - `BOOK-D20`. Appointments in the series carry `series_id`                                                                                                                                              |
 | `service_translation`            | `locale_code`, `name`, `summary`, `description`, `preparation`, `aftercare`                                                                                                                                                                                                         |
 | `service_step`                   | `service_id`, `sort_order`, `minutes`, `occupies_practitioner` (bool), `label` - the `BOOK-D3` model                                                                                                                                                                                |
 | `practitioner`                   | `person_id`, `display_name`, `is_bookable`, `sort_order`. A practitioner is a `person` with the `practitioner` role; this row carries scheduling attributes                                                                                                                         |
@@ -494,6 +558,8 @@ other.
 | `contraindicated`          | A blocking intake answer        | Explain, and offer a consultation instead of a treatment               |
 | `deposit-unsettled`        | Hold expired before payment     | The hold is gone; re-offer the slot if it is still free                |
 | `too-late-to-cancel`       | Outside the free window         | Show the policy that was shown before booking                          |
+| `consultation-required`    | First-time client, gated service | Offer the short consultation instead, per `BOOK-D19`                   |
+| `too-soon-in-series`       | Inside the clinical spacing      | Show the earliest date the next session may be booked, per `BOOK-D20`  |
 | `not-yours`                | Never returned                  | Not-found instead, per `§5.1`                                          |
 
 Every rejection is a value, never a throw. Retries are safe: `holdSlot` and
@@ -623,8 +689,7 @@ content entities, per `PUB-D4` and `PUB-D5`.
 **In v1** - service catalogue, availability search, hold/deposit/confirm,
 intake, cancel, reschedule, waitlist, reminders, staff day view, holidays.
 
-**Deliberately later** - recurring appointment series (a course of six
-treatments); package redemption against bookings; practitioner-facing mobile
+**Deliberately later** - package redemption against bookings; practitioner-facing mobile
 view; SMS-initiated booking; calendar export; multi-branch; resource-specific
 device booking beyond beds.
 
