@@ -221,6 +221,11 @@ no business registration.**
 
 ### BOOK-D15 - There is no practitioner-choice feature in v1
 
+> **Amended by `../39-confirmation-pass.md` §2.1.** No picker, but the
+> confirmation page and the reminder message **name who they will be seeing**.
+> Warmer at no cost, and the sentence changes rather than a new concept appearing
+> when a second practitioner joins.
+
 Superseding `BOOK-D7`. The institute's clients come for Ms. Fazaieli, and there
 are not enough other practitioners for a choice to be meaningful. A picker that
 offers one real answer is a control that only ever disappoints.
@@ -309,7 +314,10 @@ them.** As specified, the scheduler would happily confirm a facial in the middle
 of a workshop.
 
 Confirming a cohort session writes an `availability_exception` for every
-instructor on that cohort, through a narrow published function - Academy calling
+instructor on that cohort - **extended by `cohort.buffer_minutes`, default 30,
+before and after** (`../39-confirmation-pass.md` §2.5; sixty either side of every
+teaching day is an hour of bookable time that does not exist, and she is the
+entire capacity of the business) - through a narrow published function - Academy calling
 into Booking, never writing Booking's tables, per the bounded-context rule.
 Cancelling or moving a session withdraws or moves it.
 

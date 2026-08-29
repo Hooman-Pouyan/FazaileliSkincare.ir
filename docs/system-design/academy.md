@@ -209,6 +209,14 @@ sibling per aggregate, or a branch - **not a second settlement path**, per
 
 ### ACAD-D13 - Certification stays in the first block; attendance and instalments do not
 
+> **Substantially revised by `../39-confirmation-pass.md` §2.3 and §2.7.**
+> **Attendance is in**, so `issueCertificate` checks a real attendance threshold
+> rather than taking a staff-confirmed completion on trust - which makes the
+> certificate mean something measurable, and puts question 21 on `ACAD3`'s
+> critical path. **Instalments are in. Packages and mentorship are in.** Only
+> recorded video remains deferred. What survives below is the tables-before-
+> screens argument, which still holds.
+
 Revising `35-plan-review-and-resequencing.md` §9.3, which deferred all three
 together. That was one judgement applied to three different things.
 
@@ -227,6 +235,55 @@ staff-confirmed completion rather than a computed attendance threshold - which
 them is painful, so `instalment_plan` and `instalment` are created in `ACAD0` and
 left unused. Schema now, screens later. The cost of the empty tables is nothing;
 the cost of adding them after enrolments exist is a migration over live money.
+
+### ACAD-D14 - A missing prerequisite holds the enrolment for her review
+
+Replacing the hard refusal in `§7`. Somebody with equivalent experience from
+another institute is a real case, and a refusal turns them away without her ever
+seeing it.
+
+`enrolment.status` gains `pending_review`. The seat **stays held** while she
+decides, and `cohort.hold_hours` applies to her as much as to the student - a
+pending enrolment nobody reviews releases its seat like any other.
+
+Not free: a staff queue for pending enrolments, an approve and a decline action
+with a required reason, and a notification on each outcome.
+
+### ACAD-D15 - A cohort withdrawal is credit, never cash
+
+Answering question 27, and superseding the refund tiers proposed in
+`../38-academy-implementation-plan.md` §7.
+
+No cash refunds. A withdrawal becomes credit toward a future cohort, valid twelve
+months. **Booking already works this way** (`BOOK-D16`), and one rule across the
+whole site - *we keep your money here, not from you* - is easier to say on the
+telephone, easier to defend, and costs the business nothing, since credit is
+redeemed against a seat that would otherwise sit empty.
+
+It also removes Academy's last dependency on the unbuilt refund path.
+
+**Owed by her:** the validity period if twelve months is wrong, and whether credit
+transfers to another person. The policy appears on the cohort page **before**
+payment, per the rule `BOOK-D8` applies to cancellation.
+
+### ACAD-D16 - Only video is deferred, and the block splits in two
+
+`../39-confirmation-pass.md` §2.7. Instalments, packages and mentorship all return
+to scope; recorded video does not.
+
+Academy thereby becomes the largest block in the plan, against a stated business
+priority that ranks it third. So it splits, and the split is what keeps the
+sequence intact:
+
+| Packets | Contents | Property |
+| --- | --- | --- |
+| `ACAD0`-`ACAD5` | Catalogue, cohorts, enrolment, attendance, certification, staff screens | **The public product is critique-ready here** |
+| `ACAD6` | Instalments | Payment-layer work. The shop inherits it for large baskets, which argues for building it properly rather than quickly |
+| `ACAD7` | Mentorship, through Booking's scheduler | Needs pricing, duration and availability from her |
+| `ACAD8` | Packages | **Last, necessarily** - a package redeems into Commerce, Booking and Academy, so all three must be finished |
+
+Ordered this way, none of the three additions delays what the whole sequence was
+arranged around.
 
 ---
 
