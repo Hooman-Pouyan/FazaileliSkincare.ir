@@ -1,5 +1,7 @@
 # Academy - phased implementation plan
 
+**Amended by [`../../35-plan-review-and-resequencing.md`](../../35-plan-review-and-resequencing.md)** (2026-08-29): `ACAD4` (recorded lessons, VOD, watermarking) is deferred until a provider is chosen and demand is demonstrated; instalments remain here, at the payment layer, and are cut from shop v1 (F-20).
+
 **Status:** Review-ready; no runtime implementation is authorized by this document
 **Updated:** 2026-08-27
 **Scope:** Courses, in-person cohorts, recorded lessons, enrolment and instalments, attendance, certification, packages, and mentorship

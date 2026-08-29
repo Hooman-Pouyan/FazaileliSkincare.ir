@@ -101,6 +101,9 @@ false so the safe behaviour is the default.
 
 ### BOOK-D4 - A slot is held, not booked, until the deposit settles
 
+> **Amended by `BOOK-D14`.** When `deposit_rials` is 0 the hold confirms
+> immediately; the held state and both exclusion constraints are unchanged.
+
 Mirrors `COM-D3` exactly. A `held` appointment is a real row with a real time
 range that participates in both exclusion constraints, carrying `expires_at`
 10 minutes out. If the deposit does not settle, a sweeper releases it.
@@ -135,14 +138,22 @@ appointments on days the clinic is shut is the failure this prevents.
 
 ### BOOK-D7 - Choosing a practitioner by name is a per-service policy
 
+> **Superseded by `BOOK-D15`.** Retained for its reasoning, which still applies
+> if the institute grows. No `practitioner_choice` column is built in v1.
+
 If every customer may request Ms. Fazaieli, she becomes the bottleneck this
 context exists to remove, and two colleagues sit idle.
 
-`service.practitioner_choice` is one of `any` (pooled), `named` (customer picks),
-or `named_surcharge`. Consultations default to `named` - the relationship is the
-product. Routine treatments default to `any`.
+`service.practitioner_choice` was to be one of `any` (pooled), `named` (customer
+picks), or `named_surcharge`. Consultations would default to `named` - the
+relationship is the product. Routine treatments would default to `any`.
+
+**This is not built.** See `BOOK-D15`.
 
 ### BOOK-D8 - The cancellation policy is encoded, not re-argued per customer
+
+> **Amended by `BOOK-D16`.** The window and the tiers are settled; a deposit is
+> credit rather than a refundable payment, so cancellation never calls `COM7`.
 
 `service.free_cancellation_hours` and `service.deposit_rials`. Inside the window,
 cancelling refunds the deposit; outside it, the deposit is forfeit and the
@@ -193,6 +204,72 @@ records who wants what service in which window; releasing a slot notifies matche
 in order, through the outbox, with a short claim window so one released slot is
 not promised to five people at once.
 
+### BOOK-D14 - A service with no deposit confirms immediately
+
+Deposits are the only part of Booking that touches money, and money is the part
+that waits on merchant paperwork. `deposit_rials = 0` therefore means the hold
+transitions straight to `confirmed` rather than waiting for a settlement that
+will never arrive.
+
+Nothing else changes. The `held` state, `expires_at`, both exclusion constraints
+and the sweeper are exactly as `BOOK-D2` and `BOOK-D4` specify - only the trigger
+for the transition differs. Switching deposits on later is editing one number per
+service, not a migration.
+
+**This is what lets Booking ship end to end with no gateway, no SMS account and
+no business registration.**
+
+### BOOK-D15 - There is no practitioner-choice feature in v1
+
+Superseding `BOOK-D7`. The institute's clients come for Ms. Fazaieli, and there
+are not enough other practitioners for a choice to be meaningful. A picker that
+offers one real answer is a control that only ever disappoints.
+
+So: no `practitioner_choice` column, no enum, no picker. `practitioner_id` stays
+on `appointment` because the exclusion constraint needs it, and
+`practitioner_skill` stays because it is what makes availability correct when a
+second practitioner is added. Assignment is by the system from
+`practitioner_skill`, and where Ms. Fazaieli is the only skilled practitioner the
+availability grid is simply her calendar.
+
+Adding a picker later is additive - a column, an enum and a control - and touches
+no appointment already taken. This is a deletion that costs nothing to reverse.
+
+**One consequence worth stating plainly.** If she is effectively the only
+practitioner, her hours are the entire capacity of the business, which makes
+`BOOK-D3`'s interleaving question **more** important rather than less. It is the
+only lever that raises capacity without hiring.
+
+**A second.** With one practitioner and three beds the bed axis does not bind
+today. `BOOK-D1` and the second exclusion constraint stay anyway: they cost one
+constraint, and they are the part that cannot be retrofitted once appointments
+exist.
+
+### BOOK-D16 - The cancellation policy, settled
+
+Amending `BOOK-D8`, which specified the mechanism and left the numbers open.
+
+| When the client cancels | What happens |
+| --- | --- |
+| More than 24 hours before | Free. Any deposit is released back as credit, usable on any future booking |
+| 12 to 24 hours before | Free once. A second late cancellation inside 90 days moves the client to the tier below |
+| Under 12 hours, or no-show | The deposit is retained as credit against a future booking, valid 90 days. It is not returned as money |
+
+Three properties this has that a refund policy does not. **It never calls
+`COM7`** - no refund path is required for Booking to launch, which removes its
+last dependency on unbuilt commerce work. **It is not a punishment** - the client
+keeps their money, they simply keep it here, which is easier to say on the phone
+and easier to defend. And **it costs the clinic nothing to be generous with**,
+because credit is only redeemed against capacity that would otherwise sit idle.
+
+The rule is shown before the client pays, per `BOOK-D8`, never after they cancel.
+`service.free_cancellation_hours` stays as the encoded window; the tiers above are
+its defaults.
+
+**Until deposits are switched on** (`BOOK-D14`), cancellation carries no money at
+all and the policy exists only as a stated expectation and a no-show count on the
+customer record.
+
 ---
 
 ## 3. Database contract
@@ -213,7 +290,7 @@ settlement path branches on which aggregate is present.
 
 | Table                            | Purpose and notable columns                                                                                                                                                                                                                                                         |
 | -------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `service`                        | `slug`, `kind` (`treatment`/`consultation`/`mentorship`), `duration_minutes`, `buffer_minutes`, `price_rials`, `deposit_rials`, `free_cancellation_hours`, `practitioner_choice`, `allows_interleaving`, `required_resource_kind`, `is_published`, `review_state`                   |
+| `service`                        | `slug`, `kind` (`treatment`/`consultation`/`mentorship`), `duration_minutes`, `buffer_minutes`, `price_rials`, `deposit_rials`, `free_cancellation_hours`, `allows_interleaving`, `required_resource_kind`, `is_published`, `review_state`                   |
 | `service_translation`            | `locale_code`, `name`, `summary`, `description`, `preparation`, `aftercare`                                                                                                                                                                                                         |
 | `service_step`                   | `service_id`, `sort_order`, `minutes`, `occupies_practitioner` (bool), `label` - the `BOOK-D3` model                                                                                                                                                                                |
 | `practitioner`                   | `person_id`, `display_name`, `is_bookable`, `sort_order`. A practitioner is a `person` with the `practitioner` role; this row carries scheduling attributes                                                                                                                         |
@@ -230,8 +307,8 @@ settlement path branches on which aggregate is present.
 | `waitlist_entry`                 | `person_id`, `service_id`, `window_start`, `window_end`, `status`, `notified_at`, `claim_expires_at`                                                                                                                                                                                |
 
 **Enums.** `appointment_status`: `held`, `confirmed`, `completed`, `cancelled`,
-`no_show`, `expired`. `resource_kind`: `bed`, `device`.
-`practitioner_choice`: `any`, `named`, `named_surcharge`.
+`no_show`, `expired`. `resource_kind`: `bed`, `device`. No
+`practitioner_choice` enum, per `BOOK-D15`.
 
 **Every foreign key is indexed**, and the exit gate for `BOOK1` proves it by
 query rather than by reading, as `packet 12` did.
@@ -462,12 +539,14 @@ cancelling a practitioner's day re-offers every affected slot.
 
 ## 10. What the maintainer must answer before BOOK0
 
-1. **Deposit amount and free-cancellation window per service.** `BOOK-D5` and
-   `BOOK-D8` are structural; the numbers are his.
+1. ~~Deposit amount and free-cancellation window per service.~~ **Answered
+   2026-08-29:** launch with `deposit_rials = 0` per `BOOK-D14`; the cancellation
+   tiers are settled in `BOOK-D16`. Deposit amounts are needed only when deposits
+   are switched on.
 2. **Does a practitioner ever leave a client mid-treatment?** `BOOK-D3`'s
    interleaving switch, per service.
-3. **May customers pick a practitioner by name, and does that cost more?**
-   `BOOK-D7`.
+3. ~~May customers pick a practitioner by name?~~ **Answered 2026-08-29: no
+   picker in v1.** `BOOK-D15`.
 4. **The intake questions**, and which are blocking. `BOOK-D10`.
 5. **Working hours per practitioner**, and how leave is normally requested.
 6. **What happens to a no-show's deposit**, which is a policy question with a

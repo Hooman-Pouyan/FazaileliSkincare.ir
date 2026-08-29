@@ -1,5 +1,7 @@
 # Shop experience - iteration plan
 
+**Amended by [`../../35-plan-review-and-resequencing.md`](../../35-plan-review-and-resequencing.md)** (2026-08-29): `SHOPX2` synonym work, the replenishment prompt and shop instalments are cut (F-18, F-19, F-20); `SHOPX4`'s outbox drain moves to milestone M0, first (F-22); photography moves out of `SHOPX5` into the parallel content track; the rial/toman display rule is owed (F-9).
+
 **Status:** Review-ready; no runtime implementation is authorized by this document
 **Updated:** 2026-08-27
 **Scope:** User flows, merchandising, conversion and polish for the existing shop - hub, listing, PDP, cart, checkout, account

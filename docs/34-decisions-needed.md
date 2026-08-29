@@ -1,5 +1,7 @@
 # Decisions needed - the consolidated question list
 
+**Amended by [`35-plan-review-and-resequencing.md`](35-plan-review-and-resequencing.md)** (2026-08-29): questions 1, 3, 13 and 16 are answered by `BOOK-D14`, `BOOK-D15` and `BOOK-D16`; the list is reduced to the eight that genuinely need a human answer, and three missing questions are added - SMS provider, VAT treatment, and the Arabic content policy.
+
 **Date:** 2026-08-27
 **Purpose:** Every question across Booking, Academy, Shop, the public surfaces, content operations and the back office that must be answered before the work is unambiguous
 **Sources:** the `§10` sections of [`system-design/booking.md`](system-design/booking.md), [`system-design/academy.md`](system-design/academy.md), [`system-design/studio.md`](system-design/studio.md), [`system-design/storefront/public-surfaces.md`](system-design/storefront/public-surfaces.md), [`system-design/storefront/shop-experience-iteration.md`](system-design/storefront/shop-experience-iteration.md), [`system-design/content-operations.md`](system-design/content-operations.md), [`system-design/back-office.md`](system-design/back-office.md)

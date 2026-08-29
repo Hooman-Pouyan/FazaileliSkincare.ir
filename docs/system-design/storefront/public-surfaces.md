@@ -1,5 +1,7 @@
 # Public surfaces - the Landing and the three hubs
 
+**Amended by [`../../35-plan-review-and-resequencing.md`](../../35-plan-review-and-resequencing.md)** (2026-08-29): resequenced to milestone M5; `milestone` and `space` tables cut (F-16, F-17); the polymorphic consent table replaced by real foreign keys (F-5); `before_after_case` blocked until consent revocation actually revokes (F-4); `PUB0`'s foreign keys to Booking's schema and its unbuilt staff screens corrected (F-23, F-24); legal pages added to scope (F-3).
+
 **Status:** Review-ready; no runtime implementation is authorized by this document
 **Updated:** 2026-08-27
 **Scope:** The four pages a visitor meets before signing in - `/` (personal brand), `/shop`, `/book`, `/academy` - and the content entities they need

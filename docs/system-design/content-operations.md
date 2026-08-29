@@ -1,5 +1,7 @@
 # Content operations - how anything on this site gets changed
 
+**Amended by [`../../35-plan-review-and-resequencing.md`](../../35-plan-review-and-resequencing.md)** (2026-08-29): `curated_list` and `curated_list_item` cut in favour of the existing `product.merchandising_rank` plus a toggle (F-15); §7 and §9 deleted in favour of `back-office.md` §6 (F-26); a bulk copy-approval path is required and not yet designed (F-12).
+
 **Status:** Review-ready; no runtime implementation is authorized by this document
 **Updated:** 2026-08-27
 **Scope:** The editing model for every changeable thing on the site - prices, stock, product copy, campaigns, testimonials, credentials, before-and-after cases, courses, services

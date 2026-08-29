@@ -1,5 +1,7 @@
 # Back office - screens, panels, and the isolation decision
 
+**Amended by [`../../35-plan-review-and-resequencing.md`](../../35-plan-review-and-resequencing.md)** (2026-08-29): the CSP ships independently of `BO0` and before it (F-2); `price_adjustment_batch` does not carry the shape §5.4 assumes - no scope, percentage, rounding rule or item table (C-1); `review_state` is on `product`, not per locale, so §5.6's per-locale state needs a migration (C-2); the bulk copy-approval screen is the one that matters and is not designed (F-12); `BO6` merges into Booking's `BOOK5`; the delivery order is revised in §4 of the review.
+
 **Status:** Review-ready; no runtime implementation is authorized by this document
 **Updated:** 2026-08-27
 **Scope:** Every staff-facing screen - orders, transfers, prices, inventory, products, content, bookings, academy, customers, settings - and the security boundary around them

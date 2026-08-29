@@ -1,5 +1,7 @@
 # Studio - phased implementation plan
 
+**Amended by [`../../35-plan-review-and-resequencing.md`](../../35-plan-review-and-resequencing.md)** (2026-08-29): `STU0` is `30-next-block-plan.md` Phase D under a second name (F-25); "no migrations" is false while the protocol panel needs `person_protocol` (C-3); `STU-D3` is overruled by `back-office.md` §5.1 - an empty panel says so rather than disappearing (F-7).
+
 **Status:** Review-ready; no runtime implementation is authorized by this document
 **Updated:** 2026-08-27
 **Scope:** The customer's unified view across Commerce, Booking and Academy - a read model that owns no writes
