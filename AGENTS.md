@@ -10,6 +10,14 @@ Read this before changing anything in this repository. It exists because the pri
 
 ---
 
+## Where to start
+
+**Implementing? Open [`docs/40-execution-handoff.md`](docs/40-execution-handoff.md) first.** It is the current work board and it carries its own reading list. [`docs/39-confirmation-pass.md`](docs/39-confirmation-pass.md) is binding over every other document. [`docs/README.md`](docs/README.md) indexes everything else.
+
+A session starting anywhere else is guessing, and this file exists because guessing is what produces drift.
+
+---
+
 ## Hard rules
 
 These are not preferences. Breaking one costs money, data, or a customer.
