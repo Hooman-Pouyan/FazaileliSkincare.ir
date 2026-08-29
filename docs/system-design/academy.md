@@ -157,6 +157,77 @@ professional pricing and `is_professional_only` products.
 attendance tick: the role changes what somebody may buy and at what price, and
 that decision belongs to a person.
 
+### ACAD-D11 - A cohort seat is held for days, not minutes, because bank transfer is asynchronous
+
+`ACAD-D2` specifies a `held` enrolment "with a TTL", by analogy with the cart and
+with `BOOK-D4`. Both of those hold for ten minutes, and **ten minutes is wrong
+here.**
+
+A cart hold covers a card payment that settles in seconds. A cohort seat covers
+an Iranian bank transfer: the student transfers, uploads a receipt, and a person
+reconciles it against a statement - hours later, or the next morning. A
+ten-minute TTL would release every seat before anybody could pay for one.
+
+`cohort.hold_hours`, defaulting to **48**. The seat counts against capacity while
+held, because a seat that does not count is not held.
+
+The risk this creates is real and is handled by people rather than by a timer: a
+student holds a seat and never pays, and a genuine student is turned away. So
+staff can release a held seat from the admin at any time, the waitlist is offered
+the moment a hold expires or is released, and the held-seat list is visible on
+the cohort screen rather than buried.
+
+### ACAD-D12 - The payment aggregate becomes three-way, in one migration, done once
+
+`BOOK-D5` adds `appointment_id` to `payment`. Academy needs `enrolment_id` on the
+same table. Done as two migrations by two packets, the one-aggregate check is
+written twice and will disagree.
+
+**One migration owns this**, in whichever of `BOOK0` or `ACAD0` lands first, and
+it does the whole job:
+
+```sql
+ALTER TABLE payment ALTER COLUMN order_id DROP NOT NULL;
+ALTER TABLE payment ADD COLUMN appointment_id uuid REFERENCES appointment(id);
+ALTER TABLE payment ADD COLUMN enrolment_id  uuid REFERENCES enrolment(id);
+ALTER TABLE payment ADD CONSTRAINT payment_one_aggregate_check CHECK (
+  (order_id IS NOT NULL)::int
++ (appointment_id IS NOT NULL)::int
++ (enrolment_id IS NOT NULL)::int = 1);
+```
+
+Two existing objects assume `order_id` is not null and must be revisited in the
+same migration rather than discovered later: the unique index
+`payment_id_order_unique` on `(id, order_id)`, and `payment_order_time_idx`.
+Postgres does not treat two nulls as conflicting, so the unique index will not
+break - but it stops meaning what it says, and a partial index `WHERE order_id IS
+NOT NULL` is what was intended.
+
+`settleOrder` in `bank-transfer.service.ts` is order-shaped today. It gains a
+sibling per aggregate, or a branch - **not a second settlement path**, per
+`COM-D8`.
+
+### ACAD-D13 - Certification stays in the first block; attendance and instalments do not
+
+Revising `35-plan-review-and-resequencing.md` §9.3, which deferred all three
+together. That was one judgement applied to three different things.
+
+**Certification stays.** `ACAD-D8` is right that a code resolving on fazaieli.ir
+is what makes certification worth paying for. A course sold on the promise of a
+certificate, whose certificate is then produced by hand in Word, is a catalogue
+with a claim attached. And the build is genuinely small: a table, a random code,
+a staff action and one public route.
+
+**Attendance goes.** Its only consumer is the completion rule, and for one cohort
+a register on paper is sufficient. `issueCertificate` therefore takes a
+staff-confirmed completion rather than a computed attendance threshold - which
+`ACAD-D8` already permits, since issuing is a person's decision.
+
+**Instalments go, but their tables stay.** `ACAD-D4` is right that retrofitting
+them is painful, so `instalment_plan` and `instalment` are created in `ACAD0` and
+left unused. Schema now, screens later. The cost of the empty tables is nothing;
+the cost of adding them after enrolments exist is a migration over live money.
+
 ---
 
 ## 3. Database contract
