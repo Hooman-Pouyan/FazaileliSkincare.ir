@@ -483,3 +483,121 @@ No orders (there are none yet), no price tooling (C-1's migration is owed), no
 content approval (that arrives with the content track), and no customer 360.
 Those are steps 3 to 5, and each should wait until someone has asked for it
 twice.
+
+
+---
+
+## 9. Delivery order, agreed 2026-08-29
+
+The maintainer's proposal, adopted: **finish the public product first, learn what
+it needs from using it, and build the general administration once the
+requirements are known rather than guessed.** That is the right instinct - an
+admin built for a product that is still moving is built twice.
+
+It needs one amendment and one sharpening.
+
+### 9.1 The amendment - staff surfaces belong to their context, not to "the back office"
+
+A booking system whose staff cannot see the day is not a booking system. Marking
+a no-show, taking a telephone booking, blocking an hour and setting closed days
+are not administration of Booking; they **are** Booking. The same is true of
+taking attendance in Academy.
+
+So those screens ship inside `BOOK5` and `ACAD3` and are not deferred with the
+rest of the back office. `back-office.md`'s `BO6` and `BO7` are absorbed rather
+than scheduled.
+
+What genuinely waits for the product to settle is the **general** administration:
+the order queue, price tooling, inventory, content approval, customer 360.
+
+### 9.2 Why `BO0` still comes first
+
+`BO0` is not a back office. It is the substrate the first staff screen needs, and
+three of its five pieces cannot be retrofitted cheaply:
+
+| Piece | Why it cannot wait |
+|---|---|
+| Admin origin and cookie scope | Booking's day view is a staff screen. Scoping session cookies after sessions exist in the wild is painful, and doing it now costs a middleware rule |
+| The audit wrapper | If the first staff mutation does not write an audit row, no later one will either. "Who marked that no-show" must be answerable from the first day |
+| The CSP | Configuration, not architecture. Ships independently and immediately |
+| Re-authentication | Cheaper to add now than to thread through screens that already exist |
+| The list component | The day view needs it regardless |
+
+### 9.3 The sharpening - Academy's lifecycle is not needed for critique
+
+The stated goal is a complete public front end to critique, iterate and expand
+against. That needs Academy's **public surface and enrolment**. It does not need
+its operational machinery.
+
+Cohorts run a few times a year. Attendance, certificates and instalments are a
+substantial build - instalments alone are a payment-layer feature - serving an
+event that happens rarely and is currently handled by hand without complaint.
+
+So Academy enters this block as `ACAD0`, `ACAD1` and a **reduced `ACAD2`**:
+catalogue, cohorts with capacity and waitlist, and enrolment paid in full.
+Attendance, certification, instalments and the practitioner-role loop stay manual
+for the first cohort and are built once a real cohort has run through the system.
+`ACAD4` remains deferred entirely.
+
+This also respects the stated business priority, in which Academy is third.
+
+### 9.4 The order
+
+| # | Block | Contents |
+|---|---|---|
+| 1 | **Foundations** | The notification worker behind its interface (7.1); the CSP; `BO0`'s origin, audit wrapper, re-auth and list component |
+| 2 | **Booking, complete** | `BOOK0`-`BOOK6`, including the staff day view and holidays. Ships with no gateway and no registration, per `BOOK-D14` |
+| 3 | **Academy, reduced** | `ACAD0`, `ACAD1`, `ACAD2` without instalments. Public surface and enrolment only |
+| 4 | **Iteration across all three** | Shop, Booking and Academy front ends critiqued together, adjusted, and expanded. Content track feeds this continuously |
+| 5 | **General administration** | Orders, prices, inventory, content approval, customer 360 - built against requirements now known rather than assumed |
+
+Content (§4, `M3`) runs in parallel throughout and is never a numbered block.
+
+---
+
+## 10. Notification fan-out and n8n - recorded, not scheduled
+
+Raised by the maintainer as a future requirement: daily schedules, new bookings,
+consultation requests, orders needing shipment or approval, and course purchases
+delivered to her on Telegram or WhatsApp, and Instagram connected to the site.
+
+### 10.1 It is nearly free, if the worker is built correctly
+
+Everything above is a **consumer of `notification_outbox`**, not a new system. If
+7.1's `NotificationChannel` interface exists, n8n is one more adapter: the worker
+posts to an n8n webhook and n8n fans out to whatever she uses. Nothing in the
+application learns what Telegram is.
+
+That is the argument for building the interface properly in block 1 even though
+only a console adapter exists at first.
+
+### 10.2 The distinction that matters - staff channel and customer channel are not the same
+
+**Staff notifications need no registration and could ship early.** A Telegram bot
+is created in a minute, costs nothing, needs no business documents, and delivers
+to her phone reliably. Her daily schedule and new-booking alerts could arrive
+this way long before any SMS account exists.
+
+**Customer notifications cannot use it.** Telegram is filtered in Iran and reaches
+customers only through a VPN they may not have. Order confirmations and
+appointment reminders have to be SMS, which is what the provider account is for.
+
+**WhatsApp is not realistically available.** The WhatsApp Business API runs
+through Meta, and Meta's sanctions posture makes an Iranian business account
+unobtainable in practice. The same blocker applies to the Instagram Graph API, so
+"connect Instagram to the website" is not an API integration. What is available
+is outbound - the site links to Instagram - and a manual export of her archive,
+which is a separate content question.
+
+### 10.3 The rule if n8n is adopted
+
+**n8n delivers and notifies. It never decides.**
+
+A workflow that writes to the database, changes an appointment state or applies a
+policy puts business logic outside the repository, outside the tests, outside
+code review and outside the audit trail. That is the drift this project's
+conventions exist to prevent, and an automation tool is the easiest place in the
+world for it to happen quietly.
+
+Anything n8n needs to change goes through a Server Action that already exists,
+with the same authorization and the same audit row as a human doing it.
