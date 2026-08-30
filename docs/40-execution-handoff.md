@@ -53,12 +53,10 @@ Its exit gate passes **and** a review-log section exists in
 `docs/20-packet-review-log.md` **and** a row exists in `docs/17-execution-ledger.md`.
 Per `8.10`. No exceptions.
 
-### 0.35 · Two things to do before B0
+### 0.35 · Do not start at Booking
 
-| # | Task | Why |
-|---|---|---|
-| P.1 | **Fix `R-9`** — the integration suite writes to the development database | Booking and Academy add more integration tests than every previous packet combined. Left alone this gets much worse, fast |
-| P.2 | Confirm a **privacy policy page** is scheduled | `B3.14` collects health data. `35` finding F-3 stops being a commerce concern the moment intake ships (`BOOK-D23`) |
+**Part Zero comes first.** It is four things that are either cheap now and
+expensive later, or that something downstream cannot work without. See below.
 
 ### 0.4 · Stop and ask — never guess these
 
@@ -79,10 +77,109 @@ Task order **is** priority.
 
 ---
 
+# PART ZERO · FOUNDATIONS
+
+**Start here, not at Booking.** Four packets. None is large, and each is either
+impossible to retrofit cheaply or is blocking something already shipped.
+
+`F1` and `F2` can be done in any order. `F3` is independent of both. `F4` should
+land before the first staff screen (`B5`).
+
+---
+
+## F1 · The test database
+
+`R-9` in `27-storefront-refinement-backlog.md`: the integration suite writes to
+the development database. Booking and Academy together add **more integration
+tests than every previous packet combined** — concurrency proofs, sweepers,
+capacity races. Left alone this goes from an annoyance to a daily obstruction.
+
+| # | Task | Done when |
+|---|---|---|
+| F1.1 | Integration tests run against an isolated database | A per-run schema or a separate database. Never the development one |
+| F1.2 | The suite creates and tears down its own state | Two consecutive runs from a dirty tree both pass |
+| F1.3 | Prove it | Seed the dev database, run the whole integration suite, dev data **unchanged** |
+
+**Exit:** `pnpm test:integration` twice in a row, dev database untouched.
+
+---
+
+## F2 · A Content-Security-Policy
+
+There is none today, on a site that takes payments. `back-office.md` §3.2 ranks
+this above co-location and then schedules it inside `BO0`; it is a configuration
+change and it should not wait for a hostname.
+
+Hard rule 10 already forbids foreign hosts, so the policy can be **tight from the
+first attempt** — that is unusual and worth exploiting.
+
+| # | Task | Done when |
+|---|---|---|
+| F2.1 | CSP in report-only mode on the storefront | Header present, violations logged |
+| F2.2 | Fix what it reports | Expect very little, given hard rule 10 |
+| F2.3 | Enforce | `default-src 'self'`, no `unsafe-inline` in `script-src` |
+| F2.4 | A test asserting the header is present and enforcing | Regression protection |
+
+**Exit:** enforcing CSP on every route, no console violations, every page still works.
+
+---
+
+## F3 · The notification worker
+
+`35` finding F-1, and **the highest-leverage unbuilt thing in the repository.**
+`notification_outbox` exists and nothing drains it, so today an order is placed,
+a receipt is uploaded, and the customer is told **nothing, ever**.
+
+This is not a Booking prerequisite. It is a **Commerce defect** that Booking and
+Academy also depend on. Build it now and three contexts stop being silent.
+
+**Build the worker, not the provider** (`35` §M-A). No SMS account is required.
+
+| # | Task | Done when |
+|---|---|---|
+| F3.1 | `NotificationChannel` interface — `send(message, locale)` | One method, no provider concepts leaking through it |
+| F3.2 | Console adapter for development | Prints what would be sent |
+| F3.3 ‖ | Recording adapter for tests | Assertable |
+| F3.4 | The drain: ordered, with backoff | Claims rows so two workers cannot send the same message |
+| F3.5 | Dead-lettering after N attempts | Failures visible, not silently dropped |
+| F3.6 | **Once-only delivery, keyed on the outbox row** | Survives a worker restart mid-send |
+| F3.7 | Templates for fa, en and ar | **Structure only.** The Persian wording is the maintainer's — log it |
+| F3.8 | Wire the existing Commerce events | Order placed, payment settled, transfer rejected. **This is the part that is currently silent** |
+| F3.9 | Outbox panel with failures and a retry action | Minimal route now; folds into `/admin/settings` at `F4` |
+
+**Exit gate:** an order placed in development produces **exactly one** recorded
+notification; a forced failure retries and then dead-letters; a worker killed
+mid-send does not double-send on restart. **No provider account exists.**
+
+---
+
+## F4 · `BO0` — the substrate every staff screen needs
+
+Not a back office. It is what the first staff screen requires, and three of its
+five parts cannot be retrofitted cheaply.
+
+| # | Task | Done when |
+|---|---|---|
+| F4.1 | The admin origin and middleware | `/admin/*` refused on the public host; storefront routes refused on the admin host. **`admin.localhost` in development** — nothing is deployed yet |
+| F4.2 | Session cookies scoped to the admin host | A storefront XSS cannot issue authenticated admin requests. **Scoping cookies after sessions exist in the wild is the expensive version of this task** |
+| F4.3 | The audit wrapper | One function every admin mutation passes through, writing actor, action, entity, before and after. If the first staff mutation does not write a row, no later one will |
+| F4.4 | TOTP re-authentication for dangerous actions | Settling money, committing prices, granting a role, revoking consent |
+| F4.5 | **The shared list component** | Title and count · `/`-focused search · filter chips **in the URL** · optional bulk select · dense table with tabular numerals · numbered pagination. Built on the **shadcn data table** plus the **command** primitive, in the compact density scope. Not hand-rolled — this is the single most likely drift in the back office |
+| F4.6 | Its three designed states | Nothing yet · nothing matching the filters, with a clear-filters action · the read failed |
+| F4.7 | `/admin` day screen | Each panel a count and a link. **An empty queue says so rather than disappearing** — a missing panel reads as broken |
+| F4.8 | Confirm a privacy policy page is scheduled | `B3.14` collects health data; `35` finding F-3 stops being a commerce concern the moment intake ships (`BOOK-D23`) |
+
+**Exit gate:** a storefront page cannot reach an admin route on the public
+hostname; an admin session cookie is not sent to the storefront origin; the CSP is
+enforced; and **every mutation under `/admin` writes an audit row, proved by
+test.**
+
+---
+
 # PART ONE · BOOKING
 
 Nothing in Part One needs a payment gateway, an SMS account, or business
-registration. `B6` alone needs the notification worker.
+registration. `B6` needs `F3`; `B5` needs `F4`.
 
 ---
 
@@ -499,13 +596,23 @@ hours redeems into three contexts with no cross-imports.
 ## Appendix · The critical path
 
 ```
+F1 · F2 · F3 · F4                        Part Zero — foundations, any order
+                                          F3 also un-silences Commerce today
+
 U → B0 → B1 → B2 → B3 → B4 → B7          Booking, customer-complete
-              B0 → (BO0) → B5             the staff day
-                    B6 ← notification worker
+                    B5 ← F4               the staff day
+                    B6 ← F3               reminders
 A0 → A1 → A2 → A3 → A4 → A5               Academy, critique-ready
                           A6 · A7         either order
                                 → A8      last, needs all three contexts
 ```
+
+**Why Part Zero is not optional.** `F1` gets worse every packet. `F2` is a
+configuration change protecting a site that already takes payments. `F3` is
+already broken in production code — Commerce is silent today. `F4`'s cookie
+scoping and audit wrapper are cheap now and expensive after sessions and
+mutations exist. None of the four is large; all four are the wrong thing to do
+later.
 
 `B0.10` — the payment migration — is shared. **Whichever context reaches it first
 owns it, and the other verifies rather than repeats.** Getting this wrong produces
